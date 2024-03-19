@@ -1,7 +1,7 @@
-name: "gamlj-website"
+name: "pamlj-website"
 output_dir: "../docs"
 navbar:
-  title: "GAMLj"
+  title: "PAMLj"
   left:
   - text: "Correlation"
     href:  correlation.html
