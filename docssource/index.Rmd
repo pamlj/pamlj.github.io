@@ -1,0 +1,163 @@
+---
+title: "GAMLj: General Analyses for the Linear Model in Jamovi"
+output: 
+  html_document:
+    includes:
+         in_header: ganalytics.txt
+
+---
+  
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+
+```
+  
+`r version("3.0.0")`
+
+This documentation it is being updated toward `r modulename()` version 3 and above. You still find much of the material suitable for `r modulename()` version 2. In case you want to read documentation that applies only to version 2, please go to `r ext_url("Version 2 docs","https://mcfanda.github.io/gamlj_legacy.github.io/")`.
+
+<div class="bignote">  
+If you are interested in more information about the statistical models that can be estimated by `r modulename()`, and their results interpretation, you can read  `r ext_url("GAMLj models","https://gamlj.github.io/book/booklet.html")`, a (in progress) web book companion to the module.
+</div>
+
+General, Mixed and Generalized Models module for `r jamovi`.
+
+`r pic("commons/pics/ui.png")`
+
+GAMLj offers tools to estimate, visualize, and interpret General Linear Models, Mixed Linear Models and Generalized Linear Models with categorical and/or continuous variables, with options to facilitate estimation of interactions, simple slopes, simple effects, post-hoc tests, etc.
+
+* ANOVA and Regression approach
+* Continuous and categorical independent variables
+* F-test, LR tests, and parameter estimates
+* Confidence intervals, standard, profile and bootstrap
+* Moderation made easy
+* Simple slopes analysis
+* Simple effects analysis
+* Simple interaction analysis
+* Post-hoc analysis
+* Plots for any order of interactions
+* Automatic selection of best estimation methods and degrees of freedom selection
+* Type III estimation
+* A large set of effect size indices, depending on the model being estimated, such as $\eta^2$, $\omega^2$, $\epsilon^2$, and Cohen's $d$, both partial and not partial. 
+
+Available models are:
+
+* OLS Regression (GLM)
+* OLS ANOVA (GLM)
+* OLS ANCOVA (GLM)
+* Random coefficients regression (Mixed)
+* Random coefficients ANOVA-ANCOVA (Mixed)
+* Logistic regression (GZLM)
+* Logistic ANOVA-like model (GZLM)
+* Probit regression (GZLM)
+* Probit ANOVA-like model (GZLM)
+* Multinomial regression (GZLM)
+* Multinomial ANOVA-like model (GZLM)
+* Poisson regression (GZLM)
+* Poisson ANOVA-like model (GZLM)
+* Overdispersed Poisson regression (GZLM)
+* Overdispersed Poisson ANOVA-like model (GZLM)
+* Negative binomial regression (GZLM)
+* Negative binomial  ANOVA-like model (GZLM)
+* Ordinal regression (GZLM)
+* Ordinal ANOVA-like model (GZLM)
+* Mixed Logistic regression (GMixed)
+* Mixed Logistic ANOVA-like model (GMixed)
+* Mixed Probit regression (GMixed)
+* Mixed Probit ANOVA-like model (GMixed)
+* Mixed Multinomial regression (GMixed)
+* Mixed Multinomial ANOVA-like model (GMixed)
+* Mixed Poisson regression (GMixed)
+* Mixed Poisson ANOVA-like model (GMixed)
+* Mixed Overdispersed Poisson regression (GMixed)
+* Mixed Overdispersed Poisson ANOVA-like model (GMixed)
+* Mixed Negative binomial regression (GMixed)
+* Mixed Negative binomail  ANOVA-like model (GMixed)
+* Mixed Ordinal regression (GMixed)
+* Mixed Ordinal ANOVA-like model (GMixed)
+
+
+Please visit the sub-modules pages for details:
+
+* [GAMLj GLM](glm.html)
+* [GAMLj Mixed models](mixed.html)
+* [GAMLj Generalized Models](gzlm.html)
+* [GAMLj Generalized Mixed Models](gzlmmixed.html)
+
+# Examples
+
+Some worked out examples of the analyses carried out with `r jamovi` `r modulename()` are posted here (more to come)
+
+<div class="littletitle">General Linear Model</div>
+`r list_pages(topic="glm",category = "example")`
+<div class="littletitle">Mixed models</div>
+`r include_examples("mixed")`
+<div class="littletitle">Generalized Linear Models</div>
+`r include_examples("gzlm")`
+
+<div class="littletitle">Generalized Mixed Models</div>
+
+`r include_examples("gmixed")`
+
+
+# Details
+
+`r  include_details(NULL)`
+
+
+
+# Installation
+
+If you didn't already, install [jamovi](https://www.jamovi.org/download.html) and run it. Select the jamovi modules library and install GAMLj from there
+
+<img src="glm/install.png" class="img-responsive" alt="">
+
+## Linux
+
+If you are working in linux you can download [Jamovi](https://www.jamovi.org/download.html), then download the .jmo from this link [gamlj binaries](https://github.com/mcfanda/binaries/blob/master/gamlj_linux.jmo).
+
+
+## Others
+
+You will first need to download [Jamovi](https://www.jamovi.org/download.html). 
+
+
+You can clone this repository and compile the module within R with 
+
+```
+library(jmvtools)
+
+jmvtools::install()
+
+```
+
+# Install in R
+
+To install it in R, simple use:
+
+```
+
+devtools::install_github("gamlj/gamlj")
+
+```
+
+# Troubleshooting
+
+Please check out the  [troubleshooting page](https://mcfanda.github.io/gamlj_docs/troubles.html). 
+
+# Release notes
+
+Please check out the  [Release notes](release_notes.html). 
+
+# Quality control
+
+Please check the [rosetta store](rosetta.html) for alignment with other software results and possible discrepancies.
+
+# Specs
+
+`r list_pages(category="details")`
+
+  
+`r issues()`

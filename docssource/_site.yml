@@ -1,0 +1,20 @@
+name: "gamlj-website"
+output_dir: "../docs"
+navbar:
+  title: "GAMLj"
+  left:
+  - text: "Correlation"
+    href:  correlation.html
+  - text: "GLM"
+    href:  glm.html
+  right: 
+  - text: "View on Github"
+    href: https://github.com/pamlj/pamlj
+output:
+  html_document:
+    css: 
+     - style.css
+     - helpstyle.css
+    theme: flatly
+
+    
