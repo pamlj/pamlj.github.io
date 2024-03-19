@@ -21,7 +21,7 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-**General Linear Model** Power Analysis
+# **General Linear Model** Power Analysis
 
 `r version("0.1.0")` 
 
