@@ -124,9 +124,12 @@ pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative="greater")
 
 Results are the same.
 
-
-
 `r issues()`
+
+# Back to `r link_pages(nickname="rosetta")`
+`
+
+
 
 # References
 '

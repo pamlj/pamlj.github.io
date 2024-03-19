@@ -1,7 +1,8 @@
 ---
 title: "PAMLj: rosetta"
-topic: correlation
+topic: rosetta
 category: help
+nickname: rosetta
 output: 
   html_document:
      includes:
