@@ -1,5 +1,5 @@
 ---
-title: "GAMLj: General Analyses for the Linear Model in Jamovi"
+title: "PAMLj: Power Analysis for Linear Models in Jamovi"
 output: 
   html_document:
     includes:
