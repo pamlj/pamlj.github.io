@@ -1,6 +1,6 @@
 # folders should be absolute or relative to the docssource folder
 # do not use the trailing slash
-MODULE_NAME="GAMLj"
+MODULE_NAME="PAMLj"
 MODULE_FOLDER="~/Skinner/Forge/jamovi/pamlj/pamlj"
 PROJECT_FOLDER="~/Skinner/Forge/jamovi/pamlj/pamlj.github.io"
 SOURCE_FOLDER="docssource"

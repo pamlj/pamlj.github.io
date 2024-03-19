@@ -18,7 +18,6 @@ mcdocs_init()
 
 This documentation it is being updated toward `r modulename()` version 0.1.0 and above.
 
-Please check out the  [troubleshooting page](https://mcfanda.github.io/gamlj_docs/troubles.html). 
 
 # Release notes
 
