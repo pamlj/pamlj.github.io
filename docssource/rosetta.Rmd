@@ -1,5 +1,5 @@
 ---
-title: "General Linear Model"
+title: "PAMLj: rosetta"
 topic: correlation
 category: help
 output: 
