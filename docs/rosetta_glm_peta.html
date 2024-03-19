@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="(Marcello Gallucci)" />
 
 
-<title>Infos</title>
+<title>GLM</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -70,6 +69,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 <link rel="stylesheet" href="helpstyle.css" type="text/css" />
@@ -359,59 +380,137 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Infos</h1>
-<h4 class="author">(Marcello Gallucci)</h4>
+<h1 class="title toc-ignore">GLM</h1>
 
 </div>
 
 
-<div id="details" class="section level1">
-<h1>Details</h1>
-<p>Here you can find some explanation about how GALMj module does
-things.</p>
-<ul>
-</ul>
+<div id="power-analysis-based-on-partial-eta-squared"
+class="section level1">
+<h1>Power Analysis based on Partial Eta-Squared</h1>
+<p><span class="version"> <span class="versiontitle"> PAMLj version ≥
+</span> 0.1.0 </span></p>
+<p>Here we compare the results of <span class="modulename">PAMLj</span>
+with other software that performs power analysis. In particular, we will
+compare our results with <a
+href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
+package</a> and <a
+href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.</p>
 </div>
-<div id="examples" class="section level1">
-<h1>Examples</h1>
-<p>Here you can find some applications of GALMj module.</p>
-<div id="glm" class="section level2">
-<h2>GLM</h2>
+<div id="correlation" class="section level1">
+<h1>Correlation</h1>
+<p>For Pearson and Spearman correlation, we can compare <span
+class="modulename">PAMLj</span> with <code>R pwr package</code>.
+Consider, however, that for this task <span
+class="modulename">PAMLj</span> employs <code>R pwr package</code> under
+the hood, so the results are obviously in line. Both packages use the <a
+href="https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh">inverse
+hyperbolic tangent</a> transformation <span class="citation">(<a
+href="#ref-cohen1988spa">Cohen 1988</a>)</span>.</p>
+<div id="example-1" class="section level2">
+<h2>Example 1</h2>
 <ul>
+<li>Aim = Sample size</li>
+<li>Expected r = .3</li>
+<li>Required power = .8</li>
+<li>Alpha = .05</li>
 </ul>
+<div id="r" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)</code></pre>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 84.07364
+##               r = 0.3
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = two.sided</code></pre>
 </div>
-<div id="mixed-model" class="section level2">
-<h2>Mixed model</h2>
+<div id="pamlj" class="section level3">
+<h3>PAMLj</h3>
+<p><img src="rosetta/pics/r.1.png" width="1112" /></p>
+<p>If we round the <code>pwr</code> package results, they are the
+same</p>
+</div>
+</div>
+<div id="example-2" class="section level2">
+<h2>Example 2</h2>
 <ul>
+<li>Aim = power</li>
+<li>Expected r = .4</li>
+<li>N = 52</li>
+<li>Alpha = .05</li>
 </ul>
+<div id="r-1" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>pwr::pwr.r.test(r=.4,n=52,sig.level=.05)</code></pre>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 52
+##               r = 0.4
+##       sig.level = 0.05
+##           power = 0.8485972
+##     alternative = two.sided</code></pre>
 </div>
-<div id="generalized-linear-model" class="section level2">
-<h2>Generalized Linear Model</h2>
+<div id="pamlj-1" class="section level3">
+<h3>PAMLj</h3>
+<p><img src="rosetta/pics/r.2.png" width="1384" /></p>
+<p>Results are the same.</p>
+</div>
+</div>
+<div id="example-3" class="section level2">
+<h2>Example 3</h2>
 <ul>
+<li>Aim = minimal effect size</li>
+<li>power = .95</li>
+<li>N = 52</li>
+<li>Alpha = .01</li>
 </ul>
+<div id="r-2" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>pwr::pwr.r.test(n=52,power=.95,sig.level=.01)</code></pre>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 52
+##               r = 0.5369775
+##       sig.level = 0.01
+##           power = 0.95
+##     alternative = two.sided</code></pre>
 </div>
-<div id="generalized-mixed-models" class="section level2">
-<h2>Generalized Mixed Models</h2>
+<div id="pamlj-2" class="section level3">
+<h3>PAMLj</h3>
+<p><img src="rosetta/pics/r.3.png" width="1108" /></p>
+<p>Results are the same.</p>
+</div>
+</div>
+<div id="example-4" class="section level2">
+<h2>Example 4</h2>
 <ul>
+<li>Aim = Sample size</li>
+<li>power = .95</li>
+<li>Expected r = .45</li>
+<li>Alpha = .01</li>
+<li>Tails = “two.sided”</li>
 </ul>
+<div id="r-3" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative=&quot;greater&quot;)</code></pre>
+<pre><code>## 
+##      approximate correlation power calculation (arctangh transformation) 
+## 
+##               n = 69.45436
+##               r = 0.45
+##       sig.level = 0.01
+##           power = 0.95
+##     alternative = greater</code></pre>
 </div>
-</div>
-<div id="rosetta-store-results-across-software" class="section level1">
-<h1>Rosetta store: results across software</h1>
-<p>Comparisons with other software: Here you can find comparisons of
-results obtained in jamovi GAMLj, and other software, usually jamovi
-(jmv), pure R, and SPSS. The pages are primarily meant to test
-convergence between GAMLj and well-established packages, but they can be
-useful also to check how to get equivalent results across different
-programs.</p>
-<ul>
-<li>
-<a href="rosetta_correlation.html">Correlation</a>
-</li>
-<li>
-<a href="rosetta_glm_peta.html">GLM</a>
-</li>
-</ul>
+<div id="pamlj-3" class="section level3">
+<h3>PAMLj</h3>
+<p><img src="rosetta/pics/r.4.png" width="1104" /></p>
+<p>Results are the same.</p>
 <h1>
 Comments?
 </h1>
@@ -422,6 +521,18 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+</div>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<p>’</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cohen1988spa" class="csl-entry">
+Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for
+the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.
+</div>
+</div>
 </div>
 
 

@@ -1,0 +1,132 @@
+---
+title: "GLM"
+topic: peta
+category: rosetta
+nickname: ros_correlation
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Power Analysis based on Partial Eta-Squared
+
+`r version("0.1.0")` 
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our
+results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
+
+
+# Correlation
+
+For Pearson and Spearman correlation, we can compare `r modulename()` with `R pwr package`. Consider, however, that for this task `r modulename()` employs `R pwr package` under the hood, so the results are obviously in line. Both packages use the  [inverse hyperbolic tangent](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh) transformation [@cohen1988spa].
+
+## Example 1
+
+*   Aim = Sample size 
+*   Expected r = .3
+*   Required power = .8
+*   Alpha = .05
+
+    
+### R
+
+```{r }
+
+pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)
+
+```
+
+### PAMLj
+
+`r pic("rosetta/pics/r.1.png")`
+
+If we round the `pwr` package results, they are the same
+
+## Example 2
+
+*   Aim = power
+*   Expected r = .4
+*   N = 52
+*   Alpha = .05
+
+    
+### R
+
+
+```{r }
+
+pwr::pwr.r.test(r=.4,n=52,sig.level=.05)
+
+```
+
+### PAMLj
+
+`r pic("rosetta/pics/r.2.png")`
+
+Results are the same.
+
+## Example 3
+
+*   Aim = minimal effect size
+*   power = .95
+*   N = 52
+*   Alpha = .01
+
+### R
+
+
+```{r }
+
+pwr::pwr.r.test(n=52,power=.95,sig.level=.01)
+
+```
+
+### PAMLj
+
+`r pic("rosetta/pics/r.3.png")`
+
+Results are the same.
+
+## Example 4
+
+*   Aim = Sample size
+*   power = .95
+*   Expected r = .45
+*   Alpha = .01
+*   Tails = "two.sided"
+
+### R
+
+
+```{r }
+
+pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative="greater")
+
+```
+
+### PAMLj
+
+`r pic("rosetta/pics/r.4.png")`
+
+Results are the same.
+
+
+
+`r issues()`
+
+# References
+'
