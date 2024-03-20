@@ -25,6 +25,7 @@ mcdocs_init()
 #  Power Analysis
 
 `r version("0.1.0")` 
+
 ## Validation
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. 
