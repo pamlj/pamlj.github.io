@@ -28,22 +28,22 @@ mcdocs_init()
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 
-We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), then we test some other design and analysis. In G*Power manual the aim of the analysis is to find the post hoc power, here we look for the minimum sample size given the power obtained in the G*Power manual. So, this is not a tutorial on how to conduct a power analysis (the required power is sometimes a non-sense), is a testing exercise to evaluate the correctness of the results.
+We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), then we test some other design and analysis. In GPower manual the aim of the analysis is to find the post hoc power, here we look for the minimum sample size given the power obtained in the GPower manual. So, this is not a tutorial on how to conduct a power analysis (the required power is sometimes a non-sense), is a testing exercise to evaluate the correctness of the results.
 
 # Multiple regression
 
 <i> Multiple Regression - omnibus (deviation of R 2 from zero), fixed model, p. 33 </i>
 
-Here we estimate the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. Five predictors means that the model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$.
+T he manual estimates the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. The resulting power is $1-\beta=.6735$ based on Five predictors me95 cases. So, starting from the given power, we should obtain a required sample size of 95. The model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$. 
 
 *   Aim = Sample Size
 *   Expected $R^2$    = .10
 *   $f^2$              = `r round(0.10/(1-.10),digits=4)`
 *   power           = .6735
-*   N = 95
 *   Effect DF       = 5
 *   Model  DF       = 5
 *   Alpha           = .05
+*   Correct results: N = 95
 
 ### G*Power
 
@@ -52,7 +52,7 @@ Here we estimate the post-hoc power for the F-test associated to the $R^2$ of a 
     
 ### R
 
-In R, we can use the `pwr.f2.test` command, just plugging in the effect size $f^2$ and the effect DF $u=5$. However, $N$ should be inserted as the residuals degrees of freedom, thus we have $v=N-u-1=95-5-1=89$
+In R, we can use the `pwr.f2.test` command, just plugging in the effect size $f^2$ and the effect DF $u=5$. However, $N$ should be computed as the residuals degrees of freedom $v$ plus the $u+1$, thus we have $N=v+u+1$
 
 ```{r }
 
@@ -64,7 +64,7 @@ N
 
 ### PAMLj
 
-In `r modulename()` we can use both `r opt("Partial Eta-Squared")` or `r opt("Eta-Squared")`, because in the case of the $R^2$ the two effect size are identical. For simplicity, we use `r opt("Partial Eta-Squared")`
+In `r modulename()` we can use both `r opt("Partial Eta-Squared")` or `r opt("Eta-Squared")`, because in the case of the $R^2$ the two effect size are identical. For simplicity, we use `r opt("Partial Eta-Squared")`.
 
 `r pic("rosetta/pics/glm.n.1.png")`
 
@@ -77,7 +77,7 @@ Had we used `r opt("Eta-Squared")`, we simply put the $R^2$ to test both in the 
 
 <i> F test: Multiple Regression - special (increase of R2), fixed model , p. 37 </i>
 
-The first example examines a linear model (regression) with $R_f^2=.30$ with 9 predictors and compare it to a nested model with $R_n^2=.25$ with 5 predictors. Basically, the test is aimed at testing the variance explained by 4 predictors present in the full model but not the nested model. The variance explained by the 4 predictors is therefore $R_f^2-R_n^2=.30-.25=.05$.  This is also called $\Delta R^2$, but more formally is a $\eta^2$ with 4 degrees of freedom evaluated in a model with 9 degrees of freedom.
+The example examines a linear model (regression) with $R_f^2=.30$ with 9 predictors and compare it to a nested model with $R_n^2=.25$ with 5 predictors. Basically, the test is aimed at testing the variance explained by 4 predictors present in the full model but not the nested model. The variance explained by the 4 predictors is therefore $R_f^2-R_n^2=.30-.25=.05$.  This is also called $\Delta R^2$, but more formally is a $\eta^2$ with 4 degrees of freedom evaluated in a model with 9 degrees of freedom. In the GPower manual the resulting power is .241296 based on a sample of 90 cases. So, we should obtain 90 as the required sample size.
 
 The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=(R_f^2-R_n^2)/(1-R_f^2)$.
 
@@ -90,6 +90,7 @@ The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $
 *   Effect DF       = 4
 *   Model  DF       = 9
 *   Alpha           = .01
+*   Correct results: N = 90
 
 ### G*Power
 
@@ -123,7 +124,7 @@ Results are perfectly in line with other software.
 
 <i> F test: Fixed effects ANOVA - special, main effects and interaction p. 27</i>
 
-Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the sample size required to achieve a power of $.475627$ of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$. The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters. The resulting sample size should be $N = 90$.
+Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the sample size required to achieve a power of $.475627$ of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$. The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters. The resulting sample size should be $N = 108$.
 
 
 *   Aim = Sample Size
@@ -133,10 +134,11 @@ Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 lev
 *   Model  DF       = 35
 *   Power           =  .475627
 *   Alpha           = .01
+*   Correct results: N = 108
 
 ### G*Power
 
-First notice that for this problem, G*Power offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size . $f$ is simply the square root of $f^2$ so it can be computed from the partial Eta-squared as  $f=\sqrt{p\eta^2/(1-p\eta^2)}$ . Based on the G*Power example, the resulting sample size should be N=108.
+First notice that for this problem, GPower offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size . $f$ is simply the square root of $f^2$ so it can be computed from the partial Eta-squared as  $f=\sqrt{p\eta^2/(1-p\eta^2)}$ .
 
 Plugging in the parameters we obtain:
 
@@ -145,26 +147,24 @@ Plugging in the parameters we obtain:
 
 ### R
 
-As we have seen before, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an estimation of the power increasing the effect size $f^2$ such as to match the correct NCP is $\lambda=Nf^2$. The effect DF $u=4$ and the model DF are $m=35$, yielding $v=N-m-1=108-35-1=72$
+As we have seen in `r link_pages(nickname="ros_glm_posthoc")`, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an approximated estimation of the sample size by computing the N employing the whole  model DF $m=35$, yielding $v=N+m+1$
 
 ```{r }
 f<-0.2450722
 u<-4
 m<-35
 power=.475627
-#N=108
-#v<-N-m-1
-#f2<-f^2*N/(u+v+1)
 (res<-pwr::pwr.f2.test(f2=f2,u=4, power=power,sig.level=.05))
 N<-round(res$v+m+1)
 N
+
 ```
 
-We obtained the same results as in G*Power
+As expected, the required sample size obtained in `pwr.f2.test` is larger than the one obtained in GPower.
 
 ### PAMLj
 
-We plug in the partial Eta-squared and the required parameters, and we obtain the same results as before.
+We plug in the partial Eta-squared and the required parameters, and we obtain N=108, as in GPower.
 
 `r pic("rosetta/pics/glm.n.3.png")`
 

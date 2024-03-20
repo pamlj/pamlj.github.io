@@ -103,16 +103,27 @@ pwr::pwr.f2.test(f2=f2,u=4, v=80,sig.level=.01)
 
 ```
 
-Notice that the results (_power_) are similar, but not as close as before. This is because and G*Power and `pwr:pwr.f2.test()` use two different computations of the F-distribution _non centrality parameter $\lambda"_. G*Power uses $\lambda=f^2 \cdot N$, whereas  `pwr:pwr.f2.test()` uses  $\lambda=f^2 \cdot (u+v+1)$.  `r modulename()` allows to choose which one to use.
+Notice that the results (_power_) are similar, but not as close as before. This is because and G*Power and `pwr:pwr.f2.test()` use two different computations of the F-distribution _non centrality parameter $\lambda"_. G*Power uses $\lambda=f^2 \cdot N$, whereas  `pwr:pwr.f2.test()` uses  $\lambda=f^2 \cdot (u+v+1)$.  `r modulename()` allows to choose which one to use. To obtain the correct power one should adjust the effect size such that the non-centrality parameter will be correct. One can do this:
 
+```{r }
+N<-90
+u<-4
+v=80
+f2=.05/(1-.30)
+f2adj<-f2*N/(v+u+1)
+pwr::pwr.f2.test(f2=f2adj,u=u, v=v,sig.level=.01)
+
+```
+
+The power is now identical to the one estimated in GPower.
 
 ### PAMLj
 
-By default,  `r modulename()` employs the `pwr.f2.test` _non centrality parameter_, yielding the same results of the R module.
+By default,  `r modulename()` employs the GPower _non centrality parameter_, yielding the same results as GPower.
 
 `r pic("rosetta/pics/glm.2.1.png")`
 
-BY selecting the option `r opt("G*Power NCP")`, we obtain the same results as in G*Power.
+BY de-selecting the option `r opt("G*Power NCP")`, we obtain the same results as in R without adjustment.
 
 `r pic("rosetta/pics/glm.2.2.png")`
 
@@ -121,7 +132,7 @@ BY selecting the option `r opt("G*Power NCP")`, we obtain the same results as in
 
 <i> F test: Fixed effects ANOVA - special, main effects and interaction p. 27</i>
 
-Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the power of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$ (here the value is slightly different than in G*Power manual, but this value honour the f value used in the manual). The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters.
+Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the power of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$ (here the value is slightly different than in GPower manual, but this value honors the f value used in the manual). The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters.
 
 *   Aim = power
 *   $p\eta^2$   = 0.05665751
@@ -143,7 +154,7 @@ Plugging in the parameters we obtain:
 
 ### R
 
-As we have seen before, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an estimation of the power increasing the effect size $f^2$ such as to match the correct NCP is $\lambda=Nf^2$. The effect DF $u=4$ and the model DF are $m=35$, yielding $v=N-m-1=108-35-1=72$
+As we have seen before, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an estimation of the power by adjusting the effect size $f^2$ such as to match the correct NCP will be $\lambda=Nf^2$. The effect DF $u=4$ and the model DF are $m=35$, yielding $v=N-m-1=108-35-1=72$
 
 ```{r }
 f<-0.2450722

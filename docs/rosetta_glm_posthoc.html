@@ -499,17 +499,34 @@ F-distribution <em>non centrality parameter $“</em>. G</em>Power uses
 <span class="math inline">\(\lambda=f^2 \cdot N\)</span>, whereas
 <code>pwr:pwr.f2.test()</code> uses <span
 class="math inline">\(\lambda=f^2 \cdot (u+v+1)\)</span>. <span
-class="modulename">PAMLj</span> allows to choose which one to use.</p>
+class="modulename">PAMLj</span> allows to choose which one to use. To
+obtain the correct power one should adjust the effect size such that the
+non-centrality parameter will be correct. One can do this:</p>
+<pre class="r"><code>N&lt;-90
+u&lt;-4
+v=80
+f2=.05/(1-.30)
+f2adj&lt;-f2*N/(v+u+1)
+pwr::pwr.f2.test(f2=f2adj,u=u, v=v,sig.level=.01)</code></pre>
+<pre><code>## 
+##      Multiple regression power calculation 
+## 
+##               u = 4
+##               v = 80
+##              f2 = 0.07563025
+##       sig.level = 0.01
+##           power = 0.2412965</code></pre>
+<p>The power is now identical to the one estimated in GPower.</p>
 </div>
 <div id="pamlj-1" class="section level3">
 <h3>PAMLj</h3>
-<p>By default, <span class="modulename">PAMLj</span> employs the
-<code>pwr.f2.test</code> <em>non centrality parameter</em>, yielding the
-same results of the R module.</p>
-<p><img src="rosetta/pics/glm.2.1.png" width="1383" /></p>
-<p>BY selecting the option <span class="option">G<em>Power NCP</span>,
-we obtain the same results as in G</em>Power.</p>
-<p><img src="rosetta/pics/glm.2.2.png" width="1345" /></p>
+<p>By default, <span class="modulename">PAMLj</span> employs the GPower
+<em>non centrality parameter</em>, yielding the same results as
+GPower.</p>
+<p><img src="rosetta/pics/glm.2.1.png" width="1220" /></p>
+<p>BY de-selecting the option <span class="option">G*Power NCP</span>,
+we obtain the same results as in R without adjustment.</p>
+<p><img src="rosetta/pics/glm.2.2.png" width="1253" /></p>
 </div>
 </div>
 <div id="anova" class="section level1">
@@ -526,8 +543,8 @@ freedom, and <span class="math inline">\(C\)</span> having 3 DF. The
 researcher is interested in the power of the test associated with the
 interaction <span class="math inline">\(A*B\)</span>, with a partial
 Eta-squared <span class="math inline">\(p\eta^2=0.05665751\)</span>
-(here the value is slightly different than in G*Power manual, but this
-value honour the f value used in the manual). The interaction will have
+(here the value is slightly different than in GPower manual, but this
+value honors the f value used in the manual). The interaction will have
 <span class="math inline">\(DF=2*2=4\)</span> degrees of freedom, and
 the whole model will have <span class="math inline">\(DF=35\)</span>,
 the number of groups minus one. Here are the parameters.</p>
@@ -557,10 +574,10 @@ class="math inline">\(f=\sqrt{p\eta^2/(1-p\eta^2)}\)</span> .</p>
 <p>As we have seen before, <code>pwr.f2.test</code> command will
 underestimate the power due to the fact that the non centrality
 parameter is smaller than the one used in G*Power. Nonetheless, we can
-get an estimation of the power increasing the effect size <span
-class="math inline">\(f^2\)</span> such as to match the correct NCP is
-<span class="math inline">\(\lambda=Nf^2\)</span>. The effect DF <span
-class="math inline">\(u=4\)</span> and the model DF are <span
+get an estimation of the power by adjusting the effect size <span
+class="math inline">\(f^2\)</span> such as to match the correct NCP will
+be <span class="math inline">\(\lambda=Nf^2\)</span>. The effect DF
+<span class="math inline">\(u=4\)</span> and the model DF are <span
 class="math inline">\(m=35\)</span>, yielding <span
 class="math inline">\(v=N-m-1=108-35-1=72\)</span></p>
 <pre class="r"><code>f&lt;-0.2450722
