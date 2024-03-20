@@ -42,7 +42,19 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 * Eta-squared and $R^2$ based analysis
 * Standardized coefficients based analysis
 
-More informations can be found at [PAMLj page](https://pamlj.github.io/)
+
+## Validation
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. 
+
+`r list_pages(category="rosetta")`
+
+## Consistency
+
+Here we check some of the options of the module to demonstrate that they hopefully work (or do not). 
+
+`r list_pages(category="checks")`
+
 
 # Install in jamovi
 
