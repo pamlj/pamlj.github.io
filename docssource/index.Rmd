@@ -1,35 +1,90 @@
 ---
-title: "PAMLj: Power Analysis for Linear Models in Jamovi"
+title: "PAMLj"
+topic: pamlj
+category: help
+nickname: index
 output: 
   html_document:
-    includes:
+     includes:
          in_header: ganalytics.txt
-
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
 ---
-  
+
 
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
+```
+
+# Power analysis for linear models in jamovi
+
+
+Version 0.1.*
+
+<center>
+<img width="300" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
+</center>
+<br>
+
+Estimation of  power parameters (required sample size, posthoc power, minimal detectable effect size and required alpha) for  General Linear Models.
+
+
+* Correlation
+* Regression
+* ANOVA
+* Partial eta-squared based analysis
+* Eta-squared and $R^2$ based analysis
+* Standardized coefficients based analysis
+
+More informations can be found at [PAMLj page](https://pamlj.github.io/)
+
+# Install in jamovi
+
+Please install [jamovi](https://www.jamovi.org/download.html) and run it. Select the jamovi modules library and install PAMLj from there
+
+
+## From GitHub
+
+In your R script (or Rstudio) simply issue 
 
 ```
-  
-`r version("0.1.0")`
+library(jmvtools)
+devtools::install_github("pamlj/pamlj")
 
-This documentation it is being updated toward `r modulename()` version 0.1.0 and above.
+```
+
+## From source
 
 
-# Release notes
+You will first need to download [jamovi](https://www.jamovi.org/download.html). 
 
-Please check out the  [Release notes](release_notes.html). 
+You can clone this repository and compile the module within R with 
 
-# Quality control
+```
+library(jmvtools)
 
-Please check the [rosetta store](rosetta.html) for alignment with other software results and possible discrepancies.
+jmvtools::install()
 
-# Specs
+```
 
-`r list_pages(category="details")`
 
-  
+# Programmatic name
+
+```
+paste(paste(LETTERS[c(16,1,13,12)],collapse =""),paste(letters[10]),sep="")
+
+```
+
+
+`r include_details("glm")`
+
+
 `r issues()`
+
+'
