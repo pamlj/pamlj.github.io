@@ -1,5 +1,5 @@
 ---
-title: "General Linear Model"
+title: "GLM: posthoc power"
 topic: posthoc
 category: rosetta
 nickname: ros_glm_posthoc

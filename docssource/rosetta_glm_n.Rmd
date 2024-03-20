@@ -1,5 +1,5 @@
 ---
-title: "General Linear Model"
+title: "GLM: required sample size"
 topic: samplesize
 category: rosetta
 nickname: ros_glm_n
@@ -22,7 +22,7 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-# Power Analysis: Minimum Sample Size 
+# Power Analysis for the General Linear Model
 
 `r version("0.1.0")` 
 
