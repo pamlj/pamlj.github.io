@@ -182,5 +182,4 @@ We plug in the partial Eta-squared and the required parameters, and we obtain th
 # Back to `r link_pages(nickname="rosetta")`
 
 
-# References
 '
