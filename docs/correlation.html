@@ -69,6 +69,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 <link rel="stylesheet" href="helpstyle.css" type="text/css" />
@@ -366,6 +388,69 @@ div.tocify {
 <p><strong>Correlation</strong> Power Analysis</p>
 <p><span class="version"> <span class="versiontitle"> PAMLj version ≥
 </span> 0.1.0 </span></p>
+<p><img src="pics/correlation/ui.png" width="1346" /></p>
+<div id="correlation" class="section level1">
+<h1>Correlation</h1>
+<p><code>Correlation</code> allows computing power parameters for
+testing the Pearson or Spearman correltion coefficient. The first thing
+to to is to decide the aim of the analysis. Some text in
+<code>Info</code> results field explains the different aims.</p>
+<p><img src="commons/pics/aims.1.png" width="589" /></p>
+<p>For correlation analysis, it also suggests the following:</p>
+<p><img src="pics/correlation/aims.2.png" width="599" /></p>
+<p>We start with the first aim,</p>
+<div id="n-required-sample-size" class="section level2">
+<h2>N: Required sample size</h2>
+<p>When we want to compute the required sample size for a planned
+research, we need to anticipate, from pilots, meta-analysis, etc., but
+see <span class="citation">(<a href="#ref-albers2017biased">Albers and
+Lakens 2017</a>)</span>, an effect size. In case of correlation, not
+surprising, the effect size is the Pearson correlation.</p>
+<p>Let assume we want to estimate the <strong>required sample size
+(N)</strong> for a planned research for which we expect the correlation
+between our target variables to be .20, and we want to achieve a power
+of .90 with a two-tailed test, evaluated at <span
+class="math inline">\(\alpha=.05\)</span>. In <span
+class="modulename">PAMLj</span> we simply plug in these parameters.</p>
+<p><img src="pics/correlation/r.1.png" width="990" /></p>
+<p>From the result table we can see that the required N is 258, so we
+need 258 case to achieve a power of .90 given an expected correlation of
+.2.</p>
+<p>The second table we get is the `Power by Effect” table, which inform
+us on the different power levels associated with different possible
+effect sizes.</p>
+<p><img src="pics/correlation/r.2.png" width="472" /></p>
+<p>Based on the estimate <span class="math inline">\(N=258\)</span>, we
+should expected a very low power (<span
+class="math inline">\(1-\beta&lt;.5\)</span>) were the actual population
+effect size less then .122. A power of <span
+class="math inline">\(1-\beta&lt;\)</span> between .5 and .80 should be
+expected were our effect size be between .122 and .173. A power between
+.80 and .95 is to be expected if our population effect size is between
+.173 and .222, whereas a power greater than .95 can be expected is the
+population correlation is larger than .222.</p>
+</div>
+<div id="sensitivity-analysis" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p>Sensitivity analysis means exploring different scenarios. <span
+class="option">Power contour plot</span> visualize the power from green
+(low) to yellow (high) as a function of possible sample size (x-axis)
+and effect (correlation) size.</p>
+<p><img src="pics/correlation/r.3.png" width="547" /></p>
+<p>In the power contour plot, we see the solid line representing the
+combinations of Sample Size (N) and effect size that will yield the
+required power (in the example .90). So we know how the power will
+change had we underestimated the effect size (go down in y-axis) or
+underestimated the sample size (go left on the x-axis).</p>
+<p>The second plot we can ask is the <span class="option">Power curve by
+N</span>. It portraints how the power (y-axis) chances as one increases
+the sample size (x-axis).</p>
+<p><img src="pics/correlation/r.4.png" width="465" /></p>
+<p>In this example we can see that if we were not able to collect more
+than 150 case, our expected power will not be more than .70 (to be
+optimistic).</p>
+</div>
+</div>
 <div id="examples" class="section level1">
 <h1>Examples</h1>
 <p>Some worked out examples of the analyses carried out with jamovi
@@ -388,6 +473,14 @@ or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 <p>’</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-albers2017biased" class="csl-entry">
+Albers, C, and D Lakens. 2017. <span>“Biased Sample Size Estimates in
+a-Priori Power Analysis Due to the Choice of Effect Size Index and
+Follow-up Bias.”</span> <em>Journal of Experimental Social
+Psychology</em>.
+</div>
+</div>
 </div>
 
 

@@ -28,7 +28,7 @@ mcdocs_init()
 Version 0.1.*
 
 <center>
-<img width="300" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
+<img width="800" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
 </center>
 <br>
 
