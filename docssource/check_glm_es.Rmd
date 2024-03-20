@@ -1,0 +1,82 @@
+---
+title: "GLM options"
+topic: glm
+category: checks
+nickname: check_es
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Consistency checks
+
+`r version("0.1.0")` 
+
+Here we check that the options provided by `r modulename()` to help constructing the power analysis yield correct results.
+
+## Adjusted effect size
+
+When power analysis is based observed effect sizes taken from previous research or pilot studies, it is always a good idea to use an adjusted version of the indices. This because the indices of effect size based on variances are almost always up-ward biased [@richardson2011eta]. For the Partial Eta-squared there are two adjustments that can be carried out, yielding the Partial Omega-Squared and the Partial Epsilon-squared. The two are very similar, so any of the two would work fine. 
+
+In order to adjust the observed Partial Eta-squared in `r modulename()`, one needs the actual value, the effect degrees of freedom and the residual degrees of freedom of the model from which the index is taken. This information is almost always present in a published paper and is always present in software results (if the info comes from a pilot study). Thus one can plug this info into the fields in the `r opt("Option")` , `r opt("Convert effect size indices")`.
+
+
+`r pic("rosetta/checks/esadjust.1.png")`
+
+To help us out in this exercise, let's consider he `Tooth Growth` dataset from the `r jamovi` data library. The data allows for a `2 (dose) X 3 (supp)` ANOVA that can be carried out with the `r `jamovi` module [GAMLj3](https://gamlj.github.io/). The effect size indices of the effects are presented in the ouput table. 
+
+`r pic("rosetta/checks/esadjust.2.png")`
+
+We now assume that the researcher does not have access to the full set of results (say the Partial Eta-squared is taken from a paper), but only to the reported effect of the interaction, with F(2,54)=4.107, p.=.002, $p\eta^2=.132$.  The researcher prefers to use an adjusted version of the index in the power analysis, but the full table of results is not available, only the F-test info is as just reported in the text.
+
+To use an adjusted version, first we define the correct _df_ for the effect and for the model in the main panel.
+
+`r pic("rosetta/checks/esadjust.3.png")`
+
+Then we fill in the `r opt("Observed Partial Eta-squared")` ($p\eta^2=.132$) and `r opt("Observed residuals degrees of freedom")` ($df=54$) fields with the data from our paper.
+
+`r pic("rosetta/checks/esadjust.4.png")`
+
+It is clear that the module is computing the right adjusted coefficients. At this point, we pick the adjusted index that we like by selecting it in `r opt("Use as effectr size")` (here $\omega$), and it will be automagically transferred in the main panel `r opt("Expected partial Eta-squared")`.
+
+`r pic("rosetta/checks/esadjust.5.png")`
+
+Out of curiosity, if we were looking for a minimum sample size to achieve a power of at least .90, with the original (un-adjusted) effect size we would obtain $N=86$. With the adjusted version ($\omega=.094$) we would obtain $N=125$, which is `r round(125/86,digit=3)*100`% larger than the other. To be more concrete, because it is very likely that our population effect size being closer to  .094 than to .132, had we used .132 and so collected data for a sample of $N=86$, our actual power will be $1-\beta=.745$, way lower than the .90 we planned.
+
+`r pic("rosetta/checks/esadjust.6.png")`
+
+
+## GPower Partial effect size indices
+
+[GPower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) (a leading software for power analysis)
+suggest to use a different adjustment. The adjustment yields values that are usually in beteween the observed effect size and the population effect size. `r modulename()` provides the possibility to use the GPower adjustment, by simply selecting `r opt("G*Power")` in the `r opt("Use as effect size ")` list. 
+
+`r pic("rosetta/checks/esadjust.6.png")`
+
+For the user convenience, the option `r opt("f2")` is there to allow comparing results from GPower (which uses $f^2$ as an effect size) and `r modulename()` without having the user to transform the effect size indices back and forth.
+
+
+
+# Navigate
+
+Back to `r link_pages(nickname="rosetta")`
+
+
+`r issues()`
+
+# References
+'

@@ -1,0 +1,67 @@
+---
+title: "GLM options"
+topic: glm
+category: checks
+nickname: check_df
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Consistency checks
+
+`r version("0.1.0")` 
+
+Here we check that the options provided by `r modulename()` to help constructing the power analysis yield correct results.
+
+# Model definition
+
+GLM power analysis requires the user to input the degrees of freedom ( _df_ ) of the effect associated with the test being evaluated and the model that produces that test. Whereas the effect _df_ are usually simple to anticipate, the whole model _df_ may be more challenging. For this reason, `r modulename()` offers some options to re-construct the model _df_ based on the research design in the panel `r opt("Model definition")`. 
+
+Now we check if the options work correctly by considering an hypothetical ANOVA design $A (3) \times B (3) \times C (4)$ in which we want to estimate power for $A*C$ interaction. Knowing the design, one can compute the effect _df_ as $df=(3-1)(4-1)=6$. For the model _df_, one can observe that there are $K=3*3*4=36$ groups in the design, so the model _df_ should be $df=K-1=35$.
+
+Let's check what happens if one asks the module to reconstruct the model _df_.  In `r opt("Model definition")` we can declare that we have 0 covariates (continuous independent variables) and 3 factors, specifying their levels. We also declare that the model will involve all possible interactions among the factors (2-way, 3-way)
+
+`r pic("rosetta/checks/modeldef.1.png")`
+
+As soon as we define the factors levels, the `r opt("Model degrees of freedom")` field gets updated to the correct number.
+
+`r pic("rosetta/checks/modeldef.2.png")`
+
+$df=35$ as expected.
+
+
+Let's now consider a more complex example. Assume now that we want to estimate the model _df_ in the design described above, knowing that there will be, together with the three factors just defined, also two covariates, and that we plan to estimate the two-way interactions between the covariates and the factors, but not interaction between covariates no higher (not more than 2) order interactions involving covariates. Analytically, we have $df_1=35$ for the factors effects (main effects and interactions), plus $df_2=2$ for the covariates main effects, plus $df_3=(2+2+3)*2=14$  for the two-way interactions factor*covariate. Indeed, each factor*covariate interactions has _df_ equal to the factor_df_, but there are two covariates, so we need to multiply by 2. The total must be $df=df_1+df_2+df_3=35+2+14=51$. Let's check the module results.
+
+`r pic("rosetta/checks/modeldef.3.png")`
+
+yielding 51 as expected.
+
+`r pic("rosetta/checks/modeldef.4.png")`
+
+
+
+
+# Navigate
+
+Back to `r link_pages(nickname="rosetta")`
+
+
+`r issues()`
+
+# References
+'

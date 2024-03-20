@@ -25,10 +25,18 @@ mcdocs_init()
 #  Power Analysis
 
 `r version("0.1.0")` 
+## Validation
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. 
 
 `r list_pages(category="rosetta")`
+
+## Consistency
+
+Here we check some of the options of the module to demonstrate that they hopefully work (or do not). 
+
+`r list_pages(category="checks")`
+
 
 `r issues()`
 

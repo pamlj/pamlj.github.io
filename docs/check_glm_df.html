@@ -11,7 +11,7 @@
 
 
 
-<title>PAMLj: rosetta</title>
+<title>GLM options</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -358,40 +358,75 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">PAMLj: rosetta</h1>
+<h1 class="title toc-ignore">GLM options</h1>
 
 </div>
 
 
-<div id="power-analysis" class="section level1">
-<h1>Power Analysis</h1>
+<div id="consistency-checks" class="section level1">
+<h1>Consistency checks</h1>
 <p><span class="version"> <span class="versiontitle"> PAMLj version ≥
-</span> 0.1.0 </span> ## Validation</p>
-<p>Here we compare the results of <span class="modulename">PAMLj</span>
-with other software that performs power analysis.</p>
-<ul>
-<li>
-<a href="rosetta_correlation.html">Correlation</a>
-</li>
-<li>
-<a href="rosetta_glm_n.html">GLM: required sample size</a>
-</li>
-<li>
-<a href="rosetta_glm_posthoc.html">GLM: posthoc power</a>
-</li>
-</ul>
-<div id="consistency" class="section level2">
-<h2>Consistency</h2>
-<p>Here we check some of the options of the module to demonstrate that
-they hopefully work (or do not).</p>
-<ul>
-<li>
-<a href="check_glm_df.html">GLM options</a>
-</li>
-<li>
-<a href="check_glm_es.html">GLM options</a>
-</li>
-</ul>
+</span> 0.1.0 </span></p>
+<p>Here we check that the options provided by <span
+class="modulename">PAMLj</span> to help constructing the power analysis
+yield correct results.</p>
+</div>
+<div id="model-definition" class="section level1">
+<h1>Model definition</h1>
+<p>GLM power analysis requires the user to input the degrees of freedom
+( <em>df</em> ) of the effect associated with the test being evaluated
+and the model that produces that test. Whereas the effect <em>df</em>
+are usually simple to anticipate, the whole model <em>df</em> may be
+more challenging. For this reason, <span class="modulename">PAMLj</span>
+offers some options to re-construct the model <em>df</em> based on the
+research design in the panel <span class="option">Model
+definition</span>.</p>
+<p>Now we check if the options work correctly by considering an
+hypothetical ANOVA design <span class="math inline">\(A (3) \times B (3)
+\times C (4)\)</span> in which we want to estimate power for <span
+class="math inline">\(A*C\)</span> interaction. Knowing the design, one
+can compute the effect <em>df</em> as <span
+class="math inline">\(df=(3-1)(4-1)=6\)</span>. For the model
+<em>df</em>, one can observe that there are <span
+class="math inline">\(K=3*3*4=36\)</span> groups in the design, so the
+model <em>df</em> should be <span
+class="math inline">\(df=K-1=35\)</span>.</p>
+<p>Let’s check what happens if one asks the module to reconstruct the
+model <em>df</em>. In <span class="option">Model definition</span> we
+can declare that we have 0 covariates (continuous independent variables)
+and 3 factors, specifying their levels. We also declare that the model
+will involve all possible interactions among the factors (2-way,
+3-way)</p>
+<p><img src="rosetta/checks/modeldef.1.png" width="625" /></p>
+<p>As soon as we define the factors levels, the <span
+class="option">Model degrees of freedom</span> field gets updated to the
+correct number.</p>
+<p><img src="rosetta/checks/modeldef.2.png" width="476" /></p>
+<p><span class="math inline">\(df=35\)</span> as expected.</p>
+<p>Let’s now consider a more complex example. Assume now that we want to
+estimate the model <em>df</em> in the design described above, knowing
+that there will be, together with the three factors just defined, also
+two covariates, and that we plan to estimate the two-way interactions
+between the covariates and the factors, but not interaction between
+covariates no higher (not more than 2) order interactions involving
+covariates. Analytically, we have <span
+class="math inline">\(df_1=35\)</span> for the factors effects (main
+effects and interactions), plus <span
+class="math inline">\(df_2=2\)</span> for the covariates main effects,
+plus <span class="math inline">\(df_3=(2+2+3)*2=14\)</span> for the
+two-way interactions factor<em>covariate. Indeed, each
+factor</em>covariate interactions has <em>df</em> equal to the
+factor_df_, but there are two covariates, so we need to multiply by 2.
+The total must be <span
+class="math inline">\(df=df_1+df_2+df_3=35+2+14=51\)</span>. Let’s check
+the module results.</p>
+<p><img src="rosetta/checks/modeldef.3.png" width="626" /></p>
+<p>yielding 51 as expected.</p>
+<p><img src="rosetta/checks/modeldef.4.png" width="474" /></p>
+</div>
+<div id="navigate" class="section level1">
+<h1>Navigate</h1>
+<p>Back to <a href="rosetta.html">PAMLj: rosetta</a></p>
 <h1>
 Comments?
 </h1>
@@ -402,7 +437,6 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
-</div>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
