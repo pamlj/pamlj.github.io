@@ -1,5 +1,5 @@
 ---
-title: "GLM options"
+title: "GLM options: converting effect size"
 topic: glm
 category: checks
 nickname: check_es

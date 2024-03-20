@@ -1,5 +1,5 @@
 ---
-title: "GLM options"
+title: "GLM options: computing degrees of freedom"
 topic: glm
 category: checks
 nickname: check_df
