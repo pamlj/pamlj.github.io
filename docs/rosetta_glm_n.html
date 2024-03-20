@@ -11,7 +11,7 @@
 
 
 
-<title>GLM</title>
+<title>General Linear Model</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -69,28 +69,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-/* for pandoc --citeproc since 2.11 */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 <link rel="stylesheet" href="helpstyle.css" type="text/css" />
@@ -380,14 +358,13 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">GLM</h1>
+<h1 class="title toc-ignore">General Linear Model</h1>
 
 </div>
 
 
-<div id="power-analysis-based-on-partial-eta-squared"
-class="section level1">
-<h1>Power Analysis based on Partial Eta-Squared</h1>
+<div id="power-analysis-minimum-sample-size" class="section level1">
+<h1>Power Analysis: Minimum Sample Size</h1>
 <p><span class="version"> <span class="versiontitle"> PAMLj version ≥
 </span> 0.1.0 </span></p>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
@@ -396,121 +373,221 @@ compare our results with <a
 href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
 package</a> and <a
 href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.</p>
+<p>We use a few examples from <a
+href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power
+manual</a>, then we test some other design and analysis. In G<em>Power
+manual the aim of the analysis is to find the post hoc power, here we
+look for the minimum sample size given the power obtained in the
+G</em>Power manual. So, this is not a tutorial on how to conduct a power
+analysis (the required power is sometimes a non-sense), is a testing
+exercise to evaluate the correctness of the results.</p>
 </div>
-<div id="correlation" class="section level1">
-<h1>Correlation</h1>
-<p>For Pearson and Spearman correlation, we can compare <span
-class="modulename">PAMLj</span> with <code>R pwr package</code>.
-Consider, however, that for this task <span
-class="modulename">PAMLj</span> employs <code>R pwr package</code> under
-the hood, so the results are obviously in line. Both packages use the <a
-href="https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh">inverse
-hyperbolic tangent</a> transformation <span class="citation">(<a
-href="#ref-cohen1988spa">Cohen 1988</a>)</span>.</p>
-<div id="example-1" class="section level2">
-<h2>Example 1</h2>
+<div id="multiple-regression" class="section level1">
+<h1>Multiple regression</h1>
+<p><i> Multiple Regression - omnibus (deviation of R 2 from zero), fixed
+model, p. 33 </i></p>
+<p>Here we estimate the post-hoc power for the F-test associated to the
+<span class="math inline">\(R^2\)</span> of a model with 5 predictors.
+Five predictors means that the model degrees of freedom are 5. Because
+the test is on the whole model <span class="math inline">\(R^2\)</span>,
+also the the effect DF are 5. The <span
+class="math inline">\(R^2\)</span> is transformed into the <span
+class="math inline">\(f^2\)</span> effect size with the simple formula
+<span class="math inline">\(f^2=R^2/(1-R^2)\)</span>.</p>
 <ul>
-<li>Aim = Sample size</li>
-<li>Expected r = .3</li>
-<li>Required power = .8</li>
+<li>Aim = Sample Size</li>
+<li>Expected <span class="math inline">\(R^2\)</span> = .10</li>
+<li><span class="math inline">\(f^2\)</span> = 0.1111</li>
+<li>power = .6735</li>
+<li>N = 95</li>
+<li>Effect DF = 5</li>
+<li>Model DF = 5</li>
 <li>Alpha = .05</li>
 </ul>
+<div id="gpower" class="section level3">
+<h3>G*Power</h3>
+<p><img src="rosetta/pics/gpower.n.glm.1.png" width="688" /></p>
+</div>
 <div id="r" class="section level3">
 <h3>R</h3>
-<pre class="r"><code>pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)</code></pre>
+<p>In R, we can use the <code>pwr.f2.test</code> command, just plugging
+in the effect size <span class="math inline">\(f^2\)</span> and the
+effect DF <span class="math inline">\(u=5\)</span>. However, <span
+class="math inline">\(N\)</span> should be inserted as the residuals
+degrees of freedom, thus we have <span
+class="math inline">\(v=N-u-1=95-5-1=89\)</span></p>
+<pre class="r"><code>(res&lt;-pwr::pwr.f2.test(f2=.1111,u=5, power=.6735,sig.level=.05))</code></pre>
 <pre><code>## 
-##      approximate correlation power calculation (arctangh transformation) 
+##      Multiple regression power calculation 
 ## 
-##               n = 84.07364
-##               r = 0.3
+##               u = 5
+##               v = 88.99396
+##              f2 = 0.1111
 ##       sig.level = 0.05
-##           power = 0.8
-##     alternative = two.sided</code></pre>
+##           power = 0.6735</code></pre>
+<pre class="r"><code>N&lt;-round((res$v+res$u+1))
+N</code></pre>
+<pre><code>## [1] 95</code></pre>
 </div>
 <div id="pamlj" class="section level3">
 <h3>PAMLj</h3>
-<p><img src="rosetta/pics/r.1.png" width="1112" /></p>
-<p>If we round the <code>pwr</code> package results, they are the
-same</p>
+<p>In <span class="modulename">PAMLj</span> we can use both <span
+class="option">Partial Eta-Squared</span> or <span
+class="option">Eta-Squared</span>, because in the case of the <span
+class="math inline">\(R^2\)</span> the two effect size are identical.
+For simplicity, we use <span class="option">Partial
+Eta-Squared</span></p>
+<p><img src="rosetta/pics/glm.n.1.png" width="1368" /></p>
+<p>Had we used <span class="option">Eta-Squared</span>, we simply put
+the <span class="math inline">\(R^2\)</span> to test both in the effect
+size and the <span class="math inline">\(R^2\)</span> field, obtaining
+the same results.</p>
+<p><img src="rosetta/pics/glm.n.1.2.png" width="1275" /></p>
 </div>
 </div>
-<div id="example-2" class="section level2">
-<h2>Example 2</h2>
+<div id="increase-in-r2" class="section level1">
+<h1>Increase in <span class="math inline">\(R^2\)</span></h1>
+<p><i> F test: Multiple Regression - special (increase of R2), fixed
+model , p. 37 </i></p>
+<p>The first example examines a linear model (regression) with <span
+class="math inline">\(R_f^2=.30\)</span> with 9 predictors and compare
+it to a nested model with <span class="math inline">\(R_n^2=.25\)</span>
+with 5 predictors. Basically, the test is aimed at testing the variance
+explained by 4 predictors present in the full model but not the nested
+model. The variance explained by the 4 predictors is therefore <span
+class="math inline">\(R_f^2-R_n^2=.30-.25=.05\)</span>. This is also
+called <span class="math inline">\(\Delta R^2\)</span>, but more
+formally is a <span class="math inline">\(\eta^2\)</span> with 4 degrees
+of freedom evaluated in a model with 9 degrees of freedom.</p>
+<p>The <span class="math inline">\(\eta^2\)</span> is transformed into
+the <span class="math inline">\(f^2\)</span> effect size with the simple
+formula <span
+class="math inline">\(f^2=(R_f^2-R_n^2)/(1-R_f^2)\)</span>.</p>
 <ul>
-<li>Aim = power</li>
-<li>Expected r = .4</li>
-<li>N = 52</li>
-<li>Alpha = .05</li>
+<li>Aim = Sample Size</li>
+<li><span class="math inline">\(R_f^2\)</span> = .30</li>
+<li><span class="math inline">\(R_n^2\)</span> = .25</li>
+<li><span class="math inline">\(\eta^2\)</span> = 0.05</li>
+<li><span class="math inline">\(f^2\)</span> = 0.07143</li>
+<li>Power = .241296</li>
+<li>Effect DF = 4</li>
+<li>Model DF = 9</li>
+<li>Alpha = .01</li>
 </ul>
+<div id="gpower-1" class="section level3">
+<h3>G*Power</h3>
+<p><img src="rosetta/pics/gpower.n.glm.2.png" width="681" /></p>
+</div>
 <div id="r-1" class="section level3">
 <h3>R</h3>
-<pre class="r"><code>pwr::pwr.r.test(r=.4,n=52,sig.level=.05)</code></pre>
+<p>In R, we can use the <code>pwr.f2.test</code> command, just plugging
+in the effect size <span class="math inline">\(f^2\)</span> and the
+effect DF <span class="math inline">\(u=4\)</span>. The final <span
+class="math inline">\(N\)</span> will results as <span
+class="math inline">\(N=v+u+1\)</span></p>
+<pre class="r"><code>f2=.05/(1-.30)
+u&lt;-4
+m&lt;-9
+power&lt;- .241296
+(res&lt;-pwr::pwr.f2.test(f2=f2,u=u, power=power,sig.level=.01))</code></pre>
 <pre><code>## 
-##      approximate correlation power calculation (arctangh transformation) 
+##      Multiple regression power calculation 
 ## 
-##               n = 52
-##               r = 0.4
-##       sig.level = 0.05
-##           power = 0.8485972
-##     alternative = two.sided</code></pre>
+##               u = 4
+##               v = 84.60237
+##              f2 = 0.07142857
+##       sig.level = 0.01
+##           power = 0.241296</code></pre>
+<pre class="r"><code>N&lt;-round((res$v+u+1))
+N</code></pre>
+<pre><code>## [1] 90</code></pre>
 </div>
 <div id="pamlj-1" class="section level3">
 <h3>PAMLj</h3>
-<p><img src="rosetta/pics/r.2.png" width="1384" /></p>
-<p>Results are the same.</p>
+<p>Results are perfectly in line with other software.</p>
+<p><img src="rosetta/pics/glm.n.2.png" width="1342" /></p>
 </div>
 </div>
-<div id="example-3" class="section level2">
-<h2>Example 3</h2>
+<div id="anova" class="section level1">
+<h1>ANOVA</h1>
+<p><i> F test: Fixed effects ANOVA - special, main effects and
+interaction p. 27</i></p>
+<p>Here we have an ANOVA design <span class="math inline">\(A \times B
+\times C\)</span> with <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> having 3 levels and <span
+class="math inline">\(C\)</span> with 4 levels. Thus the overall model
+features 36 groups, with <span class="math inline">\(A\)</span> and
+<span class="math inline">\(B\)</span> effects having 2 degrees of
+freedom, and <span class="math inline">\(C\)</span> having 3 DF. The
+researcher is interested in the sample size required to achieve a power
+of <span class="math inline">\(.475627\)</span> of the test associated
+with the interaction <span class="math inline">\(A*B\)</span>, with a
+partial Eta-squared <span
+class="math inline">\(p\eta^2=0.05665751\)</span>. The interaction will
+have <span class="math inline">\(DF=2*2=4\)</span> degrees of freedom,
+and the whole model will have <span
+class="math inline">\(DF=35\)</span>, the number of groups minus one.
+Here are the parameters. The resulting sample size should be <span
+class="math inline">\(N = 90\)</span>.</p>
 <ul>
-<li>Aim = minimal effect size</li>
-<li>power = .95</li>
-<li>N = 52</li>
+<li>Aim = Sample Size</li>
+<li><span class="math inline">\(p\eta^2\)</span> = 0.05665751</li>
+<li><span class="math inline">\(f\)</span> = 0.24507</li>
+<li>Effect DF = 4</li>
+<li>Model DF = 35</li>
+<li>Power = .475627</li>
 <li>Alpha = .01</li>
 </ul>
+<div id="gpower-2" class="section level3">
+<h3>G*Power</h3>
+<p>First notice that for this problem, G<em>Power offers <em>F test:
+Fixed effects ANOVA</em> routine, which requires an <span
+class="math inline">\(f\)</span> as the effect size . <span
+class="math inline">\(f\)</span> is simply the square root of <span
+class="math inline">\(f^2\)</span> so it can be computed from the
+partial Eta-squared as <span
+class="math inline">\(f=\sqrt{p\eta^2/(1-p\eta^2)}\)</span> . Based on
+the G</em>Power example, the resulting sample size should be N=108.</p>
+<p>Plugging in the parameters we obtain:</p>
+<p><img src="rosetta/pics/gpower.n.glm.3.png" width="680" /></p>
+</div>
 <div id="r-2" class="section level3">
 <h3>R</h3>
-<pre class="r"><code>pwr::pwr.r.test(n=52,power=.95,sig.level=.01)</code></pre>
+<p>As we have seen before, <code>pwr.f2.test</code> command will
+underestimate the power due to the fact that the non centrality
+parameter is smaller than the one used in G*Power. Nonetheless, we can
+get an estimation of the power increasing the effect size <span
+class="math inline">\(f^2\)</span> such as to match the correct NCP is
+<span class="math inline">\(\lambda=Nf^2\)</span>. The effect DF <span
+class="math inline">\(u=4\)</span> and the model DF are <span
+class="math inline">\(m=35\)</span>, yielding <span
+class="math inline">\(v=N-m-1=108-35-1=72\)</span></p>
+<pre class="r"><code>f&lt;-0.2450722
+u&lt;-4
+m&lt;-35
+power=.475627
+#N=108
+#v&lt;-N-m-1
+#f2&lt;-f^2*N/(u+v+1)
+(res&lt;-pwr::pwr.f2.test(f2=f2,u=4, power=power,sig.level=.05))</code></pre>
 <pre><code>## 
-##      approximate correlation power calculation (arctangh transformation) 
+##      Multiple regression power calculation 
 ## 
-##               n = 52
-##               r = 0.5369775
-##       sig.level = 0.01
-##           power = 0.95
-##     alternative = two.sided</code></pre>
+##               u = 4
+##               v = 84.92006
+##              f2 = 0.07142857
+##       sig.level = 0.05
+##           power = 0.475627</code></pre>
+<pre class="r"><code>N&lt;-round(res$v+m+1)
+N</code></pre>
+<pre><code>## [1] 121</code></pre>
+<p>We obtained the same results as in G*Power</p>
 </div>
 <div id="pamlj-2" class="section level3">
 <h3>PAMLj</h3>
-<p><img src="rosetta/pics/r.3.png" width="1108" /></p>
-<p>Results are the same.</p>
-</div>
-</div>
-<div id="example-4" class="section level2">
-<h2>Example 4</h2>
-<ul>
-<li>Aim = Sample size</li>
-<li>power = .95</li>
-<li>Expected r = .45</li>
-<li>Alpha = .01</li>
-<li>Tails = “two.sided”</li>
-</ul>
-<div id="r-3" class="section level3">
-<h3>R</h3>
-<pre class="r"><code>pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative=&quot;greater&quot;)</code></pre>
-<pre><code>## 
-##      approximate correlation power calculation (arctangh transformation) 
-## 
-##               n = 69.45436
-##               r = 0.45
-##       sig.level = 0.01
-##           power = 0.95
-##     alternative = greater</code></pre>
-</div>
-<div id="pamlj-3" class="section level3">
-<h3>PAMLj</h3>
-<p><img src="rosetta/pics/r.4.png" width="1104" /></p>
-<p>Results are the same.</p>
+<p>We plug in the partial Eta-squared and the required parameters, and
+we obtain the same results as before.</p>
+<p><img src="rosetta/pics/glm.n.3.png" width="1346" /></p>
 <h1>
 Comments?
 </h1>
@@ -523,20 +600,12 @@ or <a href="mailto:mcfanda@gmail.com
 </p>
 </div>
 </div>
-</div>
 <div id="back-to-pamlj-rosetta" class="section level1">
 <h1>Back to <a href="rosetta.html">PAMLj: rosetta</a></h1>
-<p>`</p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
 <p>’</p>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-cohen1988spa" class="csl-entry">
-Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for
-the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.
-</div>
-</div>
 </div>
 
 

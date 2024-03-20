@@ -32,7 +32,7 @@ results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf
 
 # Correlation
 
-For Pearson and Spearman correlation, we can compare `r modulename()` with `R pwr package`. Consider, however, that for this task `r modulename()` employs `R pwr package` under the hood, so the results are obviously in line. Both packages use the  [inverse hyperbolic tangent](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh) transformation [@cohen1988spa].
+For Pearson and Spearman correlation, we can compare `r modulename()` with `R pwr package` and `G*Power`. Consider, however, that for this task `r modulename()` employs `R pwr package` under the hood, so the results are obviously in line. For G*Power, the comparison represents a proper validation. All packages use the  [inverse hyperbolic tangent](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh) transformation [@cohen1988spa].
 
 ## Example 1
 
@@ -41,7 +41,10 @@ For Pearson and Spearman correlation, we can compare `r modulename()` with `R pw
 *   Required power = .8
 *   Alpha = .05
 
-    
+### PAMLj
+
+`r pic("rosetta/pics/r.1.png")`
+
 ### R
 
 ```{r }
@@ -50,11 +53,13 @@ pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)
 
 ```
 
-### PAMLj
+### G*Power
 
-`r pic("rosetta/pics/r.1.png")`
+`r pic("rosetta/pics/gpower.r.1.png")`
 
-If we round the `pwr` package results, they are the same
+
+If we round the results, they are the same
+
 
 ## Example 2
 
@@ -64,8 +69,12 @@ If we round the `pwr` package results, they are the same
 *   Alpha = .05
 
     
-### R
 
+### PAMLj
+
+`r pic("rosetta/pics/r.2.png")`
+
+### R
 
 ```{r }
 
@@ -73,11 +82,11 @@ pwr::pwr.r.test(r=.4,n=52,sig.level=.05)
 
 ```
 
-### PAMLj
+### G*Power
 
-`r pic("rosetta/pics/r.2.png")`
+`r pic("rosetta/pics/gpower.r.2.png")`
 
-Results are the same.
+Results are the same at the third decimal place, which can be consider quite good.
 
 ## Example 3
 
@@ -85,6 +94,10 @@ Results are the same.
 *   power = .95
 *   N = 52
 *   Alpha = .01
+
+### PAMLj
+
+`r pic("rosetta/pics/r.3.png")`
 
 ### R
 
@@ -95,11 +108,12 @@ pwr::pwr.r.test(n=52,power=.95,sig.level=.01)
 
 ```
 
-### PAMLj
 
-`r pic("rosetta/pics/r.3.png")`
+### G*Power
 
-Results are the same.
+`r pic("rosetta/pics/gpower.r.3.png")`
+
+Again, rounding a the third decimal place, results are the same.
 
 ## Example 4
 
@@ -109,8 +123,12 @@ Results are the same.
 *   Alpha = .01
 *   Tails = "two.sided"
 
-### R
+### PAMLj
 
+`r pic("rosetta/pics/r.4.png")`
+
+
+### R
 
 ```{r }
 
@@ -118,11 +136,11 @@ pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative="greater")
 
 ```
 
-### PAMLj
+### G*power
 
-`r pic("rosetta/pics/r.4.png")`
+`r pic("rosetta/pics/gpower.r.4.png")`
 
-Results are the same.
+In this case, notice that `r modulename()` yield 69, which is rounded for 69.45, whereas G*Power round it up to 70. Thus, results are quite in line.
 
 # Navigate
 

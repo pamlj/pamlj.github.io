@@ -1,0 +1,175 @@
+---
+title: "General Linear Model"
+topic: posthoc
+category: rosetta
+nickname: ros_glm_posthoc
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Power Analysis: post hoc power 
+
+`r version("0.1.0")` 
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
+
+We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), then we test some other design and analysis. In all these example the aim of the analysis is to find the post hoc power given an effect size, a sample size and the design characteristics.
+
+# Multiple regression
+<i> Multiple Regression - omnibus (deviation of R 2 from zero), fixed model, p. 33 </i>
+
+Here we estimate the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. Five predictors means that the model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$.
+
+*   Aim = power
+*   Expected $R^2$    = .10
+*   $f^2$              = `r round(0.10/(1-.10),digits=4)`
+*   Sample Size (N) = 95
+*   Effect DF       = 5
+*   Model  DF       = 5
+*   Alpha           = .05
+
+### G*Power
+
+`r pic("rosetta/pics/gpower.glm.1.png")`
+
+    
+### R
+
+In R, we can use the `pwr.f2.test` command, just plugging in the effect size $f^2$ and the effect DF $u=5$. However, $N$ should be inserted as the residuals degrees of freedom, thus we have $v=N-u-1=95-5-1=89$
+
+```{r }
+
+pwr::pwr.f2.test(f2=.1111,u=5, v=89,sig.level=.05)
+
+```
+
+### PAMLj
+
+In `r modulename()` we can use both `r opt("Partial Eta-Squared")` or `r opt("Eta-Squared")`, because in the case of the $R^2$ the two effect size are identical. For simplicity, we use `r opt("Partial Eta-Squared")`
+
+`r pic("rosetta/pics/glm.1.png")`
+
+Had we used `r opt("Eta-Squared")`, we simply put the $R^2$ to test both in the effect size and the $R^2$ field, obtaining the same results.
+
+`r pic("rosetta/pics/glm.1.2.png")`
+
+We obtain the same results in packages, although we will see that this is not always the case (see next example).
+
+
+# Increase in $R^2$
+
+<i> F test: Multiple Regression - special (increase of R2), fixed model , p. 37 </i>
+
+The first example examines a linear model (regression) with $R_f^2=.30$ with 9 predictors and compare it to a nested model with $R_n^2=.25$ with 5 predictors. Basically, the test is aimed at testing the variance explained by 4 predictors present in the full model but not the nested model. The variance explained by the 4 predictors is therefore $R_f^2-R_n^2=.30-.25=.05$.  This is also called $\Delta R^2$, but more formally is a $\eta^2$ with 4 degrees of freedom evaluated in a model with 9 degrees of freedom.
+
+The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=(R_f^2-R_n^2)/(1-R_f^2)$.
+
+*   Aim = power
+*   $R_f^2$    = .30
+*   $R_n^2$    = .25
+*   $\eta^2$    =  0.05
+*   $f^2$              = `r round(0.05/(1-.30),digits=5)`
+*   Sample Size (N) = 90
+*   Effect DF       = 4
+*   Model  DF       = 9
+*   Alpha           = .01
+
+### G*Power
+
+`r pic("rosetta/pics/gpower.glm.2.png")`
+
+### R
+
+In R, we can use the `pwr.f2.test` command, just plugging in the effect size $f^2$ and the effect DF $u=4$. Keeping in mind that the model has $m=9$ degrees of freedom, the $N$ is inserted as the residuals degrees of freedom, that is $v=N-m-1=90-9-1=80$
+
+```{r }
+f2=.05/(1-.30)
+pwr::pwr.f2.test(f2=f2,u=4, v=80,sig.level=.01)
+
+```
+
+Notice that the results (_power_) are similar, but not as close as before. This is because and G*Power and `pwr:pwr.f2.test()` use two different computations of the F-distribution _non centrality parameter $\lambda"_. G*Power uses $\lambda=f^2 \cdot N$, whereas  `pwr:pwr.f2.test()` uses  $\lambda=f^2 \cdot (u+v+1)$.  `r modulename()` allows to choose which one to use.
+
+
+### PAMLj
+
+By default,  `r modulename()` employs the `pwr.f2.test` _non centrality parameter_, yielding the same results of the R module.
+
+`r pic("rosetta/pics/glm.2.1.png")`
+
+BY selecting the option `r opt("G*Power NCP")`, we obtain the same results as in G*Power.
+
+`r pic("rosetta/pics/glm.2.2.png")`
+
+
+# ANOVA 
+
+<i> F test: Fixed effects ANOVA - special, main effects and interaction p. 27</i>
+
+Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the power of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$ (here the value is slightly different than in G*Power manual, but this value honour the f value used in the manual). The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters.
+
+*   Aim = power
+*   $p\eta^2$   = 0.05665751
+*   $f$              = `r round(sqrt(0.05665751/(1-0.05665751)),digits=5)`
+*   Sample Size (N) = 90
+*   Effect DF       = 4
+*   Model  DF       = 35
+*   Alpha           = .05
+
+### G*Power
+
+First notice that for this problem, G*Power offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size . $f$ is simply the square root of $f^2$ so it can be computed from the partial Eta-squared as  $f=\sqrt{p\eta^2/(1-p\eta^2)}$ .
+
+Plugging in the parameters we obtain:
+
+`r pic("rosetta/pics/gpower.glm.3.png")`
+
+
+
+### R
+
+As we have seen before, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an estimation of the power increasing the effect size $f^2$ such as to match the correct NCP is $\lambda=Nf^2$. The effect DF $u=4$ and the model DF are $m=35$, yielding $v=N-m-1=108-35-1=72$
+
+```{r }
+f<-0.2450722
+u<-4
+m<-35
+N=108
+v<-N-m-1
+f2<-f^2*N/(u+v+1)
+pwr::pwr.f2.test(f2=f2,u=4, v=72,sig.level=.05)
+
+```
+
+We obtained the same results as in G*Power
+
+### PAMLj
+
+We plug in the partial Eta-squared and the required parameters, and we obtain the same results as before.
+
+`r pic("rosetta/pics/glm.3.png")`
+
+
+
+`r issues()`
+
+# Back to `r link_pages(nickname="rosetta")`
+
+
+# References
+'
