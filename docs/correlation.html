@@ -11,7 +11,7 @@
 
 
 
-<title>General Linear Model</title>
+<title>Correlation</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -380,45 +380,46 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">General Linear Model</h1>
+<h1 class="title toc-ignore">Correlation</h1>
 
 </div>
 
 
-<p><strong>Correlation</strong> Power Analysis</p>
+<p>Power Analysis</p>
 <p><span class="version"> <span class="versiontitle"> PAMLj version ≥
 </span> 0.1.0 </span></p>
 <p><img src="pics/correlation/ui.png" width="1346" /></p>
 <div id="correlation" class="section level1">
 <h1>Correlation</h1>
-<p><code>Correlation</code> allows computing power parameters for
-testing the Pearson or Spearman correltion coefficient. The first thing
-to to is to decide the aim of the analysis. Some text in
-<code>Info</code> results field explains the different aims.</p>
+<p><code>Correlation</code> allows for computing power parameters for
+testing the Pearson or Spearman correlation coefficient. The initial
+step is to determine the objective of the analysis ( <em>aim</em> ).
+Further details regarding different objectives can be found in the
+<code>Info</code> results field.</p>
 <p><img src="commons/pics/aims.1.png" width="589" /></p>
 <p>For correlation analysis, it also suggests the following:</p>
-<p><img src="pics/correlation/aims.2.png" width="599" /></p>
-<p>We start with the first aim,</p>
-<div id="n-required-sample-size" class="section level2">
-<h2>N: Required sample size</h2>
-<p>When we want to compute the required sample size for a planned
-research, we need to anticipate, from pilots, meta-analysis, etc., but
-see <span class="citation">(<a href="#ref-albers2017biased">Albers and
-Lakens 2017</a>)</span>, an effect size. In case of correlation, not
-surprising, the effect size is the Pearson correlation.</p>
-<p>Let assume we want to estimate the <strong>required sample size
-(N)</strong> for a planned research for which we expect the correlation
-between our target variables to be .20, and we want to achieve a power
-of .90 with a two-tailed test, evaluated at <span
-class="math inline">\(\alpha=.05\)</span>. In <span
-class="modulename">PAMLj</span> we simply plug in these parameters.</p>
+<p><img src="pics/correlation/aims.2.png" width="563" /></p>
+<p>We start with the first aim, finding the required sample size N.</p>
+<div id="aim-n-required-sample-size" class="section level2">
+<h2>Aim: N (Required sample size)</h2>
+<p>When estimating the required sample size for planned research, it’s
+essential to anticipate an effect size, which can be derived from
+pilots, meta-analyses, etc., (but see <span class="citation">Albers and
+Lakens (<a href="#ref-albers2017biased">2017</a>)</span>). In the case
+of correlation analysis, the effect size corresponds to the Pearson
+correlation coefficient.</p>
+<p>Let’s consider a scenario where we aim to estimate the required
+sample size (N) for a planned research project. Assuming an expected
+correlation of 0.20 between our target variables, and aiming for a power
+of 0.90 with a two-tailed test, evaluated at α = 0.05, we can simply
+input these parameters into <span class="modulename">PAMLj</span>.</p>
 <p><img src="pics/correlation/r.1.png" width="990" /></p>
 <p>From the result table we can see that the required N is 258, so we
 need 258 case to achieve a power of .90 given an expected correlation of
 .2.</p>
-<p>The second table we get is the `Power by Effect” table, which inform
-us on the different power levels associated with different possible
-effect sizes.</p>
+<p>The second table we get is the <code>Power by Effect Size</code>
+table, which informs us on the different power levels associated with
+different possible effect sizes.</p>
 <p><img src="pics/correlation/r.2.png" width="472" /></p>
 <p>Based on the estimate <span class="math inline">\(N=258\)</span>, we
 should expected a very low power (<span
@@ -433,35 +434,113 @@ population correlation is larger than .222.</p>
 <div id="sensitivity-analysis" class="section level2">
 <h2>Sensitivity analysis</h2>
 <p>Sensitivity analysis means exploring different scenarios. <span
-class="option">Power contour plot</span> visualize the power from green
-(low) to yellow (high) as a function of possible sample size (x-axis)
-and effect (correlation) size.</p>
+class="option">Power contour plot</span> visualizes the power from low
+(green) to high (yellow) as a function of possible sample sizes (x-axis)
+and effect (correlation) sizes.</p>
 <p><img src="pics/correlation/r.3.png" width="547" /></p>
 <p>In the power contour plot, we see the solid line representing the
-combinations of Sample Size (N) and effect size that will yield the
-required power (in the example .90). So we know how the power will
-change had we underestimated the effect size (go down in y-axis) or
-underestimated the sample size (go left on the x-axis).</p>
-<p>The second plot we can ask is the <span class="option">Power curve by
-N</span>. It portraints how the power (y-axis) chances as one increases
-the sample size (x-axis).</p>
+combinations of Sample Size (N) and effect size that yields the required
+power (in the example .90). So we know how the power will change had we
+underestimated the effect size (go down in y-axis) or underestimated the
+sample size (go left on the x-axis).</p>
+<p>The second plot we can ask is the <code>Power curve by N</code> . It
+portraits how the power (y-axis) chances as one increases the sample
+size (x-axis).</p>
 <p><img src="pics/correlation/r.4.png" width="465" /></p>
-<p>In this example we can see that if we were not able to collect more
-than 150 case, our expected power will not be more than .70 (to be
+<p>The solid line portraits the change in power as we increases sample
+size given the effect size (<span class="math inline">\(r=.2\)</span>)
+and the critical alpha (<span
+class="math inline">\(\alpha=.05\)</span>). In this example, for
+instance, we can see that if we were not able to collect more than 150
+cases, our expected power will not be more than .70 (to be
 optimistic).</p>
 </div>
+<div id="aim-power-posthoc-power" class="section level2">
+<h2>Aim: Power (posthoc power)</h2>
+<p>Post-hoc power analysis serves to evaluate the likelihood of
+obtaining statistically significant results after conducting research,
+particularly when a pre-hoc (a priori) analysis was not performed. For
+instance, let’s consider a scenario where a research study involves 25
+participants, resulting in a Pearson correlation coefficient of 0.35,
+which is found to be statistically significant. In this context,
+post-hoc power analysis assesses the probability of consistently
+obtaining significant results if the research were to be replicated
+multiple times, drawing from the same population.</p>
+<p>So, let’s fill in the field for <code>Calculate: Power</code>. The
+effect size is .35, N (Sample size) is 25. The expected power is under
+the column <code>power</code>.</p>
+<p><img src="pics/correlation/r.5.png" width="1245" /></p>
+<p>The expected power, calculated as <span
+class="math inline">\(1−\beta=.414\)</span>, indicates that it’s less
+likely to replicate the results than to obtain significant results when
+drawing from the same population and employing the same sample size. If
+there are concerns about the lack of replication, increasing the sample
+size (N) would be recommended <span class="citation">(<a
+href="#ref-schonbrodt2013sample">Schönbrodt and Perugini
+2013</a>)</span>.</p>
 </div>
-<div id="examples" class="section level1">
-<h1>Examples</h1>
-<p>Some worked out examples of the analyses carried out with jamovi
-GAMLj are posted here (more to come)</p>
-<ul>
-</ul>
+<div id="sensitivity-analysis-1" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p><strong>Power contour plot</strong> and <strong>Power curve by
+N</strong> have here the same interpretation as mentioned above.
+However, when the aim of the analysis is to find the achieved power, one
+can ask for <span class="option">Power curve by effect size</span>.</p>
+<p><img src="pics/correlation/r.6.png" width="460" /></p>
+<p>Here, we observe the relationship between the power of the test and
+the effect size. The solid curve illustrates how the power may vary
+across different effect sizes, given a fixed sample size (<span
+class="math inline">\(N=25\)</span>). In this example, it becomes
+evident that in our research one can consistently (i.e. <span
+class="math inline">\(1-\beta &gt; .90\)</span>) detect a significant
+correlation only for correlations exceeding 0.6.</p>
 </div>
-<div id="details" class="section level1">
-<h1>Details</h1>
-<p>Some more information about the module specs can be found here #
-Specs</p>
+<div id="aim-effect-size-aka-another-sensitivity-analysis"
+class="section level2">
+<h2>Aim: Effect size (AKA another sensitivity analysis)</h2>
+<p>In recent years, there has been a growing interest towards the
+<em>minimum detectable effect size</em> (MDES). However, there seems to
+be some confusion surrounding its interpretation. In a proper power
+analysis aimed at determining the required sample size, utilizing a
+minimum detectable effect size can be beneficial. To clarify, the MDES
+represents the smallest effect size that a study aims to detect. It
+involves deciding the minimum value of correlation (for example, 0.08)
+that would be considered meaningful. Subsequently, the sample size is
+determined to ensure that if the observed correlation exceeds the MDES,
+it would yield a statistically significant result with a specified
+probability (<span class="math inline">\(1-\beta=power\)</span>)</p>
+<p>Computing <span class="option">Calculate: Effect size</span> serves a
+different purpose—it determines the minimum effect size that can be
+detected as significant with a specified probability (<span
+class="math inline">\(1-\beta\)</span>), given the sample size at hand.
+In essence, it is a post-hoc power analysis.</p>
+<p>While this analysis may not always be necessary, it can prove useful
+in certain scenarios. For instance, consider a situation where only a
+limited sample of 40 cases was collected due to constraints such as
+research topic, funding, or population size. In such cases, <span
+class="option">Calculate: Effect size</span> helps answer the question:
+What is the lowest effect size that would be detectable as significant
+with a certain probability (<span
+class="math inline">\(1-\beta\)</span>) given the sample size
+(N=40)?</p>
+<p>Imagine you have collected 40 cases and need to test several
+correlations. You can determine the lowest level of correlation that
+would be detectable in future studies with a probability greater than
+0.90. By inputting the available information — <span
+class="math inline">\(N=40\)</span>, required power of 0.90 (for
+instance), and an alpha of 0.05 — you can obtain valuable insights.</p>
+<p><img src="pics/correlation/r.7.png" width="1123" /></p>
+<p>Results show that any correlation less than .483 will be tested with
+a power less than .90.</p>
+</div>
+<div id="sensitivity-analysis-2" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p><strong>Power contour plot</strong> and <strong>Power curve by
+N</strong> have here the same interpretation as mentioned above.</p>
+</div>
+<div id="aim-required-alpha" class="section level2">
+<h2>Aim required alpha</h2>
+<p>I feel like nobody is going to use this option. If you are, you know
+what you are doing so we do not need a tutorial.</p>
 <h1>
 Comments?
 </h1>
@@ -479,6 +558,12 @@ Albers, C, and D Lakens. 2017. <span>“Biased Sample Size Estimates in
 a-Priori Power Analysis Due to the Choice of Effect Size Index and
 Follow-up Bias.”</span> <em>Journal of Experimental Social
 Psychology</em>.
+</div>
+<div id="ref-schonbrodt2013sample" class="csl-entry">
+Schönbrodt, Felix D, and Marco Perugini. 2013. <span>“At What Sample
+Size Do Correlations Stabilize?”</span> <em>Journal of Research in
+Personality</em> 47 (5): 609–12.
+</div>
 </div>
 </div>
 </div>

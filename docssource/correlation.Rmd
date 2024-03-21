@@ -1,6 +1,6 @@
 ---
-title: "General Linear Model"
-topic: glm
+title: "Correlation"
+topic: correlation
 category: help
 output: 
   html_document:
@@ -21,7 +21,7 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-**Correlation** Power Analysis
+Power Analysis
 
 `r version("0.1.0")` 
 
@@ -29,7 +29,7 @@ mcdocs_init()
 
 # Correlation
 
-`Correlation` allows computing power parameters for testing the Pearson or Spearman correltion coefficient. The first thing to to is to decide the aim of the analysis. Some text in `Info` results field explains the different aims. 
+`Correlation` allows for computing power parameters for testing the Pearson or Spearman correlation coefficient. The initial step is to determine the objective of the analysis ( _aim_ ). Further details regarding different objectives can be found in the `Info` results field.
 
 `r pic("commons/pics/aims.1.png")`
 
@@ -37,19 +37,20 @@ For correlation analysis, it also suggests the following:
 
 `r pic("pics/correlation/aims.2.png")`
 
-We start with the first aim,
+We start with the first aim, finding the required sample size N.
 
-## N: Required sample size
+## Aim: N (Required sample size)
 
-When we want to compute the required sample size for a planned research, we need to anticipate, from pilots, meta-analysis, etc., but see [@albers2017biased], an effect size. In case of correlation, not surprising, the effect size is the Pearson correlation.
 
-Let assume we want to estimate the __required sample size (N)__ for a planned research for which we expect the correlation between our target variables to be .20, and we want to achieve a power of .90 with a two-tailed test, evaluated at $\alpha=.05$. In `r modulename()` we simply plug in these parameters.
+When estimating the required sample size for planned research, it's essential to anticipate an effect size, which can be derived from pilots, meta-analyses, etc., (but see @albers2017biased). In the case of correlation analysis, the effect size corresponds to the Pearson correlation coefficient.
+
+Let's consider a scenario where we aim to estimate the required sample size (N) for a planned research project. Assuming an expected correlation of 0.20 between our target variables, and aiming for a power of 0.90 with a two-tailed test, evaluated at α = 0.05, we can simply input these parameters into `r modulename()`.
 
 `r pic("pics/correlation/r.1.png")`
 
 From the result table we can see that the required N is 258, so we need 258 case to achieve a power of .90 given an expected correlation of .2. 
 
-The second table we get is the `Power by Effect" table, which inform us on the different power levels associated with different possible effect sizes. 
+The second table we get is the `Power by Effect Size` table, which informs us on the different power levels associated with different possible effect sizes. 
 
 `r pic("pics/correlation/r.2.png")`
 
@@ -57,32 +58,62 @@ Based on the estimate $N=258$, we should expected a very low power ($1-\beta<.5$
 
 ## Sensitivity analysis
 
-Sensitivity analysis means exploring different scenarios. `r opt("Power contour plot")` visualize the power from green (low) to yellow (high) as a function of possible sample size (x-axis) and effect (correlation) size. 
+Sensitivity analysis means exploring different scenarios. `r opt("Power contour plot")` visualizes the power from low (green) to high (yellow) as a function of possible sample sizes (x-axis) and effect (correlation) sizes. 
 
 `r pic("pics/correlation/r.3.png")`
 
-In the power contour plot, we see the solid line representing the combinations of Sample Size (N) and effect size that will yield the required power (in the example .90). So we know how the power will change had we underestimated the effect size (go down in y-axis) or underestimated the sample size (go left on the x-axis).
+In the power contour plot, we see the solid line representing the combinations of Sample Size (N) and effect size that  yields the required power (in the example .90). So we know how the power will change had we underestimated the effect size (go down in y-axis) or underestimated the sample size (go left on the x-axis).
 
-The second plot we can ask is the `r opt("Power curve by N")`. It portraints how the power (y-axis) chances as one increases the sample size (x-axis).
+The second plot we can ask is the `Power curve by N` .
+It portraits how the power (y-axis) chances as one increases the sample size (x-axis).
 
 `r pic("pics/correlation/r.4.png")`
 
-In this example we can see that if we were not able to collect more than 150 case, our expected power will not be more than .70 (to be optimistic).
+The solid line portraits the change in power as we increases sample size given the effect size ($r=.2$) and the critical alpha ($\alpha=.05$).
+In this example, for instance,  we can see that if we were not able to collect more than 150 cases, our expected power will not be more than .70 (to be optimistic).
 
 
+## Aim: Power (posthoc power)
+
+Post-hoc power analysis serves to evaluate the likelihood of obtaining statistically significant results after conducting research, particularly when a pre-hoc (a priori) analysis was not performed. For instance, let's consider a scenario where a research study involves 25 participants, resulting in a Pearson correlation coefficient of 0.35, which is found to be statistically significant. In this context, post-hoc power analysis assesses the probability of consistently obtaining significant results if the research were to be replicated multiple times, drawing from the same population.
+
+So, let's fill in the field for `Calculate: Power`. The effect size is .35, N (Sample size) is 25. The expected power is under the column `power`.
+
+`r pic("pics/correlation/r.5.png")`
+
+The expected power, calculated as $1−\beta=.414$, indicates that it's less likely to replicate the results than to obtain significant results when drawing from the same population and employing the same sample size. If there are concerns about the lack of replication, increasing the sample size (N) would be recommended [@schonbrodt2013sample]. 
+
+## Sensitivity analysis
+
+__Power contour plot__ and __Power curve by N__ have here the same interpretation as mentioned above. However, when the aim of the analysis is to find the achieved power, one can ask for `r opt("Power curve by effect size")`.  
+
+`r pic("pics/correlation/r.6.png")`
+
+Here, we observe the relationship between the power of the test and the effect size. The solid curve illustrates how the power may vary across different effect sizes, given a fixed sample size ($N=25$). In this example, it becomes evident that in our research one can consistently (i.e. $1-\beta > .90$) detect a significant correlation only for correlations exceeding 0.6.
+
+## Aim: Effect size (AKA another sensitivity analysis)
+
+In recent years, there has been a growing interest towards the _minimum detectable effect size_ (MDES). However, there seems to be some confusion surrounding its interpretation. In a proper power analysis aimed at determining the required sample size, utilizing a minimum detectable effect size can be beneficial. To clarify, the MDES represents the smallest effect size that a study aims to detect. It involves deciding the minimum value of correlation (for example, 0.08) that would be considered meaningful. Subsequently, the sample size is determined to ensure that if the observed correlation exceeds the MDES, it would yield a statistically significant result with a specified probability ($1-\beta=power$)
+
+Computing `r opt("Calculate: Effect size")` serves a different purpose—it determines the minimum effect size that can be detected as significant with a specified probability ($1-\beta$), given the sample size at hand. In essence, it is a post-hoc power analysis.
+
+While this analysis may not always be necessary, it can prove useful in certain scenarios. For instance, consider a situation where only a limited sample of 40 cases was collected due to constraints such as research topic, funding, or population size. In such cases, `r opt("Calculate: Effect size")` helps answer the question: What is the lowest effect size that would be detectable as significant with a certain probability ($1-\beta$) given the sample size (N=40)?
+
+Imagine you have collected 40 cases and need to test several correlations. You can determine the lowest level of correlation that would be detectable in future studies with a probability greater than 0.90. By inputting the available information — $N=40$, required power of 0.90 (for instance), and an alpha of 0.05 — you can obtain valuable insights.
+
+`r pic("pics/correlation/r.7.png")`
+
+Results show that any correlation less than .483 will be tested with a power less than .90.
 
 
-# Examples
+## Sensitivity analysis
 
-Some worked out examples of the analyses carried out with jamovi GAMLj are posted here (more to come)
+__Power contour plot__ and __Power curve by N__ have here the same interpretation as mentioned above. 
 
-`r include_examples("correlation")`
 
-# Details
+## Aim required alpha 
 
-Some more information about the module specs can be found here
-# Specs
-
+I feel like nobody is going to use this option. If you are, you know what you are doing so we do not need a tutorial.
 
 `r issues()`
 
