@@ -72,66 +72,47 @@ Assume now we have a 2 X 3 design, and we are focusing on the interaction effect
 
 From the results table `A priori power analysis` we can see that the required N is 201, so we need 201 cases to achieve a power of .90 given an expected $p\eta^2=.06$. 
 
-These results are identical to the ones one would obtain in R using `pwr` package or emplying [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). See `r link_pages(nickname="ros_glm_n")` for validation.
-
-## Sensitivity analysis
-
-Sensitivity analysis means exploring different scenarios. `r opt("Power contour plot")` visualizes the power from low (green) to high (yellow) as a function of possible sample sizes (x-axis) and effect (correlation) sizes. 
-
-`r pic("pics/correlation/r.3.png")`
-
-In the power contour plot, we see the solid line representing the combinations of Sample Size (N) and effect size that  yields the required power (in the example .90). So we know how the power will change had we underestimated the effect size (go down in y-axis) or underestimated the sample size (go left on the x-axis).
-
-The second plot we can ask is the `Power curve by N` .
-It portraits how the power (y-axis) chances as one increases the sample size (x-axis).
-
-`r pic("pics/correlation/r.4.png")`
-
-The solid line portraits the change in power as we increases sample size given the effect size ($r=.2$) and the critical alpha ($\alpha=.05$).
-In this example, for instance,  we can see that if we were not able to collect more than 150 cases, our expected power will not be more than .70 (to be optimistic).
-
+These results are identical to the ones one would obtain in R using `pwr` package or employing [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). See `r link_pages(nickname="ros_glm_n")` for validation.
 
 ## Aim: Power (posthoc power)
 
-Post-hoc power analysis serves to evaluate the likelihood of obtaining statistically significant results after conducting research, particularly when a pre-hoc (a priori) analysis was not performed. For instance, let's consider a scenario where a research study involves 25 participants, resulting in a Pearson correlation coefficient of 0.35, which is found to be statistically significant. In this context, post-hoc power analysis assesses the probability of consistently obtaining significant results if the research were to be replicated multiple times, drawing from the same population.
+Post-hoc power analysis serves to evaluate the likelihood of obtaining statistically significant results after conducting research, particularly when a pre-hoc (a priori) analysis was not performed. For instance, let's consider a scenario where a research study involves 50 participants, with the focal effect of one continuous independent variable results in a Partial Eta-squared coefficient of 0.04, which is found to be statistically significant. In the model there are other three continuous predictors. In this context, post-hoc power analysis assesses the probability of consistently obtaining significant results if the research were to be replicated multiple times, drawing from the same population a sample of 50 participants.
 
-So, let's fill in the field for `Calculate: Power`. The effect size is .35, N (Sample size) is 25. The expected power is under the column `power`.
+So, let's fill in the field for `Calculate: Power`. The effect size is 0.04, N (Sample size) is 50. The effect _df_ is 1, and the model _df_ are 4, because there are four continuous predictors. 
 
-`r pic("pics/correlation/r.5.png")`
+`r pic("pics/glm/peta.3.i.png")`
+`r pic("pics/glm/peta.3.a.png")`
 
-The expected power, calculated as $1−\beta=.414$, indicates that it's less likely to replicate the results than to obtain significant results when drawing from the same population and employing the same sample size. If there are concerns about the lack of replication, increasing the sample size (N) would be recommended [@schonbrodt2013sample]. 
+The expected power, calculated as $1−\beta=.292$, indicates that it's very unlikely to replicate the results when drawing from the same population and employing the same sample size. 
 
-## Sensitivity analysis
-
-__Power contour plot__ and __Power curve by N__ have here the same interpretation as mentioned above. However, when the aim of the analysis is to find the achieved power, one can ask for `r opt("Power curve by effect size")`.  
-
-`r pic("pics/correlation/r.6.png")`
-
-Here, we observe the relationship between the power of the test and the effect size. The solid curve illustrates how the power may vary across different effect sizes, given a fixed sample size ($N=25$). In this example, it becomes evident that in our research one can consistently (i.e. $1-\beta > .90$) detect a significant correlation only for correlations exceeding 0.6.
 
 ## Aim: Effect size (AKA another sensitivity analysis)
 
-In recent years, there has been a growing interest towards the _minimum detectable effect size_ (MDES). However, there seems to be some confusion surrounding its interpretation. In a proper power analysis aimed at determining the required sample size, utilizing a minimum detectable effect size can be beneficial. To clarify, the MDES represents the smallest effect size that a study aims to detect. It involves deciding the minimum value of correlation (for example, 0.08) that would be considered meaningful. Subsequently, the sample size is determined to ensure that if the observed correlation exceeds the MDES, it would yield a statistically significant result with a specified probability ($1-\beta=power$)
+Estimating the effect size aim at finding _minimum detectable effect size_ (MDES). It determines the minimum effect size that can be detected as significant with a specified probability ($1-\beta=power$), given the sample size at hand. In essence, it is a post-hoc power analysis but may be used also in planning a research.
 
-Computing `r opt("Calculate: Effect size")` serves a different purpose—it determines the minimum effect size that can be detected as significant with a specified probability ($1-\beta$), given the sample size at hand. In essence, it is a post-hoc power analysis.
+For instance, consider a situation where only a limited sample of 40 cases was collected due to constraints such as research topic, funding, or population size. In such cases, `Calculate: Effect size` helps answer the question: What is the lowest effect size that would be detectable as significant with a certain probability ($1-\beta=power$) given the sample size (N=50)?
 
-While this analysis may not always be necessary, it can prove useful in certain scenarios. For instance, consider a situation where only a limited sample of 40 cases was collected due to constraints such as research topic, funding, or population size. In such cases, `r opt("Calculate: Effect size")` helps answer the question: What is the lowest effect size that would be detectable as significant with a certain probability ($1-\beta$) given the sample size (N=40)?
+Imagine a research group knows they can only  collected 50 cases. Their are going to estimate a multiple regression with 4 predictors. They wonder what will be the smallest effect size that would result as significant. Plugging the parameters into the input panel, we obtain the required results.  
 
-Imagine you have collected 40 cases and need to test several correlations. You can determine the lowest level of correlation that would be detectable in future studies with a probability greater than 0.90. By inputting the available information — $N=40$, required power of 0.90 (for instance), and an alpha of 0.05 — you can obtain valuable insights.
+`r pic("pics/glm/peta.4.i.png")`
+`r pic("pics/glm/peta.4.a.png")`
 
-`r pic("pics/correlation/r.7.png")`
+Results show that any Partial Eta-squared less than .180 will be tested with a power less than .90.
 
-Results show that any correlation less than .483 will be tested with a power less than .90.
-
-
-## Sensitivity analysis
-
-__Power contour plot__ and __Power curve by N__ have here the same interpretation as mentioned above. 
+These results are identical to the ones one would obtain in R using `pwr` package or employing [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). See `r link_pages(nickname="ros_glm_posthoc")` for validation.
 
 
-## Aim required alpha 
+## Adjusting the effect size.
 
-I feel like nobody is going to use this option. If you are, you know what you are doing so we do not need a tutorial.
+
+When power analysis is based observed effect sizes taken from previous research or pilot studies, it is always a good idea to use an adjusted version of the indices. This because the indices of effect size based on variances are almost always up-ward biased [@richardson2011eta]. For the Partial Eta-squared there are two adjustments that can be carried out, yielding the Partial Omega-Squared and the Partial Epsilon-squared. The two are very similar, so any of the two would work fine. 
+
+`r modulename()` provides a method to convert the observed Partial Eta-squared into the adjusted effect size directly from the User Interface
+
+`r pic("rosetta/checks/esadjust.1.png")`
+
+Please see `r link_pages(nickname="check_es")` for details.
+
 
 `r issues()`
 
