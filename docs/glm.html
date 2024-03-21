@@ -11,7 +11,7 @@
 
 
 
-<title>General Linear Model</title>
+<title>Generali Linear Model</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -69,6 +69,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 <link rel="stylesheet" href="helpstyle.css" type="text/css" />
@@ -358,21 +380,231 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">General Linear Model</h1>
+<h1 class="title toc-ignore">Generali Linear Model</h1>
 
 </div>
 
 
-<div id="pamlj-power-analysis-for-the-general-linear-models-in-jamovi"
-class="section level1">
-<h1>PAMLj power analysis for the general linear models in jamovi</h1>
-<p>Version 0.1.*</p>
-<center>
-<img width="600" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
-</center>
-<p><br></p>
+<p>Power Analysis</p>
+<p><span class="version"> <span class="versiontitle"> PAMLj version ≥
+</span> 0.1.0 </span></p>
+<p><img src="pics/glm/ui.png" width="1234" /></p>
+<p><code>GLM power analysis</code> allows for computing power parameters
+for testing a wide range of effect across several different designs. The
+initial step is to determine the objective of the analysis (
+<em>aim</em> ). Further details regarding different objectives can be
+found in the <code>Info</code> results field.</p>
+<p><img src="commons/pics/aims.1.png" width="589" /></p>
+<p>The second step is to decide what type of effect size we want to
+employ.</p>
 <ul>
+<li><p><strong>Partial Eta-Squared</strong> : valuable for any
+application of the GLM, such as ANOVA, ANCOVA, regression, for
+individual effects and overall test (<span
+class="math inline">\(R^2\)</span>).</p></li>
+<li><p><strong>Eta-Squared</strong> : valuable for any application of
+the GLM, such as ANOVA, ANCOVA, regression, for individual effects and
+blocks of effects (<span class="math inline">\(\Delta
+R^2\)</span>).</p></li>
+<li><p><strong>Beta coefficients</strong> : valuable in particular for
+regression for individual effects.</p></li>
 </ul>
+<p>We begin with the first type of effect size.</p>
+<div id="partial-eta-squared" class="section level1">
+<h1>Partial Eta-squared</h1>
+<p>The partial eta-squared <span class="math inline">\(p\eta^2\)</span>
+is one of the most commonly used effect size index with the GLM. It is
+the ratio between the variance explained by an effect (<span
+class="math inline">\(\sigma_x^2\)</span>) and the variance not
+explained by any other effect is the model (<span
+class="math inline">\(\sigma_x^2+\sigma^2\)</span>, where <span
+class="math inline">\(\sigma^2\)</span> is the residual variance).
+Formally: <span
+class="math inline">\(\sigma_x^2/(\sigma_x^2+\sigma^2)\)</span>. It is
+usually reported in published papers and can be computed with any
+available statistical software.</p>
+<p>Partial Eta-squared is used in power analysis for its close
+connection to the F-test. The F-test natural effect size is <span
+class="math inline">\(f^2\)</span> <span class="citation">(<a
+href="#ref-cohen1988spa">Cohen 1988</a>)</span>, which can be computed
+as <span class="math inline">\(f^2=p\eta^2/(1-p\eta^2)\)</span>. The
+partial Eta-squared can be associated to continuous or categorical
+independent variables, or to any other term in the model, such as
+interactions or polynomial effects. The degrees of freedom (
+<em>df</em>) associated with its test are always 1 for effects involving
+continuous variables, <span class="math inline">\(K-1\)</span> for
+categorical variables with <span class="math inline">\(K\)</span> levels
+(groups).</p>
+<p>When we have our expected Partial Eta-squared (but see below for more
+details), we can use it to compute the other power parameters, depending
+on the aim of the analysis.</p>
+<div id="aim-n-required-sample-size" class="section level2">
+<h2>Aim: N (Required sample size)</h2>
+<p>When estimating the required sample size for planned research, we
+want to know what is the smallest sample that guarantees a significant
+result with probability equal to <span
+class="math inline">\(1-\beta=power\)</span>, given the expected effect
+size <span class="math inline">\(p\eta^2\)</span>. That is, the minimum
+N such that we achieve the desired power for a test of the expected
+effect size.</p>
+<p>Let’s consider a scenario where we aim to estimate the required
+sample size (N) for a planned research project. Assuming we have a
+single continuous independent variable with an expected Partial
+Eta-squared of 0.15 evaluated at α = 0.05. We aim for a power of 0.90.
+Because the independent variable is continuous, it’s test will have 1
+<em>df</em>. Because there is only one independent variable, the
+<code>Model degrees of freedom</code> will be 1 as well (see below for
+more about computing <em>df</em> in complex models).</p>
+<p>We can simply input these parameters into <span
+class="modulename">PAMLj</span>.</p>
+<p><img src="pics/glm/peta.1.i.png" width="637" />
+<img src="pics/glm/peta.1.a.png" width="533" /></p>
+<p>From the results table <code>A priori power analysis</code> we can
+see that the required N is 62, so we need 62 cases to achieve a power of
+.90 given an expected <span
+class="math inline">\(p\eta^2=.15\)</span>.The tables reports all power
+parameters, all but one are input by the user, and the required one
+estimated by the module.</p>
+<p>The second table we get is the <code>Power by Effect Size</code>
+table, which informs us on the different power levels associated with
+different possible effect sizes. Based on the estimate <span
+class="math inline">\(N=62\)</span>, we should expected a very low power
+(<span class="math inline">\(1-\beta&lt;.5\)</span>) should the actual
+population effect size be less than .06. A power of <span
+class="math inline">\(1-\beta&lt;\)</span> between .5 and .80 should the
+expected effect size be between .06 and .116. A power between .80 and
+.95 is to be expected if our population effect size is between .116 and
+.178, whereas a power greater than .95 can be expected if the population
+correlation is larger than .178.</p>
+<p>Assume now we have a 2 X 3 design, and we are focusing on the
+interaction effect. Assume the expected Partial Eta-squared is .06. The
+interaction effect test has <span
+class="math inline">\((2-1)(3-1)=2\)</span> degrees of freedom, whereas
+the overall model has <span class="math inline">\(3*2-1=5\)</span>
+<em>df</em>. We can plug these values in the interface and get the
+required N.</p>
+<p><img src="pics/glm/peta.2.i.png" width="628" />
+<img src="pics/glm/peta.2.a.png" width="536" /></p>
+<p>From the results table <code>A priori power analysis</code> we can
+see that the required N is 201, so we need 201 cases to achieve a power
+of .90 given an expected <span
+class="math inline">\(p\eta^2=.06\)</span>.</p>
+<p>These results are identical to the ones one would obtain in R using
+<code>pwr</code> package or emplying <a
+href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.
+See <a href="rosetta_glm_n.html">Rosetta: GLM required N</a> for
+validation.</p>
+</div>
+<div id="sensitivity-analysis" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p>Sensitivity analysis means exploring different scenarios. <span
+class="option">Power contour plot</span> visualizes the power from low
+(green) to high (yellow) as a function of possible sample sizes (x-axis)
+and effect (correlation) sizes.</p>
+<p><img src="pics/correlation/r.3.png" width="547" /></p>
+<p>In the power contour plot, we see the solid line representing the
+combinations of Sample Size (N) and effect size that yields the required
+power (in the example .90). So we know how the power will change had we
+underestimated the effect size (go down in y-axis) or underestimated the
+sample size (go left on the x-axis).</p>
+<p>The second plot we can ask is the <code>Power curve by N</code> . It
+portraits how the power (y-axis) chances as one increases the sample
+size (x-axis).</p>
+<p><img src="pics/correlation/r.4.png" width="465" /></p>
+<p>The solid line portraits the change in power as we increases sample
+size given the effect size (<span class="math inline">\(r=.2\)</span>)
+and the critical alpha (<span
+class="math inline">\(\alpha=.05\)</span>). In this example, for
+instance, we can see that if we were not able to collect more than 150
+cases, our expected power will not be more than .70 (to be
+optimistic).</p>
+</div>
+<div id="aim-power-posthoc-power" class="section level2">
+<h2>Aim: Power (posthoc power)</h2>
+<p>Post-hoc power analysis serves to evaluate the likelihood of
+obtaining statistically significant results after conducting research,
+particularly when a pre-hoc (a priori) analysis was not performed. For
+instance, let’s consider a scenario where a research study involves 25
+participants, resulting in a Pearson correlation coefficient of 0.35,
+which is found to be statistically significant. In this context,
+post-hoc power analysis assesses the probability of consistently
+obtaining significant results if the research were to be replicated
+multiple times, drawing from the same population.</p>
+<p>So, let’s fill in the field for <code>Calculate: Power</code>. The
+effect size is .35, N (Sample size) is 25. The expected power is under
+the column <code>power</code>.</p>
+<p><img src="pics/correlation/r.5.png" width="1245" /></p>
+<p>The expected power, calculated as <span
+class="math inline">\(1−\beta=.414\)</span>, indicates that it’s less
+likely to replicate the results than to obtain significant results when
+drawing from the same population and employing the same sample size. If
+there are concerns about the lack of replication, increasing the sample
+size (N) would be recommended <span class="citation">(<a
+href="#ref-schonbrodt2013sample">Schönbrodt and Perugini
+2013</a>)</span>.</p>
+</div>
+<div id="sensitivity-analysis-1" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p><strong>Power contour plot</strong> and <strong>Power curve by
+N</strong> have here the same interpretation as mentioned above.
+However, when the aim of the analysis is to find the achieved power, one
+can ask for <span class="option">Power curve by effect size</span>.</p>
+<p><img src="pics/correlation/r.6.png" width="460" /></p>
+<p>Here, we observe the relationship between the power of the test and
+the effect size. The solid curve illustrates how the power may vary
+across different effect sizes, given a fixed sample size (<span
+class="math inline">\(N=25\)</span>). In this example, it becomes
+evident that in our research one can consistently (i.e. <span
+class="math inline">\(1-\beta &gt; .90\)</span>) detect a significant
+correlation only for correlations exceeding 0.6.</p>
+</div>
+<div id="aim-effect-size-aka-another-sensitivity-analysis"
+class="section level2">
+<h2>Aim: Effect size (AKA another sensitivity analysis)</h2>
+<p>In recent years, there has been a growing interest towards the
+<em>minimum detectable effect size</em> (MDES). However, there seems to
+be some confusion surrounding its interpretation. In a proper power
+analysis aimed at determining the required sample size, utilizing a
+minimum detectable effect size can be beneficial. To clarify, the MDES
+represents the smallest effect size that a study aims to detect. It
+involves deciding the minimum value of correlation (for example, 0.08)
+that would be considered meaningful. Subsequently, the sample size is
+determined to ensure that if the observed correlation exceeds the MDES,
+it would yield a statistically significant result with a specified
+probability (<span class="math inline">\(1-\beta=power\)</span>)</p>
+<p>Computing <span class="option">Calculate: Effect size</span> serves a
+different purpose—it determines the minimum effect size that can be
+detected as significant with a specified probability (<span
+class="math inline">\(1-\beta\)</span>), given the sample size at hand.
+In essence, it is a post-hoc power analysis.</p>
+<p>While this analysis may not always be necessary, it can prove useful
+in certain scenarios. For instance, consider a situation where only a
+limited sample of 40 cases was collected due to constraints such as
+research topic, funding, or population size. In such cases, <span
+class="option">Calculate: Effect size</span> helps answer the question:
+What is the lowest effect size that would be detectable as significant
+with a certain probability (<span
+class="math inline">\(1-\beta\)</span>) given the sample size
+(N=40)?</p>
+<p>Imagine you have collected 40 cases and need to test several
+correlations. You can determine the lowest level of correlation that
+would be detectable in future studies with a probability greater than
+0.90. By inputting the available information — <span
+class="math inline">\(N=40\)</span>, required power of 0.90 (for
+instance), and an alpha of 0.05 — you can obtain valuable insights.</p>
+<p><img src="pics/correlation/r.7.png" width="1123" /></p>
+<p>Results show that any correlation less than .483 will be tested with
+a power less than .90.</p>
+</div>
+<div id="sensitivity-analysis-2" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p><strong>Power contour plot</strong> and <strong>Power curve by
+N</strong> have here the same interpretation as mentioned above.</p>
+</div>
+<div id="aim-required-alpha" class="section level2">
+<h2>Aim required alpha</h2>
+<p>I feel like nobody is going to use this option. If you are, you know
+what you are doing so we do not need a tutorial.</p>
 <h1>
 Comments?
 </h1>
@@ -384,6 +616,18 @@ or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 <p>’</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cohen1988spa" class="csl-entry">
+Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for
+the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.
+</div>
+<div id="ref-schonbrodt2013sample" class="csl-entry">
+Schönbrodt, Felix D, and Marco Perugini. 2013. <span>“At What Sample
+Size Do Correlations Stabilize?”</span> <em>Journal of Research in
+Personality</em> 47 (5): 609–12.
+</div>
+</div>
+</div>
 </div>
 
 

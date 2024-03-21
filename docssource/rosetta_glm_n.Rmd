@@ -3,6 +3,8 @@ title: "GLM: required sample size"
 topic: samplesize
 category: rosetta
 nickname: ros_glm_n
+linklabel: "Rosetta: GLM required N" 
+
 output: 
   html_document:
      includes:
