@@ -1,0 +1,153 @@
+---
+title: "Independent sample T-test: Equivalence tests"
+topic: ttest
+category: rosetta
+nickname: ttest_ind_equi
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+
+```
+
+# Power Analysis
+
+`r version("0.2.0")` 
+
+Here we compare the results of `r modulename()` with published results and other software that performs equivalence tests for the t-test.
+
+# Independent sample t-test
+
+For the independent t-test, we will refer to @lakens2017equivalence `r ext_url("Table 1","https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502906/table/table1-1948550617697177/?report=objectonly")`
+, in which sample size are reported for an equivalence test with expected value $\delta=0$ and varying "Bound", in `r modulename()` refereed to as 'equivalence limit'. @lakens2017equivalence Table 1 reports results for $\alpha=.05$ and $\alpha=.01$.  The table (available `r ext_url("here","https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502906/table/table1-1948550617697177/?report=objectonly")`) is reproduced below.
+
+`r pic("rosetta/pics/ttest_ind_equi_1.png")`
+
+The table reports the required N to obtain a sufficient power (80% or 90%) given a certain $\alpha$ and a certain limit $\Delta$ of equivalence.
+
+
+### PAMLj
+
+For the firs test, we insert an `r opt("Equivalence limit")` of $.1$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
+`r pic("rosetta/pics/ttest_ind_equi_2.png")`
+`r pic("rosetta/pics/ttest_ind_equi_3.png")`
+
+### R
+
+```{r }
+
+pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)
+
+```
+
+### G*Power
+
+`r pic("rosetta/pics/gpower.r.1.png")`
+
+
+If we round the results, they are the same
+
+
+## Example 2
+
+*   Aim = power
+*   Expected r = .4
+*   N = 52
+*   Alpha = .05
+
+    
+
+### PAMLj
+
+`r pic("rosetta/pics/r.2.png")`
+
+### R
+
+```{r }
+
+pwr::pwr.r.test(r=.4,n=52,sig.level=.05)
+
+```
+
+### G*Power
+
+`r pic("rosetta/pics/gpower.r.2.png")`
+
+Results are the same at the third decimal place, which can be consider quite good.
+
+## Example 3
+
+*   Aim = minimal effect size
+*   power = .95
+*   N = 52
+*   Alpha = .01
+
+### PAMLj
+
+`r pic("rosetta/pics/r.3.png")`
+
+### R
+
+
+```{r }
+
+pwr::pwr.r.test(n=52,power=.95,sig.level=.01)
+
+```
+
+
+### G*Power
+
+`r pic("rosetta/pics/gpower.r.3.png")`
+
+Again, rounding a the third decimal place, results are the same.
+
+## Example 4
+
+*   Aim = Sample size
+*   power = .95
+*   Expected r = .45
+*   Alpha = .01
+*   Tails = "two.sided"
+
+### PAMLj
+
+`r pic("rosetta/pics/r.4.png")`
+
+
+### R
+
+```{r }
+
+pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative="greater")
+
+```
+
+### G*power
+
+`r pic("rosetta/pics/gpower.r.4.png")`
+
+In this case, notice that `r modulename()` yield 69, which is rounded for 69.45, whereas G*Power round it up to 70. Thus, results are quite in line.
+
+# Navigate
+
+Back to `r link_pages(nickname="rosetta")`
+
+
+`r issues()`
+
+# References
+'
