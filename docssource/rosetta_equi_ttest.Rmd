@@ -36,8 +36,9 @@ For the independent t-test, we will refer to @lakens2017equivalence `r ext_url("
 
 `r pic("rosetta/pics/ttest_ind_equi_1.png")`
 
-The table reports the required N to obtain a sufficient power (80% or 90%) given a certain $\alpha$ and a certain limit $\Delta$ of equivalence.
+The table reports the required N (per group) to obtain a sufficient power (80% or 90%) given a certain $\alpha$ and a certain limit $\Delta$ of equivalence.
 
+To compare the results with R, we are going to use results from `r ext_url("powerandsamplesize.com website", "http://powerandsamplesize.com/Calculators/Compare-2-Means/2-Sample-Equivalence")`, in which the R code of their nice online calculator is public and open, so we could implemented in R to make comparisons.
 
 ### PAMLj
 
@@ -45,102 +46,75 @@ For the firs test, we insert an `r opt("Equivalence limit")` of $.1$, an expecte
 `r pic("rosetta/pics/ttest_ind_equi_2.png")`
 `r pic("rosetta/pics/ttest_ind_equi_3.png")`
 
+As expected, the results are quite similar. The 1-unit difference observed (1714 vs 1713) is simply due to the rounding, which may yield slightly different results across different software. 
+
 ### R
 
 ```{r }
 
-pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)
-
+muA=5
+muB=5
+delta=1
+kappa=1
+sd=10
+alpha=0.05
+beta=0.20
+nB=(1+1/kappa)*(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(abs(muA-muB)-delta))^2
+z=(abs(muA-muB)-delta)/(sd*sqrt((1+1/kappa)/nB))
+ceiling(nB) # 108
+(Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
 ```
 
-### G*Power
-
-`r pic("rosetta/pics/gpower.r.1.png")`
-
-
-If we round the results, they are the same
-
-
-## Example 2
-
-*   Aim = power
-*   Expected r = .4
-*   N = 52
-*   Alpha = .05
-
-    
+For $\Delta=.2$ we proceed as before.
 
 ### PAMLj
 
-`r pic("rosetta/pics/r.2.png")`
+For the firs test, we insert an <b>Equivalence limit</b> of $.1$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
+`r pic("rosetta/pics/ttest_ind_equi_4.png")`
+`r pic("rosetta/pics/ttest_ind_equi_5.png")`
 
 ### R
 
 ```{r }
 
-pwr::pwr.r.test(r=.4,n=52,sig.level=.05)
-
+muA=5
+muB=5
+delta=2
+kappa=1
+sd=10
+alpha=0.05
+beta=0.20
+nB=(1+1/kappa)*(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(abs(muA-muB)-delta))^2
+z=(abs(muA-muB)-delta)/(sd*sqrt((1+1/kappa)/nB))
+ceiling(nB) # 108
+(Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
 ```
 
-### G*Power
+Again, results are identical even after rounding.
 
-`r pic("rosetta/pics/gpower.r.2.png")`
-
-Results are the same at the third decimal place, which can be consider quite good.
-
-## Example 3
-
-*   Aim = minimal effect size
-*   power = .95
-*   N = 52
-*   Alpha = .01
+As a final test, we try $\Delta=.5$, $\alpha=.01$, power=.90, expecting  $N=128$ (see table under "exact" columns).
 
 ### PAMLj
 
-`r pic("rosetta/pics/r.3.png")`
-
-### R
-
-
-```{r }
-
-pwr::pwr.r.test(n=52,power=.95,sig.level=.01)
-
-```
-
-
-### G*Power
-
-`r pic("rosetta/pics/gpower.r.3.png")`
-
-Again, rounding a the third decimal place, results are the same.
-
-## Example 4
-
-*   Aim = Sample size
-*   power = .95
-*   Expected r = .45
-*   Alpha = .01
-*   Tails = "two.sided"
-
-### PAMLj
-
-`r pic("rosetta/pics/r.4.png")`
-
-
-### R
+For the firs test, we insert an <b>Equivalence limit</b> of $.1$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
+`r pic("rosetta/pics/ttest_ind_equi_6.png")`
+`r pic("rosetta/pics/ttest_ind_equi_7.png")`
 
 ```{r }
 
-pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative="greater")
-
+muA=5
+muB=5
+delta=5
+kappa=1
+sd=10
+alpha=0.01
+beta=0.10
+nB=(1+1/kappa)*(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(abs(muA-muB)-delta))^2
+z=(abs(muA-muB)-delta)/(sd*sqrt((1+1/kappa)/nB))
+ceiling(nB) # 108
+(Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
 ```
 
-### G*power
-
-`r pic("rosetta/pics/gpower.r.4.png")`
-
-In this case, notice that `r modulename()` yield 69, which is rounded for 69.45, whereas G*Power round it up to 70. Thus, results are quite in line.
 
 # Navigate
 
