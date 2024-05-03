@@ -31,8 +31,8 @@ Here we compare the results of `r modulename()` with published results and other
 
 # Independent sample t-test
 
-For the independent t-test, we will refer to @lakens2017equivalence `r ext_url("Table 1","https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502906/table/table1-1948550617697177/?report=objectonly")`
-, in which sample size are reported for an equivalence test with expected value $\delta=0$ and varying "Bound", in `r modulename()` refereed to as 'equivalence limit'. @lakens2017equivalence Table 1 reports results for $\alpha=.05$ and $\alpha=.01$.  The table (available `r ext_url("here","https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502906/table/table1-1948550617697177/?report=objectonly")`) is reproduced below.
+For the independent samples t-test, we will refer to @lakens2017equivalence `r ext_url("Table 1","https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502906/table/table1-1948550617697177/?report=objectonly")`
+, in which sample sizes are reported for an equivalence test with expected value $\delta=0$ and varying "Bound", in `r modulename()` refereed to as `r opt("equivalence limit")` . @lakens2017equivalence Table 1 reports results for $\alpha=.05$ and $\alpha=.01$.  The table (available `r ext_url("here","https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5502906/table/table1-1948550617697177/?report=objectonly")`) is reproduced below.
 
 `r pic("rosetta/pics/ttest_ind_equi_1.png")`
 
@@ -42,7 +42,7 @@ To compare the results with R, we are going to use results from `r ext_url("powe
 
 ### PAMLj
 
-For the firs test, we insert an `r opt("Equivalence limit")` of $.1$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
+For the firs test, we insert an `r opt("Equivalence limit")` of $.1$, an expected $\Delta_d=0$, power=.80 and $\alpha=.05$.
 `r pic("rosetta/pics/ttest_ind_equi_2.png")`
 `r pic("rosetta/pics/ttest_ind_equi_3.png")`
 
@@ -65,11 +65,11 @@ ceiling(nB) # 108
 (Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
 ```
 
-For $\Delta=.2$ we proceed as before.
+For $\Delta_d=.2$ we proceed as before.
 
 ### PAMLj
 
-For the firs test, we insert an <b>Equivalence limit</b> of $.1$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
+For the firs test, we insert an <b>Equivalence limit</b> of $.1$, an expected $\Delta_d=0$, power=.80 and $\alpha=.05$.
 `r pic("rosetta/pics/ttest_ind_equi_4.png")`
 `r pic("rosetta/pics/ttest_ind_equi_5.png")`
 
@@ -92,13 +92,15 @@ ceiling(nB) # 108
 
 Again, results are identical even after rounding.
 
-As a final test, we try $\Delta=.5$, $\alpha=.01$, power=.90, expecting  $N=128$ (see table under "exact" columns).
+As a final test, we try $\Delta_d=.5$, $\alpha=.01$, power=.90, expecting  $N=128$ (see table under "exact" columns).
 
 ### PAMLj
 
-For the firs test, we insert an <b>Equivalence limit</b> of $.1$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
+For the firs test, we insert an <b>Equivalence limit</b> of $.5$, an expected $\delta=0$, power=.80 and $\alpha=.05$.
 `r pic("rosetta/pics/ttest_ind_equi_6.png")`
 `r pic("rosetta/pics/ttest_ind_equi_7.png")`
+
+### R
 
 ```{r }
 
@@ -107,6 +109,8 @@ muB=5
 delta=5
 kappa=1
 sd=10
+(d <- (muA-muB)/sd)
+(delta_d <- (delta)/sd )
 alpha=0.01
 beta=0.10
 nB=(1+1/kappa)*(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(abs(muA-muB)-delta))^2
@@ -114,6 +118,57 @@ z=(abs(muA-muB)-delta)/(sd*sqrt((1+1/kappa)/nB))
 ceiling(nB) # 108
 (Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
 ```
+
+# Paired t-test
+
+To compare the results with R, we are going to use results from `r ext_url("powerandsamplesize.com website", "http://powerandsamplesize.com/Calculators/Compare-2-Means/2-Sample-Equivalence")`. The code is for comparing one mean with a population value, which is equivalent to compare the difference between two means in a paired sample (repeated measures).
+
+In the first example, we have As a final test, we try $\Delta_l=.5$, $\alpha=.01$, power=.90, expecting  $N=128$ (see table under "exact" columns).
+
+### R
+
+```{r }
+mu=2
+mu0=2
+delta=0.05
+sd=0.10
+(d<-(mu-mu0)/sd)
+(delta_d<-(delta)/sd)
+alpha=0.05
+beta=0.20
+(n=(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(delta-abs(mu-mu0)))^2)
+ceiling(n) # 35
+z=(abs(mu-mu0)-delta)/sd*sqrt(n)
+(Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
+```
+
+### PAMLj
+
+`r pic("rosetta/pics/ttest_paired_equi_1.png")`
+`r pic("rosetta/pics/ttest_paired_equi_2.png")`
+
+Now, we test an equivalence test assuming that the expected value is not exactly one. 
+
+### R
+
+```{r }
+mu=3
+mu0=2
+delta=2
+sd=10
+(d<-(mu-mu0)/sd)
+(delta_d<-(delta)/sd)
+alpha=0.05
+beta=0.20
+(n=(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(delta-abs(mu-mu0)))^2)
+ceiling(n) # 35
+z=(abs(mu-mu0)-delta)/sd*sqrt(n)
+(Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
+```
+### PAMLj
+
+`r pic("rosetta/pics/ttest_paired_equi_3.png")`
+`r pic("rosetta/pics/ttest_paired_equi_4.png")`
 
 
 # Navigate
