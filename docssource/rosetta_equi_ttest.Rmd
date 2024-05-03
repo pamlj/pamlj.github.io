@@ -123,7 +123,7 @@ ceiling(nB) # 108
 
 To compare the results with R, we are going to use results from `r ext_url("powerandsamplesize.com website", "http://powerandsamplesize.com/Calculators/Compare-2-Means/2-Sample-Equivalence")`. The code is for comparing one mean with a population value, which is equivalent to compare the difference between two means in a paired sample (repeated measures).
 
-In the first example, we have As a final test, we try $\Delta_l=.5$, $\alpha=.01$, power=.90, expecting  $N=128$ (see table under "exact" columns).
+In the first example, we have As a final test, we try $\Delta_d=.5$, $\alpha=.01$, power=.90, expecting  $N=128$ (see table under "exact" columns).
 
 ### R
 
