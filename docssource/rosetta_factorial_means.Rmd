@@ -4,7 +4,6 @@ topic: samplesize
 category: rosetta
 nickname: ros_fac_means
 linklabel: "Rosetta: GLM required N" 
-
 output: 
   html_document:
      includes:
@@ -16,6 +15,8 @@ bibliography:
      - bib.bib
 link-citations: true
         
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -60,236 +61,114 @@ We can use the dataset `factorial` which comes with `r modulename()` in the `r j
 
 `r pic("rosetta/pics/factorial/facmeans.5.png")`
 
+Data describe the means and standard deviations for a 2X3X2 design. 
+
 `r pic("rosetta/pics/factorial/facmeans.data.png")`
 
+In `Factorial designs power analysis` from `Expected Means` we can simply input the factors, indicating also the column representing the means and the one representing the standard devations. 
 
-*   Aim = Sample Size
-*   $p\eta^2$   = 0.05665751
-*   $f$              = `r round(sqrt(0.05665751/(1-0.05665751)),digits=5)`
-*   Effect DF       = 4
-*   Number of groups in the design = 36
-*   Model  DF       = 35
-*   Power           =  .475627
-*   Alpha           = .05
-*   Correct results: N = 108
+`r pic("rosetta/pics/factorial/facmeans.6.png")`
 
-## G*Power
+For the purpose of computing the expected power, we can set the sample size to 240, corresponding to 20 cases per cell.
 
-First notice that for this problem, GPower offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size . $f$ is simply the square root of $f^2$ so it can be computed from the partial Eta-squared as  $f=\sqrt{p\eta^2/(1-p\eta^2)}$ .
+`r pic("rosetta/pics/factorial/facmeans.7.png")`
 
-Plugging in the parameters we obtain:
-
-`r pic("rosetta/pics/gpower.n.glm.3.png")`
+`r modulename()` computes the expected effect sizes and the expected power for all factors effects and their interaction.
 
 
-## R
+For comparison, we can use `Superpower` employing the following code:
 
-As we have seen in `r link_pages(nickname="ros_glm_posthoc")`, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an approximated estimation of the sample size by computing the N employing the whole  model DF $m=35$, yielding $v=N+m+1$
-
-```{r }
-f<-0.2450722
-f2<-f^2
-u<-4
-m<-35
-power=.475627
-(res<-pwr::pwr.f2.test(f2=f2,u=4, power=power,sig.level=.05))
-N<-round(res$v+m+1)
-N
-
-```
-
-As expected, the required sample size obtained in `pwr.f2.test` is larger than the one obtained in GPower.
-
-## PAMLj
-
-We plug in the partial Eta-squared and the required parameters, and we obtain N=108, as in GPower.
-
-`r pic("rosetta/pics/factorial/facpeta.n.1.png")`
-`r pic("rosetta/pics/factorial/facpeta.n.2.png")`
-
-To obtain a practically equivalent result of the one obtained with  `pwr.f2.test`, we can simply unselect the `G*Power NCP` option.
-
-`r pic("rosetta/pics/factorial/facpeta.n.3.png")`
-`r pic("rosetta/pics/factorial/facpeta.n.4.png")`
-
-
-# Repeated Measures ANOVA 
-
-To test the `Factorial design power analysis` sub-module for repeated measures or mixed design, we can compare results with GPower and `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`. However, in G*Power the default effect size used for repeated-measures effects is defined in a different way as compared with  `Factorial design power analysis` sub-module, Superpower or even SPSS. Moreover, `Superpower` package requires to input the expected means of the design cells and only produce estimation of power,not the required N. Nonetheless, we can still make some useful comparison.
-
-We start with a 2x2 repeated measure design as described in `r ext_url("Caldwell et al. Superpower 2x2 within-within example","https://aaroncaldwell.us/SuperpowerBook/repeated-measures-anova.html#part-4")`. They tested a 2x2 design with 25 participants, with interaction effect as follows:
-
-*   Aim = Power
-*   AXB $p\eta^2$ = 0.1428571
-*   $f$             = `r round(sqrt(0.1428571/(1-0.1428571)),digits=5)`
-*   Effect DF       = 1
-*   Number of groups in the design = 1
-*   N               =   25
-*   Alpha           =  .05
-*   Correct results: AxB power =.484
-
-## Superpower
-
-In the `Superpower` package, we can obtain the results with the following code:
-
-```{r }
-mu = c(700, 670, 670, 700) 
-n <- 25
-sd <- 150
-r <- 0.75
-string = "2w*2w"
-alpha_level <- 0.05
-design_result <- Superpower::ANOVA_design(design = string,
-                              n = n, 
-                              mu = mu, 
-                              sd = sd, 
-                              r = r, plot=FALSE)
-exact_result <- Superpower::ANOVA_exact(design_result,
-                            alpha_level = alpha_level,
-                            verbose = FALSE)
-zapsmall(exact_result$main_results)
-
-```
-## G*Power
-
-As regard `G*Power`, the correct input requires some reasoning. First, `G*Power` uses different definition of the effect size. Both `Superpower` and `r modulename()` use the standard partial-eta squared, the same effect size one would find in SPSS repeated-measure Anova analysis. To set `G*Power` to use this effect size, we selected the appropriate option in `Options`.
-
-`r pic("rosetta/pics/factorial/facpeta.n.5.png")`
-
-Furtheremore, `G*Power` requires in input the number of repeated measures and the number of groups in the design. Because the example is a completely repeated measure design, the number of groups is simply 1. However, even though the interaction has 4 repeated measures, the actual degrees of freedom are only 1, because for the interaction we have $DF=(a-1)(b-1)$, where $a$ and $b$ are the number of levels of the factors. Now, to "trick" `G*Power` to compute the power for an effect with 1 DF, we should declare that the repeated measures levels are 2. After all, a 2-way interaction in a repeated measure design is simply the differences between two difference values, so the setup is not so far away from the actual design. That, indeed, produces the correct output.
-
-`r pic("rosetta/pics/factorial/facpeta.n.6.png")`
-
-## PAMLj
-
-The setup in `r modulename()` is straightforward and produced the expected results.
-
-`r pic("rosetta/pics/factorial/facpeta.n.7.png")`
-`r pic("rosetta/pics/factorial/facpeta.n.8.png")`
-
-
-## Required N
-
-We can use the same design to test the convergence of G*Power and `r modulename()` in computing the required N. 
-
-*   Aim = N
-*   AXB $p\eta^2$ = 0.1428571
-*   $f$             = `r round(sqrt(0.1428571/(1-0.1428571)),digits=5)`
-*   Effect DF       = 1
-*   Number of groups in the design = 1
-*   Power           =   .90
-*   Alpha           =  .05
-*   Correct results: AxB N =66
-
-### G*Power
-
-`r pic("rosetta/pics/factorial/facpeta.n.9.png")`
-
-### PAMLj
-
-`r pic("rosetta/pics/factorial/facpeta.n.11.png")`
-`r pic("rosetta/pics/factorial/facpeta.n.12.png")`
-
-Results are identical with required $N=66$. As an additional test, we can ask `Superpower` to compute the power fo $N=66$, expecting an estimated power very similar to .90.
-
-
-```{r }
-mu = c(700, 670, 670, 700) 
-n <- 66
-sd <- 150
-r <- 0.75
-string = "2w*2w"
-alpha_level <- 0.05
-design_result <- Superpower::ANOVA_design(design = string,
-                              n = n, 
-                              mu = mu, 
-                              sd = sd, 
-                              r = r, plot=FALSE)
-exact_result <- Superpower::ANOVA_exact(design_result,
-                            alpha_level = alpha_level,
-                            verbose = FALSE)
-zapsmall(exact_result$main_results)
-
-```
-Interestengly, if we user `Superpower` simulation-based power estimation, we get an even closer result to the one obtained in `r modulename()`.
-
-
-```{r }
-mu = c(700, 670, 670, 700) 
-n <- 66
-sd <- 150
-r <- 0.75
-string = "2w*2w"
-alpha_level <- 0.05
-design_result <- Superpower::ANOVA_design(design = string,
-                              n = n, 
-                              mu = mu, 
-                              sd = sd, 
-                              r = r,plot=FALSE)
-#exact_result <- Superpower::ANOVA_power(design_result,
-#                            alpha_level = alpha_level,
-#                            verbose = FALSE,seed=12^3)
-zapsmall(exact_result$main_results)
-
-```
-
-# Mixed ANOVA
-
-Let's now assume that the design we just analyzed was a mixed between-within design. We can use an example in `r ext_url("Caldwell et al. Superpower ComplexMixed Anova example","https://aaroncaldwell.us/SuperpowerBook/mixed-anova.html#b4w-design")`. Here we have 4 (Time) x 2 (Treatment) design, with Time with four repeated measures and Treatment with two groups. Differently from the example in Caldwell et al., we assume 60 participants, so the power estimates do not ceil up to 1. The setup is the following:
-
-*   Aim = power
-*   Treatment $p\eta^2$             = 0.01550 (df=1)
-*   Time $p\eta^2$                  = 0.04581 (df=3)	
-*   Treatment X Time $p\eta^2$      = 0.02347 (df=3)
-*   Number of groups in the design = 2
-*   N               =   60 (30 per group)
-*   Alpha           =  .05
-
-Running the analysis with `Superpower` we obtain.
 
 ```{r}
 
-cor_1 <- matrix(c(1,.6,.491,.399,
-                  .6,1,.495,.402,
-                  .491,.495,1,.491,
-                  .399,.402,.491,1), nrow=4)
 
-cor_2 <- cor_1*0
-
-pain_cor_mat <- cbind(rbind(cor_1,cor_2),
-                      rbind(cor_2,cor_1))
-
-design_result <- Superpower::ANOVA_design("2b*4w",
-                              n = 30,
-                              mu = c(2.4, 2.38, 2.05, 1.90,
-                                     2.4, 2.39, 2.36, 2.30),
-                              sd = .92,
-                              r = pain_cor_mat,
-                              labelnames = c("Treatment", "sensory", "standard",
-                                             "TIME", "t1", "t2", "t3", "t4"),
-                              plot = FALSE)
-
-exact_result <- Superpower::ANOVA_exact(design_result,
-                            alpha_level = alpha_level,
+ds<-pamlj::factorial
+std<-8
+n<-20
+des_str<-"2b*3b*2b"
+design <- Superpower::ANOVA_design(design = des_str, 
+                              #sample size per group 
+                              n = n, 
+                              #pattern of means
+                              mu =ds$means,
+                              sd = std,
+                              plot=FALSE
+                       ) 
+exact_result <- Superpower::ANOVA_exact(design,
+                            alpha_level = .05,
                             verbose = FALSE)
 zapsmall(exact_result$main_results)
 
-exact_result$aov_result
 
 ```
-which align quite well with the `r modulename()` results, with some small differences mostly due to approximation.
 
-**Main effect of Treatment**
 
-`r pic("rosetta/pics/factorial/facpeta.n.13.png")`
+It is easy to check that the expected power is almost identical (apart for rounding) for all effects. It is worth noticing that despite the expected power
+is identical for the two software, they produce different effect size indices. This is due to the way the two software compute the effect sizes. `Superpower` build a dataset of the input sample size and estimate the effect size, whereas `r modulename()` computes the estimated effect size in the population. Because these effect size are upward biased, in small to moderate sample size they tend to be larger than in the population. Indeed, if we ask `Superpower` to compute the effect sizes for a very large sample, the estimated indices converge to the ones obtained in `r modulename()`.
 
-**Main effect of Time**
+```{r}
 
-`r pic("rosetta/pics/factorial/facpeta.n.14.png")`
+ds<-pamlj::factorial
+std<-8
+n<-5000
+des_str<-"2b*3b*2b"
+design <- Superpower::ANOVA_design(design = des_str, 
+                              #sample size per group 
+                              n = n, 
+                              #pattern of means
+                              mu =ds$means,
+                              sd = std,
+                              plot=FALSE
+                       ) 
+exact_result <- Superpower::ANOVA_exact(design,
+                            alpha_level = .05,
+                            verbose = FALSE)
+zapsmall(exact_result$main_results)
 
-**Interaction**
 
-`r pic("rosetta/pics/factorial/facpeta.n.15.png")`
+```
+
+
+# Repeated measures design
+
+Let's now assume that the design we have analyzed before was a repeated measures design. In repeated measures designs, to compute the power parameters from means and standard deviations, one needs to anticipate the average correlations among repeated measures. Let's assume that the repeated measures correlate, on average, .2. We can setup the analysis as before, but in the `Repeated Measures` tab, we can declare which factor is within-subjects and input the expected correlation. In this example, we set the sample size to 50.
+
+`r pic("rosetta/pics/factorial/facmeans.8.png")`
+
+Having set the factors as repeated measures factors and with a non-zero correlation changes the effect size estimation and the estimated power.
+
+`r pic("rosetta/pics/factorial/facmeans.9.png")`
+
+We should also note that the residuals degrees of freedom are now different, and they depended on the sample size and degrees of freedom of the effect. 
+
+For comparison, we run the same analysis with `Superpower`.
+
+
+```{r}
+
+ds<-pamlj::factorial
+std<-8
+n<-50
+des_str<-"2w*3w*2w"
+r<-.2
+design <- Superpower::ANOVA_design(design = des_str, 
+                              #sample size per group 
+                              n = n, 
+                              #pattern of means
+                              mu =ds$means,
+                              r=r,
+                              sd = std,
+                              plot=FALSE
+                       ) 
+exact_result <- Superpower::ANOVA_exact(design,
+                            alpha_level = .05,
+                            verbose = FALSE)
+zapsmall(exact_result$main_results)
+
+
+```
+
+We can see that the results are pretty similar. The difference is due to the fact that `Superpower` estimates the power based on the sample estimates of the effect size, whereas `r modulename()` uses the population effect size. 
 
 
 `r issues()`
