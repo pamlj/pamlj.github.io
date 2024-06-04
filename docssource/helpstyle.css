@@ -22,11 +22,12 @@ h1 {
 
 }
 
-.section h1 {
-  padding-top: 155px !important; 
-  margin-top: -155px !important; 
-  
+p {
+    
+    line-height: 1.5;
+    font-size: 1.1;
 }
+
 
 .section h2 {
   font-size: 20px;

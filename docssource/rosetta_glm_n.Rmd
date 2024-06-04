@@ -26,7 +26,7 @@ mcdocs_init()
 
 # Power Analysis for the General Linear Model
 
-`r version("0.1.0")` 
+`r version("0.2.0")` 
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 
@@ -135,7 +135,7 @@ Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 lev
 *   Effect DF       = 4
 *   Model  DF       = 35
 *   Power           =  .475627
-*   Alpha           = .01
+*   Alpha           = .05
 *   Correct results: N = 108
 
 ### G*Power
@@ -149,12 +149,13 @@ Plugging in the parameters we obtain:
 
 ### R
 
-As we have seen in `r link_pages(nickname="ros_glm_posthoc")`, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an approximated estimation of the sample size by computing the N employing the whole  model DF $m=35$, yielding $v=N+m+1$
+As we have seen in `r link_pages(nickname="ros_glm_posthoc")`, `pwr.f2.test` command will underestimate the power due to the fact that the non centrality parameter is smaller than the one used in G*Power.  Nonetheless, we can get an approximated estimation of the sample size by computing the N employing the whole  model DF $m=35$, yielding $N=v+m+1$
 
 ```{r }
 f<-0.2450722
 u<-4
 m<-35
+f2<-f^2
 power=.475627
 (res<-pwr::pwr.f2.test(f2=f2,u=4, power=power,sig.level=.05))
 N<-round(res$v+m+1)

@@ -367,7 +367,7 @@ div.tocify {
 class="section level1">
 <h1>Power Analysis for the General Linear Model</h1>
 <p><span class="version"> <span class="versiontitle"> PAMLj version ≥
-</span> 0.1.0 </span></p>
+</span> 0.2.0 </span></p>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
 with other software that performs power analysis. In particular, we will
 compare our results with <a
@@ -544,7 +544,7 @@ class="math inline">\(N = 108\)</span>.</p>
 <li>Effect DF = 4</li>
 <li>Model DF = 35</li>
 <li>Power = .475627</li>
-<li>Alpha = .01</li>
+<li>Alpha = .05</li>
 <li>Correct results: N = 108</li>
 </ul>
 <div id="gpower-2" class="section level3">
@@ -567,23 +567,24 @@ the power due to the fact that the non centrality parameter is smaller
 than the one used in G*Power. Nonetheless, we can get an approximated
 estimation of the sample size by computing the N employing the whole
 model DF <span class="math inline">\(m=35\)</span>, yielding <span
-class="math inline">\(v=N+m+1\)</span></p>
+class="math inline">\(N=v+m+1\)</span></p>
 <pre class="r"><code>f&lt;-0.2450722
 u&lt;-4
 m&lt;-35
+f2&lt;-f^2
 power=.475627
 (res&lt;-pwr::pwr.f2.test(f2=f2,u=4, power=power,sig.level=.05))</code></pre>
 <pre><code>## 
 ##      Multiple regression power calculation 
 ## 
 ##               u = 4
-##               v = 84.92006
-##              f2 = 0.07142857
+##               v = 101.0071
+##              f2 = 0.06006038
 ##       sig.level = 0.05
 ##           power = 0.475627</code></pre>
 <pre class="r"><code>N&lt;-round(res$v+m+1)
 N</code></pre>
-<pre><code>## [1] 121</code></pre>
+<pre><code>## [1] 137</code></pre>
 <p>As expected, the required sample size obtained in
 <code>pwr.f2.test</code> is larger than the one obtained in GPower.</p>
 </div>
