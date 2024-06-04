@@ -129,7 +129,7 @@ zapsmall(exact_result$main_results)
 ```
 
 
-# Repeated measures design
+# Repeated measures designs
 
 Let's now assume that the design we have analyzed before was a repeated measures design. In repeated measures designs, to compute the power parameters from means and standard deviations, one needs to anticipate the average correlations among repeated measures. Let's assume that the repeated measures correlate, on average, .2. We can setup the analysis as before, but in the `Repeated Measures` tab, we can declare which factor is within-subjects and input the expected correlation. In this example, we set the sample size to 50.
 
@@ -168,7 +168,7 @@ zapsmall(exact_result$main_results)
 
 ```
 
-We can see that the results are pretty similar. The difference is due to the fact that `Superpower` estimates power based on the sample estimates of the effect size, whereas `r modulename()` uses the population effect size. To add an additional proof, we can ask GPower to compute the power for a Repeated measure effect with effect size $p\eta^2=.0818$, 1 DF (two measures), all within effects (1 group) with $N=50$ (and SPSS effect size, cf. `r link_pages("ros_fac_peta")`.
+We can see that the results are pretty similar. The difference is due to the fact that `Superpower` estimates power based on the sample estimates of the effect size, whereas `r modulename()` uses the population effect size. To add an additional proof, we can ask GPower to compute the power for a Repeated measure effect with effect size $p\eta^2=.0818$, 1 DF (two measures), all within effects (1 group) with $N=50$ (and SPSS effect size, cf. `r link_pages("ros_fac_peta")`).
 
 `r pic("rosetta/pics/factorial/facmeans.10.png")`
 

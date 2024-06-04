@@ -3,7 +3,7 @@ title: "Factorial design: power from effect size"
 topic: samplesize
 category: rosetta
 nickname: ros_fac_peta
-linklabel: "Rosetta: GLM required N" 
+linklabel: "Rosetta: Factorial power from effect size" 
 
 output: 
   html_document:
