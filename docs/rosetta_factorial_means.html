@@ -540,9 +540,19 @@ zapsmall(exact_result$main_results)</code></pre>
 ## b:c   68.95522             0.07342 0.28149        7.76530
 ## a:b:c 51.50017             0.05126 0.23244        5.29460</code></pre>
 <p>We can see that the results are pretty similar. The difference is due
-to the fact that <code>Superpower</code> estimates the power based on
-the sample estimates of the effect size, whereas <span
-class="modulename">PAMLj</span> uses the population effect size.</p>
+to the fact that <code>Superpower</code> estimates power based on the
+sample estimates of the effect size, whereas <span
+class="modulename">PAMLj</span> uses the population effect size. To add
+an additional proof, we can ask GPower to compute the power for a
+Repeated measure effect with effect size <span
+class="math inline">\(p\eta^2=.0818\)</span>, 1 DF (two measures), all
+within effects (1 group) with <span class="math inline">\(N=50\)</span>
+(and SPSS effect size,
+cf. <a href="rosetta_factorial_peta.html">Rosetta: GLM required
+N</a>.</p>
+<p><img src="rosetta/pics/factorial/facmeans.10.png" width="932" /></p>
+<p>Results are indeed identical to <span class="modulename">PAMLj</span>
+results.</p>
 <h1>
 Comments?
 </h1>
