@@ -1,5 +1,5 @@
 ---
-title: "Factorial design: power from means and SD"
+title: "Factorial designs: power from means and SD"
 topic: samplesize
 category: rosetta
 nickname: ros_fac_means

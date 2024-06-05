@@ -1,5 +1,5 @@
 ---
-title: "Factorial design: power from effect size"
+title: "Factorial designs: power from effect size"
 topic: samplesize
 category: rosetta
 nickname: ros_fac_peta
