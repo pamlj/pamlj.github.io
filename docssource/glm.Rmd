@@ -1,5 +1,5 @@
 ---
-title: "Generali Linear Model"
+title: "General Linear Model"
 topic: glm
 category: help
 output: 
@@ -20,9 +20,6 @@ link-citations: true
 library(mcdocs)
 mcdocs_init()
 ```
-
-Power Analysis
-
 
 :::{ .version}
 0.2.0

@@ -3,7 +3,7 @@ title: "Factorial designs: power from means and SD"
 topic: samplesize
 category: rosetta
 nickname: ros_fac_means
-linklabel: "Rosetta: GLM required N" 
+linklabel: "Rosetta: Factorial designs from means" 
 bibliography: 
      - bib.bib
 link-citations: true
@@ -19,7 +19,9 @@ mcdocs_init()
 
 ```
 
-# Power Analysis for the Factorial Designs
+:::version
+0.2.0
+:::
 
 `r version("0.2.0")` 
 

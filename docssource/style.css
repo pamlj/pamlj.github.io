@@ -84,4 +84,11 @@ span.little {
 }
 
 
+#sidebar > h2 > a {
+    display:inline;
+}
+
+#navbut  {
+    float: right;
+}
 
