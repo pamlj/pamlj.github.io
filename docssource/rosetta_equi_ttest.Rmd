@@ -18,7 +18,11 @@ mcdocs_init()
 
 # Power Analysis
 
-`r version("0.2.0")` 
+
+:::{ .version}
+0.2.0
+:::
+
 
 Here we compare the results of `r modulename()` with published results and other software that performs equivalence tests for the t-test.
 

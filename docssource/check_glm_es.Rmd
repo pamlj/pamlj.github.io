@@ -24,7 +24,10 @@ mcdocs_init()
 
 # Consistency checks
 
-`r version("0.1.0")` 
+
+:::{ .version}
+0.2.0
+:::
 
 Here we check that the options provided by `r modulename()` to help constructing the power analysis yield correct results.
 

@@ -23,7 +23,11 @@ mcdocs_init()
 
 Power Analysis
 
-`r version("0.1.0")` 
+
+:::{ .version}
+0.2.0
+:::
+
 
 `r pic("pics/glm/ui.png")`
 
