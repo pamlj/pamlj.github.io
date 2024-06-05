@@ -3,13 +3,9 @@ title: "PAMLj: rosetta"
 topic: rosetta
 category: help
 nickname: rosetta
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
+output:
+  rmdformats::readthedown:
+    highlight: kate
 bibliography: 
      - bib.bib
 link-citations: true

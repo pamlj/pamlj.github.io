@@ -14,10 +14,7 @@ navbar:
   - text: "View on Github"
     href: https://github.com/pamlj/pamlj
 output:
-  html_document:
-    css: 
-     - style.css
-     - helpstyle.css
-    theme: flatly
+    rmdformats::readthedown:
+       highlight: kate
 
     
