@@ -1,14 +1,8 @@
 ---
-title: "Generali Linear Model"
+title: "General Linear Model"
 topic: glm
 category: help
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
+
 bibliography: 
      - bib.bib
 link-citations: true

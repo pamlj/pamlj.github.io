@@ -1,17 +1,10 @@
 ---
 title: "GLM: required sample size"
+author: Marcello Gallucci
 topic: samplesize
 category: rosetta
 nickname: ros_glm_n
 linklabel: "Rosetta: GLM required N" 
-
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
@@ -41,7 +34,12 @@ T he manual estimates the post-hoc power for the F-test associated to the $R^2$ 
 *   Aim = Sample Size
 *   Expected $R^2$    = .10
 *   $f^2$              = `r round(0.10/(1-.10),digits=4)`
-*   power           = .6735
+*   power      html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false       = .6735
 *   Effect DF       = 5
 *   Model  DF       = 5
 *   Alpha           = .05
