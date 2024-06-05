@@ -31,7 +31,7 @@ span.keytitle {
   font-style: normal;
 }
 
-span.version {
+div.version {
   display: inline-block;
   padding: 5px;
   color: #FFFFFF;
@@ -40,6 +40,11 @@ span.version {
   border-radius: 5px; 
   background-color: green;
   margin-bottom: 10px;
+}
+
+div.version p {
+    margin-bottom: 0px !important;
+    
 }
 
 span.versiontitle {
@@ -92,4 +97,6 @@ span.little {
   font-style: normal;
   font-size: 15px;
 }
+
+
 

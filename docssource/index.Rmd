@@ -1,15 +1,9 @@
 ---
 title: "PAMLj"
+author: Marcello Gallucci
 topic: pamlj
 category: help
 nickname: index
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
@@ -25,7 +19,7 @@ mcdocs_init()
 # Power analysis for linear models in jamovi
 
 
-Version 0.1.*
+`r version("0.2.0")` 
 
 <center>
 <img width="800" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
@@ -34,6 +28,10 @@ Version 0.1.*
 
 Estimation of  power parameters (required sample size, posthoc power, minimal detectable effect size and required alpha) for  General Linear Models.
 
+:::{ .version}
+a note
+this is important
+:::
 
 * Correlation
 * Regression

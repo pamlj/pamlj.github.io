@@ -3,13 +3,6 @@ title: "Independent sample T-test: Equivalence tests"
 topic: ttest
 category: rosetta
 nickname: ttest_ind_equi
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
@@ -61,7 +54,7 @@ alpha=0.05
 beta=0.20
 nB=(1+1/kappa)*(sd*(qnorm(1-alpha)+qnorm(1-beta/2))/(abs(muA-muB)-delta))^2
 z=(abs(muA-muB)-delta)/(sd*sqrt((1+1/kappa)/nB))
-ceiling(nB) # 108
+ceiling(nB) 
 (Power=2*(pnorm(z-qnorm(1-alpha))+pnorm(-z-qnorm(1-alpha)))-1)
 ```
 

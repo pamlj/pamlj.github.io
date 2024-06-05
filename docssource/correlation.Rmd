@@ -1,14 +1,8 @@
 ---
 title: "Correlation"
+author: Marcello Gallucci
 topic: correlation
 category: help
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
@@ -27,7 +21,7 @@ Power Analysis
 
 `r pic("pics/correlation/ui.png")`
 
-# Correlation
+
 
 `Correlation` allows for computing power parameters for testing the Pearson or Spearman correlation coefficient. The initial step is to determine the objective of the analysis ( _aim_ ). Further details regarding different objectives can be found in the `Info` results field.
 
@@ -39,7 +33,7 @@ For correlation analysis, it also suggests the following:
 
 We start with the first aim, finding the required sample size N.
 
-## Aim: N (Required sample size)
+# Aim: N (Required sample size)
 
 
 When estimating the required sample size for planned research, it's essential to anticipate an effect size, which can be derived from pilots, meta-analyses, etc., (but see @albers2017biased). In the case of correlation analysis, the effect size corresponds to the Pearson correlation coefficient.
@@ -76,7 +70,7 @@ The solid line portraits the change in power as we increases sample size given t
 In this example, for instance,  we can see that if we were not able to collect more than 150 cases, our expected power will not be more than .70 (to be optimistic).
 
 
-## Aim: Power (posthoc power)
+# Aim: Power (posthoc power)
 
 Post-hoc power analysis serves to evaluate the likelihood of obtaining statistically significant results after conducting research, particularly when a pre-hoc (a priori) analysis was not performed. For instance, let's consider a scenario where a research study involves 25 participants, resulting in a Pearson correlation coefficient of 0.35, which is found to be statistically significant. In this context, post-hoc power analysis assesses the probability of consistently obtaining significant results if the research were to be replicated multiple times, drawing from the same population.
 
@@ -94,7 +88,9 @@ __Power contour plot__ and __Power curve by N__ have here the same interpretatio
 
 Here, we observe the relationship between the power of the test and the effect size. The solid curve illustrates how the power may vary across different effect sizes, given a fixed sample size ($N=25$). In this example, it becomes evident that in our research one can consistently (i.e. $1-\beta > .90$) detect a significant correlation only for correlations exceeding 0.6.
 
-## Aim: Effect size (AKA another sensitivity analysis)
+# Aim: Effect size
+
+(AKA another sensitivity analysis)
 
 In recent years, there has been a growing interest towards the _minimum detectable effect size_ (MDES). However, there seems to be some confusion surrounding its interpretation. In a proper power analysis aimed at determining the required sample size, utilizing a minimum detectable effect size can be beneficial. To clarify, the MDES represents the smallest effect size that a study aims to detect. It involves deciding the minimum value of correlation (for example, 0.08) that would be considered meaningful. Subsequently, the sample size is determined to ensure that if the observed correlation exceeds the MDES, it would yield a statistically significant result with a specified probability ($1-\beta=power$)
 
