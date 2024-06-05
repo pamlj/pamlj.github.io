@@ -4,14 +4,6 @@ topic: samplesize
 category: rosetta
 nickname: ros_fac_peta
 linklabel: "Rosetta: Factorial power from effect size" 
-
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true

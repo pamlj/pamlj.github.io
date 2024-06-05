@@ -4,13 +4,6 @@ topic: posthoc
 category: rosetta
 nickname: ros_glm_posthoc
 linklabel: "Rosetta: GLM posthoc power" 
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true

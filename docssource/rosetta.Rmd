@@ -4,9 +4,6 @@ author: Marcello Gallucci
 topic: rosetta
 category: help
 nickname: rosetta
-output:
-  rmdformats::readthedown:
-    highlight: kate
 bibliography: 
      - bib.bib
 link-citations: true

@@ -4,13 +4,6 @@ topic: samplesize
 category: rosetta
 nickname: ros_fac_means
 linklabel: "Rosetta: GLM required N" 
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
