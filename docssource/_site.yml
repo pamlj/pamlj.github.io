@@ -1,4 +1,5 @@
 name: "pamlj-website"
+author: Marcello
 output_dir: "../docs"
 navbar:
   title: "PAMLj"
@@ -16,5 +17,7 @@ navbar:
 output:
     rmdformats::readthedown:
        highlight: kate
+       toc: 3
+       css: style.css
 
     
