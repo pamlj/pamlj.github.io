@@ -92,3 +92,6 @@ span.little {
     float: right;
 }
 
+#comments > h1 {
+    display: none;
+}
