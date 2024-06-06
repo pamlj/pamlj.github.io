@@ -1,5 +1,6 @@
 ---
 title: "Independent sample T-test: Equivalence tests"
+author: Marcello Gallucci
 topic: ttest
 category: rosetta
 nickname: ttest_ind_equi
