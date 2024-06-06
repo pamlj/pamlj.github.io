@@ -114,6 +114,11 @@ Results show that any correlation less than .483 will be tested with a power les
 __Power contour plot__ and __Power curve by N__ have here the same interpretation as mentioned above. 
 
 
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="index")` 
+:::
 
 
 `r issues()`

@@ -118,4 +118,8 @@ Please see `r link_pages(nickname="check_es")` for details.
 
 `r issues()`
 
-'
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="index")` 
+:::
