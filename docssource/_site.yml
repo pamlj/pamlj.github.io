@@ -23,4 +23,6 @@ output:
           - https://use.fontawesome.com/releases/v5.15.4/css/all.css
           - style.css
        includes:
-           in_header: my.js
+           in_header: 
+                     - my.js
+                     - ganalytics.txt
