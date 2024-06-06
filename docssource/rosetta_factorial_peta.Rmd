@@ -8,6 +8,8 @@ bibliography:
      - bib.bib
 link-citations: true
         
+editor_options: 
+  chunk_output_type: console
 ---
 
 

@@ -23,7 +23,8 @@ Here we compare the results of `r modulename()` with other software that perform
 We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), then we test some other design and analysis. In all these example the aim of the analysis is to find the post hoc power given an effect size, a sample size and the design characteristics.
 
 # Multiple regression
-<i> Multiple Regression - omnibus (deviation of R 2 from zero), fixed model, p. 33 </i>
+
+<i> Multiple Regression - omnibus (deviation of R 2 from zero), fixed model, p. 33 </i>
 
 Here we estimate the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. Five predictors means that the model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$.
 

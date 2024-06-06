@@ -263,6 +263,12 @@ SD</a></h2>
       <li><a href="#repeated-measures-designs"
       id="toc-repeated-measures-designs">Repeated measures
       designs</a></li>
+      <li><a href="#mixed-anova" id="toc-mixed-anova">Mixed ANOVA</a>
+      <ul>
+      <li><a href="#expected-power" id="toc-expected-power">Expected
+      Power</a></li>
+      <li><a href="#required-n" id="toc-required-n">Required N</a></li>
+      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -279,7 +285,12 @@ Gallucci</p>
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
 <div class="version">
-<p>0.2.0</p>
+<p>
+0.2.0
+</p>
+</div>
+<div style="clear:both">
+
 </div>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
 with other software that performs power analysis. In particular, we will
@@ -311,7 +322,7 @@ together with the power parameters.</p>
 results, using its interface for inputing the means and the standard
 deviations.</p>
 <p><img src="rosetta/pics/factorial/facmeans.4.png" width="876" /></p>
-<p>Results are almost the same, with only one unit of difference.</p>
+<p>Results are the same.</p>
 <p>Unfortunately, G*Power does not allow to input means and sd other
 than for one-way between-subjects designs, so we cannot test <span
 class="modulename">PAMLj</span> for more complex designs. For this
@@ -371,14 +382,14 @@ following code:</p>
 (apart for rounding) for all effects. It is worth noticing that despite
 the expected power is identical for the two software, they produce
 different effect size indices. This is due to the way the two software
-compute the effect sizes. <code>Superpower</code> build a dataset of the
-input sample size and estimate the effect size, whereas <span
-class="modulename">PAMLj</span> computes the estimated effect size in
-the population. Because these effect size are upward biased, in small to
-moderate sample size they tend to be larger than in the population.
-Indeed, if we ask <code>Superpower</code> to compute the effect sizes
-for a very large sample, the estimated indices converge to the ones
-obtained in <span class="modulename">PAMLj</span>.</p>
+compute the effect sizes. <code>Superpower</code> builds a dataset of
+the input sample size and estimate the effect sizes, whereas <span
+class="modulename">PAMLj</span> computes the estimated effect sizes in
+the population. Because these effect size indices are upward biased, in
+small to moderate sample sizes they tend to be larger than in the
+population. Indeed, if we ask <code>Superpower</code> to compute the
+effect sizes for a very large sample, the estimated indices converge to
+the ones obtained in <span class="modulename">PAMLj</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">5000</span></span>
@@ -414,13 +425,13 @@ assume that the repeated measures correlate, on average, .2. We can
 setup the analysis as before, but in the <code>Repeated Measures</code>
 tab, we can declare which factor is within-subjects and input the
 expected correlation. In this example, we set the sample size to 50.</p>
-<p><img src="rosetta/pics/factorial/facmeans.8.png" width="564" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.8.png" width="563" /></p>
 <p>Having set the factors as repeated measures factors and with a
 non-zero correlation changes the effect size estimation and the
 estimated power.</p>
 <p><img src="rosetta/pics/factorial/facmeans.9.png" width="548" /></p>
 <p>We should also note that the residuals degrees of freedom are now
-different, and they depended on the sample size and degrees of freedom
+different, because they depend on the sample size and degrees of freedom
 of the effect.</p>
 <p>For comparison, we run the same analysis with
 <code>Superpower</code>.</p>
@@ -464,6 +475,82 @@ effect size</a>).</p>
 <p><img src="rosetta/pics/factorial/facmeans.10.png" width="937" /></p>
 <p>Results are indeed identical to <span class="modulename">PAMLj</span>
 results.</p>
+</div>
+<div id="mixed-anova" class="section level1">
+<h1>Mixed ANOVA</h1>
+<div id="expected-power" class="section level2">
+<h2>Expected Power</h2>
+<p>We can now test the module with a mixed design, with one repeated
+measure factor (say A) and the other two (B and C) as between-subjects
+factors. This yields a design with 6 groups, so we can set the sample
+size to 120, corresponding to 20 cases per group. As for the
+correlations among repeated measures, we can set it to .5. In PAMLj, we
+simply set up the input as follows.</p>
+<p><img src="rosetta/pics/factorial/facmeans.11.png" width="584" /></p>
+<p>and for the repeated measures we have</p>
+<p><img src="rosetta/pics/factorial/facmeans.12.png" width="573" /></p>
+<p>Results are the following:</p>
+<p><img src="rosetta/pics/factorial/facmeans.13.png" width="549" /></p>
+<p>For comparison, we run the same analysis with
+<code>Superpower</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">50</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2w*3b*2b&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>r<span class="ot">&lt;-</span>.<span class="dv">5</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>                              <span class="at">r=</span>r,</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>                       ) </span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<pre><code>##          power partial_eta_squared cohen_f non_centrality
+## b     40.34061             0.01312 0.11531        3.90885
+## c     83.85936             0.02891 0.17253        8.75174
+## b:c   42.45058             0.01389 0.11869        4.14149
+## a     75.85217             0.02368 0.15573        7.13021
+## b:a   97.40707             0.05808 0.24831       18.12760
+## c:a   82.05198             0.02756 0.16836        8.33333
+## b:c:a 73.90719             0.02801 0.16975        8.47135</code></pre>
+<p>All considering, results are enough similar.</p>
+</div>
+<div id="required-n" class="section level2">
+<h2>Required N</h2>
+<p>To validate PAMLj computation of the required sample size, we can use
+GPOWER. Using the <code>factorial</code> dataset, assuming one repeated
+measure factor (A) with correlation equal to .5, the other two (B and C)
+as between-subjects factors, with required power set to .90, we obtain
+the following results.</p>
+<p><img src="rosetta/pics/factorial/facmeans.14.png" width="556" /></p>
+<p>We can now pick the interaction <span
+class="math inline">\(A*B\)</span>, with <span
+class="math inline">\(p\eta^2=.0293\)</span> with 2 degrees of freedom.
+In GPower, we can use
+<code>ANOVA: Repeated measures, within-between interactions</code>, with
+<code>Options</code> set to <code>SPSS</code>. To approximate the
+results, we can set the <code>Number of repeated measures</code> to 2,
+and the <code>Number of groups</code> to 3 (factor B has three
+levels).</p>
+<p><img src="rosetta/pics/factorial/facmeans.15.png" width="943" /></p>
+<p>The results are similar but not very close. Despites the fact that
+both software indicates the same effect size and the same degrees of
+freedom, PAMLj give a slightly larger required N because PAMLj takes
+into the account that the whole model has three factors, whereas this
+information cannot be passed to GPower. In fact, PAMLj yields the same
+results of GPower if one select the option <code>Liberal</code> in the
+<code>Non-centrality parameter</code>. The option <code>Liberal</code>,
+in fact, estimate the required N without considering the whole model
+degrees of freedom, but only the effect degrees of freedom.</p>
+<p><img src="rosetta/pics/factorial/facmeans.16.png" width="573" />
+<img src="rosetta/pics/factorial/facmeans.17.png" width="560" /></p>
+</div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>

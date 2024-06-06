@@ -21,10 +21,7 @@ mcdocs_init()
 
 ```
 
-:::version
-0.2.0
-:::
-
+`r version("0.2.0")`
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf),  `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`, and  [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 
@@ -47,7 +44,7 @@ As a quick test, we can use `G*Power` to check the results, using its interface 
 
 `r pic("rosetta/pics/factorial/facmeans.4.png")`
 
-Results are almost the same, with only one unit of difference.
+Results are  the same.
 
 Unfortunately, G*Power does not allow to input means and sd other than for one-way between-subjects designs, so we cannot test `r modulename()` for more complex designs. For this purpose, we can use `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`, which allows computing the expected power starting from an array of means and standard deviations.
 
@@ -100,7 +97,7 @@ zapsmall(exact_result$main_results)
 
 
 It is easy to check that the expected power is almost identical (apart for rounding) for all effects. It is worth noticing that despite the expected power
-is identical for the two software, they produce different effect size indices. This is due to the way the two software compute the effect sizes. `Superpower` build a dataset of the input sample size and estimate the effect size, whereas `r modulename()` computes the estimated effect size in the population. Because these effect size are upward biased, in small to moderate sample size they tend to be larger than in the population. Indeed, if we ask `Superpower` to compute the effect sizes for a very large sample, the estimated indices converge to the ones obtained in `r modulename()`.
+is identical for the two software, they produce different effect size indices. This is due to the way the two software compute the effect sizes. `Superpower` builds a dataset of the input sample size and estimate the effect sizes, whereas `r modulename()` computes the estimated effect sizes in the population. Because these effect size indices are upward biased, in small to moderate sample sizes they tend to be larger than in the population. Indeed, if we ask `Superpower` to compute the effect sizes for a very large sample, the estimated indices converge to the ones obtained in `r modulename()`.
 
 ```{r}
 
@@ -135,7 +132,7 @@ Having set the factors as repeated measures factors and with a non-zero correlat
 
 `r pic("rosetta/pics/factorial/facmeans.9.png")`
 
-We should also note that the residuals degrees of freedom are now different, and they depended on the sample size and degrees of freedom of the effect. 
+We should also note that the residuals degrees of freedom are now different, because they depend on the sample size and degrees of freedom of the effect. 
 
 For comparison, we run the same analysis with `Superpower`.
 
@@ -169,6 +166,69 @@ We can see that the results are pretty similar. The difference is due to the fac
 `r pic("rosetta/pics/factorial/facmeans.10.png")`
 
 Results are indeed identical to `r modulename()` results.
+
+# Mixed ANOVA
+
+## Expected Power
+
+We can now test the module with a mixed design, with one repeated measure factor (say A) and the other two (B and C) as between-subjects factors. This yields a design with 6 groups, so we can set the sample size to 120, corresponding to 20 cases per group. As for the correlations among repeated measures, we can set it to .5. In PAMLj, we simply set up the input as follows.
+
+`r pic("rosetta/pics/factorial/facmeans.11.png")`
+
+and for the repeated measures we have 
+
+`r pic("rosetta/pics/factorial/facmeans.12.png")`
+
+Results are the following:
+
+`r pic("rosetta/pics/factorial/facmeans.13.png")`
+
+For comparison, we run the same analysis with `Superpower`.
+
+
+```{r}
+
+ds<-pamlj::factorial
+std<-8
+n<-50
+des_str<-"2w*3b*2b"
+r<-.5
+design <- Superpower::ANOVA_design(design = des_str, 
+                              #sample size per group 
+                              n = n, 
+                              #pattern of means
+                              mu =ds$means,
+                              r=r,
+                              sd = std,
+                              plot=FALSE
+                       ) 
+exact_result <- Superpower::ANOVA_exact(design,
+                            alpha_level = .05,
+                            verbose = FALSE)
+zapsmall(exact_result$main_results)
+
+
+```
+
+All considering, results are enough similar. 
+
+## Required N
+
+To validate PAMLj computation of the required sample size, we can use GPOWER. Using the `factorial` dataset, assuming one repeated measure factor (A) with correlation equal to .5,  the other two (B and C) as between-subjects factors, with required power set to .90, we obtain the following results.
+
+`r pic("rosetta/pics/factorial/facmeans.14.png")`
+
+We can now pick the interaction $A*B$, with $p\eta^2=.0293$ with 2 degrees of freedom. In GPower, we can use  `ANOVA: Repeated measures, within-between interactions`, with `Options` set to `SPSS`. To approximate the results, we can set the `Number of repeated measures` to 2,
+and the `Number of groups` to 3 (factor B has three levels). 
+
+`r pic("rosetta/pics/factorial/facmeans.15.png")`
+
+The results are similar but not very close. Despites the fact that both software indicates the same effect size and the same degrees of freedom, PAMLj give a slightly larger required N because PAMLj takes into the account that the whole model  has three factors, whereas this information cannot be passed to GPower. In fact, PAMLj yields the same results of GPower if one select the option `Liberal` in the `Non-centrality parameter`. The option `Liberal`, in fact, estimate the required N without considering the whole model degrees of freedom, but only the effect degrees of freedom. 
+
+`r pic("rosetta/pics/factorial/facmeans.16.png")`
+`r pic("rosetta/pics/factorial/facmeans.17.png")`
+
+
 
 `r issues()`
 
