@@ -85,8 +85,11 @@ span.little {
 
 
 #sidebar > h2 > a {
-    display:inline;
+    max-width: 150px;
+    display: inline-block;
+    padding: 0;
 }
+
 
 #navbut  {
     float: right;
