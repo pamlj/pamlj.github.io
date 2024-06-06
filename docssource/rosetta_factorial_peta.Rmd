@@ -32,6 +32,9 @@ When dealing with Between-subjects designs, the `Factorial Design Power Analysis
 We use the ANOVA example in `r link_pages(nickname="ros_glm_posthoc")`, in which an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 3 groups and 2 degrees of freedom, and $C$ having 4 groups and 3 DF. The researcher is interested in the power of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$ (here the value is slightly different than in GPower manual, but this value honors the f value used in the manual). The interaction spreads across 9 groups or $DF=2*2=4$ degrees of freedom. Here are the parameters.
 
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = Sample Size
 *   $p\eta^2$   = 0.05665751
 *   $f$              = `r round(sqrt(0.05665751/(1-0.05665751)),digits=5)`
@@ -42,6 +45,7 @@ We use the ANOVA example in `r link_pages(nickname="ros_glm_posthoc")`, in which
 *   Alpha           = .05
 *   Correct results: N = 108
 
+:::
 ## G*Power
 
 First notice that for this problem, GPower offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size . $f$ is simply the square root of $f^2$ so it can be computed from the partial Eta-squared as  $f=\sqrt{p\eta^2/(1-p\eta^2)}$ .
@@ -88,6 +92,9 @@ To test the `Factorial design power analysis` sub-module for repeated measures o
 
 We start with a 2x2 repeated measure design as described in `r ext_url("Caldwell et al. Superpower 2x2 within-within example","https://aaroncaldwell.us/SuperpowerBook/repeated-measures-anova.html#part-4")`. They tested a 2x2 design with 25 participants, with interaction effect as follows:
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = Power
 *   AXB $p\eta^2$ = 0.1428571
 *   $f$             = `r round(sqrt(0.1428571/(1-0.1428571)),digits=5)`
@@ -96,6 +103,9 @@ We start with a 2x2 repeated measure design as described in `r ext_url("Caldwell
 *   N               =   25
 *   Alpha           =  .05
 *   Correct results: AxB power =.484
+
+:::
+
 
 ## Superpower
 
@@ -141,6 +151,9 @@ The setup in `r modulename()` is straightforward and produced the expected resul
 
 We can use the same design to test the convergence of G*Power and `r modulename()` in computing the required N. 
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = N
 *   AXB $p\eta^2$ = 0.1428571
 *   $f$             = `r round(sqrt(0.1428571/(1-0.1428571)),digits=5)`
@@ -149,6 +162,8 @@ We can use the same design to test the convergence of G*Power and `r modulename(
 *   Power           =   .90
 *   Alpha           =  .05
 *   Correct results: AxB N =66
+
+:::
 
 ### G*Power
 
@@ -204,7 +219,7 @@ zapsmall(exact_result$main_results)
 
 # Mixed ANOVA
 
-Let's now assume that the design we just analyzed was a mixed between-within design. We can use an example in `r ext_url("Caldwell et al. Superpower ComplexMixed Anova example","https://aaroncaldwell.us/SuperpowerBook/mixed-anova.html#b4w-design")`. Here we have 4 (Time) x 2 (Treatment) design, with Time with four repeated measures and Treatment with two groups. Differently from the example in Caldwell et al., we assume 60 participants, so the power estimates do not ceil up to 1. The setup is the following:
+Let's now assume that the design we just analyzed was a mixed between-within design. We can use an example in `r ext_url("Caldwell et al. Superpower Complex Mixed Anova example","https://aaroncaldwell.us/SuperpowerBook/mixed-anova.html#b4w-design")`. Here we have 4 (Time) x 2 (Treatment) design, with Time with four repeated measures and Treatment with two groups. Differently from the example in Caldwell et al., we assume 60 participants, so the power estimates do not ceil up to 1. The setup is the following:
 
 *   Aim = power
 *   Treatment $p\eta^2$             = 0.01550 (df=1)
@@ -263,8 +278,12 @@ which align quite well with the `r modulename()` results, with some small differ
 
 `r issues()`
 
-# Back to `r link_pages(nickname="rosetta")`
+
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
+:::
 
 
 # References
-'

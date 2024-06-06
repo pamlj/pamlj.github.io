@@ -271,9 +271,6 @@ size</a></h2>
       </ul></li>
       <li><a href="#mixed-anova" id="toc-mixed-anova">Mixed
       ANOVA</a></li>
-      <li><a href="#back-to-pamlj-rosetta"
-      id="toc-back-to-pamlj-rosetta">Back to
-      <a href="rosetta.html">PAMLj: rosetta</a></a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
@@ -332,6 +329,8 @@ slightly different than in GPower manual, but this value honors the f
 value used in the manual). The interaction spreads across 9 groups or
 <span class="math inline">\(DF=2*2=4\)</span> degrees of freedom. Here
 are the parameters.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Sample Size</li>
 <li><span class="math inline">\(p\eta^2\)</span> = 0.05665751</li>
@@ -343,6 +342,7 @@ are the parameters.</p>
 <li>Alpha = .05</li>
 <li>Correct results: N = 108</li>
 </ul>
+</div>
 <div id="gpower" class="section level2">
 <h2>G*Power</h2>
 <p>First notice that for this problem, GPower offers <em>F test: Fixed
@@ -414,6 +414,8 @@ comparison.</p>
 <a href='https://aaroncaldwell.us/SuperpowerBook/repeated-measures-anova.html#part-4' target='_blank'>Caldwell
 et al. Superpower 2x2 within-within example</a>. They tested a 2x2
 design with 25 participants, with interaction effect as follows:</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Power</li>
 <li>AXB <span class="math inline">\(p\eta^2\)</span> = 0.1428571</li>
@@ -424,6 +426,7 @@ design with 25 participants, with interaction effect as follows:</p>
 <li>Alpha = .05</li>
 <li>Correct results: AxB power =.484</li>
 </ul>
+</div>
 <div id="superpower" class="section level2">
 <h2>Superpower</h2>
 <p>In the <code>Superpower</code> package, we can obtain the results
@@ -485,6 +488,8 @@ and produced the expected results.</p>
 <h2>Required N</h2>
 <p>We can use the same design to test the convergence of G*Power and
 <span class="modulename">PAMLj</span> in computing the required N.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = N</li>
 <li>AXB <span class="math inline">\(p\eta^2\)</span> = 0.1428571</li>
@@ -495,6 +500,7 @@ and produced the expected results.</p>
 <li>Alpha = .05</li>
 <li>Correct results: AxB N =66</li>
 </ul>
+</div>
 <div id="gpower-2" class="section level3">
 <h3>G*Power</h3>
 <p><img src="rosetta/pics/factorial/facpeta.n.9.png" width="611" /></p>
@@ -557,7 +563,7 @@ power estimation, we get an even closer result to the one obtained in
 <p>Let’s now assume that the design we just analyzed was a mixed
 between-within design. We can use an example in
 <a href='https://aaroncaldwell.us/SuperpowerBook/mixed-anova.html#b4w-design' target='_blank'>Caldwell
-et al. Superpower ComplexMixed Anova example</a>. Here we have 4 (Time)
+et al. Superpower Complex Mixed Anova example</a>. Here we have 4 (Time)
 x 2 (Treatment) design, with Time with four repeated measures and
 Treatment with two groups. Differently from the example in Caldwell et
 al., we assume 60 participants, so the power estimates do not ceil up to
@@ -632,13 +638,14 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+<div class="adm adm-seealso">
+<p>Back to</p>
+<p><a href="rosetta.html">PAMLj: rosetta</a>,
+<a href="index.html">PAMLj</a></p>
 </div>
-<div id="back-to-pamlj-rosetta" class="section level1">
-<h1>Back to <a href="rosetta.html">PAMLj: rosetta</a></h1>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
-<p>’</p>
 </div>
 </div>
 
