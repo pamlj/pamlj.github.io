@@ -47,10 +47,12 @@
   --pst-color-toc-link: 119, 117, 122;
   --pst-color-toc-link-hover: var(--pst-color-active-navigation);
   --pst-color-toc-link-active: var(--pst-color-active-navigation);
+  --color-setup: 153, 102, 255;
   --pst-icon-check-circle: "\f058";
   --pst-icon-info-circle: "\f05a";
   --pst-icon-exclamation-triangle: "\f071";
   --pst-icon-exclamation-circle: "\f06a";
+  --icon-setup: "\f013";
   --pst-icon-times-circle: "\f057";
   --pst-icon-lightbulb: "\f0eb";
   --pst-color-admonition-default: var(--pst-color-info);
@@ -1256,6 +1258,18 @@ div.sourceCode .row div {
   color: rgba(var(--pst-color-admonition-note), 1);
 }
 
+.adm.adm-setup {
+  border-color: rgba(var(--color-setup));
+}
+.adm.adm-setup > p:first-child {
+  background-color: rgba(var(--color-setup), 0.1);
+}
+.adm.adm-setup > p:first-child:before {
+  content: var(--icon-setup);
+  color: rgba(var(--color-setup), 1);
+}
+
+
 
 div.version {
   display: inline-block;
@@ -1269,7 +1283,7 @@ div.version {
   border-radius: 5px; 
   background-color: green;
   margin-bottom: 10px;
-}
+  margin-left: 10px}
 
 div.version p {
     margin-bottom: 0px !important;

@@ -15,6 +15,8 @@
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
         <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
         <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
         <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
         <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
         <script src="site_libs/readthedown-0.1/readthedown.js"></script>
@@ -273,8 +275,6 @@
       <li><a href="#gpower-3" id="toc-gpower-3">G*power</a></li>
       </ul></li>
       </ul></li>
-      <li><a href="#navigate" id="toc-navigate">Navigate</a></li>
-      <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -434,12 +434,6 @@ consider quite good.</p>
 <p>In this case, notice that <span class="modulename">PAMLj</span> yield
 69, which is rounded for 69.45, whereas G*Power round it up to 70. Thus,
 results are quite in line.</p>
-</div>
-</div>
-</div>
-<div id="navigate" class="section level1">
-<h1>Navigate</h1>
-<p>Back to <a href="rosetta.html">PAMLj: rosetta</a></p>
 <h1>
 Comments?
 </h1>
@@ -450,14 +444,17 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+<div class="adm adm-seealso">
+<p>Back to</p>
+<p><a href="rosetta.html">PAMLj: rosetta</a>,
+<a href="index.html">PAMLj</a></p>
 </div>
-<div id="references" class="section level1">
-<h1>References</h1>
-<p>’</p>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-cohen1988spa" class="csl-entry">
 Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for
 the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -473,7 +470,19 @@ the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.
 
 			
  		
-	    });
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
   </script>
 
 

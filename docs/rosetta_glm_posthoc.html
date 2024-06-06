@@ -15,6 +15,8 @@
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
         <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
         <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
         <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
         <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
         <script src="site_libs/readthedown-0.1/readthedown.js"></script>
@@ -267,9 +269,6 @@
       <li><a href="#r-2" id="toc-r-2">R</a></li>
       <li><a href="#pamlj-2" id="toc-pamlj-2">PAMLj</a></li>
       </ul></li>
-      <li><a href="#back-to-pamlj-rosetta"
-      id="toc-back-to-pamlj-rosetta">Back to
-      <a href="rosetta.html">PAMLj: rosetta</a></a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -313,6 +312,8 @@ also the the effect DF are 5. The <span
 class="math inline">\(R^2\)</span> is transformed into the <span
 class="math inline">\(f^2\)</span> effect size with the simple formula
 <span class="math inline">\(f^2=R^2/(1-R^2)\)</span>.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = power</li>
 <li>Expected <span class="math inline">\(R^2\)</span> = .10</li>
@@ -322,6 +323,7 @@ class="math inline">\(f^2\)</span> effect size with the simple formula
 <li>Model DF = 5</li>
 <li>Alpha = .05</li>
 </ul>
+</div>
 <div id="gpower" class="section level3">
 <h3>G*Power</h3>
 <p><img src="rosetta/pics/gpower.glm.1.png" width="681" /></p>
@@ -380,6 +382,8 @@ of freedom evaluated in a model with 9 degrees of freedom.</p>
 the <span class="math inline">\(f^2\)</span> effect size with the simple
 formula <span
 class="math inline">\(f^2=(R_f^2-R_n^2)/(1-R_f^2)\)</span>.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = power</li>
 <li><span class="math inline">\(R_f^2\)</span> = .30</li>
@@ -391,6 +395,7 @@ class="math inline">\(f^2=(R_f^2-R_n^2)/(1-R_f^2)\)</span>.</p>
 <li>Model DF = 9</li>
 <li>Alpha = .01</li>
 </ul>
+</div>
 <div id="gpower-1" class="section level3">
 <h3>G*Power</h3>
 <p><img src="rosetta/pics/gpower.glm.2.png" width="681" /></p>
@@ -470,6 +475,8 @@ value honors the f value used in the manual). The interaction will have
 <span class="math inline">\(DF=2*2=4\)</span> degrees of freedom, and
 the whole model will have <span class="math inline">\(DF=35\)</span>,
 the number of groups minus one. Here are the parameters.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = power</li>
 <li><span class="math inline">\(p\eta^2\)</span> = 0.05665751</li>
@@ -479,6 +486,7 @@ the number of groups minus one. Here are the parameters.</p>
 <li>Model DF = 35</li>
 <li>Alpha = .05</li>
 </ul>
+</div>
 <div id="gpower-2" class="section level3">
 <h3>G*Power</h3>
 <p>First notice that for this problem, G*Power offers <em>F test: Fixed
@@ -534,11 +542,12 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+<div class="adm adm-seealso">
+<p>Back to</p>
+<p><a href="rosetta.html">PAMLj: rosetta</a>,
+<a href="index.html">PAMLj</a></p>
 </div>
 </div>
-<div id="back-to-pamlj-rosetta" class="section level1">
-<h1>Back to <a href="rosetta.html">PAMLj: rosetta</a></h1>
-<p>’</p>
 </div>
 </div>
 
@@ -552,7 +561,19 @@ or <a href="mailto:mcfanda@gmail.com
 
 			
  		
-	    });
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
   </script>
 
 

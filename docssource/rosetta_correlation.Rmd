@@ -142,12 +142,11 @@ pwr::pwr.r.test(r=.45,power=.95,sig.level=.01,alternative="greater")
 
 In this case, notice that `r modulename()` yield 69, which is rounded for 69.45, whereas G*Power round it up to 70. Thus, results are quite in line.
 
-# Navigate
-
-Back to `r link_pages(nickname="rosetta")`
-
 
 `r issues()`
 
-# References
-'
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
+:::

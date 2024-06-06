@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="pandoc" />
 
+        <meta name="author" content="Marcello Gallucci" />
     
     
     <title>General Linear Model</title>
@@ -15,6 +16,8 @@
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
         <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
         <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
         <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
         <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
         <script src="site_libs/readthedown-0.1/readthedown.js"></script>
@@ -194,7 +197,9 @@
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
-                </div>
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
    </div>
      
 
@@ -421,7 +426,19 @@ Research Review</em> 6 (2): 135–47.
 
 			
  		
-	    });
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
   </script>
 
 

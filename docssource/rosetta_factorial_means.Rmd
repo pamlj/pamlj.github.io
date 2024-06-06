@@ -1,5 +1,6 @@
 ---
 title: "Factorial designs: power from means and SD"
+author: Marcello Gallucci 
 topic: samplesize
 category: rosetta
 nickname: ros_fac_means
@@ -10,6 +11,7 @@ link-citations: true
         
 editor_options: 
   chunk_output_type: console
+  
 ---
 
 
@@ -23,7 +25,6 @@ mcdocs_init()
 0.2.0
 :::
 
-`r version("0.2.0")` 
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf),  `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`, and  [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 
@@ -171,8 +172,10 @@ Results are indeed identical to `r modulename()` results.
 
 `r issues()`
 
-# Back to `r link_pages(nickname="rosetta")`
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
+:::
 
 
-# References
-'

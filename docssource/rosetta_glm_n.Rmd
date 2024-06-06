@@ -18,7 +18,10 @@ mcdocs_init()
 
 # Power Analysis for the General Linear Model
 
-`r version("0.2.0")` 
+:::{ .version }
+0.2.0
+:::
+
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 
@@ -30,6 +33,9 @@ We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbei
 
 T he manual estimates the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. The resulting power is $1-\beta=.6735$ based on Five predictors me95 cases. So, starting from the given power, we should obtain a required sample size of 95. The model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$. 
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = Sample Size
 *   Expected $R^2$    = .10
 *   $f^2$              = `r round(0.10/(1-.10),digits=4)`
@@ -38,6 +44,8 @@ T he manual estimates the post-hoc power for the F-test associated to the $R^2$ 
 *   Model  DF       = 5
 *   Alpha           = .05
 *   Correct results: N = 95
+
+:::
 
 ### G*Power
 
@@ -75,6 +83,9 @@ The example examines a linear model (regression) with $R_f^2=.30$ with 9 predict
 
 The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=(R_f^2-R_n^2)/(1-R_f^2)$.
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = Sample Size
 *   $R_f^2$    = .30
 *   $R_n^2$    = .25
@@ -85,6 +96,8 @@ The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $
 *   Model  DF       = 9
 *   Alpha           = .01
 *   Correct results: N = 90
+
+:::
 
 ### G*Power
 
@@ -121,6 +134,9 @@ Results are perfectly in line with other software.
 Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the sample size required to achieve a power of $.475627$ of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$. The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters. The resulting sample size should be $N = 108$.
 
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = Sample Size
 *   $p\eta^2$   = 0.05665751
 *   $f$              = `r round(sqrt(0.05665751/(1-0.05665751)),digits=5)`
@@ -129,6 +145,8 @@ Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 lev
 *   Power           =  .475627
 *   Alpha           = .05
 *   Correct results: N = 108
+
+:::
 
 ### G*Power
 
@@ -166,7 +184,11 @@ We plug in the partial Eta-squared and the required parameters, and we obtain N=
 
 `r issues()`
 
-# Back to `r link_pages(nickname="rosetta")`
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
+:::
 
 
 # References

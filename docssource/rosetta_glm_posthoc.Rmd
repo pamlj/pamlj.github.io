@@ -29,6 +29,9 @@ We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbei
 
 Here we estimate the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. Five predictors means that the model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$.
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = power
 *   Expected $R^2$    = .10
 *   $f^2$              = `r round(0.10/(1-.10),digits=4)`
@@ -36,6 +39,8 @@ Here we estimate the post-hoc power for the F-test associated to the $R^2$ of a 
 *   Effect DF       = 5
 *   Model  DF       = 5
 *   Alpha           = .05
+
+:::
 
 ### G*Power
 
@@ -73,6 +78,9 @@ The first example examines a linear model (regression) with $R_f^2=.30$ with 9 p
 
 The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=(R_f^2-R_n^2)/(1-R_f^2)$.
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = power
 *   $R_f^2$    = .30
 *   $R_n^2$    = .25
@@ -83,6 +91,7 @@ The $\eta^2$ is transformed into the $f^2$ effect size with the simple formula $
 *   Model  DF       = 9
 *   Alpha           = .01
 
+:::
 ### G*Power
 
 `r pic("rosetta/pics/gpower.glm.2.png")`
@@ -128,6 +137,9 @@ BY de-selecting the option `r opt("G*Power NCP")`, we obtain the same results as
 
 Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 levels and $C$ with 4 levels. Thus the overall model features 36 groups, with $A$ and $B$ effects having 2 degrees of freedom, and $C$ having 3 DF. The researcher is interested in the power of the test associated with the interaction $A*B$, with a partial Eta-squared $p\eta^2=0.05665751$ (here the value is slightly different than in GPower manual, but this value honors the f value used in the manual). The interaction will have $DF=2*2=4$ degrees of freedom, and the whole model will have $DF=35$, the number of groups minus one. Here are the parameters.
 
+:::{ .adm .adm-setup}
+Setup
+
 *   Aim = power
 *   $p\eta^2$   = 0.05665751
 *   $f$              = `r round(sqrt(0.05665751/(1-0.05665751)),digits=5)`
@@ -135,6 +147,8 @@ Here we have an ANOVA design $A \times B \times C$ with $A$ and $B$ having 3 lev
 *   Effect DF       = 4
 *   Model  DF       = 35
 *   Alpha           = .05
+
+:::
 
 ### G*Power
 
@@ -170,10 +184,11 @@ We plug in the partial Eta-squared and the required parameters, and we obtain th
 `r pic("rosetta/pics/glm.3.png")`
 
 
-
 `r issues()`
 
-# Back to `r link_pages(nickname="rosetta")`
+:::{ .adm .adm-seealso}
+Back to
 
+`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
+:::
 
-'

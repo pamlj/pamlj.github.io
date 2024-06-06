@@ -168,12 +168,15 @@ z=(abs(mu-mu0)-delta)/sd*sqrt(n)
 `r pic("rosetta/pics/ttest_paired_equi_4.png")`
 
 
-# Navigate
-
-Back to `r link_pages(nickname="rosetta")`
-
 
 `r issues()`
+
+:::{ .adm .adm-seealso}
+Back to
+
+`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
+:::
+
 
 # References
 '

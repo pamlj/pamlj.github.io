@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="pandoc" />
 
+        <meta name="author" content="Marcello Gallucci" />
     
     
     <title>Factorial designs: power from means and SD</title>
@@ -15,6 +16,8 @@
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
         <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
         <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
         <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
         <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
         <script src="site_libs/readthedown-0.1/readthedown.js"></script>
@@ -251,14 +254,12 @@ SD</a></h2>
       <li><a href="#repeated-measures-designs"
       id="toc-repeated-measures-designs">Repeated measures
       designs</a></li>
-      <li><a href="#back-to-pamlj-rosetta"
-      id="toc-back-to-pamlj-rosetta">Back to
-      <a href="rosetta.html">PAMLj: rosetta</a></a></li>
-      <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
-                </div>
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
    </div>
      
 
@@ -269,11 +270,6 @@ SD</a></h2>
 <div id="main">
 <div class="version">
 <p>0.2.0</p>
-</div>
-<div class="version">
-<p>
-0.2.0
-</p>
 </div>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
 with other software that performs power analysis. In particular, we will
@@ -468,13 +464,11 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+<div class="adm adm-seealso">
+<p>Back to</p>
+<p><a href="rosetta.html">PAMLj: rosetta</a>,
+<a href="index.html">PAMLj</a></p>
 </div>
-<div id="back-to-pamlj-rosetta" class="section level1">
-<h1>Back to <a href="rosetta.html">PAMLj: rosetta</a></h1>
-</div>
-<div id="references" class="section level1">
-<h1>References</h1>
-<p>’</p>
 </div>
 </div>
 
@@ -488,7 +482,19 @@ or <a href="mailto:mcfanda@gmail.com
 
 			
  		
-	    });
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
   </script>
 
 

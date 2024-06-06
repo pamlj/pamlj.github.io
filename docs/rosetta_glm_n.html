@@ -15,6 +15,8 @@
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
         <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
         <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
         <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
         <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
         <script src="site_libs/readthedown-0.1/readthedown.js"></script>
@@ -267,9 +269,6 @@
       <li><a href="#r-2" id="toc-r-2">R</a></li>
       <li><a href="#pamlj-2" id="toc-pamlj-2">PAMLj</a></li>
       </ul></li>
-      <li><a href="#back-to-pamlj-rosetta"
-      id="toc-back-to-pamlj-rosetta">Back to
-      <a href="rosetta.html">PAMLj: rosetta</a></a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
@@ -287,9 +286,7 @@
 class="section level1">
 <h1>Power Analysis for the General Linear Model</h1>
 <div class="version">
-<p>
-0.2.0
-</p>
+<p>0.2.0</p>
 </div>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
 with other software that performs power analysis. In particular, we will
@@ -321,6 +318,8 @@ also the the effect DF are 5. The <span
 class="math inline">\(R^2\)</span> is transformed into the <span
 class="math inline">\(f^2\)</span> effect size with the simple formula
 <span class="math inline">\(f^2=R^2/(1-R^2)\)</span>.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Sample Size</li>
 <li>Expected <span class="math inline">\(R^2\)</span> = .10</li>
@@ -331,6 +330,7 @@ class="math inline">\(f^2\)</span> effect size with the simple formula
 <li>Alpha = .05</li>
 <li>Correct results: N = 95</li>
 </ul>
+</div>
 <div id="gpower" class="section level3">
 <h3>G*Power</h3>
 <p><img src="rosetta/pics/gpower.n.glm.1.png" width="688" /></p>
@@ -393,6 +393,8 @@ we should obtain 90 as the required sample size.</p>
 the <span class="math inline">\(f^2\)</span> effect size with the simple
 formula <span
 class="math inline">\(f^2=(R_f^2-R_n^2)/(1-R_f^2)\)</span>.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Sample Size</li>
 <li><span class="math inline">\(R_f^2\)</span> = .30</li>
@@ -405,6 +407,7 @@ class="math inline">\(f^2=(R_f^2-R_n^2)/(1-R_f^2)\)</span>.</p>
 <li>Alpha = .01</li>
 <li>Correct results: N = 90</li>
 </ul>
+</div>
 <div id="gpower-1" class="section level3">
 <h3>G*Power</h3>
 <p><img src="rosetta/pics/gpower.n.glm.2.png" width="681" /></p>
@@ -460,6 +463,8 @@ and the whole model will have <span
 class="math inline">\(DF=35\)</span>, the number of groups minus one.
 Here are the parameters. The resulting sample size should be <span
 class="math inline">\(N = 108\)</span>.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Sample Size</li>
 <li><span class="math inline">\(p\eta^2\)</span> = 0.05665751</li>
@@ -470,6 +475,7 @@ class="math inline">\(N = 108\)</span>.</p>
 <li>Alpha = .05</li>
 <li>Correct results: N = 108</li>
 </ul>
+</div>
 <div id="gpower-2" class="section level3">
 <h3>G*Power</h3>
 <p>First notice that for this problem, GPower offers <em>F test: Fixed
@@ -526,10 +532,12 @@ or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+<div class="adm adm-seealso">
+<p>Back to</p>
+<p><a href="rosetta.html">PAMLj: rosetta</a>,
+<a href="index.html">PAMLj</a></p>
 </div>
 </div>
-<div id="back-to-pamlj-rosetta" class="section level1">
-<h1>Back to <a href="rosetta.html">PAMLj: rosetta</a></h1>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
@@ -547,7 +555,19 @@ or <a href="mailto:mcfanda@gmail.com
 
 			
  		
-	    });
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
   </script>
 
 

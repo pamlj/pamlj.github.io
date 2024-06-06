@@ -1,5 +1,6 @@
 ---
 title: "General Linear Model"
+author: Marcello Gallucci 
 topic: glm
 category: help
 output: 
