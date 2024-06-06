@@ -488,7 +488,7 @@ correlations among repeated measures, we can set it to .5. In PAMLj, we
 simply set up the input as follows.</p>
 <p><img src="rosetta/pics/factorial/facmeans.11.png" width="584" /></p>
 <p>and for the repeated measures we have</p>
-<p><img src="rosetta/pics/factorial/facmeans.12.png" width="573" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.12.png" width="567" /></p>
 <p>Results are the following:</p>
 <p><img src="rosetta/pics/factorial/facmeans.13.png" width="549" /></p>
 <p>For comparison, we run the same analysis with
@@ -528,7 +528,7 @@ GPOWER. Using the <code>factorial</code> dataset, assuming one repeated
 measure factor (A) with correlation equal to .5, the other two (B and C)
 as between-subjects factors, with required power set to .90, we obtain
 the following results.</p>
-<p><img src="rosetta/pics/factorial/facmeans.14.png" width="556" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.14.png" width="529" /></p>
 <p>We can now pick the interaction <span
 class="math inline">\(A*B\)</span>, with <span
 class="math inline">\(p\eta^2=.0293\)</span> with 2 degrees of freedom.
@@ -539,15 +539,19 @@ results, we can set the <code>Number of repeated measures</code> to 2,
 and the <code>Number of groups</code> to 3 (factor B has three
 levels).</p>
 <p><img src="rosetta/pics/factorial/facmeans.15.png" width="943" /></p>
-<p>The results are similar but not very close. Despites the fact that
-both software indicates the same effect size and the same degrees of
-freedom, PAMLj give a slightly larger required N because PAMLj takes
-into the account that the whole model has three factors, whereas this
-information cannot be passed to GPower. In fact, PAMLj yields the same
-results of GPower if one select the option <code>Liberal</code> in the
+<p>The results are similar but not very close, being the <span
+class="math inline">\(N=219\)</span> for PAMLj and <span
+class="math inline">\(N=216\)</span> for GPower. However, in this case
+it is not a matter of approximation or rounding. Notice that both
+software indicates the same effect size and the same degrees of freedom,
+PAMLj gives a slightly larger required N because PAMLj takes into the
+account that the whole model has three factors, whereas this information
+cannot be passed to GPower. In fact, PAMLj yields the same results of
+GPower if one selects the option <code>Liberal</code> in the
 <code>Non-centrality parameter</code>. The option <code>Liberal</code>,
-in fact, estimate the required N without considering the whole model
-degrees of freedom, but only the effect degrees of freedom.</p>
+in fact, estimates the required N without considering the whole model
+degrees of freedom, but only the effect degrees of freedom (cf
+<a href="specs_fncp.html">F-Test Non-centrality parameters</a>).</p>
 <p><img src="rosetta/pics/factorial/facmeans.16.png" width="573" />
 <img src="rosetta/pics/factorial/facmeans.17.png" width="560" /></p>
 </div>

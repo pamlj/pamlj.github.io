@@ -223,7 +223,7 @@ and the `Number of groups` to 3 (factor B has three levels).
 
 `r pic("rosetta/pics/factorial/facmeans.15.png")`
 
-The results are similar but not very close. Despites the fact that both software indicates the same effect size and the same degrees of freedom, PAMLj give a slightly larger required N because PAMLj takes into the account that the whole model  has three factors, whereas this information cannot be passed to GPower. In fact, PAMLj yields the same results of GPower if one select the option `Liberal` in the `Non-centrality parameter`. The option `Liberal`, in fact, estimate the required N without considering the whole model degrees of freedom, but only the effect degrees of freedom. 
+The results are similar but not very close, being the $N=219$ for PAMLj and $N=216$ for GPower. However, in this case it is not a matter of approximation or rounding. Notice that both software indicates the same effect size and the same degrees of freedom, PAMLj gives a slightly larger required N because PAMLj takes into the account that the whole model  has three factors, whereas this information cannot be passed to GPower. In fact, PAMLj yields the same results of GPower if one selects the option `Liberal` in the `Non-centrality parameter`. The option `Liberal`, in fact, estimates the required N without considering the whole model degrees of freedom, but only the effect degrees of freedom (cf `r link_pages(nickname="specs_fncp")`). 
 
 `r pic("rosetta/pics/factorial/facmeans.16.png")`
 `r pic("rosetta/pics/factorial/facmeans.17.png")`
