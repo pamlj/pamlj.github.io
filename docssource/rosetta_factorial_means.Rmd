@@ -1,7 +1,7 @@
 ---
 title: "Factorial designs: power from means and SD"
 author: Marcello Gallucci 
-topic: samplesize
+topic: factorial
 category: rosetta
 nickname: ros_fac_means
 linklabel: "Rosetta: Factorial designs from means" 
@@ -172,10 +172,5 @@ Results are indeed identical to `r modulename()` results.
 
 `r issues()`
 
-:::{ .adm .adm-seealso}
-Back to
-
-`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
-:::
-
+`r backto("rosetta")`
 

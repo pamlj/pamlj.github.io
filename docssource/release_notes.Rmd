@@ -1,14 +1,5 @@
 ---
 title: "Releases Notes"
-output: 
-  html_document:
-    includes:
-         in_header: ganalytics.txt
-    toc: true
-    toc_float:
-         collapsed: false
-editor_options: 
-  chunk_output_type: console
 ---
 
 #Releases and changes
@@ -16,14 +7,15 @@ editor_options:
 
 ```{r echo=FALSE,results='asis',warning=FALSE,message=FALSE}
 library(mcdocs)
-mcdocs_init()
-mcdocs_gh_info()
-coms<-get_commits()
-write_commits(coms)
+#mcdocs_init()
+#mcdocs_gh_info()
+#coms<-get_commits()
+#write_commits(coms)
 
 ```
 
 
 
 
-`r #¯issues()`
+`r issues()`
+`r backto()`

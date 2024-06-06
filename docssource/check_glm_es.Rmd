@@ -3,13 +3,6 @@ title: "GLM options: converting effect size"
 topic: glm
 category: checks
 nickname: check_es
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
@@ -74,9 +67,7 @@ For the user convenience, the option `r opt("f2")` is there to allow comparing r
 
 
 
-# Navigate
-
-Back to `r link_pages(nickname="rosetta")`
+`r backto("rosetta")`
 
 
 `r issues()`

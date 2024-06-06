@@ -5,9 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="pandoc" />
 
+        <meta name="author" content="Marcello Gallucci" />
     
     
-    <title>GLM options: converting effect size</title>
+    <title>GLM based on Eta-Squared</title>
 
         <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -179,28 +180,20 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">GLM options: converting effect size</h1>
+      <h1 class="title">GLM based on Eta-Squared</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">GLM options: converting effect size</a></h2>
+    <h2><a href="#content">GLM based on Eta-Squared</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#consistency-checks"
-      id="toc-consistency-checks">Consistency checks</a>
-      <ul>
-      <li><a href="#adjusted-effect-size"
-      id="toc-adjusted-effect-size">Adjusted effect size</a></li>
-      <li><a href="#gpower-partial-effect-size-indices"
-      id="toc-gpower-partial-effect-size-indices">GPower Partial effect
-      size indices</a></li>
-      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
-      <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
-                </div>
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
    </div>
      
 
@@ -209,103 +202,8 @@
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="consistency-checks" class="section level1">
-<h1>Consistency checks</h1>
 <div class="version">
 <p>0.2.0</p>
-</div>
-<p>Here we check that the options provided by <span
-class="modulename">PAMLj</span> to help constructing the power analysis
-yield correct results.</p>
-<div id="adjusted-effect-size" class="section level2">
-<h2>Adjusted effect size</h2>
-<p>When power analysis is based observed effect sizes taken from
-previous research or pilot studies, it is always a good idea to use an
-adjusted version of the indices. This because the indices of effect size
-based on variances are almost always up-ward biased <span
-class="citation">(<a href="#ref-richardson2011eta">Richardson
-2011</a>)</span>. For the Partial Eta-squared there are two adjustments
-that can be carried out, yielding the Partial Omega-Squared and the
-Partial Epsilon-squared. The two are very similar, so any of the two
-would work fine.</p>
-<p>In order to adjust the observed Partial Eta-squared in <span
-class="modulename">PAMLj</span>, one needs the actual value, the effect
-degrees of freedom and the residual degrees of freedom of the model from
-which the index is taken. This information is almost always present in a
-published paper and is always present in software results (if the info
-comes from a pilot study). Thus one can plug this info into the fields
-in the <span class="option">Option</span> , <span class="option">Convert
-effect size indices</span>.</p>
-<p><img src="rosetta/checks/esadjust.1.png" width="527" /></p>
-<p>To help us out in this exercise, let’s consider he
-<code>Tooth Growth</code> dataset from the <span
-class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>
-data library. The data allows for a <code>2 (dose) X 3 (supp)</code>
-ANOVA that can be carried out with the <code>r</code>jamovi` module <a
-href="https://gamlj.github.io/">GAMLj3</a>. The effect size indices of
-the effects are presented in the ouput table.</p>
-<p><img src="rosetta/checks/esadjust.2.png" width="648" /></p>
-<p>We now assume that the researcher does not have access to the full
-set of results (say the Partial Eta-squared is taken from a paper), but
-only to the reported effect of the interaction, with F(2,54)=4.107,
-p.=.002, <span class="math inline">\(p\eta^2=.132\)</span>. The
-researcher prefers to use an adjusted version of the index in the power
-analysis, but the full table of results is not available, only the
-F-test info is as just reported in the text.</p>
-<p>To use an adjusted version, first we define the correct <em>df</em>
-for the effect and for the model in the main panel.</p>
-<p><img src="rosetta/checks/esadjust.3.png" width="530" /></p>
-<p>Then we fill in the <span class="option">Observed Partial
-Eta-squared</span> (<span class="math inline">\(p\eta^2=.132\)</span>)
-and <span class="option">Observed residuals degrees of freedom</span>
-(<span class="math inline">\(df=54\)</span>) fields with the data from
-our paper.</p>
-<p><img src="rosetta/checks/esadjust.4.png" width="512" /></p>
-<p>It is clear that the module is computing the right adjusted
-coefficients. At this point, we pick the adjusted index that we like by
-selecting it in <span class="option">Use as effectr size</span> (here
-<span class="math inline">\(\omega\)</span>), and it will be
-automagically transferred in the main panel <span
-class="option">Expected partial Eta-squared</span>.</p>
-<p><img src="rosetta/checks/esadjust.5.png" width="557" /></p>
-<p>Out of curiosity, if we were looking for a minimum sample size to
-achieve a power of at least .90, with the original (un-adjusted) effect
-size we would obtain <span class="math inline">\(N=86\)</span>. With the
-adjusted version (<span class="math inline">\(\omega=.094\)</span>) we
-would obtain <span class="math inline">\(N=125\)</span>, which is 145.3%
-larger than the other. To be more concrete, because it is very likely
-that our population effect size being closer to .094 than to .132, had
-we used .132 and so collected data for a sample of <span
-class="math inline">\(N=86\)</span>, our actual power will be <span
-class="math inline">\(1-\beta=.745\)</span>, way lower than the .90 we
-planned.</p>
-<p><img src="rosetta/checks/esadjust.6.png" width="1213" /></p>
-</div>
-<div id="gpower-partial-effect-size-indices" class="section level2">
-<h2>GPower Partial effect size indices</h2>
-<p><a
-href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">GPower</a>
-(a leading software for power analysis) suggest to use a different
-adjustment. The adjustment yields values that are usually in beteween
-the observed effect size and the population effect size. <span
-class="modulename">PAMLj</span> provides the possibility to use the
-GPower adjustment, by simply selecting
-<span class="option">G*Power</span> in the <span class="option">Use as
-effect size </span> list.</p>
-<p><img src="rosetta/checks/esadjust.6.png" width="1213" /></p>
-<p>For the user convenience, the option <span class="option">f2</span>
-is there to allow comparing results from GPower (which uses <span
-class="math inline">\(f^2\)</span> as an effect size) and <span
-class="modulename">PAMLj</span> without having the user to transform the
-effect size indices back and forth.</p>
-<div class="adm adm-seealso">
-<p>
-Return to main help pages
-</p>
-<a class='backto' href='index.html'>Main page</a>
-<a class="backto" href="rosetta.html">PAMLj: rosetta</a>
-</div>
-</div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
@@ -317,16 +215,12 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 </div>
-<div id="references" class="section level1">
-<h1>References</h1>
-<p>’</p>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-richardson2011eta" class="csl-entry">
-Richardson, John TE. 2011. <span>“Eta Squared and Partial Eta Squared as
-Measures of Effect Size in Educational Research.”</span> <em>Educational
-Research Review</em> 6 (2): 135–47.
-</div>
-</div>
+<div class="adm adm-seealso">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="glm.html">General Linear Model</a>
 </div>
 </div>
 

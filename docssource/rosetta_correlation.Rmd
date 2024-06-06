@@ -1,15 +1,9 @@
 ---
 title: "Correlation"
+author: Marcello Gallucci
 topic: correlation
 category: rosetta
 nickname: ros_correlation
-output: 
-  html_document:
-     includes:
-         in_header: ganalytics.txt
-     toc: true
-     toc_float:
-        collapsed: false
 bibliography: 
      - bib.bib
 link-citations: true
@@ -34,18 +28,23 @@ results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf
 
 For Pearson and Spearman correlation, we can compare `r modulename()` with `R pwr package` and `G*Power`. Consider, however, that for this task `r modulename()` employs `R pwr package` under the hood, so the results are obviously in line. For G*Power, the comparison represents a proper validation. All packages use the  [inverse hyperbolic tangent](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh) transformation [@cohen1988spa].
 
-## Example 1
+# Example 1 : Sample size
+
+:::{ .adm .adm-setup}
+Setup
 
 *   Aim = Sample size 
 *   Expected r = .3
 *   Required power = .8
 *   Alpha = .05
 
-### PAMLj
+:::
+
+## PAMLj
 
 `r pic("rosetta/pics/r.1.png")`
 
-### R
+## R
 
 ```{r }
 
@@ -53,7 +52,7 @@ pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)
 
 ```
 
-### G*Power
+## G*Power
 
 `r pic("rosetta/pics/gpower.r.1.png")`
 
@@ -61,20 +60,23 @@ pwr::pwr.r.test(r=.3,power=.8,sig.level=.05)
 If we round the results, they are the same
 
 
-## Example 2
+# Example 2: Power
+
+:::{ .adm .adm-setup}
+Setup
 
 *   Aim = power
 *   Expected r = .4
 *   N = 52
 *   Alpha = .05
 
-    
+:::    
 
-### PAMLj
+## PAMLj
 
 `r pic("rosetta/pics/r.2.png")`
 
-### R
+## R
 
 ```{r }
 
@@ -82,24 +84,29 @@ pwr::pwr.r.test(r=.4,n=52,sig.level=.05)
 
 ```
 
-### G*Power
+## G*Power
 
 `r pic("rosetta/pics/gpower.r.2.png")`
 
 Results are the same at the third decimal place, which can be consider quite good.
 
-## Example 3
+# Example 3: Effect size
+
+:::{ .adm .adm-setup}
+Setup
 
 *   Aim = minimal effect size
 *   power = .95
 *   N = 52
 *   Alpha = .01
 
-### PAMLj
+:::
+
+## PAMLj
 
 `r pic("rosetta/pics/r.3.png")`
 
-### R
+## R
 
 
 ```{r }
@@ -109,20 +116,24 @@ pwr::pwr.r.test(n=52,power=.95,sig.level=.01)
 ```
 
 
-### G*Power
+## G*Power
 
 `r pic("rosetta/pics/gpower.r.3.png")`
 
 Again, rounding a the third decimal place, results are the same.
 
-## Example 4
+# Example 4: One-tail
+
+:::{ .adm .adm-setup}
+Setup
 
 *   Aim = Sample size
 *   power = .95
 *   Expected r = .45
 *   Alpha = .01
-*   Tails = "two.sided"
+*   Tails = "one.sided"
 
+:::
 ### PAMLj
 
 `r pic("rosetta/pics/r.4.png")`
@@ -150,3 +161,5 @@ Back to
 
 `r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
 :::
+
+# References

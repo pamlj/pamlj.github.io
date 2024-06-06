@@ -59,10 +59,7 @@ yielding 51 as expected.
 
 
 
-
-# Navigate
-
-Back to `r link_pages(nickname="rosetta")`
+`r backto("rosetta")`
 
 
 `r issues()`

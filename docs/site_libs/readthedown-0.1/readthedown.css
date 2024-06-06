@@ -1189,14 +1189,17 @@ div.sourceCode .row div {
   margin-left: 1.4rem;
   margin-right: 1.4rem;
 }
-.adm > p:first-child {
+.adm > :first-child {
   background-color: rgba(87,154,202, 0.1);
   position: relative;
   margin: 0 -0.6rem;
   padding: 0.4rem 0.6rem 0.4rem 2rem;
   font-weight: 700;
+  font-size: 1em;
+  color: #404040 ;
+  margin-bottom: 16px;
 }
-.adm > p:first-child:before {
+.adm > :first-child:before {
   content: "\f05a";
   position: absolute;
   left: 0.6rem;
@@ -1210,50 +1213,50 @@ div.sourceCode .row div {
 .adm.adm-warning {
   border-color: rgba(var(--pst-color-warning), 1);
 }
-.adm.adm-warning > p:first-child {
+.adm.adm-warning > :first-child {
   background-color: rgba(var(--pst-color-warning), 0.1);
 }
-.adm.adm-warning > p:first-child:before {
+.adm.adm-warning > :first-child:before {
   content: var(--pst-icon-admonition-warning);
   color: rgba(var(--pst-color-warning), 1);
 }
 .adm.adm-seealso {
   border-color: rgba(var(--pst-color-success));
 }
-.adm.adm-seealso > p:first-child {
+.adm.adm-seealso > :first-child {
   background-color: rgba(var(--pst-color-success), 0.1);
 }
-.adm.adm-seealso > p:first-child:before {
+.adm.adm-seealso > :first-child:before {
   content: "\f064";
   color: rgba(var(--pst-color-success), 1);
 }
 .adm.adm-danger {
   border-color: rgba(var(--pst-color-danger));
 }
-.adm.adm-danger > p:first-child {
+.adm.adm-danger > :first-child {
   background-color: rgba(var(--pst-color-danger), 0.1);
 }
-.adm.adm-danger > p:first-child:before {
+.adm.adm-danger > :first-child:before {
   content: var(--pst-icon-admonition-danger);
   color: rgba(var(--pst-color-danger), 1);
 }
 .adm.adm-tip {
   border-color: rgba(var(--pst-color-admonition-attention));
 }
-.adm.adm-tip > p:first-child {
+.adm.adm-tip > :first-child {
   background-color: rgba(var(--pst-color-admonition-attention), 0.1);
 }
-.adm.adm-tip > p:first-child:before {
+.adm.adm-tip > :first-child:before {
   content: var(--pst-icon-admonition-tip);
   color: rgba(var(--pst-color-admonition-attention), 1);
 }
 .adm.adm-note {
   border-color: rgba(var(--pst-color-admonition-note));
 }
-.adm.adm-note > p:first-child {
+.adm.adm-note > :first-child {
   background-color: rgba(var(--pst-color-admonition-note), 0.1);
 }
-.adm.adm-note > p:first-child:before {
+.adm.adm-note > :first-child:before {
   content: var(--pst-icon-admonition-note);
   color: rgba(var(--pst-color-admonition-note), 1);
 }
@@ -1261,10 +1264,10 @@ div.sourceCode .row div {
 .adm.adm-setup {
   border-color: rgba(var(--color-setup));
 }
-.adm.adm-setup > p:first-child {
+.adm.adm-setup > :first-child {
   background-color: rgba(var(--color-setup), 0.1);
 }
-.adm.adm-setup > p:first-child:before {
+.adm.adm-setup > :first-child:before {
   content: var(--icon-setup);
   color: rgba(var(--color-setup), 1);
 }
@@ -1273,7 +1276,7 @@ div.sourceCode .row div {
 
 div.version {
   display: inline-block;
-  padding: 12px;
+  padding: 8px;
   padding-left:  20px;
   padding-right: 20px;
   float:right;

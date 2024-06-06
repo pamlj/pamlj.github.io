@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="pandoc" />
 
+        <meta name="author" content="Marcello Gallucci" />
     
     
     <title>Correlation</title>
@@ -124,7 +125,7 @@
     </style>
     
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
-        <link rel="stylesheet" href="style.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
     
     <!-- tabsets -->
     <script>
@@ -257,38 +258,44 @@
       <ul>
       <li><a href="#power-analysis" id="toc-power-analysis">Power
       Analysis</a></li>
-      <li><a href="#correlation" id="toc-correlation">Correlation</a>
-      <ul>
-      <li><a href="#example-1" id="toc-example-1">Example 1</a>
+      <li><a href="#correlation"
+      id="toc-correlation">Correlation</a></li>
+      <li><a href="#example-1-sample-size"
+      id="toc-example-1-sample-size">Example 1 : Sample size</a>
       <ul>
       <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
       <li><a href="#r" id="toc-r">R</a></li>
       <li><a href="#gpower" id="toc-gpower">G*Power</a></li>
       </ul></li>
-      <li><a href="#example-2" id="toc-example-2">Example 2</a>
+      <li><a href="#example-2-power" id="toc-example-2-power">Example 2:
+      Power</a>
       <ul>
       <li><a href="#pamlj-1" id="toc-pamlj-1">PAMLj</a></li>
       <li><a href="#r-1" id="toc-r-1">R</a></li>
       <li><a href="#gpower-1" id="toc-gpower-1">G*Power</a></li>
       </ul></li>
-      <li><a href="#example-3" id="toc-example-3">Example 3</a>
+      <li><a href="#example-3-effect-size"
+      id="toc-example-3-effect-size">Example 3: Effect size</a>
       <ul>
       <li><a href="#pamlj-2" id="toc-pamlj-2">PAMLj</a></li>
       <li><a href="#r-2" id="toc-r-2">R</a></li>
       <li><a href="#gpower-2" id="toc-gpower-2">G*Power</a></li>
       </ul></li>
-      <li><a href="#example-4" id="toc-example-4">Example 4</a>
+      <li><a href="#example-4-one-tail"
+      id="toc-example-4-one-tail">Example 4: One-tail</a>
       <ul>
       <li><a href="#pamlj-3" id="toc-pamlj-3">PAMLj</a></li>
       <li><a href="#r-3" id="toc-r-3">R</a></li>
       <li><a href="#gpower-3" id="toc-gpower-3">G*power</a></li>
       </ul></li>
-      </ul></li>
-      <li><a href="#comments" id="toc-comments">Comments</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
-                </div>
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
    </div>
      
 
@@ -303,6 +310,9 @@
 <p>
 0.1.0
 </p>
+</div>
+<div style="clear:both">
+
 </div>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
 with other software that performs power analysis. In particular, we will
@@ -322,20 +332,24 @@ comparison represents a proper validation. All packages use the <a
 href="https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh">inverse
 hyperbolic tangent</a> transformation <span class="citation">(<a
 href="#ref-cohen1988spa">Cohen 1988</a>)</span>.</p>
-<div id="example-1" class="section level2">
-<h2>Example 1</h2>
+</div>
+<div id="example-1-sample-size" class="section level1">
+<h1>Example 1 : Sample size</h1>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Sample size</li>
 <li>Expected r = .3</li>
 <li>Required power = .8</li>
 <li>Alpha = .05</li>
 </ul>
-<div id="pamlj" class="section level3">
-<h3>PAMLj</h3>
+</div>
+<div id="pamlj" class="section level2">
+<h2>PAMLj</h2>
 <p><img src="rosetta/pics/r.1.png" width="1112" /></p>
 </div>
-<div id="r" class="section level3">
-<h3>R</h3>
+<div id="r" class="section level2">
+<h2>R</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r=</span>.<span class="dv">3</span>,<span class="at">power=</span>.<span class="dv">8</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>)</span></code></pre></div>
 <pre><code>## 
 ##      approximate correlation power calculation (arctangh transformation) 
@@ -346,26 +360,29 @@ href="#ref-cohen1988spa">Cohen 1988</a>)</span>.</p>
 ##           power = 0.8
 ##     alternative = two.sided</code></pre>
 </div>
-<div id="gpower" class="section level3">
-<h3>G*Power</h3>
+<div id="gpower" class="section level2">
+<h2>G*Power</h2>
 <p><img src="rosetta/pics/gpower.r.1.png" width="687" /></p>
 <p>If we round the results, they are the same</p>
 </div>
 </div>
-<div id="example-2" class="section level2">
-<h2>Example 2</h2>
+<div id="example-2-power" class="section level1">
+<h1>Example 2: Power</h1>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = power</li>
 <li>Expected r = .4</li>
 <li>N = 52</li>
 <li>Alpha = .05</li>
 </ul>
-<div id="pamlj-1" class="section level3">
-<h3>PAMLj</h3>
+</div>
+<div id="pamlj-1" class="section level2">
+<h2>PAMLj</h2>
 <p><img src="rosetta/pics/r.2.png" width="1384" /></p>
 </div>
-<div id="r-1" class="section level3">
-<h3>R</h3>
+<div id="r-1" class="section level2">
+<h2>R</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r=</span>.<span class="dv">4</span>,<span class="at">n=</span><span class="dv">52</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>)</span></code></pre></div>
 <pre><code>## 
 ##      approximate correlation power calculation (arctangh transformation) 
@@ -376,27 +393,30 @@ href="#ref-cohen1988spa">Cohen 1988</a>)</span>.</p>
 ##           power = 0.8485972
 ##     alternative = two.sided</code></pre>
 </div>
-<div id="gpower-1" class="section level3">
-<h3>G*Power</h3>
+<div id="gpower-1" class="section level2">
+<h2>G*Power</h2>
 <p><img src="rosetta/pics/gpower.r.2.png" width="683" /></p>
 <p>Results are the same at the third decimal place, which can be
 consider quite good.</p>
 </div>
 </div>
-<div id="example-3" class="section level2">
-<h2>Example 3</h2>
+<div id="example-3-effect-size" class="section level1">
+<h1>Example 3: Effect size</h1>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = minimal effect size</li>
 <li>power = .95</li>
 <li>N = 52</li>
 <li>Alpha = .01</li>
 </ul>
-<div id="pamlj-2" class="section level3">
-<h3>PAMLj</h3>
+</div>
+<div id="pamlj-2" class="section level2">
+<h2>PAMLj</h2>
 <p><img src="rosetta/pics/r.3.png" width="1108" /></p>
 </div>
-<div id="r-2" class="section level3">
-<h3>R</h3>
+<div id="r-2" class="section level2">
+<h2>R</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">n=</span><span class="dv">52</span>,<span class="at">power=</span>.<span class="dv">95</span>,<span class="at">sig.level=</span>.<span class="dv">01</span>)</span></code></pre></div>
 <pre><code>## 
 ##      approximate correlation power calculation (arctangh transformation) 
@@ -407,21 +427,24 @@ consider quite good.</p>
 ##           power = 0.95
 ##     alternative = two.sided</code></pre>
 </div>
-<div id="gpower-2" class="section level3">
-<h3>G*Power</h3>
+<div id="gpower-2" class="section level2">
+<h2>G*Power</h2>
 <p><img src="rosetta/pics/gpower.r.3.png" width="677" /></p>
 <p>Again, rounding a the third decimal place, results are the same.</p>
 </div>
 </div>
-<div id="example-4" class="section level2">
-<h2>Example 4</h2>
+<div id="example-4-one-tail" class="section level1">
+<h1>Example 4: One-tail</h1>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = Sample size</li>
 <li>power = .95</li>
 <li>Expected r = .45</li>
 <li>Alpha = .01</li>
-<li>Tails = “two.sided”</li>
+<li>Tails = “one.sided”</li>
 </ul>
+</div>
 <div id="pamlj-3" class="section level3">
 <h3>PAMLj</h3>
 <p><img src="rosetta/pics/r.4.png" width="1104" /></p>
@@ -446,13 +469,8 @@ consider quite good.</p>
 results are quite in line.</p>
 </div>
 </div>
-</div>
-<div id="comments" class="section level1">
-<h1>Comments</h1>
-<div class="adm adm-warning">
-<p>
-Comments?
-</p>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
 <p>
 Got comments, issues or spotted a bug? Please open an issue on
 <a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
@@ -466,6 +484,8 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 <p><a href="rosetta.html">PAMLj: rosetta</a>,
 <a href="index.html">PAMLj</a></p>
 </div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-cohen1988spa" class="csl-entry">
 Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for

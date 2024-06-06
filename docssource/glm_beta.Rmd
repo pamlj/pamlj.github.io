@@ -1,0 +1,25 @@
+---
+title: "GLM based on Beta coefficients"
+author: Marcello Gallucci 
+topic: glm
+category: subhelp
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+:::{ .version}
+0.2.0
+:::
+
+
+`r issues()`
+
+`r backto("glm")`

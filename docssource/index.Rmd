@@ -2,7 +2,7 @@
 title: "PAMLj"
 author: Marcello Gallucci
 topic: pamlj
-category: help
+category: root
 nickname: index
 bibliography: 
      - bib.bib
@@ -31,10 +31,11 @@ mcdocs_init()
 </center>
 <br>
 
-Estimation of  power parameters (required sample size, posthoc power, minimal detectable effect size and required alpha) for  General Linear Models.
+Estimation of  power parameters (required sample size, posthoc power, minimal detectable effect size and required alpha) for  General Linear Models and other commonly used statistics.
 
 
 * Correlation
+* Proportions
 * Regression
 * t-test
 * ANOVA
@@ -43,17 +44,14 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 * Standardized coefficients based analysis
 * Factorial designs (between, within and mixed)
 
-## Validation
+`r include_pages(category="help",title="Main help pages",text="Please select the help page for a specific analysis ")`
 
-Here we compare the results of `r modulename()` with other software that performs power analysis. 
 
-`r list_pages(category="rosetta")`
+`r include_pages(category="rosetta",title="Validation",text="Here we compare the results of PAMLj with other software that performs power analysis. ")`
 
-## Consistency
 
-Here we check some of the options of the module to demonstrate that they hopefully work (or do not). 
+`r include_pages(category="checks", title="Consistency",text="Here we check some of the options of the module to demonstrate that they hopefully work (or do not).")`
 
-`r list_pages(category="checks")`
 
 
 # Install in jamovi

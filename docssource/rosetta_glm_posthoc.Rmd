@@ -186,9 +186,4 @@ We plug in the partial Eta-squared and the required parameters, and we obtain th
 
 `r issues()`
 
-:::{ .adm .adm-seealso}
-Back to
-
-`r link_pages(nickname="rosetta")`, `r link_pages(nickname="index")` 
-:::
-
+`r backto("rosetta")`

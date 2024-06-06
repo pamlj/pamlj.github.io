@@ -56,7 +56,7 @@
     
     
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
-        <link rel="stylesheet" href="style.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
     
     <!-- tabsets -->
     <script>
@@ -189,12 +189,12 @@
       <ul>
       <li><a href="#power-analysis-for-linear-models-in-jamovi"
       id="toc-power-analysis-for-linear-models-in-jamovi">Power analysis
-      for linear models in jamovi</a>
-      <ul>
+      for linear models in jamovi</a></li>
+      <li><a href="#main-help-pages" id="toc-main-help-pages">Main help
+      pages</a></li>
       <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#consistency"
       id="toc-consistency">Consistency</a></li>
-      </ul></li>
       <li><a href="#install-in-jamovi"
       id="toc-install-in-jamovi">Install in jamovi</a>
       <ul>
@@ -205,7 +205,8 @@
       </ul></li>
       <li><a href="#programmatic-name"
       id="toc-programmatic-name">Programmatic name</a></li>
-      <li><a href="#comments" id="toc-comments">Comments</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -235,9 +236,10 @@ class="section level1">
 <p><br></p>
 <p>Estimation of power parameters (required sample size, posthoc power,
 minimal detectable effect size and required alpha) for General Linear
-Models.</p>
+Models and other commonly used statistics.</p>
 <ul>
 <li>Correlation</li>
+<li>Proportions</li>
 <li>Regression</li>
 <li>t-test</li>
 <li>ANOVA</li>
@@ -247,10 +249,26 @@ analysis</li>
 <li>Standardized coefficients based analysis</li>
 <li>Factorial designs (between, within and mixed)</li>
 </ul>
-<div id="validation" class="section level2">
-<h2>Validation</h2>
-<p>Here we compare the results of <span class="modulename">PAMLj</span>
-with other software that performs power analysis.</p>
+</div>
+<div id="main-help-pages" class="section level1 adm adm-seealso">
+<h1>Main help pages</h1>
+Please select the help page for a specific analysis
+<ul>
+<li>
+<a href="correlation.html">Correlation</a>
+</li>
+<li>
+<a href="glm.html">General Linear Model</a>
+</li>
+<li>
+<a href="rosetta.html">PAMLj: rosetta</a>
+</li>
+</ul>
+</div>
+<div id="validation" class="section level1 adm adm-seealso">
+<h1>Validation</h1>
+Here we compare the results of PAMLj with other software that performs
+power analysis.
 <ul>
 <li>
 <a href="rosetta_correlation.html">Correlation</a>
@@ -275,10 +293,10 @@ effect size</a>
 </li>
 </ul>
 </div>
-<div id="consistency" class="section level2">
-<h2>Consistency</h2>
-<p>Here we check some of the options of the module to demonstrate that
-they hopefully work (or do not).</p>
+<div id="consistency" class="section level1 adm adm-seealso">
+<h1>Consistency</h1>
+Here we check some of the options of the module to demonstrate that they
+hopefully work (or do not).
 <ul>
 <li>
 <a href="check_glm_df.html">GLM options: computing degrees of
@@ -288,7 +306,6 @@ freedom</a>
 <a href="check_glm_es.html">GLM options: converting effect size</a>
 </li>
 </ul>
-</div>
 </div>
 <div id="install-in-jamovi" class="section level1">
 <h1>Install in jamovi</h1>
@@ -318,15 +335,17 @@ jmvtools::install()
 <h1>Programmatic name</h1>
 <pre><code>paste(paste(LETTERS[c(16,1,13,12)],collapse =&quot;&quot;),paste(letters[10]),sep=&quot;&quot;)
 </code></pre>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<p>
+Some more information about the module specs can be found here
+</p>
 <ul>
 </ul>
 </div>
-<div id="comments" class="section level1">
-<h1>Comments</h1>
-<div class="adm adm-warning">
-<p>
-Comments?
-</p>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
 <p>
 Got comments, issues or spotted a bug? Please open an issue on
 <a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
@@ -336,7 +355,6 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 </p>
 </div>
 <p>’</p>
-</div>
 </div>
 
    
