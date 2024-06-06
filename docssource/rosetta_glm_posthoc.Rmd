@@ -16,9 +16,9 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-# Power Analysis: post hoc power 
-
-`r version("0.1.0")` 
+:::version
+0.2.0
+:::
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 

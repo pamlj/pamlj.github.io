@@ -247,9 +247,6 @@
 size</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#power-analysis-for-the-factorial-designs"
-      id="toc-power-analysis-for-the-factorial-designs">Power Analysis
-      for the Factorial Designs</a></li>
       <li><a href="#between-subjects-anova"
       id="toc-between-subjects-anova">Between-subjects ANOVA</a>
       <ul>
@@ -284,13 +281,8 @@ size</a></h2>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="power-analysis-for-the-factorial-designs"
-class="section level1">
-<h1>Power Analysis for the Factorial Designs</h1>
 <div class="version">
-<p>
-0.2.0
-</p>
+<p>0.2.0</p>
 </div>
 <p>Here we compare the results of <span class="modulename">PAMLj</span>
 with other software that performs power analysis. In particular, we will
@@ -298,7 +290,6 @@ compare our results with <a
 href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
 package</a> and <a
 href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.</p>
-</div>
 <div id="between-subjects-anova" class="section level1">
 <h1>Between-subjects ANOVA</h1>
 <p>When dealing with Between-subjects designs, the
@@ -568,6 +559,8 @@ x 2 (Treatment) design, with Time with four repeated measures and
 Treatment with two groups. Differently from the example in Caldwell et
 al., we assume 60 participants, so the power estimates do not ceil up to
 1. The setup is the following:</p>
+<div class="adm adm-setup">
+<p>Setup</p>
 <ul>
 <li>Aim = power</li>
 <li>Treatment <span class="math inline">\(p\eta^2\)</span> = 0.01550
@@ -581,6 +574,7 @@ al., we assume 60 participants, so the power estimates do not ceil up to
 <li>N = 60 (30 per group)</li>
 <li>Alpha = .05</li>
 </ul>
+</div>
 <p>Running the analysis with <code>Superpower</code> we obtain.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>cor_1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,.<span class="dv">6</span>,.<span class="dv">491</span>,.<span class="dv">399</span>,</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                  .<span class="dv">6</span>,<span class="dv">1</span>,.<span class="dv">495</span>,.<span class="dv">402</span>,</span>
