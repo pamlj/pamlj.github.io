@@ -15,10 +15,7 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-:::{ .version}
-0.2.0
-:::
-
+`r version("0.2.0")`
 
 `r issues()`
 

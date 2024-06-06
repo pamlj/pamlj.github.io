@@ -15,9 +15,7 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-:::{ .version}
-0.2.0
-:::
+`r version("0.2.0")`
 
 
 The partial eta-squared $p\eta^2$ is one of the most commonly used effect size index with the GLM. It is the ratio between the variance explained by an effect ($\sigma_x^2$) and the variance not explained by any other effect is the model ($\sigma_x^2+\sigma^2$, where $\sigma^2$ is the residual variance). Formally:  $\sigma_x^2/(\sigma_x^2+\sigma^2)$. It is usually reported in published papers and can be computed with any available statistical software.

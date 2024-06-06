@@ -116,12 +116,7 @@ __Power contour plot__ and __Power curve by N__ have here the same interpretatio
 
 `r issues()`
 
-:::{ .adm .adm-seealso}
-Back to
-
-`r link_pages(nickname="index")` 
-:::
-
+`r backto()`
 
 
 '
