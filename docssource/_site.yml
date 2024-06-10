@@ -9,6 +9,8 @@ navbar:
     href:  glm.html
   - text: "Factorial"
     href:  factorial.html
+  - text: "Proportions"
+    href:  prop.html
 
   - text: "Rosetta"
     href:  rosetta.html
