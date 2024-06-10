@@ -1,0 +1,140 @@
+---
+title: "Independent Samples Proportions"
+author: Marcello Gallucci
+topic: prop
+category: rosetta
+nickname: ros_prop_ind
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Validation
+
+`r version("0.2.0")` 
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our
+results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
+
+Each software employs a z-test after arch transforming the proportions.
+
+# Example 1: Sample size
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim   = N
+*   P1    = .6
+*   P2    = .5
+*   Power = .90
+*   Alpha = .05
+*   Tails = Two
+:::    
+
+## PAMLj
+
+`r pic("rosetta/pics/prop/ind.1.png")`
+
+The expected N is 1038, 519 per group.
+
+## R
+
+```{r }
+
+(h<-pwr::ES.h(.6,.5))
+pwr::pwr.2p.test(h=h,power=.9,sig.level=.05)
+
+```
+`ceiling` the results we obtain 519 cases per group.
+
+## G*Power
+
+`r pic("rosetta/pics/prop/gpower.ind.1.png")`
+
+Results are the same.
+
+# Example 2 : Power
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim   = N
+*   P1    = .6
+*   P2    = .5
+*   N per group = 200
+*   Alpha = .05
+*   Tails = Two
+
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/ind.2.png")`
+
+
+## R
+
+```{r }
+
+(h<-pwr::ES.h(.6,.5))
+pwr::pwr.2p.test(n=200,h=h,sig.level=.05)
+
+```
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.ind.2.png")`
+
+
+Results are almost the same, with a trivial difference of `r 0.5214145-.5301179`
+
+
+# Example 3: Unbalanced designs
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = minimal effect size
+*   power = .95
+*   N per group = 52
+*   Alpha = .01
+
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/ind.3.png")`
+
+## R
+
+
+```{r }
+
+(h<-pwr::ES.h(.6,.5))
+pwr::pwr.2p2n.test(n1=50,n2=60,h=h,sig.level=.05)
+
+```
+
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.ind.3.png")`
+
+Again,  results are the very similar.
+
+
+`r backto("rosetta","prop")` 
+
+
+`r issues()`
+
+
+
+# References

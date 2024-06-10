@@ -90,9 +90,6 @@ paste(paste(LETTERS[c(16,1,13,12)],collapse =""),paste(letters[10]),sep="")
 ```
 
 
-`r include_details("glm")`
-
-
 `r issues()`
 
 '

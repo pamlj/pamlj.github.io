@@ -1,6 +1,6 @@
 ---
 title: "GLM: required sample size"
-topic: samplesize
+topic: glm
 category: rosetta
 nickname: ros_glm_n
 linklabel: "Rosetta: GLM required N" 

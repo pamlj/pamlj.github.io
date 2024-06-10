@@ -1,0 +1,33 @@
+---
+title: "Proportions difference"
+author: Marcello Gallucci 
+topic: prop
+category: help
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r version("0.2.0")`
+
+`r #pic("pics/glm/ui.png")`
+
+
+
+`r issues()`
+
+`r backto()`
