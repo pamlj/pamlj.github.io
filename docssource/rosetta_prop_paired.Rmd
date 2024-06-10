@@ -1,0 +1,163 @@
+---
+title: "Paired Samples Proportions"
+author: Marcello Gallucci
+topic: prop
+category: rosetta
+nickname: ros_prop_paired
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Validation
+
+`r version("0.2.0")` 
+
+For paired samples proportions difference, tested with McNemar's test, different software produces sligthly different parameters, so we compare `r modulename()` with different approach. We make comparisons [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), [R MASS package](https://cran.r-project.org/web/packages/MASS/index.html), and vanilla R computation taken from [powerandsamplesize.com we size](http://powerandsamplesize.com/Calculators/Compare-Paired-Proportions/McNemar-Z-test-2-Sided-Equality).  [powerandsamplesize.com we size](http://powerandsamplesize.com/Calculators/Compare-Paired-Proportions/McNemar-Z-test-2-Sided-Equality) is particularly interesting because they show the actual code used to obtain the power parameters.  We also compare the results with [SPSS v29](https://www.ibm.com/docs/en/spss-statistics/29.0.0)
+
+
+The paired samples proportions difference is applied to a 2 X 2 table in which each cell define the proportion of pairs of cases in each combination of the two variables levels. The 2 X 2 table, cross-classifying factor A and factor B, looks like this:
+
+
+<table>
+<tr><th></th><th>A1</th><th>A2</th></tr>
+<tr><td>B1</td><td>P11</td><td>P21</td></tr>
+<tr><td>B2</td><td>P12</td><td>P22</td></tr>
+</table>
+
+In this table, $P12$ and $P21$ indicate the proportion of discordant cases, which total to $D=P12+P21$. Now, `r modulename()` requires these two proportions as input, with the constraint that $P21<P12$. Notice that the order of the factor level is arbitrary, so the constraint does not limit the application of the test. Gpower requires an odd ratio as input, which in this setup corresponds to $Odd=P21/P12$, and the proportion of discordant cases, $D=P12+P21$.  
+
+
+# Example 1: Sample size
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim   = N
+*   P1    = .32
+*   P2    = .08
+*   D     = .40
+*   Odd-ratio = 4    
+*   Power = .90
+*   Alpha = .05
+*   Tails = Two
+
+:::    
+
+## PAMLj
+
+`r pic("rosetta/pics/prop/paired.1.png")`
+
+The expected N is 69 (pairs).
+
+## R
+
+[powerandsamplesize.com we size](http://powerandsamplesize.com/Calculators/Compare-Paired-Proportions/McNemar-Z-test-2-Sided-Equality)
+
+```{r }
+
+p12=0.32
+p21=0.08
+
+alpha=0.05*1 
+beta=0.10
+pdisc=p21+p12
+pdiff=p12-p21
+(n=((qnorm(1-alpha/2)*sqrt(pdisc)+qnorm(1-beta)*sqrt(pdisc-pdiff^2))/pdiff)^2)
+ceiling(n) 
+```
+Results are exactly the same.
+
+### MESS package
+
+```{r }
+
+p12=0.32
+p21=0.08
+
+alpha=0.05
+beta=0.10
+MESS::power_mcnemar_test(psi=4,paid=p21,power=1-beta,method="normal",sig.level=.05)
+```
+rounding we obtain $N=69$.
+
+
+## G*Power
+
+`r pic("rosetta/pics/prop/gpower.paired.1.png")`
+
+
+## SPSS
+
+`r pic("rosetta/pics/prop/spss.paired.1a.png")`
+`r pic("rosetta/pics/prop/spss.paired.1b.png")`
+
+So, all results converge to $N=69$ but for GPower, which is offset of 1 unit.
+
+# Example 2 : One-Tailed
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim   = N
+*   P1    = .32
+*   P2    = .08
+*   D     = .40
+*   Odd-ratio = 4    
+*   Power = .90
+*   Alpha = .05
+*   Tails = One
+
+:::    
+
+## PAMLj
+
+`r pic("rosetta/pics/prop/paired.2.png")`
+
+The expected N is 56 (pairs).
+
+## R
+
+### MESS package
+
+```{r }
+
+p12=0.32
+p21=0.08
+
+alpha=0.05
+beta=0.10
+MESS::power_mcnemar_test(psi=4,paid=p21,power=1-beta,method="normal",sig.level=.05,alternative="one.side")
+```
+rounding we obtain $N=56$.
+
+
+## G*Power
+
+`r pic("rosetta/pics/prop/gpower.paired.2.png")`
+
+Again, GPower is slightly offset as compared with `MESS::power_mcnemar_test()` and `r modulename()`, but the results are basically the same.
+
+
+## SPSS
+
+`r pic("rosetta/pics/prop/spss.paired.2a.png")`
+`r pic("rosetta/pics/prop/spss.paired.2b.png")`
+
+As above, SPSS is aligned with all other software but GPower, slightly offset.
+
+
+`r backto("rosetta","prop")`
+
+`r issues()`
+
+
+
+

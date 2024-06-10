@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Marcello Gallucci" />
+    
+    
+    <title>Paired Samples Proportions</title>
+
+        <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+              return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Paired Samples Proportions</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Paired Samples Proportions</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#validation" id="toc-validation">Validation</a></li>
+      <li><a href="#example-1-sample-size"
+      id="toc-example-1-sample-size">Example 1: Sample size</a>
+      <ul>
+      <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
+      <li><a href="#r" id="toc-r">R</a>
+      <ul>
+      <li><a href="#mess-package" id="toc-mess-package">MESS
+      package</a></li>
+      </ul></li>
+      <li><a href="#gpower" id="toc-gpower">G*Power</a></li>
+      <li><a href="#spss" id="toc-spss">SPSS</a></li>
+      </ul></li>
+      <li><a href="#example-2-one-tailed"
+      id="toc-example-2-one-tailed">Example 2 : One-Tailed</a>
+      <ul>
+      <li><a href="#pamlj-1" id="toc-pamlj-1">PAMLj</a></li>
+      <li><a href="#r-1" id="toc-r-1">R</a>
+      <ul>
+      <li><a href="#mess-package-1" id="toc-mess-package-1">MESS
+      package</a></li>
+      </ul></li>
+      <li><a href="#gpower-1" id="toc-gpower-1">G*Power</a></li>
+      <li><a href="#spss-1" id="toc-spss-1">SPSS</a></li>
+      </ul></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<div id="validation" class="section level1">
+<h1>Validation</h1>
+<div class="version">
+<p>
+0.2.0
+</p>
+</div>
+<div style="clear:both">
+
+</div>
+<p>For paired samples proportions difference, tested with McNemar’s
+test, different software produces sligthly different parameters, so we
+compare <span class="modulename">PAMLj</span> with different approach.
+We make comparisons <a
+href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>,
+<a href="https://cran.r-project.org/web/packages/MASS/index.html">R MASS
+package</a>, and vanilla R computation taken from <a
+href="http://powerandsamplesize.com/Calculators/Compare-Paired-Proportions/McNemar-Z-test-2-Sided-Equality">powerandsamplesize.com
+we size</a>. <a
+href="http://powerandsamplesize.com/Calculators/Compare-Paired-Proportions/McNemar-Z-test-2-Sided-Equality">powerandsamplesize.com
+we size</a> is particularly interesting because they show the actual
+code used to obtain the power parameters. We also compare the results
+with <a href="https://www.ibm.com/docs/en/spss-statistics/29.0.0">SPSS
+v29</a></p>
+<p>The paired samples proportions difference is applied to a 2 X 2 table
+in which each cell define the proportion of pairs of cases in each
+combination of the two variables levels. The 2 X 2 table,
+cross-classifying factor A and factor B, looks like this:</p>
+<table>
+<tr>
+<th>
+</th>
+<th>
+A1
+</th>
+<th>
+A2
+</th>
+</tr>
+<tr>
+<td>
+B1
+</td>
+<td>
+P11
+</td>
+<td>
+P21
+</td>
+</tr>
+<tr>
+<td>
+B2
+</td>
+<td>
+P12
+</td>
+<td>
+P22
+</td>
+</tr>
+</table>
+<p>In this table, <span class="math inline">\(P12\)</span> and <span
+class="math inline">\(P21\)</span> indicate the proportion of discordant
+cases, which total to <span class="math inline">\(D=P12+P21\)</span>.
+Now, <span class="modulename">PAMLj</span> requires these two
+proportions as input, with the constraint that <span
+class="math inline">\(P21&lt;P12\)</span>. Notice that the order of the
+factor level is arbitrary, so the constraint does not limit the
+application of the test. Gpower requires an odd ratio as input, which in
+this setup corresponds to <span
+class="math inline">\(Odd=P21/P12\)</span>, and the proportion of
+discordant cases, <span class="math inline">\(D=P12+P21\)</span>.</p>
+</div>
+<div id="example-1-sample-size" class="section level1">
+<h1>Example 1: Sample size</h1>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = N</li>
+<li>P1 = .32</li>
+<li>P2 = .08</li>
+<li>D = .40</li>
+<li>Odd-ratio = 4<br />
+</li>
+<li>Power = .90</li>
+<li>Alpha = .05</li>
+<li>Tails = Two</li>
+</ul>
+</div>
+<div id="pamlj" class="section level2">
+<h2>PAMLj</h2>
+<p><img src="rosetta/pics/prop/paired.1.png" width="1101" /></p>
+<p>The expected N is 69 (pairs).</p>
+</div>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p><a
+href="http://powerandsamplesize.com/Calculators/Compare-Paired-Proportions/McNemar-Z-test-2-Sided-Equality">powerandsamplesize.com
+we size</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>p12<span class="ot">=</span><span class="fl">0.32</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>p21<span class="ot">=</span><span class="fl">0.08</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>alpha<span class="ot">=</span><span class="fl">0.05</span><span class="sc">*</span><span class="dv">1</span> </span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>beta<span class="ot">=</span><span class="fl">0.10</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>pdisc<span class="ot">=</span>p21<span class="sc">+</span>p12</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>pdiff<span class="ot">=</span>p12<span class="sc">-</span>p21</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>(<span class="at">n=</span>((<span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span><span class="fu">sqrt</span>(pdisc)<span class="sc">+</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)<span class="sc">*</span><span class="fu">sqrt</span>(pdisc<span class="sc">-</span>pdiff<span class="sc">^</span><span class="dv">2</span>))<span class="sc">/</span>pdiff)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 68.71646</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">ceiling</span>(n) </span></code></pre></div>
+<pre><code>## [1] 69</code></pre>
+<p>Results are exactly the same.</p>
+<div id="mess-package" class="section level3">
+<h3>MESS package</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>p12<span class="ot">=</span><span class="fl">0.32</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>p21<span class="ot">=</span><span class="fl">0.08</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>alpha<span class="ot">=</span><span class="fl">0.05</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>beta<span class="ot">=</span><span class="fl">0.10</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>MESS<span class="sc">::</span><span class="fu">power_mcnemar_test</span>(<span class="at">psi=</span><span class="dv">4</span>,<span class="at">paid=</span>p21,<span class="at">power=</span><span class="dv">1</span><span class="sc">-</span>beta,<span class="at">method=</span><span class="st">&quot;normal&quot;</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<pre><code>## 
+##      McNemar paired comparison of proportions approximate power calculation 
+## 
+##               n = 68.71646
+##            paid = 0.08
+##             psi = 4
+##       sig.level = 0.05
+##           power = 0.9
+##     alternative = two.sided
+## 
+## NOTE: n is number of pairs</code></pre>
+<p>rounding we obtain <span class="math inline">\(N=69\)</span>.</p>
+</div>
+</div>
+<div id="gpower" class="section level2">
+<h2>G*Power</h2>
+<p><img src="rosetta/pics/prop/gpower.paired.1.png" width="596" /></p>
+</div>
+<div id="spss" class="section level2">
+<h2>SPSS</h2>
+<p><img src="rosetta/pics/prop/spss.paired.1a.png" width="812" />
+<img src="rosetta/pics/prop/spss.paired.1b.png" width="751" /></p>
+<p>So, all results converge to <span class="math inline">\(N=69\)</span>
+but for GPower, which is offset of 1 unit.</p>
+</div>
+</div>
+<div id="example-2-one-tailed" class="section level1">
+<h1>Example 2 : One-Tailed</h1>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = N</li>
+<li>P1 = .32</li>
+<li>P2 = .08</li>
+<li>D = .40</li>
+<li>Odd-ratio = 4<br />
+</li>
+<li>Power = .90</li>
+<li>Alpha = .05</li>
+<li>Tails = One</li>
+</ul>
+</div>
+<div id="pamlj-1" class="section level2">
+<h2>PAMLj</h2>
+<p><img src="rosetta/pics/prop/paired.2.png" width="1035" /></p>
+<p>The expected N is 56 (pairs).</p>
+</div>
+<div id="r-1" class="section level2">
+<h2>R</h2>
+<div id="mess-package-1" class="section level3">
+<h3>MESS package</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>p12<span class="ot">=</span><span class="fl">0.32</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>p21<span class="ot">=</span><span class="fl">0.08</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>alpha<span class="ot">=</span><span class="fl">0.05</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>beta<span class="ot">=</span><span class="fl">0.10</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>MESS<span class="sc">::</span><span class="fu">power_mcnemar_test</span>(<span class="at">psi=</span><span class="dv">4</span>,<span class="at">paid=</span>p21,<span class="at">power=</span><span class="dv">1</span><span class="sc">-</span>beta,<span class="at">method=</span><span class="st">&quot;normal&quot;</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>,<span class="at">alternative=</span><span class="st">&quot;one.side&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##      McNemar paired comparison of proportions approximate power calculation 
+## 
+##               n = 55.63893
+##            paid = 0.08
+##             psi = 4
+##       sig.level = 0.05
+##           power = 0.9
+##     alternative = one.sided
+## 
+## NOTE: n is number of pairs</code></pre>
+<p>rounding we obtain <span class="math inline">\(N=56\)</span>.</p>
+</div>
+</div>
+<div id="gpower-1" class="section level2">
+<h2>G*Power</h2>
+<p><img src="rosetta/pics/prop/gpower.paired.2.png" width="601" /></p>
+<p>Again, GPower is slightly offset as compared with
+<code>MESS::power_mcnemar_test()</code> and <span
+class="modulename">PAMLj</span>, but the results are basically the
+same.</p>
+</div>
+<div id="spss-1" class="section level2">
+<h2>SPSS</h2>
+<p><img src="rosetta/pics/prop/spss.paired.2a.png" width="812" />
+<img src="rosetta/pics/prop/spss.paired.2b.png" width="774" /></p>
+<p>As above, SPSS is aligned with all other software but GPower,
+slightly offset.</p>
+<div class="adm adm-seealso">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="rosetta.html">PAMLj: rosetta</a>
+<a class="backto" href="prop.html">Proportions difference</a>
+</div>
+</div>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

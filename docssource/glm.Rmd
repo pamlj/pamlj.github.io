@@ -47,6 +47,8 @@ Please select the effect size index to go to its dedicated page.
 
 `r include_pages(topic="glm",category="subhelp",title="Go the help page for:")`
 
+`r include_pages(topic="glm",category="rosetta",title="Validation")`
+
 `r issues()`
 
 `r backto()`

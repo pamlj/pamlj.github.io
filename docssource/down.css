@@ -98,3 +98,19 @@ span.little {
 .navbar-nav {
   font-size: .9em !important;
 }
+
+
+td {
+    text-align: center;
+}
+th {
+   text-align: center;
+    border-bottom: 2px solid black;
+}
+
+
+.backto {
+    
+    margin-top: 10em;
+    
+}

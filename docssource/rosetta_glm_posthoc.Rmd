@@ -1,6 +1,6 @@
 ---
 title: "GLM: posthoc power"
-topic: posthoc
+topic: glm
 category: rosetta
 nickname: ros_glm_posthoc
 linklabel: "Rosetta: GLM posthoc power" 

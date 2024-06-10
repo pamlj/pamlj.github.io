@@ -27,7 +27,8 @@ mcdocs_init()
 `r #pic("pics/glm/ui.png")`
 
 
-
-`r issues()`
+`r include_pages(topic="prop",category="rosetta",title="Validation")`
 
 `r backto()`
+
+`r issues()`
