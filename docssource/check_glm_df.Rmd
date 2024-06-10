@@ -59,8 +59,7 @@ yielding 51 as expected.
 
 
 
-`r backto("rosetta")`
-
+`r backto("glm","rosetta")`
 
 `r issues()`
 

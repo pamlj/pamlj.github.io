@@ -43,7 +43,7 @@ Setup
 
 ### G*Power
 
-`r pic("rosetta/pics/gpower.glm.1.png")`
+`r pic("rosetta/pics/glm/gpower.glm.1.png")`
 
     
 ### R
@@ -60,11 +60,11 @@ pwr::pwr.f2.test(f2=.1111,u=5, v=89,sig.level=.05)
 
 In `r modulename()` we can use both `r opt("Partial Eta-Squared")` or `r opt("Eta-Squared")`, because in the case of the $R^2$ the two effect size are identical. For simplicity, we use `r opt("Partial Eta-Squared")`
 
-`r pic("rosetta/pics/glm.1.png")`
+`r pic("rosetta/pics/glm/glm.1.png")`
 
 Had we used `r opt("Eta-Squared")`, we simply put the $R^2$ to test both in the effect size and the $R^2$ field, obtaining the same results.
 
-`r pic("rosetta/pics/glm.1.2.png")`
+`r pic("rosetta/pics/glm/glm.1.2.png")`
 
 We obtain the same results in packages, although we will see that this is not always the case (see next example).
 
@@ -93,7 +93,7 @@ Setup
 :::
 ### G*Power
 
-`r pic("rosetta/pics/gpower.glm.2.png")`
+`r pic("rosetta/pics/glm/gpower.glm.2.png")`
 
 ### R
 
@@ -123,11 +123,11 @@ The power is now identical to the one estimated in GPower.
 
 By default,  `r modulename()` employs the GPower _non centrality parameter_, yielding the same results as GPower.
 
-`r pic("rosetta/pics/glm.2.1.png")`
+`r pic("rosetta/pics/glm/glm.2.1.png")`
 
 BY de-selecting the option `r opt("G*Power NCP")`, we obtain the same results as in R without adjustment.
 
-`r pic("rosetta/pics/glm.2.2.png")`
+`r pic("rosetta/pics/glm/glm.2.2.png")`
 
 
 # ANOVA 
@@ -155,7 +155,7 @@ First notice that for this problem, G*Power offers  _F test: Fixed effects ANOVA
 
 Plugging in the parameters we obtain:
 
-`r pic("rosetta/pics/gpower.glm.3.png")`
+`r pic("rosetta/pics/glm/gpower.glm.3.png")`
 
 
 
@@ -180,9 +180,9 @@ We obtained the same results as in G*Power
 
 We plug in the partial Eta-squared and the required parameters, and we obtain the same results as before.
 
-`r pic("rosetta/pics/glm.3.png")`
+`r pic("rosetta/pics/glm/glm.3.png")`
 
-
-`r issues()`
 
 `r backto("rosetta")`
+
+`r issues()`

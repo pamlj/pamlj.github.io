@@ -264,22 +264,25 @@
       <li><a href="#multiple-regression"
       id="toc-multiple-regression">Multiple regression</a>
       <ul>
+      <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
       <li><a href="#gpower" id="toc-gpower">G*Power</a></li>
       <li><a href="#r" id="toc-r">R</a></li>
-      <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
+      <li><a href="#spss" id="toc-spss">SPSS</a></li>
       </ul></li>
       <li><a href="#increase-in-r2" id="toc-increase-in-r2">Increase in
       <span class="math inline">\(R^2\)</span></a>
       <ul>
+      <li><a href="#pamlj-1" id="toc-pamlj-1">PAMLj</a></li>
       <li><a href="#gpower-1" id="toc-gpower-1">G*Power</a></li>
       <li><a href="#r-1" id="toc-r-1">R</a></li>
-      <li><a href="#pamlj-1" id="toc-pamlj-1">PAMLj</a></li>
+      <li><a href="#spss-1" id="toc-spss-1">SPSS</a></li>
       </ul></li>
       <li><a href="#anova" id="toc-anova">ANOVA</a>
       <ul>
+      <li><a href="#pamlj-2" id="toc-pamlj-2">PAMLj</a></li>
       <li><a href="#gpower-2" id="toc-gpower-2">G*Power</a></li>
       <li><a href="#r-2" id="toc-r-2">R</a></li>
-      <li><a href="#pamlj-2" id="toc-pamlj-2">PAMLj</a></li>
+      <li><a href="#spss-2" id="toc-spss-2">SPSS</a></li>
       </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
@@ -306,7 +309,10 @@ with other software that performs power analysis. In particular, we will
 compare our results with <a
 href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
 package</a> and <a
-href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.</p>
+href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>.
+We also compare the results with <a
+href="https://www.ibm.com/docs/en/spss-statistics/29.0.0">SPSS
+v29</a></p>
 <p>We use a few examples from <a
 href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power
 manual</a>, then we test some other design and analysis. In GPower
@@ -344,9 +350,24 @@ class="math inline">\(f^2\)</span> effect size with the simple formula
 <li>Correct results: N = 95</li>
 </ul>
 </div>
+<div id="pamlj" class="section level3">
+<h3>PAMLj</h3>
+<p>In <span class="modulename">PAMLj</span> we can use both <span
+class="option">Partial Eta-Squared</span> or <span
+class="option">Eta-Squared</span>, because in the case of the <span
+class="math inline">\(R^2\)</span> the two effect size are identical.
+For simplicity, we use <span class="option">Partial
+Eta-Squared</span>.</p>
+<p><img src="rosetta/pics/glm/glm.n.1.png" width="1368" /></p>
+<p>Had we used <span class="option">Eta-Squared</span>, we simply put
+the <span class="math inline">\(R^2\)</span> to test both in the effect
+size and the <span class="math inline">\(R^2\)</span> field, obtaining
+the same results.</p>
+<p><img src="rosetta/pics/glm/glm.n.1.2.png" width="1275" /></p>
+</div>
 <div id="gpower" class="section level3">
 <h3>G*Power</h3>
-<p><img src="rosetta/pics/gpower.n.glm.1.png" width="688" /></p>
+<p><img src="rosetta/pics/glm/gpower.n.glm.1.png" width="688" /></p>
 </div>
 <div id="r" class="section level3">
 <h3>R</h3>
@@ -357,7 +378,9 @@ class="math inline">\(N\)</span> should be computed as the residuals
 degrees of freedom <span class="math inline">\(v\)</span> plus the <span
 class="math inline">\(u+1\)</span>, thus we have <span
 class="math inline">\(N=v+u+1\)</span></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>(res<span class="ot">&lt;-</span>pwr<span class="sc">::</span><span class="fu">pwr.f2.test</span>(<span class="at">f2=</span>.<span class="dv">1111</span>,<span class="at">u=</span><span class="dv">5</span>, <span class="at">power=</span>.<span class="dv">6735</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">sqrt</span>(.<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## [1] 0.3162278</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>(res<span class="ot">&lt;-</span>pwr<span class="sc">::</span><span class="fu">pwr.f2.test</span>(<span class="at">f2=</span>.<span class="dv">1111</span>,<span class="at">u=</span><span class="dv">5</span>, <span class="at">power=</span>.<span class="dv">6735</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>))</span></code></pre></div>
 <pre><code>## 
 ##      Multiple regression power calculation 
 ## 
@@ -366,24 +389,20 @@ class="math inline">\(N=v+u+1\)</span></p>
 ##              f2 = 0.1111
 ##       sig.level = 0.05
 ##           power = 0.6735</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="fu">round</span>((res<span class="sc">$</span>v<span class="sc">+</span>res<span class="sc">$</span>u<span class="sc">+</span><span class="dv">1</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>N</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="fu">round</span>((res<span class="sc">$</span>v<span class="sc">+</span>res<span class="sc">$</span>u<span class="sc">+</span><span class="dv">1</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>N</span></code></pre></div>
 <pre><code>## [1] 95</code></pre>
 </div>
-<div id="pamlj" class="section level3">
-<h3>PAMLj</h3>
-<p>In <span class="modulename">PAMLj</span> we can use both <span
-class="option">Partial Eta-Squared</span> or <span
-class="option">Eta-Squared</span>, because in the case of the <span
-class="math inline">\(R^2\)</span> the two effect size are identical.
-For simplicity, we use <span class="option">Partial
-Eta-Squared</span>.</p>
-<p><img src="rosetta/pics/glm.n.1.png" width="1368" /></p>
-<p>Had we used <span class="option">Eta-Squared</span>, we simply put
-the <span class="math inline">\(R^2\)</span> to test both in the effect
-size and the <span class="math inline">\(R^2\)</span> field, obtaining
-the same results.</p>
-<p><img src="rosetta/pics/glm.n.1.2.png" width="1275" /></p>
+<div id="spss" class="section level3">
+<h3>SPSS</h3>
+<p>In SPSS, we can use
+<code>Power Analysis -&gt; Regression -&gt; Univariate Linear</code> to
+compare the results. The caveat is that SPSS requires <em>the multiple
+partial correlation</em> as input, which is simply the squared root of
+the <em>partial eta-squared</em>. So, in this case, we have <span
+class="math inline">\(pr=\sqrt{.10}=0.3162\)</span>.</p>
+<p><img src="rosetta/pics/glm/spss.n.glm.1a.png" width="644" />
+<img src="rosetta/pics/glm/spss.n.glm.1b.png" width="643" /></p>
 </div>
 </div>
 <div id="increase-in-r2" class="section level1">
@@ -421,9 +440,14 @@ class="math inline">\(f^2=(R_f^2-R_n^2)/(1-R_f^2)\)</span>.</p>
 <li>Correct results: N = 90</li>
 </ul>
 </div>
+<div id="pamlj-1" class="section level3">
+<h3>PAMLj</h3>
+<p>Results are perfectly in line with other software.</p>
+<p><img src="rosetta/pics/glm/glm.n.2.png" width="1342" /></p>
+</div>
 <div id="gpower-1" class="section level3">
 <h3>G*Power</h3>
-<p><img src="rosetta/pics/gpower.n.glm.2.png" width="681" /></p>
+<p><img src="rosetta/pics/glm/gpower.n.glm.2.png" width="681" /></p>
 </div>
 <div id="r-1" class="section level3">
 <h3>R</h3>
@@ -432,11 +456,11 @@ in the effect size <span class="math inline">\(f^2\)</span> and the
 effect DF <span class="math inline">\(u=4\)</span>. The final <span
 class="math inline">\(N\)</span> will results as <span
 class="math inline">\(N=v+u+1\)</span></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>f2<span class="ot">=</span>.<span class="dv">05</span><span class="sc">/</span>(<span class="dv">1</span><span class="fl">-.30</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>u<span class="ot">&lt;-</span><span class="dv">4</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">9</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>power<span class="ot">&lt;-</span> .<span class="dv">241296</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>(res<span class="ot">&lt;-</span>pwr<span class="sc">::</span><span class="fu">pwr.f2.test</span>(<span class="at">f2=</span>f2,<span class="at">u=</span>u, <span class="at">power=</span>power,<span class="at">sig.level=</span>.<span class="dv">01</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>f2<span class="ot">=</span>.<span class="dv">05</span><span class="sc">/</span>(<span class="dv">1</span><span class="fl">-.30</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>u<span class="ot">&lt;-</span><span class="dv">4</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">9</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>power<span class="ot">&lt;-</span> .<span class="dv">241296</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>(res<span class="ot">&lt;-</span>pwr<span class="sc">::</span><span class="fu">pwr.f2.test</span>(<span class="at">f2=</span>f2,<span class="at">u=</span>u, <span class="at">power=</span>power,<span class="at">sig.level=</span>.<span class="dv">01</span>))</span></code></pre></div>
 <pre><code>## 
 ##      Multiple regression power calculation 
 ## 
@@ -445,14 +469,22 @@ class="math inline">\(N=v+u+1\)</span></p>
 ##              f2 = 0.07142857
 ##       sig.level = 0.01
 ##           power = 0.241296</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="fu">round</span>((res<span class="sc">$</span>v<span class="sc">+</span>u<span class="sc">+</span><span class="dv">1</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>N</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="fu">round</span>((res<span class="sc">$</span>v<span class="sc">+</span>u<span class="sc">+</span><span class="dv">1</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>N</span></code></pre></div>
 <pre><code>## [1] 90</code></pre>
 </div>
-<div id="pamlj-1" class="section level3">
-<h3>PAMLj</h3>
-<p>Results are perfectly in line with other software.</p>
-<p><img src="rosetta/pics/glm.n.2.png" width="1342" /></p>
+<div id="spss-1" class="section level3">
+<h3>SPSS</h3>
+<p>In SPSS, we can use
+<code>Power Analysis -&gt; Regression -&gt; Univariate Linear</code> to
+compare the results. SPSS requires the two <span
+class="math inline">\(R^2\)</span> as input. We also need to input the
+number of preditor of the full model, which are the degrees of freedom
+of the full model, and the number of predictors in the nested model,
+which are the degrees of freedom of the effect.</p>
+<p><img src="rosetta/pics/glm/spss.n.glm.2a.png" width="643" />
+<img src="rosetta/pics/glm/spss.n.glm.2b.png" width="715" /></p>
+<p>Results are in line with <span class="modulename">PAMLj</span>.</p>
 </div>
 </div>
 <div id="anova" class="section level1">
@@ -486,8 +518,14 @@ class="math inline">\(N = 108\)</span>.</p>
 <li>Model DF = 35</li>
 <li>Power = .475627</li>
 <li>Alpha = .05</li>
-<li>Correct results: N = 108</li>
+<li>Expected results: N = 108</li>
 </ul>
+</div>
+<div id="pamlj-2" class="section level3">
+<h3>PAMLj</h3>
+<p>We plug in the partial Eta-squared and the required parameters, and
+we obtain N=108, as in GPower.</p>
+<p><img src="rosetta/pics/glm/glm.n.3.png" width="1346" /></p>
 </div>
 <div id="gpower-2" class="section level3">
 <h3>G*Power</h3>
@@ -499,7 +537,7 @@ class="math inline">\(f^2\)</span> so it can be computed from the
 partial Eta-squared as <span
 class="math inline">\(f=\sqrt{p\eta^2/(1-p\eta^2)}\)</span> .</p>
 <p>Plugging in the parameters we obtain:</p>
-<p><img src="rosetta/pics/gpower.n.glm.3.png" width="680" /></p>
+<p><img src="rosetta/pics/glm/gpower.n.glm.3.png" width="680" /></p>
 </div>
 <div id="r-2" class="section level3">
 <h3>R</h3>
@@ -510,12 +548,12 @@ than the one used in G*Power. Nonetheless, we can get an approximated
 estimation of the sample size by computing the N employing the whole
 model DF <span class="math inline">\(m=35\)</span>, yielding <span
 class="math inline">\(N=v+m+1\)</span></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>f<span class="ot">&lt;-</span><span class="fl">0.2450722</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>u<span class="ot">&lt;-</span><span class="dv">4</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">35</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>f2<span class="ot">&lt;-</span>f<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>power<span class="ot">=</span>.<span class="dv">475627</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>(res<span class="ot">&lt;-</span>pwr<span class="sc">::</span><span class="fu">pwr.f2.test</span>(<span class="at">f2=</span>f2,<span class="at">u=</span><span class="dv">4</span>, <span class="at">power=</span>power,<span class="at">sig.level=</span>.<span class="dv">05</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>f<span class="ot">&lt;-</span><span class="fl">0.2450722</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>u<span class="ot">&lt;-</span><span class="dv">4</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="dv">35</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>f2<span class="ot">&lt;-</span>f<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>power<span class="ot">=</span>.<span class="dv">475627</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>(res<span class="ot">&lt;-</span>pwr<span class="sc">::</span><span class="fu">pwr.f2.test</span>(<span class="at">f2=</span>f2,<span class="at">u=</span><span class="dv">4</span>, <span class="at">power=</span>power,<span class="at">sig.level=</span>.<span class="dv">05</span>))</span></code></pre></div>
 <pre><code>## 
 ##      Multiple regression power calculation 
 ## 
@@ -524,17 +562,35 @@ class="math inline">\(N=v+m+1\)</span></p>
 ##              f2 = 0.06006038
 ##       sig.level = 0.05
 ##           power = 0.475627</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="fu">round</span>(res<span class="sc">$</span>v<span class="sc">+</span>m<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>N</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>N<span class="ot">&lt;-</span><span class="fu">round</span>(res<span class="sc">$</span>v<span class="sc">+</span>m<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>N</span></code></pre></div>
 <pre><code>## [1] 137</code></pre>
 <p>As expected, the required sample size obtained in
 <code>pwr.f2.test</code> is larger than the one obtained in GPower.</p>
 </div>
-<div id="pamlj-2" class="section level3">
-<h3>PAMLj</h3>
-<p>We plug in the partial Eta-squared and the required parameters, and
-we obtain N=108, as in GPower.</p>
-<p><img src="rosetta/pics/glm.n.3.png" width="1346" /></p>
+<div id="spss-2" class="section level3">
+<h3>SPSS</h3>
+<p>In SPSS, we can use
+<code>Power Analysis -&gt; Regression -&gt; Univariate Linear</code> to
+compare the results. In fact, the F-test in GLM is the same for
+regression and the ANOVA, and the <em>number of predictors</em> in SPSS
+is nothing else that the degrees of freedom of the effect and the model.
+The caveat is that SPSS requires <em>the multiple partial
+correlation</em> as input, which is simply the squared root of the
+<em>partial eta-squared</em>. So, in this case, we have <span
+class="math inline">\(pr=\sqrt{.0.0566}=0.238\)</span>.</p>
+<p><img src="rosetta/pics/glm/spss.n.glm.3a.png" width="639" />
+<img src="rosetta/pics/glm/spss.n.glm.3b.png" width="630" /></p>
+<p>SPSS gives the same results of <span
+class="modulename">PAMLj</span>.</p>
+<div class="adm adm-seealso">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="rosetta.html">PAMLj: rosetta</a>
+<a class="backto" href="glm.html">General Linear Model</a>
+</div>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
@@ -546,11 +602,6 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
-</div>
-<div class="adm adm-seealso">
-<p>Back to</p>
-<p><a href="rosetta.html">PAMLj: rosetta</a>,
-<a href="index.html">PAMLj</a></p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>

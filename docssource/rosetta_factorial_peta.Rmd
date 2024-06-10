@@ -52,7 +52,7 @@ First notice that for this problem, GPower offers  _F test: Fixed effects ANOVA_
 
 Plugging in the parameters we obtain:
 
-`r pic("rosetta/pics/gpower.n.glm.3.png")`
+`r pic("rosetta/pics/glm/gpower.n.glm.3.png")`
 
 
 ## R
