@@ -101,6 +101,17 @@ rounding we obtain $N=69$.
 
 So, all results converge to $N=69$ but for GPower, which is offset of 1 unit.
 
+
+## Results
+
+```{r, echo=FALSE}
+
+tab<-list(PAMLj=69,psw.com=69,MESS=69,GPower=70,SPSS=69)
+tab<-as.data.frame(t(as.data.frame(tab)))
+names(tab)<-"Require N"
+htmlTable::htmlTable(tab)
+```
+
 # Example 2 : One-Tailed
 
 :::{ .adm .adm-setup}
@@ -152,6 +163,14 @@ Again, GPower is slightly offset as compared with `MESS::power_mcnemar_test()` a
 `r pic("rosetta/pics/prop/spss.paired.2b.png")`
 
 As above, SPSS is aligned with all other software but GPower, slightly offset.
+
+```{r, echo=FALSE}
+
+tab<-list(PAMLj=56,MESS=56,GPower=58,SPSS=56)
+tab<-as.data.frame(t(as.data.frame(tab)))
+names(tab)<-"Require N"
+htmlTable::htmlTable(tab)
+```
 
 
 `r backto("rosetta","prop")`

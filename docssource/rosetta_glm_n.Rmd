@@ -86,6 +86,17 @@ In SPSS, we can use `Power Analysis -> Regression -> Univariate Linear` to compa
 `r pic("rosetta/pics/glm/spss.n.glm.1b.png")`
 
 
+### Results
+
+```{r, echo=FALSE}
+
+tab<-list(PAMLj=56,MESS=56,GPower=58,SPSS=56)
+tab<-as.data.frame(t(as.data.frame(tab)))
+names(tab)<-"Require N"
+htmlTable::htmlTable(tab)
+```
+
+
 # Increase in $R^2$
 
 <i> F test: Multiple Regression - special (increase of R2), fixed model , p. 37 </i>
