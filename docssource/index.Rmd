@@ -16,8 +16,6 @@ link-citations: true
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
-include_details()
-list_pages(category="details")
 ```
 
 # Power analysis for linear models in jamovi
