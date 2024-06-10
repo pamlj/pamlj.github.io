@@ -1,0 +1,25 @@
+---
+title: "One sample t-test"
+author: Marcello Gallucci 
+topic: ttest
+category: subhelp
+order: 3
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+
+```
+
+`r version("0.2.0")`
+
+
+`r issues()`
+
+`r backto("ttest")`

@@ -168,6 +168,9 @@
         <a href="glm.html">GLM</a>
       </li>
       <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
         <a href="rosetta.html">Rosetta</a>
       </li>
             </ul>
@@ -195,6 +198,7 @@
       <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#consistency"
       id="toc-consistency">Consistency</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
       <li><a href="#install-in-jamovi"
       id="toc-install-in-jamovi">Install in jamovi</a>
       <ul>
@@ -205,7 +209,7 @@
       </ul></li>
       <li><a href="#programmatic-name"
       id="toc-programmatic-name">Programmatic name</a></li>
-      <li><a href="#details" id="toc-details">Details</a></li>
+      <li><a href="#details-1" id="toc-details-1">Details</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -258,13 +262,16 @@ Please select the help page for a specific analysis
 <a href="correlation.html">Correlation</a>
 </li>
 <li>
+<a href="factorial.html">General Linear Model</a>
+</li>
+<li>
 <a href="glm.html">General Linear Model</a>
 </li>
 <li>
 <a href="rosetta.html">PAMLj: rosetta</a>
 </li>
 <li>
-<a href="specs_fncp.html">F-Test Non-centrality parameters</a>
+<a href="ttest.html">T-test</a>
 </li>
 </ul>
 </div>
@@ -277,10 +284,6 @@ power analysis.
 <a href="rosetta_correlation.html">Correlation</a>
 </li>
 <li>
-<a href="rosetta_equi_ttest.html">Independent sample T-test: Equivalence
-tests</a>
-</li>
-<li>
 <a href="rosetta_factorial_means.html">Factorial designs: power from
 means and SD</a>
 </li>
@@ -289,10 +292,23 @@ means and SD</a>
 effect size</a>
 </li>
 <li>
+<a href="rosetta_glm_posthoc.html">GLM: posthoc power</a>
+</li>
+<li>
 <a href="rosetta_glm_n.html">GLM: required sample size</a>
 </li>
 <li>
-<a href="rosetta_glm_posthoc.html">GLM: posthoc power</a>
+<a href="rosetta_equi_ttest.html">Independent sample T-test: Equivalence
+tests</a>
+</li>
+<li>
+<a href="rosetta_ttest_ind.html">Independent Samples t-test</a>
+</li>
+<li>
+<a href="rosetta_ttest_one.html">One Sample t-test</a>
+</li>
+<li>
+<a href="rosetta_ttest_paired.html">Pairted Samples t-test</a>
 </li>
 </ul>
 </div>
@@ -307,6 +323,17 @@ freedom</a>
 </li>
 <li>
 <a href="check_glm_es.html">GLM options: converting effect size</a>
+</li>
+</ul>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<p>
+Some more information about the module specs can be found here
+</p>
+<ul>
+<li>
+<a href="specs_fncp.html">F-Test Non-centrality parameters</a>
 </li>
 </ul>
 </div>
@@ -339,13 +366,11 @@ jmvtools::install()
 <pre><code>paste(paste(LETTERS[c(16,1,13,12)],collapse =&quot;&quot;),paste(letters[10]),sep=&quot;&quot;)
 </code></pre>
 </div>
-<div id="details" class="section level1 adm adm-seealso">
+<div id="details-1" class="section level1 adm adm-seealso">
 <h1>Details</h1>
 <p>
 Some more information about the module specs can be found here
 </p>
-<ul>
-</ul>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>

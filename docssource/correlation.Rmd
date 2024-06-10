@@ -29,11 +29,7 @@ Power Analysis
 
 `Correlation` allows for computing power parameters for testing the Pearson or Spearman correlation coefficient. The initial step is to determine the objective of the analysis ( _aim_ ). Further details regarding different objectives can be found in the `Info` results field.
 
-`r pic("commons/pics/aims.1.png")`
-
-For correlation analysis, it also suggests the following:
-
-`r pic("pics/correlation/aims.2.png")`
+`r pic("pics/common/aim.1.png")`
 
 We start with the first aim, finding the required sample size N.
 

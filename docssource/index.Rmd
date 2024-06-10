@@ -15,8 +15,9 @@ link-citations: true
 
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
-mcdocs::version
 mcdocs_init()
+include_details()
+list_pages(category="details")
 ```
 
 # Power analysis for linear models in jamovi
@@ -52,6 +53,7 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 
 `r include_pages(category="checks", title="Consistency",text="Here we check some of the options of the module to demonstrate that they hopefully work (or do not).")`
 
+`r include_details()`
 
 
 # Install in jamovi

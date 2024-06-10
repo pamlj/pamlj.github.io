@@ -3,6 +3,7 @@ title: "GLM based on partial Eta-Squared"
 author: Marcello Gallucci 
 topic: glm
 category: subhelp
+order: 1
 bibliography: 
      - bib.bib
 link-citations: true
@@ -13,6 +14,7 @@ link-citations: true
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
+
 ```
 
 `r version("0.2.0")`

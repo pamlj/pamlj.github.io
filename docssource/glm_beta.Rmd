@@ -3,6 +3,7 @@ title: "GLM based on Beta coefficients"
 author: Marcello Gallucci 
 topic: glm
 category: subhelp
+order: 3
 bibliography: 
      - bib.bib
 link-citations: true

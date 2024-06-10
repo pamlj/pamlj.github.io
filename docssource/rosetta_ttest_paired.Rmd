@@ -1,0 +1,164 @@
+---
+title: "Pairted Samples t-test"
+author: Marcello Gallucci
+topic: ttest
+category: rosetta
+nickname: ros_ttest_paired
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Validation
+
+`r version("0.1.0")` 
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our
+results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
+
+
+# Example 1 : Power
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = Power
+*   Expected $\delta$ = .5
+*   N  = 30
+*   Alpha = .05
+*   Tails: Two
+
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/paired.1.png")`
+
+The expected power is .7540.
+
+## R
+
+```{r }
+
+pwr::pwr.t.test(n=30,d=.5,sig.level=.05,type="paired")
+
+```
+rounding at for decimal places, we obtain the same results.
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.paired.1.png")`
+
+rounding at for decimal places, we obtain the same results.
+
+
+# Example 2: Sample size
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   Expected $\delta$ = .4
+*   Power = .90
+*   Alpha = .05
+*   Tails = Two
+:::    
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/paired.2.png")`
+
+The expected N is 68.
+
+## R
+
+```{r }
+
+pwr::pwr.t.test(d=.4,power=.9,sig.level=.05,type="paired")
+
+
+```
+after rounding, we get N=68.
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.paired.2.png")`
+
+Results are the same.
+
+# Example 3: Effect size
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = minimal effect size
+*   power = .95
+*   N  = 52
+*   Alpha = .01
+
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/paired.3.png")`
+
+## R
+
+
+```{r }
+
+pwr::pwr.t.test(n=52,power=.95,sig.level=.01, type="paired")
+
+```
+
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.paired.3.png")`
+
+Again, rounding a the third decimal place, results are the same.
+
+# Example 4: One-tail
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   Expected $\delta$ = .4
+*   Power = .90
+*   Alpha = .05
+*   Tails = One
+
+:::
+### PAMLj
+
+`r pic("rosetta/pics/ttest/ind.4.png")`
+
+
+### R
+
+```{r }
+
+pwr::pwr.t.test(d=.4,power=.90,sig.level=.05,type="paired",alternative="greater")
+
+```
+after rounding, we get N=55
+
+### G*power
+
+`r pic("rosetta/pics/ttest/gpower.paired.4.png")`
+
+
+
+`r backto("rosetta","ttest")` 
+
+
+`r issues()`
+

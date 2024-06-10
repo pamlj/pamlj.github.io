@@ -1,0 +1,52 @@
+---
+title: "T-test"
+author: Marcello Gallucci 
+topic: ttest
+category: help
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r version("0.2.0")`
+
+`r pic("pics/ttest/ui.png")`
+
+`T-test power analysis` allows for computing power parameters for testing difference in means in different designs. It can be used to estimate power parameters for independent samples, paired samples and one sample t-test. The module allows also for equivalence tests.
+
+The initial step is to determine the objective of the analysis ( _aim_ ). Further details regarding different objectives can be found in the `Info` results field.
+
+`r pic("pics/common/aim.1.png")`
+
+
+The second step is to decide what type of effect size we want to employ. 
+
+# Designs
+
+* __Independent Samples t-test__ : valuable for comparing two groups means, in between-subjects designs.
+
+* __Paired Samples t-test__ : valuable for comparing two means measured on the same sample, in repeated measures designs.
+
+* __One Sample t-test__ : valuable for comparing one mean with a theoretical value.
+
+Please select the test to go to its dedicated page.
+
+`r include_pages(topic="ttest",category="subhelp",title="Go the help page for:")`
+
+`r backto()`
+
+`r issues()`

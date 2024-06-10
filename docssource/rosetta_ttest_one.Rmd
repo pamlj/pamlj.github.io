@@ -1,0 +1,166 @@
+---
+title: "One Sample t-test"
+author: Marcello Gallucci
+topic: ttest
+category: rosetta
+nickname: ros_ttest_ind
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+# Validation
+
+`r version("0.1.0")` 
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our
+results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
+
+
+# Example 1 : Power
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = Power
+*   Expected $\delta$ = .5
+*   N per group = 30
+*   Alpha = .05
+*   Tails: Two
+
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/one.1.png")`
+
+The expected power is .7540.
+
+## R
+
+```{r }
+
+pwr::pwr.t.test(n=30,d=.5,sig.level=.05,type="one.sample")
+
+```
+after rounding we get power equal to .7539
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.one.1.png")`
+
+
+Results are the same
+
+
+# Example 2: Sample size
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   Expected $\delta$ = .4
+*   Power = .90
+*   Alpha = .05
+*   Tails = Two
+:::    
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/ind.2.png")`
+
+The expected N is 68.
+## R
+
+```{r }
+
+pwr::pwr.t.test(d=.4,power=.9,sig.level=.05,type="one.sample")
+
+
+```
+
+after rounding we get N=68
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.one.2.png")`
+
+Results are the same.
+
+# Example 3: Effect size
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = minimal effect size
+*   power = .95
+*   N per group = 52
+*   Alpha = .01
+
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/ttest/one.3.png")`
+
+## R
+
+
+```{r }
+
+pwr::pwr.t.test(n=52,power=.95,sig.level=.01,type="one.sample")
+
+```
+
+
+## G*Power
+
+`r pic("rosetta/pics/ttest/gpower.one.3.png")`
+
+Again, rounding a the third decimal place, results are the same.
+
+# Example 4: One-tail
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   Expected $\delta$ = .4
+*   Power = .90
+*   Alpha = .05
+*   Tails = One
+
+:::
+### PAMLj
+
+`r pic("rosetta/pics/ttest/one.4.png")`
+
+
+### R
+
+```{r }
+
+pwr::pwr.t.test(d=.4,power=.90,sig.level=.05,alternative="greater",type="one.sample")
+
+
+```
+
+### G*power
+
+`r pic("rosetta/pics/ttest/gpower.one.4.png")`
+
+`r backto("rosetta","ttest")` 
+
+
+`r issues()`
+
+
+
+# References

@@ -3,6 +3,7 @@ title: "GLM based on Eta-Squared"
 author: Marcello Gallucci 
 topic: glm
 category: subhelp
+order: 2
 bibliography: 
      - bib.bib
 link-citations: true

@@ -16,15 +16,13 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-# Power Analysis
+# Validation
 
 `r version("0.1.0")` 
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our
 results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). 
 
-
-# Correlation
 
 For Pearson and Spearman correlation, we can compare `r modulename()` with `R pwr package` and `G*Power`. Consider, however, that for this task `r modulename()` employs `R pwr package` under the hood, so the results are obviously in line. For G*Power, the comparison represents a proper validation. All packages use the  [inverse hyperbolic tangent](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions#atanh) transformation [@cohen1988spa].
 

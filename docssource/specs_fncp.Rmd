@@ -2,7 +2,7 @@
 title: "F-Test Non-centrality parameters"
 author: Marcello Gallucci
 topic: rosetta
-category: help
+category: details
 nickname: specs_fncp
 bibliography: 
      - bib.bib

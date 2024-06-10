@@ -30,7 +30,7 @@ mcdocs_init()
 
 The initial step is to determine the objective of the analysis ( _aim_ ). Further details regarding different objectives can be found in the `Info` results field.
 
-`r pic("commons/pics/aims.1.png")`
+`r pic("pics/common/aim.1.png")`
 
 
 The second step is to decide what type of effect size we want to employ. 

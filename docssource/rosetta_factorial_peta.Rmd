@@ -1,6 +1,6 @@
 ---
 title: "Factorial designs: power from effect size"
-topic: samplesize
+topic: factorial
 category: rosetta
 nickname: ros_fac_peta
 linklabel: "Rosetta: Factorial power from effect size" 
@@ -301,9 +301,9 @@ which align quite well with the `r modulename()` results, with some small differ
 `r pic("rosetta/pics/factorial/facpeta.n.15.png")`
 
 
+`r backto("rosetta")`
+
 `r issues()`
 
-
-`r backto("rosetta")`
 
 # References
