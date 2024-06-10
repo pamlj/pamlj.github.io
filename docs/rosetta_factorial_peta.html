@@ -397,26 +397,26 @@ we obtain N=108, as in GPower.</p>
 <p><img src="rosetta/pics/factorial/facpeta.n.1.png" width="586" />
 <img src="rosetta/pics/factorial/facpeta.n.2.png" width="577" /></p>
 <p>To obtain a practically equivalent result of the one obtained with
-<code>pwr.f2.test</code>, we can simply unselect the
-<code>G*Power NCP</code> option.</p>
-<p><img src="rosetta/pics/factorial/facpeta.n.3.png" width="584" />
+<code>pwr.f2.test</code>, we can simply select the <code>Liberal</code>
+in the <code>Non-centrality parameter options</code> option.</p>
+<p><img src="rosetta/pics/factorial/facpeta.n.3.png" width="582" />
 <img src="rosetta/pics/factorial/facpeta.n.4.png" width="606" /></p>
 </div>
 </div>
 <div id="repeated-measures-anova" class="section level1">
 <h1>Repeated Measures ANOVA</h1>
 <p>To test the <code>Factorial design power analysis</code> sub-module
-for repeated measures or mixed design, we can compare results with
+for repeated measures or mixed designs, we can compare results with
 GPower and
 <a href='https://aaroncaldwell.us/SuperpowerBook/' target='_blank'>Superpower
 R package</a>. However, in G*Power the default effect size used for
 repeated-measures effects is defined in a different way as compared with
 <code>Factorial design power analysis</code> sub-module, Superpower or
 even SPSS. Moreover, <code>Superpower</code> package requires to input
-the expected means of the design cells and only produce estimation of
-power,not the required N. Nonetheless, we can still make some useful
+the expected means of the design cells and it only produces estimation
+of power,not the required N. Nonetheless, we can still make some useful
 comparison.</p>
-<p>We start with a 2x2 repeated measure design as described in
+<p>We start with a 2x2 repeated measures design as described in
 <a href='https://aaroncaldwell.us/SuperpowerBook/repeated-measures-anova.html#part-4' target='_blank'>Caldwell
 et al. Superpower 2x2 within-within example</a>. They tested a 2x2
 design with 25 participants, with interaction effect as follows:</p>
@@ -553,14 +553,14 @@ power estimation, we get an even closer result to the one obtained in
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>                              <span class="at">mu =</span> mu, </span>
 <span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>                              <span class="at">sd =</span> sd, </span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>                              <span class="at">r =</span> r,<span class="at">plot=</span><span class="cn">FALSE</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#exact_result &lt;- Superpower::ANOVA_power(design_result,</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#                            alpha_level = alpha_level,</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#                            verbose = FALSE,seed=12^3)</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
-<pre><code>##        power partial_eta_squared cohen_f non_centrality
-## a    5.00000             0.00000 0.00000           0.00
-## b    5.00000             0.00000 0.00000           0.00
-## a:b 89.27484             0.13976 0.40307          10.56</code></pre>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>random_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_power</span>(design_result,</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>,<span class="at">seed=</span><span class="dv">12</span><span class="sc">^</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">zapsmall</span>(random_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<pre><code>##           power effect_size
+## anova_a     4.7     0.01444
+## anova_b     5.1     0.01595
+## anova_a:b  90.4     0.14863</code></pre>
 </div>
 </div>
 </div>
@@ -578,48 +578,48 @@ al., we assume 60 participants, so the power estimates do not ceil up to
 <p>Setup</p>
 <ul>
 <li>Aim = power</li>
-<li>Treatment <span class="math inline">\(p\eta^2\)</span> = 0.01550
+<li>Treatment <span class="math inline">\(p\eta^2\)</span> = 0.01598
 (df=1)</li>
-<li>Time <span class="math inline">\(p\eta^2\)</span> = 0.04581
+<li>Time <span class="math inline">\(p\eta^2\)</span> = 0.04717
 (df=3)<br />
 </li>
 <li>Treatment X Time <span class="math inline">\(p\eta^2\)</span> =
-0.02347 (df=3)</li>
+0.02418 (df=3)</li>
 <li>Number of groups in the design = 2</li>
 <li>N = 60 (30 per group)</li>
 <li>Alpha = .05</li>
 </ul>
 </div>
 <p>Running the analysis with <code>Superpower</code> we obtain.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>cor_1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,.<span class="dv">6</span>,.<span class="dv">491</span>,.<span class="dv">399</span>,</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                  .<span class="dv">6</span>,<span class="dv">1</span>,.<span class="dv">495</span>,.<span class="dv">402</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                  .<span class="dv">491</span>,.<span class="dv">495</span>,<span class="dv">1</span>,.<span class="dv">491</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                  .<span class="dv">399</span>,.<span class="dv">402</span>,.<span class="dv">491</span>,<span class="dv">1</span>), <span class="at">nrow=</span><span class="dv">4</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>cor_2 <span class="ot">&lt;-</span> cor_1<span class="sc">*</span><span class="dv">0</span></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>pain_cor_mat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rbind</span>(cor_1,cor_2),</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>                      <span class="fu">rbind</span>(cor_2,cor_1))</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>design_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="st">&quot;2b*4w&quot;</span>,</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>                              <span class="at">n =</span> <span class="dv">30</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>                              <span class="at">mu =</span> <span class="fu">c</span>(<span class="fl">2.4</span>, <span class="fl">2.38</span>, <span class="fl">2.05</span>, <span class="fl">1.90</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>                                     <span class="fl">2.4</span>, <span class="fl">2.39</span>, <span class="fl">2.36</span>, <span class="fl">2.30</span>),</span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>                              <span class="at">sd =</span> .<span class="dv">92</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>                              <span class="at">r =</span> pain_cor_mat,</span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>                              <span class="at">labelnames =</span> <span class="fu">c</span>(<span class="st">&quot;Treatment&quot;</span>, <span class="st">&quot;sensory&quot;</span>, <span class="st">&quot;standard&quot;</span>,</span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>                                             <span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;t1&quot;</span>, <span class="st">&quot;t2&quot;</span>, <span class="st">&quot;t3&quot;</span>, <span class="st">&quot;t4&quot;</span>),</span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>                              <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design_result,</span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>cor_1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,.<span class="dv">6</span>,.<span class="dv">491</span>,.<span class="dv">399</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>                  .<span class="dv">6</span>,<span class="dv">1</span>,.<span class="dv">495</span>,.<span class="dv">402</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>                  .<span class="dv">491</span>,.<span class="dv">495</span>,<span class="dv">1</span>,.<span class="dv">491</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                  .<span class="dv">399</span>,.<span class="dv">402</span>,.<span class="dv">491</span>,<span class="dv">1</span>), <span class="at">nrow=</span><span class="dv">4</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>cor_2 <span class="ot">&lt;-</span> cor_1<span class="sc">*</span><span class="dv">0</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>pain_cor_mat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rbind</span>(cor_1,cor_2),</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>                      <span class="fu">rbind</span>(cor_2,cor_1))</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>design_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="st">&quot;2b*4w&quot;</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>                              <span class="at">n =</span> <span class="dv">30</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>                              <span class="at">mu =</span> <span class="fu">c</span>(<span class="fl">2.4</span>, <span class="fl">2.38</span>, <span class="fl">2.05</span>, <span class="fl">1.90</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>                                     <span class="fl">2.4</span>, <span class="fl">2.39</span>, <span class="fl">2.36</span>, <span class="fl">2.30</span>),</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>                              <span class="at">sd =</span> .<span class="dv">92</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>                              <span class="at">r =</span> pain_cor_mat,</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>                              <span class="at">labelnames =</span> <span class="fu">c</span>(<span class="st">&quot;Treatment&quot;</span>, <span class="st">&quot;sensory&quot;</span>, <span class="st">&quot;standard&quot;</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>                                             <span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;t1&quot;</span>, <span class="st">&quot;t2&quot;</span>, <span class="st">&quot;t3&quot;</span>, <span class="st">&quot;t4&quot;</span>),</span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>                              <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design_result,</span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
 <pre><code>##                   power partial_eta_squared cohen_f non_centrality
 ## Treatment      15.90956             0.01598 0.12742        0.94169
 ## TIME           67.91487             0.04717 0.22249        8.61356
 ## Treatment:TIME 37.65318             0.02418 0.15742        4.31189</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>exact_result<span class="sc">$</span>aov_result</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>exact_result<span class="sc">$</span>aov_result</span></code></pre></div>
 <pre><code>## Anova Table (Type 3 tests)
 ## 
 ## Response: y

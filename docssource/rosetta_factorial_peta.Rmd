@@ -80,7 +80,7 @@ We plug in the partial Eta-squared and the required parameters, and we obtain N=
 `r pic("rosetta/pics/factorial/facpeta.n.1.png")`
 `r pic("rosetta/pics/factorial/facpeta.n.2.png")`
 
-To obtain a practically equivalent result of the one obtained with  `pwr.f2.test`, we can simply unselect the `G*Power NCP` option.
+To obtain a practically equivalent result of the one obtained with  `pwr.f2.test`, we can simply select the `Liberal` in the `Non-centrality parameter options` option.
 
 `r pic("rosetta/pics/factorial/facpeta.n.3.png")`
 `r pic("rosetta/pics/factorial/facpeta.n.4.png")`
@@ -88,9 +88,9 @@ To obtain a practically equivalent result of the one obtained with  `pwr.f2.test
 
 # Repeated Measures ANOVA 
 
-To test the `Factorial design power analysis` sub-module for repeated measures or mixed design, we can compare results with GPower and `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`. However, in G*Power the default effect size used for repeated-measures effects is defined in a different way as compared with  `Factorial design power analysis` sub-module, Superpower or even SPSS. Moreover, `Superpower` package requires to input the expected means of the design cells and only produce estimation of power,not the required N. Nonetheless, we can still make some useful comparison.
+To test the `Factorial design power analysis` sub-module for repeated measures or mixed designs, we can compare results with GPower and `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`. However, in G*Power the default effect size used for repeated-measures effects is defined in a different way as compared with  `Factorial design power analysis` sub-module, Superpower or even SPSS. Moreover, `Superpower` package requires to input the expected means of the design cells and it only produces estimation of power,not the required N. Nonetheless, we can still make some useful comparison.
 
-We start with a 2x2 repeated measure design as described in `r ext_url("Caldwell et al. Superpower 2x2 within-within example","https://aaroncaldwell.us/SuperpowerBook/repeated-measures-anova.html#part-4")`. They tested a 2x2 design with 25 participants, with interaction effect as follows:
+We start with a 2x2 repeated measures design as described in `r ext_url("Caldwell et al. Superpower 2x2 within-within example","https://aaroncaldwell.us/SuperpowerBook/repeated-measures-anova.html#part-4")`. They tested a 2x2 design with 25 participants, with interaction effect as follows:
 
 :::{ .adm .adm-setup}
 Setup
@@ -197,8 +197,28 @@ zapsmall(exact_result$main_results)
 ```
 Interestengly, if we user `Superpower` simulation-based power estimation, we get an even closer result to the one obtained in `r modulename()`.
 
+```{r include=FALSE} 
 
-```{r }
+mu = c(700, 670, 670, 700) 
+n <- 66
+sd <- 150
+r <- 0.75
+string = "2w*2w"
+alpha_level <- 0.05
+# design_result <- Superpower::ANOVA_design(design = string,
+#                               n = n, 
+#                               mu = mu, 
+#                               sd = sd, 
+#                               r = r,plot=FALSE)
+# random_result <- Superpower::ANOVA_power(design_result,
+#                             alpha_level = alpha_level,
+#                             verbose = FALSE,seed=12^3)
+# 
+#save(random_result,file="resources/rosetta1.Rda")
+load("../resources/rosetta1.Rda")
+```
+
+```{r eval=FALSE}
 mu = c(700, 670, 670, 700) 
 n <- 66
 sd <- 150
@@ -210,11 +230,12 @@ design_result <- Superpower::ANOVA_design(design = string,
                               mu = mu, 
                               sd = sd, 
                               r = r,plot=FALSE)
-#exact_result <- Superpower::ANOVA_power(design_result,
-#                            alpha_level = alpha_level,
-#                            verbose = FALSE,seed=12^3)
-zapsmall(exact_result$main_results)
-
+random_result <- Superpower::ANOVA_power(design_result,
+                            alpha_level = alpha_level,
+                            verbose = FALSE,seed=12^3)
+```
+```{r }
+zapsmall(random_result$main_results)
 ```
 
 # Mixed ANOVA
@@ -225,9 +246,9 @@ Let's now assume that the design we just analyzed was a mixed between-within des
 Setup
 
 *   Aim = power
-*   Treatment $p\eta^2$             = 0.01550 (df=1)
-*   Time $p\eta^2$                  = 0.04581 (df=3)	
-*   Treatment X Time $p\eta^2$      = 0.02347 (df=3)
+*   Treatment $p\eta^2$             = 0.01598  (df=1)
+*   Time $p\eta^2$                  = 0.04717 (df=3)	
+*   Treatment X Time $p\eta^2$      =  0.02418  (df=3)
 *   Number of groups in the design = 2
 *   N               =   60 (30 per group)
 *   Alpha           =  .05
