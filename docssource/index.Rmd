@@ -21,9 +21,7 @@ mcdocs_init()
 # Power analysis for linear models in jamovi
 
 
-:::{ .version}
-0.2.0
-:::
+`r version("0.2.0")`
 
 <center>
 <img width="800" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
