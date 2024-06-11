@@ -1,5 +1,5 @@
 ---
-title: "General Linear Model"
+title: "Factorial Designs"
 author: Marcello Gallucci 
 topic: factorial
 category: help
