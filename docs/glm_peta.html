@@ -195,9 +195,13 @@
       <ul>
       <li><a href="#aim-n-required-sample-size"
       id="toc-aim-n-required-sample-size">Aim: N (Required sample
-      size)</a></li>
-      <li><a href="#aim-power-posthoc-power"
-      id="toc-aim-power-posthoc-power">Aim: Power (posthoc
+      size)</a>
+      <ul>
+      <li><a href="#regression" id="toc-regression">Regression</a></li>
+      <li><a href="#anova" id="toc-anova">ANOVA</a></li>
+      </ul></li>
+      <li><a href="#aim-power-expected-power"
+      id="toc-aim-power-expected-power">Aim: Power (expected
       power)</a></li>
       <li><a href="#aim-effect-size-aka-another-sensitivity-analysis"
       id="toc-aim-effect-size-aka-another-sensitivity-analysis">Aim:
@@ -263,11 +267,13 @@ class="math inline">\(1-\beta=power\)</span>, given the expected effect
 size <span class="math inline">\(p\eta^2\)</span>. That is, the minimum
 N such that we achieve the desired power for a test of the expected
 effect size.</p>
+<div id="regression" class="section level3">
+<h3>Regression</h3>
 <p>Let’s consider a scenario where we aim to estimate the required
 sample size (N) for a planned research project. Assuming we have a
 single continuous independent variable with an expected Partial
 Eta-squared of 0.15 evaluated at α = 0.05. We aim for a power of 0.90.
-Because the independent variable is continuous, it’s test will have 1
+Because the independent variable is continuous, its test will have 1
 <em>df</em>. Because there is only one independent variable, the
 <code>Model degrees of freedom</code> will be 1 as well (see below for
 more about computing <em>df</em> in complex models).</p>
@@ -277,10 +283,9 @@ class="modulename">PAMLj</span>.</p>
 <img src="pics/glm/peta.1.a.png" width="533" /></p>
 <p>From the results table <code>A priori power analysis</code> we can
 see that the required N is 62, so we need 62 cases to achieve a power of
-.90 given an expected <span
-class="math inline">\(p\eta^2=.15\)</span>.The tables reports all power
-parameters, all but one are input by the user, and the required one
-estimated by the module.</p>
+.90 given an expected <span class="math inline">\(p\eta^2=.15\)</span>.
+The table reports all power parameters, all but one are input by the
+user, and the required one estimated by the module.</p>
 <p>The second table we get is the <code>Power by Effect Size</code>
 table, which informs us on the different power levels associated with
 different possible effect sizes. Based on the estimate <span
@@ -292,11 +297,14 @@ expected effect size be between .06 and .116. A power between .80 and
 .95 is to be expected if our population effect size is between .116 and
 .178, whereas a power greater than .95 can be expected if the population
 correlation is larger than .178.</p>
+</div>
+<div id="anova" class="section level3">
+<h3>ANOVA</h3>
 <p>Assume now we have a 2 X 3 design, and we are focusing on the
 interaction effect. Assume the expected Partial Eta-squared is .06. The
 interaction effect test has <span
 class="math inline">\((2-1)(3-1)=2\)</span> degrees of freedom, whereas
-the overall model has <span class="math inline">\(3*2-1=5\)</span>
+the overall model has <span class="math inline">\((3*2)-1=5\)</span>
 <em>df</em>. We can plug these values in the interface and get the
 required N.</p>
 <p><img src="pics/glm/peta.2.i.png" width="628" />
@@ -311,15 +319,16 @@ href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-a
 See <a href="rosetta_glm_n.html">Rosetta: GLM required N</a> for
 validation.</p>
 </div>
-<div id="aim-power-posthoc-power" class="section level1">
-<h1>Aim: Power (posthoc power)</h1>
-<p>Post-hoc power analysis serves to evaluate the likelihood of
-obtaining statistically significant results after conducting research,
-particularly when a pre-hoc (a priori) analysis was not performed. For
-instance, let’s consider a scenario where a research study involves 50
-participants, with the focal effect of one continuous independent
-variable results in a Partial Eta-squared coefficient of 0.04, which is
-found to be statistically significant. In the model there are other
+</div>
+<div id="aim-power-expected-power" class="section level1">
+<h1>Aim: Power (expected power)</h1>
+<p>Expected power analysis, sometimes called post-hoc power, aims at
+evaluating the likelihood of obtaining statistically significant results
+after conducting research, particularly when a pre-hoc (a priori)
+decision about the sample size cannot be performed. For instance, let’s
+consider a scenario where a research study involves 50 participants,
+with the focal effect of one continuous independent variable results in
+a Partial Eta-squared coefficient of 0.04. In the model there are other
 three continuous predictors. In this context, post-hoc power analysis
 assesses the probability of consistently obtaining significant results
 if the research were to be replicated multiple times, drawing from the
@@ -338,13 +347,14 @@ and employing the same sample size.</p>
 <div id="aim-effect-size-aka-another-sensitivity-analysis"
 class="section level1">
 <h1>Aim: Effect size (AKA another sensitivity analysis)</h1>
-<p>Estimating the effect size aim at finding <em>minimum detectable
+<p>Estimating the effect size aims at finding <em>minimum detectable
 effect size</em> (MDES). It determines the minimum effect size that can
 be detected as significant with a specified probability (<span
 class="math inline">\(1-\beta=power\)</span>), given the sample size at
-hand. In essence, it is a post-hoc power analysis but may be used also
-in planning a research.</p>
-<p>For instance, consider a situation where only a limited sample of 40
+hand and the critical <span class="math inline">\(\alpha\)</span>. In
+essence, it is a post-hoc power analysis but may be used also in
+planning a research.</p>
+<p>For instance, consider a situation where only a limited sample of 50
 cases was collected due to constraints such as research topic, funding,
 or population size. In such cases, <code>Calculate: Effect size</code>
 helps answer the question: What is the lowest effect size that would be
@@ -394,7 +404,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 </div>
-<div class="adm adm-seealso">
+<div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
