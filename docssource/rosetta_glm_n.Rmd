@@ -25,13 +25,13 @@ mcdocs_init()
 
 Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf) and [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower). We also compare the results with [SPSS v29](https://www.ibm.com/docs/en/spss-statistics/29.0.0)
 
-We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), then we test some other design and analysis. In GPower manual the aim of the analysis is to find the post hoc power, here we look for the minimum sample size given the power obtained in the GPower manual. So, this is not a tutorial on how to conduct a power analysis (the required power is sometimes a non-sense), is a testing exercise to evaluate the correctness of the results.
+We use a few examples from [G*Power manual](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), then we test some other design and analysis. In GPower manual the aim of the analysis is to find the post hoc power, here we look for the minimum sample size given the power obtained in the GPower manual. So, this is not a tutorial on how to conduct a power analysis (the required power is sometimes non-sense), it is a testing exercise to evaluate the correspondence of the results.
 
 # Multiple regression
 
 <i> Multiple Regression - omnibus (deviation of R 2 from zero), fixed model, p. 33 </i>
 
-T he manual estimates the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. The resulting power is $1-\beta=.6735$ based on Five predictors me95 cases. So, starting from the given power, we should obtain a required sample size of 95. The model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$. 
+The manual estimates the post-hoc power for the F-test associated to the $R^2$ of a model with 5 predictors. The resulting power is $1-\beta=.6735$ based on Five predictors me95 cases. So, starting from the given power, we should obtain a required sample size of 95. The model degrees of freedom are 5. Because the test is on the whole model $R^2$, also the the effect DF are 5. The $R^2$ is transformed into the $f^2$ effect size with the simple formula $f^2=R^2/(1-R^2)$. 
 
 :::{ .adm .adm-setup}
 Setup

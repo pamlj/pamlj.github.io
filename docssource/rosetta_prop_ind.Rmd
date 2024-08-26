@@ -65,7 +65,7 @@ Results are the same.
 :::{ .adm .adm-setup}
 Setup
 
-*   Aim   = N
+*   Aim   = Power
 *   P1    = .6
 *   P2    = .5
 *   N per group = 200
@@ -76,7 +76,7 @@ Setup
 
 ## PAMLj
 
-`r pic("rosetta/pics/ttest/ind.2.png")`
+`r pic("rosetta/pics/prop/ind.2.png")`
 
 
 ## R
@@ -90,7 +90,7 @@ pwr::pwr.2p.test(n=200,h=h,sig.level=.05)
 
 ## G*Power
 
-`r pic("rosetta/pics/ttest/gpower.ind.2.png")`
+`r pic("rosetta/pics/prop/gpower.ind.2.png")`
 
 
 Results are almost the same, with a trivial difference of `r 0.5214145-.5301179`
@@ -110,7 +110,7 @@ Setup
 
 ## PAMLj
 
-`r pic("rosetta/pics/ttest/ind.3.png")`
+`r pic("rosetta/pics/prop/ind.3.png")`
 
 ## R
 
@@ -125,7 +125,7 @@ pwr::pwr.2p2n.test(n1=50,n2=60,h=h,sig.level=.05)
 
 ## G*Power
 
-`r pic("rosetta/pics/ttest/gpower.ind.3.png")`
+`r pic("rosetta/pics/prop/gpower.ind.3.png")`
 
 Again,  results are the very similar.
 

@@ -1,0 +1,40 @@
+---
+title: "Factorial Designs"
+author: Marcello Gallucci 
+topic: factorial
+category: help
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r version("0.2.0")`
+
+`r pic("pics/factorial/ui.png")`
+
+
+`Factorial Designs power analysis` allows for computing power parameters for testing ANOVA effects in factorial designs
+
+
+`r include_pages(topic="factorial",category="subhelp",title="Go the help page for:")`
+
+`r include_pages(topic="factorial",category="rosetta",title="Validation")`
+
+
+`r issues()`
+
+`r backto()`
