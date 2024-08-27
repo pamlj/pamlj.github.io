@@ -114,3 +114,21 @@ th {
     margin-top: 10em;
     
 }
+
+span.option {
+    
+    background-color: #E6E6E6;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: black;
+    
+}
+
+span.panel {
+    background-color: #E6E6E6;
+    padding-right: 5px;
+    padding-left: 5px;
+    color: black;
+    
+}
+

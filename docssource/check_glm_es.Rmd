@@ -28,7 +28,7 @@ Here we check that the options provided by `r modulename()` to help constructing
 
 When power analysis is based observed effect sizes taken from previous research or pilot studies, it is always a good idea to use an adjusted version of the indices. This because the indices of effect size based on variances are almost always up-ward biased [@richardson2011eta]. For the Partial Eta-squared there are two adjustments that can be carried out, yielding the Partial Omega-Squared and the Partial Epsilon-squared. The two are very similar, so any of the two would work fine. 
 
-In order to adjust the observed Partial Eta-squared in `r modulename()`, one needs the actual value, the effect degrees of freedom and the residual degrees of freedom of the model from which the index is taken. This information is almost always present in a published paper and is always present in software results (if the info comes from a pilot study). Thus one can plug this info into the fields in the `r opt("Option")` , `r opt("Convert effect size indices")`.
+In order to adjust the observed Partial Eta-squared in `r modulename()`, one needs the actual value, the effect degrees of freedom and the residual degrees of freedom of the model from which the index is taken. This information is almost always present in a published paper and is always present in software results (if the info comes from a pilot study). Thus one can plug this info into the fields in the `r opt_panel("Options")` , `r opt_label("Convert effect size indices")`.
 
 
 `r pic("rosetta/checks/esadjust.1.png")`
@@ -47,7 +47,7 @@ Then we fill in the `r opt("Observed Partial Eta-squared")` ($p\eta^2=.132$) and
 
 `r pic("rosetta/checks/esadjust.4.png")`
 
-It is clear that the module is computing the right adjusted coefficients. At this point, we pick the adjusted index that we like by selecting it in `r opt("Use as effectr size")` (here $\omega$), and it will be automagically transferred in the main panel `r opt("Expected partial Eta-squared")`.
+It is clear that the module is computing the right adjusted coefficients. At this point, we pick the adjusted index that we like by selecting it in `r opt_label("Use as effect size")` (here $\omega$), and it will be automagically transferred in the main panel `r opt("Expected partial Eta-squared")`.
 
 `r pic("rosetta/checks/esadjust.5.png")`
 
@@ -59,7 +59,7 @@ Out of curiosity, if we were looking for a minimum sample size to achieve a powe
 ## GPower Partial effect size indices
 
 [GPower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) (a leading software for power analysis)
-suggests to use a different adjustment. The adjustment yields values that are usually in between the observed effect size and the population effect size. `r modulename()` provides the possibility to use the GPower adjustment, by simply selecting `r opt("G*Power")` in the `r opt("Use as effect size ")` list. 
+suggests to use a different adjustment. The adjustment yields values that are usually in between the observed effect size and the population effect size. `r modulename()` provides the possibility to use the GPower adjustment, by simply selecting `r opt("G*Power")` in the `r opt_label("Use as effect size ")` list. 
 
 `r pic("rosetta/checks/esadjust.7.png")`
 
