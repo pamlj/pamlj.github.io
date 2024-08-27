@@ -59,9 +59,9 @@ Out of curiosity, if we were looking for a minimum sample size to achieve a powe
 ## GPower Partial effect size indices
 
 [GPower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) (a leading software for power analysis)
-suggest to use a different adjustment. The adjustment yields values that are usually in beteween the observed effect size and the population effect size. `r modulename()` provides the possibility to use the GPower adjustment, by simply selecting `r opt("G*Power")` in the `r opt("Use as effect size ")` list. 
+suggests to use a different adjustment. The adjustment yields values that are usually in between the observed effect size and the population effect size. `r modulename()` provides the possibility to use the GPower adjustment, by simply selecting `r opt("G*Power")` in the `r opt("Use as effect size ")` list. 
 
-`r pic("rosetta/checks/esadjust.6.png")`
+`r pic("rosetta/checks/esadjust.7.png")`
 
 For the user convenience, the option `r opt("f2")` is there to allow comparing results from GPower (which uses $f^2$ as an effect size) and `r modulename()` without having the user to transform the effect size indices back and forth.
 
