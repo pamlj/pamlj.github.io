@@ -27,7 +27,6 @@ mcdocs_init()
 `r underconstruction`
 
 
-`r include_pages(topic="prop",category="rosetta",title="Validation")`
 
 `r backto("prop")`
 
