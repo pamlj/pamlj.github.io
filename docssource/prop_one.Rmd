@@ -1,8 +1,8 @@
 ---
-title: "Proportions difference"
+title: "Proportions difference: One Sample"
 author: Marcello Gallucci 
 topic: prop
-category: help
+category: subhelp
 output: 
   html_document:
      includes:
@@ -24,13 +24,10 @@ mcdocs_init()
 
 `r version("0.2.6")`
 
-
-`r #pic("pics/glm/ui.png")`
-
-`r include_pages(topic="prop",category="subhelp",title="Go the help page for:")`
+`r underconstruction`
 
 `r include_pages(topic="prop",category="rosetta",title="Validation")`
 
-`r backto()`
+`r backto("prop")`
 
 `r issues()`

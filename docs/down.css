@@ -151,3 +151,11 @@ span.option_mode {
 
     
 }
+
+div.underconstruction {
+    font-size: 3em;
+    height: 100px;
+    border: 2px red solid;
+    border-radius: 10%;
+    
+}
