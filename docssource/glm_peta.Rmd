@@ -32,7 +32,7 @@ When estimating the required sample size for planned research, we want to know w
 
 ### Regression
 
-Let's consider a scenario where we aim to estimate the required sample size (N) for a planned research project. Assuming we have a single continuous  independent variable with an expected Partial Eta-squared of 0.15 evaluated at α = 0.05. We aim for a power of 0.90. Because the independent variable is continuous, its test will have 1 _df_. Because there is only one independent variable, the `Model degrees of freedom` will be 1 as well (see below for more about computing _df_ in complex models).
+Let's consider a scenario where we aim to estimate the required sample size (N) for a planned research project. Assuming we have a single continuous  independent variable with an `r opt("Expected Partial Eta-squared")` of 0.15 evaluated at `r opt("α (type I error rate)")` = 0.05. We aim for a `r opt("Minimum desired power")` of 0.90. Because the independent variable is continuous, its test will have 1 _df_. Because there is only one independent variable, the `r opt("Model degrees of freedom")` will be 1 as well (see below for more about computing _df_ in complex models).
 
 We can simply input these parameters into `r modulename()`.
 
@@ -58,7 +58,7 @@ These results are identical to the ones one would obtain in R using `pwr` packag
 
 Expected power analysis, sometimes called post-hoc power, aims at evaluating the likelihood of obtaining statistically significant results after conducting research, particularly when a pre-hoc (a priori) decision about the sample size cannot be performed. For instance, let's consider a scenario where a research study involves 50 participants, with the focal effect of one continuous independent variable results in a Partial Eta-squared coefficient of 0.04. In the model there are other three continuous predictors. In this context, post-hoc power analysis assesses the probability of consistently obtaining significant results if the research were to be replicated multiple times, drawing from the same population a sample of 50 participants.
 
-So, let's fill in the field for `Calculate: Power`. The effect size is 0.04, N (Sample size) is 50. The effect _df_ is 1, and the model _df_ are 4, because there are four continuous predictors. 
+So, let's fill in the field for `r opt("Calculate: Power")`. The effect size is 0.04, N (Sample size) is 50. The effect _df_ is 1, and the model _df_ are 4, because there are four continuous predictors. 
 
 `r pic("pics/glm/peta.3.i.png")`
 `r pic("pics/glm/peta.3.a.png")`
@@ -70,7 +70,7 @@ The expected power, calculated as $1−\beta=.292$, indicates that it's very unl
 
 Estimating the effect size aims at finding _minimum detectable effect size_ (MDES). It determines the minimum effect size that can be detected as significant with a specified probability ($1-\beta=power$), given the sample size at hand and the critical $\alpha$. In essence, it is a post-hoc power analysis but may be used also in planning a research.
 
-For instance, consider a situation where only a limited sample of 50 cases was collected due to constraints such as research topic, funding, or population size. In such cases, `Calculate: Effect size` helps answer the question: What is the lowest effect size that would be detectable as significant with a certain probability ($1-\beta=power$) given the sample size (N=50)?
+For instance, consider a situation where only a limited sample of 50 cases was collected due to constraints such as research topic, funding, or population size. In such cases,  `r opt("Calculate: Effect Size")` helps answering the question: What is the lowest effect size that would be detectable as significant with a certain probability ($1-\beta=power$) given the sample size (N=50)?
 
 Imagine a research group knows they can only  collected 50 cases. Their are going to estimate a multiple regression with 4 predictors. They wonder what will be the smallest effect size that would result as significant. Plugging the parameters into the input panel, we obtain the required results.  
 

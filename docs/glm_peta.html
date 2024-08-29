@@ -271,12 +271,14 @@ effect size.</p>
 <h3>Regression</h3>
 <p>Let’s consider a scenario where we aim to estimate the required
 sample size (N) for a planned research project. Assuming we have a
-single continuous independent variable with an expected Partial
-Eta-squared of 0.15 evaluated at α = 0.05. We aim for a power of 0.90.
-Because the independent variable is continuous, its test will have 1
-<em>df</em>. Because there is only one independent variable, the
-<code>Model degrees of freedom</code> will be 1 as well (see below for
-more about computing <em>df</em> in complex models).</p>
+single continuous independent variable with an <span
+class="option">Expected Partial Eta-squared</span> of 0.15 evaluated at
+<span class="option">α (type I error rate)</span> = 0.05. We aim for a
+<span class="option">Minimum desired power</span> of 0.90. Because the
+independent variable is continuous, its test will have 1 <em>df</em>.
+Because there is only one independent variable, the <span
+class="option">Model degrees of freedom</span> will be 1 as well (see
+below for more about computing <em>df</em> in complex models).</p>
 <p>We can simply input these parameters into <span
 class="modulename">PAMLj</span>.</p>
 <p><img src="pics/glm/peta.1.i.png" width="637" />
@@ -333,10 +335,10 @@ three continuous predictors. In this context, post-hoc power analysis
 assesses the probability of consistently obtaining significant results
 if the research were to be replicated multiple times, drawing from the
 same population a sample of 50 participants.</p>
-<p>So, let’s fill in the field for <code>Calculate: Power</code>. The
-effect size is 0.04, N (Sample size) is 50. The effect <em>df</em> is 1,
-and the model <em>df</em> are 4, because there are four continuous
-predictors.</p>
+<p>So, let’s fill in the field for <span class="option">Calculate:
+Power</span>. The effect size is 0.04, N (Sample size) is 50. The effect
+<em>df</em> is 1, and the model <em>df</em> are 4, because there are
+four continuous predictors.</p>
 <p><img src="pics/glm/peta.3.i.png" width="636" />
 <img src="pics/glm/peta.3.a.png" width="560" /></p>
 <p>The expected power, calculated as <span
@@ -356,11 +358,11 @@ essence, it is a post-hoc power analysis but may be used also in
 planning a research.</p>
 <p>For instance, consider a situation where only a limited sample of 50
 cases was collected due to constraints such as research topic, funding,
-or population size. In such cases, <code>Calculate: Effect size</code>
-helps answer the question: What is the lowest effect size that would be
-detectable as significant with a certain probability (<span
-class="math inline">\(1-\beta=power\)</span>) given the sample size
-(N=50)?</p>
+or population size. In such cases, <span class="option">Calculate:
+Effect Size</span> helps answering the question: What is the lowest
+effect size that would be detectable as significant with a certain
+probability (<span class="math inline">\(1-\beta=power\)</span>) given
+the sample size (N=50)?</p>
 <p>Imagine a research group knows they can only collected 50 cases.
 Their are going to estimate a multiple regression with 4 predictors.
 They wonder what will be the smallest effect size that would result as

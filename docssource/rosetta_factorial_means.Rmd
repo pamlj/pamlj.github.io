@@ -31,7 +31,7 @@ Here we compare the results of `r modulename()` with other software that perform
 
 `r pic("rosetta/pics/factorial/facmeans.1.png")`
 
-When data are defined, one can use the `Factorial designs power analysis` from `Expected Means` interface in define the design factors, their means and standard deviations. 
+When data are defined, one can use the `r opt_title("Factorial designs power analysis")` from `r opt_mode("Expected Means")` interface in define the design factors, their means and standard deviations. 
 
 `r pic("rosetta/pics/factorial/facmeans.2.png")`
 
@@ -124,7 +124,7 @@ zapsmall(exact_result$main_results)
 
 # Repeated measures designs
 
-Let's now assume that the design we have analyzed before was a repeated measures design. In repeated measures designs, to compute the power parameters from means and standard deviations, one needs to anticipate the average correlations among repeated measures. Let's assume that the repeated measures correlate, on average, .2. We can setup the analysis as before, but in the `Repeated Measures` tab, we can declare which factor is within-subjects and input the expected correlation. In this example, we set the sample size to 50.
+Let's now assume that the design we have analyzed before was a repeated measures design. In repeated measures designs, to compute the power parameters from means and standard deviations, one needs to anticipate the average correlations among repeated measures. Let's assume that the repeated measures correlate, on average, .2. We can setup the analysis as before, but in the `r opt("Repeated Measures")` tab, we can declare which factor is within-subjects and input the expected correlation. In this example, we set the sample size to 50.
 
 `r pic("rosetta/pics/factorial/facmeans.8.png")`
 
