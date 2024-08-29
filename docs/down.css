@@ -153,9 +153,31 @@ span.option_mode {
 }
 
 div.underconstruction {
-    font-size: 3em;
-    height: 100px;
-    border: 2px red solid;
-    border-radius: 10%;
-    
+    border: 3px #4B0082 solid;
+    border-left: 10px #4B0082 solid;
+    border-radius: 0.4rem;
+    margin-top: 3em;
+    margin-bottom: 3em;
+
+}
+
+.underconstruction > :first-child {
+  background-color: rgba(87,154,202, 0.1);
+  position: relative;
+  margin: 0 -0.6rem;
+  padding: 0.4rem 0.6rem 0.4rem 2rem;
+  font-weight: 700;
+  font-size: 1em;
+  color: #404040 ;
+  margin-bottom: 16px;
+}
+
+
+
+p.underconstruction {
+   text-align: center;        
+   font-size: 1.5em;
+   padding-top: 2em;    
+   padding-bottom: 2em;    
+
 }
