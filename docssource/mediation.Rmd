@@ -1,0 +1,26 @@
+---
+title: "Proportions difference: Paired Samples"
+author: Marcello Gallucci 
+topic: mediation
+category: help
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r version("0.4.0")`
+
+`r underconstruction`
+
+
+
+`r backto("prop")`
+
+`r issues()`
