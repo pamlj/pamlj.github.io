@@ -1,5 +1,5 @@
 ---
-title: "Proportions difference: Paired Samples"
+title: "Power for mediation"
 author: Marcello Gallucci 
 topic: mediation
 category: help
