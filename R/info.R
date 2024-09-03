@@ -14,9 +14,9 @@ MODULE_EMAIL="mcfanda@gmail.com
 
 "
 
-FIRST_VERSION="Version.0.0.5"
+FIRST_VERSION="Version.0.0.1"
 BANNED_COMMITS=list("initialize","fix commits","remove some marks")
-BANNED_COMMITS_GREP=list("^#","^!","^Merge branch","spelling","2.9.","2.9.","2.9.")
+BANNED_COMMITS_GREP=list("^#","^!","^.$","^some notes","^almost there", "^Merge branch","spelling","^.$")
 
 # These handle the R vignettes
 
