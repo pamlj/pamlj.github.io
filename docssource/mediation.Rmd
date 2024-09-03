@@ -20,7 +20,6 @@ mcdocs_init()
 `r underconstruction`
 
 
-
-`r backto("prop")`
+`r backto()`
 
 `r issues()`
