@@ -3,15 +3,18 @@ output_dir: "../docs"
 navbar:
   title: "PAMLj"
   left:
+  - text: "t-test"
+    href:  ttest.html
   - text: "Correlation"
     href:  correlation.html
+  - text: "Proportions"
+    href:  prop.html
   - text: "GLM"
     href:  glm.html
   - text: "Factorial"
     href:  factorial.html
-  - text: "Proportions"
-    href:  prop.html
-
+  - text: "Mediation"
+    href:  mediation.html
   - text: "Rosetta"
     href:  rosetta.html
 
