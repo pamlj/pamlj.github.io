@@ -2,7 +2,10 @@
 $(document).ready(function () {
 
     if ($(".root")[0]){
-      return
+    $(".toc-details" > a).on("click", function(e) {
+        window.scrollBy(0, 100);
+    })
+          return
     };
     $('.navbar-toggle').show();
     $('.navbar').css('display', 'none');
