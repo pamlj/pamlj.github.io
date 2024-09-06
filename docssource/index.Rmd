@@ -40,6 +40,7 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 * Eta-squared and $R^2$ based analysis
 * Standardized coefficients based analysis
 * Factorial designs (between, within and mixed)
+* Mediation analysis, simple and complex
 
 `r include_pages(category="help",title="Main help pages",text="Please select the help page for a specific analysis ")`
 
