@@ -1,0 +1,18 @@
+---
+title: "pparameters_chunk"
+output: html_document
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+
+```
+
+`r pic("pics/common/input.parameters.png")`
+
+* `r opt("Minimum desired power")` is the power level ($1-$beta$) the user set as the expected power. Not available when the aim of the analysis is `power`.
+* `r opt("N (Sample size")` is the whole sample size N the user expected to have. Not available when the aim of the analysis is `N`.
+
+* `r opt("(type I error rate)")` is the significance level the user intend to use, usually referred to as $\alpha$.
+

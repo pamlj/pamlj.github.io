@@ -14,7 +14,6 @@ link-citations: true
 library(mcdocs)
 mcdocs_init()
 
-
 ```
 
 `r version("0.4.0")`
@@ -33,12 +32,15 @@ The initial step is to determine the objective of the analysis ( _aim_ ). Furthe
 
 The second step is to decide what type of model we are dealing with. 
 
+`r pic("pics/mediation/input.1.png")`
+
+
 # Models
 
-* __Simple mediation (three variables)__ : This is the classical simple mediation, with one independent variable, one mediator. The model looks like this
+* __Simple mediation (3      variables)__ : This is the classical simple mediation, with one independent variable, one mediator. The model looks like this
 `r pic("pics/mediation/diagram.1.png")`
 
-* __Complex mediation models__ : Allows computation of power parameters for more complex models: two parallel mediator, three parallel mediator and serial mediation with two mediators. They are, respectively:
+* __Complex (multiple mediators)__ : Allows computation of power parameters for more complex models: two parallel mediator, three parallel mediator and serial mediation with two mediators. They are, respectively:
 
 `r pic("pics/mediation/diagram.2.png")`
 
@@ -50,16 +52,56 @@ In simple mediation models there is one independent variable, one mediator and o
 
 `r pic("pics/mediation/diagram.1.png")`
 
-The `a` coefficient is the simple standardized coefficient of a regression from X to M (mediator). `b` and `c'` are the standardized coefficients of a multiple regression with $Y$ as dependent variable and $X$ and $M$ as independent variables.
+The `a` coefficient is the simple standardized coefficient of a regression from X to M (mediator). `b` and `c'` are the standardized coefficients of a multiple regression with $Y$ as dependent variable and $X$ and $M$ as independent variables. The mediated effect $ME=a*b$ is given by the product of the coefficients along the mediator pathway. 
+
+As for any `r modulename()` command, we can alway obtain some help in setting the analysis by clicking on the `plus` icon in the `Info` bar.
+
+`r pic("pics/mediation/output.0.1.png")`
+`r pic("pics/mediation/output.0.2.png")`
+
+
+Thus, we now declare what are the expected standardized coefficients of the model.
+
+`r pic("pics/mediation/input.2.png")`
+
+The power `r opt_label("Parameters")` are the usual parameters of power analysis.
+
+
+```{r child60, child='commons/pparameters_chunk.Rmd'}
+```
+
+# Main results
+
+As soon as the coefficients are set, the path diagram is updated and we obtain the results in the `A Priori Power Analysis` table.
+
+`r pic("pics/mediation/output.1.png")`
+
+The table recaps the input parameters plus the estimated parameter we asked in the `r opt("Compute")` option. In this example, we asked for `N`, so the module estimated $N=223$ as the required sample size to obtain a power of .90 or more, given $a=.3$, $b=.3$ and $c'=0$. An additional textual description of the results can be obtained by selecting `r opt("Exploratory text")` under the `r opt_label("Options")` label.
+
+`r pic("pics/mediation/output.2.png")`
+
+
+# Tests
+
+`r pic("pics/mediation/input.4.png")`
+
+By default, `r modulename()` assumes one is going to use the Sobel test to test the significance of the mediated effect. This does not mean that this test is to be preferred. The Sobel test is set as default only because its computation is very fast. It is based on the z-test, although it is known to be a bit biased. 
+
+In alternative, one can use the `r opt("joint significance")` method (CIT). This method establishes significance of the mediated effect by evaluating the significance of $a$ and $b$: if they are both significant, the mediated effect is deemed as significant. In our example, by selecting `r opt("joint significance")` we obtain an N=. The required N is smaller than the one obtained with the Sobel test because the joint significance method is more powerful.
+
+`r pic("pics/mediation/output.3.png")`
+
+The third method is the `r opt("Monte Carlo")` method. The Monte Carlo method is based on simulations (CITS). A distribution of parameters (with the correct standard error) is drawn and their joint probability of being significant is evaluated at the error rate defined in input. The draw is repeated R times, and the probability of obtaining a significant results is computed on the R simulations. For the `r opt("Monte Carlo")`, the number of simulations $R$ is set in the `r opt_panel("Options")`` panel. When the simulations number is larger than 1000, it is reccomended to use `r opt("Parallel computation")` to speed up the computation. However, in some operative systems (windows) the parallel computation may not work.
+
+`r pic("pics/mediation/input.5.png")`
+
+
+[ref to details on methods]
+
 
 
 
 `r include_pages(topic="mediation",category="rosetta",title="Validation")`
-
-`r issues()`
-
-`r backto()`
-
 
 `r backto()`
 
