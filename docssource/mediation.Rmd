@@ -38,16 +38,23 @@ The second step is to decide what type of model we are dealing with.
 * __Simple mediation (three variables)__ : This is the classical simple mediation, with one independent variable, one mediator. The model looks like this
 `r pic("pics/mediation/diagram.1.png")`
 
-* __Complex mediation models__ : Allows computation of power parameters for more complex models: two parallel mediator, three paralell mediator and serial mediation with two mediators. They are, respectively:
+* __Complex mediation models__ : Allows computation of power parameters for more complex models: two parallel mediator, three parallel mediator and serial mediation with two mediators. They are, respectively:
 
 `r pic("pics/mediation/diagram.2.png")`
 
 
-Please select the effect size index to go to its dedicated page.
 
-`r include_pages(topic="glm",category="subhelp",title="Go the help page for:")`
+# Simple Mediation Model
 
-`r include_pages(topic="glm",category="rosetta",title="Validation")`
+In simple mediation models there is one independent variable, one mediator and one dependent variable. The model is:
+
+`r pic("pics/mediation/diagram.1.png")`
+
+The `a` coefficient is the simple standardized coefficient of a regression from X to M (mediator). `b` and `c'` are the standardized coefficients of a multiple regression with $Y$ as dependent variable and $X$ and $M$ as independent variables.
+
+
+
+`r include_pages(topic="mediation",category="rosetta",title="Validation")`
 
 `r issues()`
 
