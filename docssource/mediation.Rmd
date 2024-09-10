@@ -13,11 +13,45 @@ link-citations: true
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
+
+
 ```
 
 `r version("0.4.0")`
 
-`r underconstruction`
+`r pic("pics/mediation/ui.png")`
+
+`Mediation power analysis` allows for computing power parameters for testing indirect (mediated) effects in several mediational models. It can be used to estimate power parameters based on the `Sobel test`, `joint significance` or `Monte Carlo` method. 
+
+`r incomplete`
+
+
+The initial step is to determine the objective of the analysis ( _aim_ ). Further details regarding different objectives can be found in the `Info` results field.
+
+`r pic("pics/common/aim.1.png")`
+
+
+The second step is to decide what type of model we are dealing with. 
+
+# Models
+
+* __Simple mediation (three variables)__ : This is the classical simple mediation, with one independent variable, one mediator. The model looks like this
+`r pic("pics/mediation/diagram.1.png")`
+
+* __Complex mediation models__ : Allows computation of power parameters for more complex models: two parallel mediator, three paralell mediator and serial mediation with two mediators. They are, respectively:
+
+`r pic("pics/mediation/diagram.2.png")`
+
+
+Please select the effect size index to go to its dedicated page.
+
+`r include_pages(topic="glm",category="subhelp",title="Go the help page for:")`
+
+`r include_pages(topic="glm",category="rosetta",title="Validation")`
+
+`r issues()`
+
+`r backto()`
 
 
 `r backto()`

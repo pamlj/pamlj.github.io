@@ -202,7 +202,12 @@
     <h2><a href="#content">Power for mediation</a></h2>
     <div id="toc">
       <ul>
+      <li><a href="#models" id="toc-models">Models</a></li>
+      <li><a href="#go-the-help-page-for"
+      id="toc-go-the-help-page-for">Go the help page for:</a></li>
+      <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      <li><a href="#comments-1" id="toc-comments-1">Comments?</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
@@ -225,12 +230,68 @@ Gallucci</p>
 <div style="clear:both">
 
 </div>
-<div class="underconstruction">
-<div>
-<i class="fa fa-drafting-compass"></i>
+<p><img src="pics/mediation/ui.png" width="1206" /></p>
+<p><code>Mediation power analysis</code> allows for computing power
+parameters for testing indirect (mediated) effects in several
+mediational models. It can be used to estimate power parameters based on
+the <code>Sobel test</code>, <code>joint significance</code> or
+<code>Monte Carlo</code> method.</p>
+<p><span class="incomplete"> Work in progress: incomplete version
+</span></p>
+<p>The initial step is to determine the objective of the analysis (
+<em>aim</em> ). Further details regarding different objectives can be
+found in the <code>Info</code> results field.</p>
+<p><img src="pics/common/aim.1.png" width="560" /></p>
+<p>The second step is to decide what type of model we are dealing
+with.</p>
+<div id="models" class="section level1">
+<h1>Models</h1>
+<ul>
+<li><p><strong>Simple mediation (three variables)</strong> : This is the
+classical simple mediation, with one independent variable, one mediator.
+The model looks like this
+<img src="pics/mediation/diagram.1.png" width="404" /></p></li>
+<li><p><strong>Complex mediation models</strong> : Allows computation of
+power parameters for more complex models: two parallel mediator, three
+paralell mediator and serial mediation with two mediators. They are,
+respectively:</p></li>
+</ul>
+<p><img src="pics/mediation/diagram.2.png" width="1128" /></p>
+<p>Please select the effect size index to go to its dedicated page.</p>
 </div>
-<p class="underconstruction">
-This page is not yet available: Please come back soon
+<div id="go-the-help-page-for" class="section level1 adm adm-seealso">
+<h1>Go the help page for:</h1>
+<ul>
+<li>
+<a href="glm_peta.html">GLM based on partial Eta-Squared</a>
+</li>
+<li>
+<a href="glm_eta.html">GLM based on Eta-Squared</a>
+</li>
+<li>
+<a href="glm_beta.html">GLM based on Beta coefficients</a>
+</li>
+</ul>
+</div>
+<div id="validation" class="section level1 adm adm-seealso">
+<h1>Validation</h1>
+<ul>
+<li>
+<a href="rosetta_glm_n.html">GLM: required sample size</a>
+</li>
+<li>
+<a href="rosetta_glm_posthoc.html">GLM: posthoc power</a>
+</li>
+</ul>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
 </p>
 </div>
 <div class="adm adm-seealso backto">
@@ -239,7 +300,13 @@ Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
 </div>
-<div id="comments" class="section level1 adm adm-warning">
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+</div>
+<div id="comments-1" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
 <p>
 Got comments, issues or spotted a bug? Please open an issue on
