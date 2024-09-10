@@ -78,22 +78,37 @@ As soon as the coefficients are set, the path diagram is updated and we obtain t
 
 The table recaps the input parameters plus the estimated parameter we asked in the `r opt("Compute")` option. In this example, we asked for `N`, so the module estimated $N=223$ as the required sample size to obtain a power of .90 or more, given $a=.3$, $b=.3$ and $c'=0$. An additional textual description of the results can be obtained by selecting `r opt("Exploratory text")` under the `r opt_label("Options")` label.
 
-`r pic("pics/mediation/output.2.png")`
+`r pic("pics/mediation/output.text.png")`
 
 
 # Tests
 
+`r pic("pics/mediation/input.3.png")`
+
+
+## Joint significance
+
+By default, `r modulename()` assumes that the `r opt("joint significance")` method [@yzerbyt2018new] will be used to test the mediated effect. This method determines the significance of the mediated effect by testing whether both paths $a$ and $b$ are significant: if both are significant, the mediated effect is considered significant. In our example, by choosing r opt("joint significance"), we obtain a required sample size of $N=137$.. Additionally, this method produces results very similar to the Monte Carlo method [@yzerbyt2018new], while being much faster in terms of computation.
+
+`r pic("pics/mediation/output.1.png")`
+
+## Sobel test
+
+Alternatively, users can opt for the Sobel test [@sobel1982asymptotic] to test the significance of the mediated effect. However, this default setting doesn't imply that the Sobel test is necessarily the best choice. It is set as the default mainly because it is computationally fast, relying on the z-test, though it is known to have some bias. In our example, we obtain an N
+
+`r pic("pics/mediation/output.2.png")`
+
+## Monte Carlo
+
+The third method is the `r opt("Monte Carlo")` method. This approach is based on simulations [@mackinnon2004confidence]. It generates a distribution of parameters with the appropriate standard error and evaluates their joint probability of being significant at the error rate provided in the input. This simulation process is repeated $R$ times, and the probability of obtaining a significant result is calculated from the R simulations. If one intends to assess significance using a bootstrap method [@preacher2008asymptotic], the Monte Carlo method is a highly accurate approximation of power parameters [@zhang2014monte].
+
+For the `r opt("Monte Carlo")` method, the number of simulations ($R$) can be set in the `r opt_panel("Options")` panel. When the number of simulations exceeds 1000, it is recommended to enable r opt("Parallel computation") to speed up the process. However, users should be aware that in certain operating systems (such as Windows), parallel computation might not function properly.
+
 `r pic("pics/mediation/input.4.png")`
 
-By default, `r modulename()` assumes one is going to use the Sobel test to test the significance of the mediated effect. This does not mean that this test is to be preferred. The Sobel test is set as default only because its computation is very fast. It is based on the z-test, although it is known to be a bit biased. 
-
-In alternative, one can use the `r opt("joint significance")` method (CIT). This method establishes significance of the mediated effect by evaluating the significance of $a$ and $b$: if they are both significant, the mediated effect is deemed as significant. In our example, by selecting `r opt("joint significance")` we obtain an N=. The required N is smaller than the one obtained with the Sobel test because the joint significance method is more powerful.
+In our example, `r opt("Monte Carlo")` method yields a required N almost equal to the one estimated by the `joint significance` method. The methods usually give very similar results.
 
 `r pic("pics/mediation/output.3.png")`
-
-The third method is the `r opt("Monte Carlo")` method. The Monte Carlo method is based on simulations (CITS). A distribution of parameters (with the correct standard error) is drawn and their joint probability of being significant is evaluated at the error rate defined in input. The draw is repeated R times, and the probability of obtaining a significant results is computed on the R simulations. For the `r opt("Monte Carlo")`, the number of simulations $R$ is set in the `r opt_panel("Options")`` panel. When the simulations number is larger than 1000, it is reccomended to use `r opt("Parallel computation")` to speed up the computation. However, in some operative systems (windows) the parallel computation may not work.
-
-`r pic("pics/mediation/input.5.png")`
 
 
 [ref to details on methods]
