@@ -1,0 +1,17 @@
+---
+title: "sensitivity_chunk"
+output: html_document
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+root<-paste0(PROJECT_FOLDER,"/",SOURCE_FOLDER,"/")
+```
+
+# Sensitivity Analysis
+
+Sensitivity analysis, exploring different plots of possible combinations of parameters, can be carried out like for any other `r modulename()` sub-modules. Please visit `r link_pages(nickname="sensitivity", path=root)`  page for more details.
+
+

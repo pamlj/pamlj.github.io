@@ -45,6 +45,7 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 `r include_pages(category="help",title="Main help pages",text="Please select the help page for a specific analysis ")`
 
 
+
 `r include_pages(category="rosetta",title="Validation",text="Here we compare the results of PAMLj with other software that performs power analysis. ")`
 
 

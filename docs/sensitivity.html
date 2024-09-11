@@ -8,7 +8,7 @@
         <meta name="author" content="Marcello Gallucci" />
     
     
-    <title>Independent samples t-test</title>
+    <title>Sensitivity analysis</title>
 
         <script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -195,13 +195,21 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Independent samples t-test</h1>
+      <h1 class="title">Sensitivity analysis</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Independent samples t-test</a></h2>
+    <h2><a href="#content">Sensitivity analysis</a></h2>
     <div id="toc">
       <ul>
+      <li><a href="#power-contour-plot"
+      id="toc-power-contour-plot">Power contour plot</a></li>
+      <li><a href="#power-curve-by-effect-size"
+      id="toc-power-curve-by-effect-size">Power curve by effect
+      size</a></li>
+      <li><a href="#power-curve-by-n" id="toc-power-curve-by-n">Power
+      curve by N</a></li>
+      <li><a href="#log-scale" id="toc-log-scale">Log scale</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -218,12 +226,96 @@ Gallucci</p>
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
 <div class="version">
-<p>
-0.2.0
-</p>
+<p>0.4.0</p>
 </div>
-<div style="clear:both">
-
+<p><img src="pics/common/sensitivity.input.1.png" width="577" /></p>
+<p>In all sub-modules of r modulename(), it is possible to conduct a
+sensitivity analysis. Sensitivity analysis allows users to explore
+various scenarios by observing how one power parameter changes as a
+function of another parameter. The results are displayed graphically,
+enabling users to easily visualize a wide range of parameter values and
+their impact on the analysis at a glance.</p>
+<div id="power-contour-plot" class="section level1">
+<h1>Power contour plot</h1>
+<p><span class="option">Power contour plot</span> visualizes the power
+from low (green) to high (yellow) as a function of possible sample sizes
+(x-axis) and effect sizes <span class="math inline">\(es\)</span>. Each
+sub-module plots a particular effect size (i.e correlation, eta-square,
+mediated effect, ect), but the interpretation of the plot does not
+change.</p>
+<p><img src="pics/common/sensitivity.1.png" width="525" /></p>
+<p>In the power contour plot, the solid line represents combinations of
+sample size (N) and effect size that yield the required power, such as
+0.90 in this example. By interpreting the plot, you can see how power
+would change if you had underestimated the effect size (moving down on
+the y-axis) or underestimated the sample size (moving left on the
+x-axis). This provides a useful way to assess how sensitive your power
+analysis is to potential errors in estimating these key parameters.</p>
+<p>The y-axis scale in the power contour plot, which represents values
+of the effect size, is designed to depict values around the input or
+estimated effect size. Typically, the range of the y-axis is set from
+approximately from <span class="math inline">\(es/3\)</span> to <span
+class="math inline">\(es∗3\)</span>, where <span
+class="math inline">\(es\)</span> stands for the effect size. However,
+in some sub-modules, adjustments to the scale may be made to enhance the
+readability and clarity of the plot. This ensures that the graph focuses
+on a meaningful range of effect sizes, making the sensitivity analysis
+more informative.</p>
+</div>
+<div id="power-curve-by-effect-size" class="section level1">
+<h1>Power curve by effect size</h1>
+<p>The second plot we can ask is the
+<code>Power curve by effect size</code> . It portraits how the power
+(y-axis) chances as one increases the effect size (x-axis).</p>
+<p><img src="pics/common/sensitivity.2.png" width="441" /></p>
+<p>The solid line in the plot illustrates how power changes as the
+effect size increases, given a fixed sample size (in this example, <span
+class="math inline">\(N=258\)</span>) and a fixed type I error rate
+(<span class="math inline">\(\alpha\)</span>=.05). In this particular
+example, we observe that if the actual effect size is lower than the
+target value of 0.20 (represented by the white dot), the expected power
+will decrease rapidly. For instance, with an effect size of 0.1, the
+estimated power would drop significantly to around 0.30.</p>
+</div>
+<div id="power-curve-by-n" class="section level1">
+<h1>Power curve by N</h1>
+<p>The second plot we can ask is the <code>Power curve by N</code> . It
+portraits how the power (y-axis) chances as one increases the sample
+size (x-axis).</p>
+<p><img src="pics/common/sensitivity.3.png" width="444" /></p>
+<p>The solid line in the plot illustrates how power changes as the
+sample size increases, given a fixed effect size (in this example, <span
+class="math inline">\(es=.20\)</span>) and a fixed type I error rate
+(<span class="math inline">\(\alpha\)</span>=.05). In this particular
+example, we observe that if the actual sample size is lower than the
+target value of around 230 cases, the expected power will decrease
+rapidly. For instance, with one collects only around 130 cases, the
+estimated power would drop to around 0.60.</p>
+</div>
+<div id="log-scale" class="section level1">
+<h1>Log scale</h1>
+<p>Depending on the specific application and the combination of power
+parameters, some plots might appear unclear or distorted. In such cases,
+the <span class="option">Log scale (when needed)</span> option can be
+helpful. It converts the axis scale from linear to logarithmic, making
+the values more readable. For instance, in the Power curve by N plot
+above, using a logarithmic scale evenly distributes the x-axis values,
+ranging from the minimum <span class="math inline">\(N=19\)</span>
+(yielding a power of 0.10) to the maximum <span
+class="math inline">\(N=2359\)</span> (yielding a power of 0.99). If the
+<span class="option">Log scale (when needed)</span> option is
+deselected, the plot would revert to a linear scale, which might look
+less clear depending on the context.</p>
+<p><img src="pics/common/sensitivity.5.png" width="1103" /></p>
+<p>There are other cases in which the plots are clearer without the
+logarithm scale. Users can choose the scale that better suits their
+needs.</p>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+</div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
@@ -235,13 +327,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 </div>
-<div class="adm adm-seealso backto">
-<p>
-Return to main help pages
-</p>
-<a class='backto' href='index.html'>Main page</a>
-<a class="backto" href="./ttest.html">T-test</a>
-</div>
+<p>’</p>
 </div>
 
    

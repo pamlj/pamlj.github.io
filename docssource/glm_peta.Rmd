@@ -93,6 +93,8 @@ When power analysis is based observed effect sizes taken from previous research 
 
 Please see `r link_pages(nickname="check_es")` for details.
 
+```{r child_sensitivity_link, child='commons/sensitivity_chunk.Rmd'}
+```
 
 `r issues()`
 

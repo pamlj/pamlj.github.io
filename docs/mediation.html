@@ -215,7 +215,8 @@
       <li><a href="#monte-carlo" id="toc-monte-carlo">Monte
       Carlo</a></li>
       </ul></li>
-      <li><a href="#validation" id="toc-validation">Validation</a></li>
+      <li><a href="#sensitivity-analysis"
+      id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -388,24 +389,27 @@ process. However, users should be aware that in certain operating
 systems (such as Windows), parallel computation might not function
 properly.</p>
 <p><img src="pics/mediation/input.4.png" width="570" /></p>
-<p>In our example, <span class="option">Monte Carlo</span> method yields
-a required N almost equal to the one estimated by the
-<code>joint significance</code> method. The methods usually give very
-similar results. As for any Monte Carlo method, results may slightly
-vary from run to run. This variation is decreased by increasing the
-number of simulations <span class="math inline">\(R\)</span>.</p>
+<p>The Monte Carlo (MC) and joint significance methods yield nearly
+identical required sample sizes (N) in our example. While MC results may
+slightly vary between runs, this variability decreases as the number of
+simulations (R) increases, improving estimate precision. Typically, both
+methods produce very similar results.</p>
 <p><img src="pics/mediation/output.3.png" width="482" /></p>
-<p>[ref to details on methods]</p>
 </div>
 </div>
-<div id="validation" class="section level1 adm adm-seealso">
-<h1>Validation</h1>
-</div>
+<div id="sensitivity-analysis" class="section level1">
+<h1>Sensitivity Analysis</h1>
+<p>Sensitivity analysis, exploring different plots of possible
+combinations of parameters, can be carried out like for any other <span
+class="modulename">PAMLj</span> sub-modules. Please visit
+<a href="./sensitivity.html">Sensitivity analysis</a> page for more
+details.</p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
+</div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>

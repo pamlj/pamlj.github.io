@@ -108,17 +108,15 @@ For the `r opt("Monte Carlo")` method, the number of simulations ($R$) can be se
 
 `r pic("pics/mediation/input.4.png")`
 
-In our example, `r opt("Monte Carlo")` method yields a required N almost equal to the one estimated by the `joint significance` method. The methods usually give very similar results. As for any Monte Carlo method, results may slightly vary from run to run. This variation is decreased by increasing the number of simulations $R$.
+The Monte Carlo (MC) and joint significance methods yield nearly identical required sample sizes (N) in our example. While MC results may slightly vary between runs, this variability decreases as the number of simulations (R) increases, improving estimate precision. Typically, both methods produce very similar results.
 
 `r pic("pics/mediation/output.3.png")`
 
+# Sensitivity Analysis
 
-[ref to details on methods]
+Sensitivity analysis, exploring different plots of possible combinations of parameters, can be carried out like for any other `r modulename()` sub-modules. Please visit `r link_pages(nickname="sensitivity")` page for more details.
 
 
-
-
-`r include_pages(topic="mediation",category="rosetta",title="Validation")`
 
 `r backto()`
 
