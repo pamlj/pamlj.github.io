@@ -102,7 +102,7 @@ Alternatively, users can opt for the Sobel test [@sobel1982asymptotic] to evalua
 
 The third method is the `r opt("Monte Carlo")` method. This approach is based on simulations [@mackinnon2004confidence]. It generates a distribution of parameters with the appropriate standard error and evaluates their joint probability of being significant at the error rate provided in the input. This simulation process is repeated $R$ times, and the probability of obtaining a significant result is calculated from the R simulations. If one intends to assess significance using a bootstrap method [@preacher2008asymptotic], the Monte Carlo method is an accurate approximation of power parameters [@zhang2014monte].
 
-For the `r opt("Monte Carlo")` method, the number of simulations ($R$) can be set in the `r opt_panel("Options")`.  When the number of simulations exceeds 1000, it is recommended to enable `r opt("Parallel computation")` to speed up the process. However, users should be aware that in certain operating systems (such as Windows), parallel computation might not function properly.
+For the `r opt("Monte Carlo")` method, the `r opt("number of simulations")`  can be set in the `r opt_panel("Options")`.  When the number of simulations exceeds 1000, it is recommended to enable `r opt("Parallel computation")` to speed up the process. However, users should be aware that in certain operating systems (such as Windows), parallel computation might not function properly.
 
 `r pic("pics/mediation/input.4.png")`
 
