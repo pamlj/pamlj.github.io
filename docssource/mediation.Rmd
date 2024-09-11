@@ -114,6 +114,7 @@ The Monte Carlo (MC) and joint significance methods yield nearly identical requi
 
 Sensitivity analysis, exploring different plots of possible combinations of parameters, can be carried out like for any other `r modulename()` sub-modules. Please visit `r link_pages(nickname="sensitivity")` page for more details.
 
+`r include_pages(topic="mediation",category="rosetta",title="Validation")`
 
 
 `r backto()`
