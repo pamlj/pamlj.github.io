@@ -1,0 +1,216 @@
+---
+title: "Validation: Mediation"
+topic: glm
+category: rosetta
+nickname: ros_mediation
+#linklabel: "Rosetta: mediation" 
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+
+:::{ .version }
+0.4.0
+:::
+
+
+Here we compare the results of `r modulename()` with other software that performs power analysis for mediation. In particular, we will compare our results with [pwrss R package](https://CRAN.R-project.org/package=pwrss), [Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/) shiny app, and [powerMediation R package](https://cran.r-project.org/package=powerMediation)
+
+* [pwrss R package](https://CRAN.R-project.org/package=pwrss) provides desired power and required sample size based on Sobel test and joint significance methods. It also provides desired power based on simulations. The simulations are based on Monte Carlo parametric re-sampling.
+
+* [Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/) shiny app] provides desired power based on simulations. The simulations are based on Monte Carlo semi-parametric re-sampling.
+
+* [powerMediation R package](https://cran.r-project.org/package=powerMediation) provides power and sample size based on Sobel test. 
+
+Finally we also check some results with  [bmen R package](https://CRAN.R-project.org/package=bmem), which employs a two-stage simulation approach. This package simulate samples, and for each sample simulate a bootstrap test. This makes the computation very time-consuming, despite it yields the same results of the much faster parametric re-sampling.
+
+
+As with any power analysis software comparison, results should be considered equivalent when their values are very close, even if they do not match exactly. This is because power parameters, such as effect sizes and sample sizes, are often rounded or approximated. The exact values may not correspond precisely across different software, but the key consideration is that the results are practically the same and provide similar insights for decision-making. Small differences in output do not invalidate the analysis as long as they are within an acceptable range.
+
+
+# Sobel test
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = Sample Size
+*   Expected $a$    = .3
+*   Expected $b$    = .3
+*   Expected $c'$   = .4
+*   power           = .80
+*   Alpha          = .05
+
+:::
+
+
+### PAMLj
+
+In `r modulename()` we set the parameters as follows, using the `Sobel test`:
+
+`r pic("rosetta/pics/mediation/input.2.png")`
+
+Using the Sobel test method one obtains $N=144$:
+
+`r pic("rosetta/pics/mediation/sobel.1.png")`
+
+
+### powerMediation package
+
+In `powerMediation` the command to use is `ssMediation.Sobel`. The required input are:
+
+* theta.1a = a = .3
+* lambda.a = b = .3
+* sigma.x = 1  (standard deviation of x)
+* sigma.m = 1  (standard deviation of the mediator)
+* sigma.epsilon:  this is the standard deviation error term of the regression predicting the dependent variable. It is equivalent to
+
+$$ \sigma_{\epsilon}=\sqrt{1-R_{y}^2} $$
+where $R_{y}^2$ is the R-squared in predicting the dependent variable with both the independent variable and the mediator. We can compute it with:
+
+$$ R_{y}^2=b^2+c'^2+2abc' $$
+which implies
+
+$$ \sigma_{\epsilon}=\sqrt{1-(b^2+c'^2+2abc')} $$
+
+
+```{r }
+a  <- .3
+b  <- .3
+cp <- .4
+
+e<-sqrt(1-(b^2+cp^2+2*a*b*cp))
+powerMediation::ssMediation.Sobel(power = .80,
+                           theta.1a = a,
+                           lambda.a = b,
+                            sigma.x = 1,
+                            sigma.m = 1,
+                      sigma.epsilon = e)
+
+```
+
+It is clear that the results collides with the `r modulename()` results.
+
+### pwrss package
+
+In `pwrss` the command to use is `pwrss.z.mediation`. The required input are:
+
+* a = .3
+* b = .3
+* ry.mx:  this is expected R-squared $R_y^2$ in predicting the dependent variable. Although `pwrss.z.mediation` accept $cp$ (c prime) as input, it is more accurate to pass the $R_y^2$, which incorporate the presence of $c'$. In fact, as we have seen above:
+
+$$ R_{y}^2=b^2+c'^2+2abc' $$
+
+
+
+
+```{r}
+a<-.3
+b<-.3
+cp<-.4
+r2y<-b^2+cp^2+2*a*b*cp
+
+pwrss::pwrss.z.mediation(a=a,b=b,r2y.mx=r2y,power=.80,alpha=.05)
+```
+
+The Sobel test yields a required sample size of $N=145$, as the other software.
+
+# Joint significance
+
+### PAMLj
+
+In `r modulename()` we set the parameters as follows, using the `Sobel test`:
+
+`r pic("rosetta/pics/mediation/input.2.png")`
+
+`r pic("rosetta/pics/mediation/joint.1.png")`
+
+The relevant parameter here is $N=95$
+
+### Other software
+
+At the moment, I did not find any software that would estimate required N using `joint significance` method. However, we can remedy by employing
+`pwrss` command, which computes `power` given an N, and we can search for the N that gives the closed required power (kind of brute force method).
+
+Here is an algorithm for that.
+
+```{r}
+
+a<-.3
+b<-.3
+cp<-.4
+r2y<-b^2+cp^2+2*a*b*cp
+power<-.80
+ns<-seq(80,110,by=1)
+results<-lapply(ns, function(n) c(n,pwrss::pwrss.z.mediation(a=a,b=b,r2y.mx=r2y,n=n,alpha=.05,verbose=F)$power[["joint"]]))
+data<-as.data.frame(do.call(rbind,results))
+data$dif<-abs(data$V2-power)
+data$V1[which.min(data$dif)]
+
+```
+
+Comfortably, the brute force method yields the same results as `r modulename()`.
+
+# Monte Carlo
+
+### PAMLj
+
+In `r modulename()` we set the parameters as follows, using the `Monte Carlo` test:
+
+`r pic("rosetta/pics/mediation/input.3.png")`
+
+Using the Monte Carlo method one obtains (a part for random variability) $N=97$:
+
+`r pic("rosetta/pics/mediation/mc.1.png")`
+
+
+
+### pwrss
+
+As above, we can use `pwrss` command, which computes `power` given an N using the `Monte Carlo` method, and we can search for the N that gives the closed required power (the brute force method).
+
+Here is an algorithm for that (it can be slow).
+
+```{r, eval=FALSE}
+
+a<-.3
+b<-.3
+cp<-.4
+r2y<-b^2+cp^2+2*a*b*cp
+power<-.80
+ns<-seq(80,110,by=1)
+results<-lapply(ns, function(n) c(n,
+                                  pwrss::pwrss.z.mediation(a=a,b=b,r2y.mx=r2y,n=n,alpha=.05,mc=TRUE,nsims=10000,verbose=F)$power[["mc"]]))
+data<-as.data.frame(do.call(rbind,results))
+data$dif<-abs(data$V2-power)
+data$V1[which.min(data$dif)]
+# this is not evaluated when compiling this page because it requires time.
+# The output is pre-computed but it can be verified that it almost always comes out this way. 
+# With nsims=10000, one expect very little variability # in the results. It seems that pwrss does not accept set.seed.
+# Results are almost always 96-98
+```
+
+### Monte Carlo Power Analysis (mc_power_med)
+
+[Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/) is a shiny app that compute power mediated effects based on semi-parametric re-sampling. This means that in each Monte Carlo sample, a new dataset is randomly draws from a population with the input parameters, and the mediated effect is computed along with the standard error. On each sample, a distribution of possible parameter is drawn and evaluated. `Monte Carlo Power Analysis` does not solve the power function for N, but we can ask to evaluate the power within a range of N's. Here, we asked to evalated the power, given the above parameters, with N from 80 t0 120.
+
+
+`r pic("rosetta/pics/mediation/input.4.png")`
+
+`r pic("rosetta/pics/mediation/mc.2.png")`
+
+Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 97. 
+
+
+`r backto("rosetta")`
+
+`r issues()`
+
+# References
