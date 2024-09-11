@@ -1,6 +1,6 @@
 ---
 title: "Validation: Mediation"
-topic: glm
+topic: mediation
 category: rosetta
 nickname: ros_mediation
 #linklabel: "Rosetta: mediation" 
@@ -206,7 +206,7 @@ data$V1[which.min(data$dif)]
 
 `r pic("rosetta/pics/mediation/mc.2.png")`
 
-Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 97. 
+Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 96-97. 
 
 
 `r backto("rosetta")`
