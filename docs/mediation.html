@@ -350,11 +350,17 @@ class="math inline">\(N=137\)</span>.</p>
 <h2>Sobel test</h2>
 <p>Alternatively, users can opt for the Sobel test <span
 class="citation">(<a href="#ref-sobel1982asymptotic">Sobel
-1982</a>)</span> to test the significance of the mediated effect.
-However, this default setting doesn’t imply that the Sobel test is
-necessarily the best choice. It is set as the default mainly because it
-is computationally fast, relying on the z-test, though it is known to
-have some bias. In our example, we obtain an N</p>
+1982</a>)</span> to evaluate the significance of the mediated effect.
+The Sobel test is commonly used for mediation analysis due to its
+computational efficiency, as it is based on the z-test. However, it is
+important to note that while the Sobel test is fast, it is known to
+introduce some bias and may not always be the most reliable method for
+testing mediated effects. In our example, we obtain an N=223, which is
+larger than the required N obtained with the
+<code>joint significance</code> test, testifying the lower power of the
+Sobel test <span class="citation">(<a
+href="#ref-mackinnon2002comparison">MacKinnon et al.
+2002</a>)</span>.</p>
 <p><img src="pics/mediation/output.2.png" width="496" /></p>
 </div>
 <div id="monte-carlo" class="section level2">
@@ -410,6 +416,12 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 </p>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-mackinnon2002comparison" class="csl-entry">
+MacKinnon, David P, Chondra M Lockwood, Jeanne M Hoffman, Stephen G
+West, and Virgil Sheets. 2002. <span>“A Comparison of Methods to Test
+Mediation and Other Intervening Variable Effects.”</span>
+<em>Psychological Methods</em> 7 (1): 83.
+</div>
 <div id="ref-mackinnon2004confidence" class="csl-entry">
 MacKinnon, David P, Chondra M Lockwood, and Jason Williams. 2004.
 <span>“Confidence Limits for the Indirect Effect: Distribution of the

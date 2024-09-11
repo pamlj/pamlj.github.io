@@ -96,7 +96,7 @@ In our example, by choosing `r opt("joint significance")`, we obtain a required 
 
 ## Sobel test
 
-Alternatively, users can opt for the Sobel test [@sobel1982asymptotic] to test the significance of the mediated effect. However, this default setting doesn't imply that the Sobel test is necessarily the best choice. It is set as the default mainly because it is computationally fast, relying on the z-test, though it is known to have some bias. In our example, we obtain an N
+Alternatively, users can opt for the Sobel test [@sobel1982asymptotic] to evaluate the significance of the mediated effect. The Sobel test is commonly used for mediation analysis due to its computational efficiency, as it is based on the z-test. However, it is important to note that while the Sobel test is fast, it is known to introduce some bias and may not always be the most reliable method for testing mediated effects. In our example, we obtain an N=223, which is larger than the required N obtained with the `joint significance` test, testifying the lower power of the Sobel test [@mackinnon2002comparison].
 
 `r pic("pics/mediation/output.2.png")`
 
