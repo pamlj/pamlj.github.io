@@ -1,5 +1,5 @@
 ---
-title: "Power for mediation"
+title: "Mediation"
 author: Marcello Gallucci 
 topic: mediation
 category: help
