@@ -88,7 +88,9 @@ The table recaps the input parameters plus the estimated parameter we asked in t
 
 ## Joint significance
 
-By default, `r modulename()` assumes that the `r opt("joint significance")` method [@yzerbyt2018new] will be used to test the mediated effect. This method determines the significance of the mediated effect by testing whether both paths $a$ and $b$ are significant: if both are significant, the mediated effect is considered significant. In our example, by choosing r opt("joint significance"), we obtain a required sample size of $N=137$.. Additionally, this method produces results very similar to the Monte Carlo method [@yzerbyt2018new], while being much faster in terms of computation.
+By default, `r modulename()` assumes that the `r opt("joint significance")` method [@yzerbyt2018new] will be used to test the mediated effect. This method determines the significance of the mediated effect by testing whether both paths $a$ and $b$ are significant: if both are significant, the mediated effect is considered significant. Additionally, this method produces results very similar to the Monte Carlo method [@yzerbyt2018new], while being much faster in terms of computation.
+
+In our example, by choosing `r opt("joint significance")`, we obtain a required sample size of $N=137$.
 
 `r pic("pics/mediation/output.1.png")`
 
