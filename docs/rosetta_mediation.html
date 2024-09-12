@@ -293,6 +293,12 @@
       id="toc-monte-carlo-power-analysis-mc_power_med">Monte Carlo Power
       Analysis (mc_power_med)</a></li>
       </ul></li>
+      <li><a href="#power-estimation" id="toc-power-estimation">Power
+      estimation</a>
+      <ul>
+      <li><a href="#other-software-1" id="toc-other-software-1">Other
+      software</a></li>
+      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
@@ -402,8 +408,8 @@ variable and the mediator. We can compute it with:</p>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>                            <span class="at">sigma.m =</span> <span class="dv">1</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>                      <span class="at">sigma.epsilon =</span> e)</span></code></pre></div>
 <pre><code>## [1] 144.3366</code></pre>
-<p>It is clear that the results collides with the <span
-class="modulename">PAMLj</span> results.</p>
+<p>It is clear that the results concur with those produced by <span
+class="modulename">PAMLj</span>.</p>
 </div>
 <div id="pwrss-package" class="section level3">
 <h3>pwrss package</h3>
@@ -457,11 +463,12 @@ class="math inline">\(N=95\)</span></p>
 </div>
 <div id="other-software" class="section level3">
 <h3>Other software</h3>
-<p>At the moment, I did not find any software that would estimate
-required N using <code>joint significance</code> method. However, we can
-remedy by employing <code>pwrss</code> command, which computes
-<code>power</code> given an N, and we can search for the N that gives
-the closed required power (kind of brute force method).</p>
+<p>At present, I have not found any software that estimates the required
+sample size (N) using the joint significance method. However, we can
+work around this by using the <code>pwrss.z.mediation</code> function,
+which calculates power for a given N. From there, we can iteratively
+search for the N that provides the closest match to the required power,
+effectively using a brute-force approach.</p>
 <p>Here is an algorithm for that.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>a<span class="ot">&lt;-</span>.<span class="dv">3</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>b<span class="ot">&lt;-</span>.<span class="dv">3</span></span>
@@ -491,10 +498,10 @@ variability) <span class="math inline">\(N=97\)</span>:</p>
 </div>
 <div id="pwrss" class="section level3">
 <h3>pwrss</h3>
-<p>As above, we can use <code>pwrss</code> command, which computes
-<code>power</code> given an N using the <code>Monte Carlo</code> method,
-and we can search for the N that gives the closed required power (the
-brute force method).</p>
+<p>As we did for the <code>joint significance</code> test, we can use
+the <code>pwrss.z.mediation</code> function, which computes power for a
+given N using the <code>Monte Carlo method</code> to search for the N
+that yields the closest match to the required power.</p>
 <p>Here is an algorithm for that (it can be slow).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>a<span class="ot">&lt;-</span>.<span class="dv">3</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>b<span class="ot">&lt;-</span>.<span class="dv">3</span></span>
@@ -507,29 +514,87 @@ brute force method).</p>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(<span class="fu">do.call</span>(rbind,results))</span>
 <span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>data<span class="sc">$</span>dif<span class="ot">&lt;-</span><span class="fu">abs</span>(data<span class="sc">$</span>V2<span class="sc">-</span>power)</span>
 <span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>data<span class="sc">$</span>V1[<span class="fu">which.min</span>(data<span class="sc">$</span>dif)]</span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co"># this is not evaluated when compiling this page because it requires time.</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># The output is pre-computed but it can be verified that it almost always comes out this way. </span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co"># With nsims=10000, one expect very little variability # in the results. It seems that pwrss does not accept set.seed.</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co"># Results are almost always 96-98</span></span></code></pre></div>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co"># This section is not evaluated during the page compilation due to the time required for execution. The output is pre-computed, but it can be</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co"># verified that the results consistently appear in this manner. With nsims=10000, we expect minimal variability in the results. However, it appears # that pwrss does not honor the set.seed function for reproducibility.</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co"># Results are almost always 96-98</span></span></code></pre></div>
 </div>
 <div id="monte-carlo-power-analysis-mc_power_med"
 class="section level3">
 <h3>Monte Carlo Power Analysis (mc_power_med)</h3>
 <p><a href="https://schoemanna.shinyapps.io/mc_power_med/">Monte Carlo
-Power Analysis</a> is a shiny app that compute power mediated effects
-based on semi-parametric re-sampling. This means that in each Monte
-Carlo sample, a new dataset is randomly draws from a population with the
-input parameters, and the mediated effect is computed along with the
-standard error. On each sample, a distribution of possible parameter is
-drawn and evaluated. <code>Monte Carlo Power Analysis</code> does not
-solve the power function for N, but we can ask to evaluate the power
-within a range of N’s. Here, we asked to evalated the power, given the
-above parameters, with N from 80 t0 120.</p>
+Power Analysis</a> is a Shiny app that computes power for mediated
+effects using semi-parametric re-sampling. In each Monte Carlo sample, a
+new dataset is randomly drawn from a population with the specified input
+parameters, and the mediated effect is calculated along with the
+standard error. For each sample, a distribution of possible parameters
+is generated and its confidence intervals are evaluated. While Monte
+Carlo Power Analysis does not directly solve for the required N, it
+allows you to evaluate power across a range of N values. In this case,
+we requested an evaluation of power with N ranging from 80 to 120, using
+the parameters mentioned above.</p>
 <p><img src="rosetta/pics/mediation/input.4.png" width="1119" /></p>
 <p><img src="rosetta/pics/mediation/mc.2.png" width="579" /></p>
 <p>Results, shown here in the vicinity of <span
 class="math inline">\(power=.80\)</span> (4th column) shows that the
-required N (2nd column) is around 96-97.</p>
+required N (2nd column) is around 96-97, congruent with the results of
+<span class="modulename">PAMLj</span></p>
+</div>
+</div>
+<div id="power-estimation" class="section level1">
+<h1>Power estimation</h1>
+<p>Now we check the results of <span class="modulename">PAMLj</span>
+when the sample size is given and the required parameter is
+<code>power</code>.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = Sample Size</li>
+<li>Expected <span class="math inline">\(a\)</span> = .2</li>
+<li>Expected <span class="math inline">\(b\)</span> = .6</li>
+<li>Expected <span class="math inline">\(c&#39;\)</span> = .2</li>
+<li>N = 70</li>
+<li>Alpha = .05</li>
+</ul>
+</div>
+<p><img src="rosetta/pics/mediation/input.5.png" width="579" /></p>
+<p>For <code>joint significance</code> method we obtain <span
+class="math inline">\(power=.401\)</span>.</p>
+<p><img src="rosetta/pics/mediation/joint.2.png" width="481" /></p>
+<p>for <code>Sobel test</code> method we obtain <span
+class="math inline">\(power=.381\)</span>.</p>
+<p><img src="rosetta/pics/mediation/sobel.2.png" width="463" /></p>
+<p>and for the <code>Monte Carlo</code> method we get <span
+class="math inline">\(power=.402\)</span>.</p>
+<p><img src="rosetta/pics/mediation/mc.3.png" width="497" /></p>
+<div id="other-software-1" class="section level3">
+<h3>Other software</h3>
+<p>The <code>pwrss</code> package provides all three method to estimate
+expected power.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>a<span class="ot">&lt;-</span>.<span class="dv">2</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>b<span class="ot">&lt;-</span>.<span class="dv">6</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>cp<span class="ot">&lt;-</span>.<span class="dv">2</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>r2y<span class="ot">&lt;-</span>b<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>cp<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>a<span class="sc">*</span>b<span class="sc">*</span>cp</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>N<span class="ot">&lt;-</span> <span class="dv">70</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">r2y.mx=</span>r2y,<span class="at">n=</span>N,<span class="at">alpha=</span>.<span class="dv">05</span>,<span class="at">mc=</span><span class="cn">TRUE</span>,<span class="at">nsims=</span><span class="dv">10000</span>,<span class="at">verbose=</span>T)</span></code></pre></div>
+<pre><code>##  Indirect Effect in Mediation Model
+##  H0: a * b = 0 
+##  HA: a * b != 0 
+##  --------------------------- 
+##         test power  n   ncp
+##        Sobel 0.380 70 1.654
+##       Aroian 0.373 70 1.636
+##      Goodman 0.387 70 1.672
+##        Joint 0.401 70    NA
+##  Monte Carlo 0.398 70    NA
+## ---------------------------- 
+##  Type I error rate = 0.05</code></pre>
+<p>Results are very close the the ones obtained with <span
+class="modulename">PAMLj</span>. As a further check for the
+<code>Monte Carlo</code> method, we can employ <a
+href="https://schoemanna.shinyapps.io/mc_power_med/">Monte Carlo Power
+Analysis</a>.</p>
+<p><img src="rosetta/pics/mediation/input.6.png" width="935" />
+<img src="rosetta/pics/mediation/mc.4.png" width="464" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages

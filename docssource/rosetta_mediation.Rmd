@@ -96,7 +96,7 @@ powerMediation::ssMediation.Sobel(power = .80,
 
 ```
 
-It is clear that the results collides with the `r modulename()` results.
+It is clear that the results concur with those produced by `r modulename()`.
 
 ### pwrss package
 
@@ -136,8 +136,7 @@ The relevant parameter here is $N=95$
 
 ### Other software
 
-At the moment, I did not find any software that would estimate required N using `joint significance` method. However, we can remedy by employing
-`pwrss` command, which computes `power` given an N, and we can search for the N that gives the closed required power (kind of brute force method).
+At present, I have not found any software that estimates the required sample size (N) using the joint significance method. However, we can work around this by using the `pwrss.z.mediation` function, which calculates power for a given N. From there, we can iteratively search for the N that provides the closest match to the required power, effectively using a brute-force approach.
 
 Here is an algorithm for that.
 
@@ -174,7 +173,7 @@ Using the Monte Carlo method one obtains (a part for random variability) $N=97$:
 
 ### pwrss
 
-As above, we can use `pwrss` command, which computes `power` given an N using the `Monte Carlo` method, and we can search for the N that gives the closed required power (the brute force method).
+As we did for the `joint significance` test, we can use the `pwrss.z.mediation` function, which computes power for a given N using the `Monte Carlo method` to search for the N that yields the closest match to the required power.
 
 Here is an algorithm for that (it can be slow).
 
@@ -191,22 +190,71 @@ results<-lapply(ns, function(n) c(n,
 data<-as.data.frame(do.call(rbind,results))
 data$dif<-abs(data$V2-power)
 data$V1[which.min(data$dif)]
-# this is not evaluated when compiling this page because it requires time.
-# The output is pre-computed but it can be verified that it almost always comes out this way. 
-# With nsims=10000, one expect very little variability # in the results. It seems that pwrss does not accept set.seed.
+# This section is not evaluated during the page compilation due to the time required for execution. The output is pre-computed, but it can be
+# verified that the results consistently appear in this manner. With nsims=10000, we expect minimal variability in the results. However, it appears # that pwrss does not honor the set.seed function for reproducibility.
 # Results are almost always 96-98
 ```
 
 ### Monte Carlo Power Analysis (mc_power_med)
 
-[Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/) is a shiny app that compute power mediated effects based on semi-parametric re-sampling. This means that in each Monte Carlo sample, a new dataset is randomly draws from a population with the input parameters, and the mediated effect is computed along with the standard error. On each sample, a distribution of possible parameter is drawn and evaluated. `Monte Carlo Power Analysis` does not solve the power function for N, but we can ask to evaluate the power within a range of N's. Here, we asked to evalated the power, given the above parameters, with N from 80 t0 120.
-
+[Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/) is a Shiny app that computes power for mediated effects using semi-parametric re-sampling. In each Monte Carlo sample, a new dataset is randomly drawn from a population with the specified input parameters, and the mediated effect is calculated along with the standard error. For each sample, a distribution of possible parameters is generated and its confidence intervals are evaluated. While Monte Carlo Power Analysis does not directly solve for the required N, it allows you to evaluate power across a range of N values. In this case, we requested an evaluation of power with N ranging from 80 to 120, using the parameters mentioned above.
 
 `r pic("rosetta/pics/mediation/input.4.png")`
 
 `r pic("rosetta/pics/mediation/mc.2.png")`
 
-Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 96-97. 
+Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 96-97, congruent with the results of `r modulename()`
+
+
+# Power estimation
+
+Now we check the results of `r modulename()` when the sample size is given and the required parameter is `power`.
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = Sample Size
+*   Expected $a$    = .2
+*   Expected $b$    = .6
+*   Expected $c'$   = .2
+*   N               = 70
+*   Alpha           = .05
+
+:::
+
+`r pic("rosetta/pics/mediation/input.5.png")`
+
+For `joint significance` method we obtain  $power=.401$.
+
+`r pic("rosetta/pics/mediation/joint.2.png")`
+
+for `Sobel test` method we obtain $power=.381$.
+
+`r pic("rosetta/pics/mediation/sobel.2.png")`
+
+and for the `Monte Carlo` method we get $power=.402$.
+
+`r pic("rosetta/pics/mediation/mc.3.png")`
+
+### Other software
+
+The `pwrss` package provides all three method to estimate expected power.
+
+
+```{r}
+
+a<-.2
+b<-.6
+cp<-.2
+r2y<-b^2+cp^2+2*a*b*cp
+N<- 70
+pwrss::pwrss.z.mediation(a=a,b=b,r2y.mx=r2y,n=N,alpha=.05,mc=TRUE,nsims=10000,verbose=T)
+```
+Results are very close the the ones obtained with `r modulename()`. As a further check for the `Monte Carlo` method, we can employ [Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/).
+
+
+`r pic("rosetta/pics/mediation/input.6.png")`
+`r pic("rosetta/pics/mediation/mc.4.png")`
 
 
 `r backto("rosetta")`
