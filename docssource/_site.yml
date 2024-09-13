@@ -30,6 +30,7 @@ output:
        css: 
           - https://use.fontawesome.com/releases/v5.15.4/css/all.css
           - down.css
+          - mcdocs.css
        includes:
            in_header: 
                      - my.js

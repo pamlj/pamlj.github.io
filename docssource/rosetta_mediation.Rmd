@@ -1,8 +1,8 @@
 ---
-title: "Validation: Mediation"
+title: "Mediation: Simple models"
 topic: mediation
 category: rosetta
-nickname: ros_mediation
+nickname: ros_mediation_simple
 #linklabel: "Rosetta: mediation" 
 bibliography: 
      - bib.bib
@@ -165,12 +165,16 @@ In `r modulename()` we set the parameters as follows, using the `Monte Carlo` te
 
 `r pic("rosetta/pics/mediation/input.3.png")`
 
-Using the Monte Carlo method one obtains (a part for random variability) $N=97$:
+Because we are testing the module, we set a `r opt("seed")` for the Monte Carlo simulation. We do this only to ensure the reproducibility of the example; however, in everyday analysis, this option should almost never be used.
+
+`r pic("rosetta/pics/mediation/input.3.1.png")`
+
+Using the Monte Carlo method one obtains (a part for random variability) $N=96$:
 
 `r pic("rosetta/pics/mediation/mc.1.png")`
 
 
-
+ 
 ### pwrss
 
 As we did for the `joint significance` test, we can use the `pwrss.z.mediation` function, which computes power for a given N using the `Monte Carlo method` to search for the N that yields the closest match to the required power.
@@ -203,7 +207,7 @@ data$V1[which.min(data$dif)]
 
 `r pic("rosetta/pics/mediation/mc.2.png")`
 
-Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 96-97, congruent with the results of `r modulename()`
+Results, shown here in the vicinity of $power=.80$ (4th column) shows that the required N (2nd column) is around 96, congruent with the results of `r modulename()`.
 
 
 # Power estimation
@@ -238,7 +242,7 @@ and for the `Monte Carlo` method we get $power=.402$.
 
 ### Other software
 
-The `pwrss` package provides all three method to estimate expected power.
+The `pwrss` package provides all three methods to estimate expected power.
 
 
 ```{r}
@@ -250,12 +254,17 @@ r2y<-b^2+cp^2+2*a*b*cp
 N<- 70
 pwrss::pwrss.z.mediation(a=a,b=b,r2y.mx=r2y,n=N,alpha=.05,mc=TRUE,nsims=10000,verbose=T)
 ```
-Results are very close the the ones obtained with `r modulename()`. As a further check for the `Monte Carlo` method, we can employ [Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/).
+Results are very close the the ones obtained with `r modulename()`.
+
+As a further check for the `Monte Carlo` method, we can employ [Monte Carlo Power Analysis](https://schoemanna.shinyapps.io/mc_power_med/). Unfortunately, __Monte Carlo Power Analysis__ shiny app does not allow to run a simulation without a `seed`, so results a bound to the particular `seed` one uses. To overcome the issue, we set the number of simulations to 10000 (patience is required here), so the `seed` becomes less important. 
 
 
 `r pic("rosetta/pics/mediation/input.6.png")`
 `r pic("rosetta/pics/mediation/mc.4.png")`
 
+The results are nicely in line with the ones obtained with `r modulename()`.
+
+As a final remark, these comparisons demonstrate that one does not need to simulate a full re-sampling of a bootstrap tests, which is very time consuming, when parametric Monte Carlo, which is quicker, or joint significance, which is very fast, yield the same results.
 
 `r backto("rosetta")`
 
