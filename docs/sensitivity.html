@@ -209,7 +209,12 @@
       size</a></li>
       <li><a href="#power-curve-by-n" id="toc-power-curve-by-n">Power
       curve by N</a></li>
-      <li><a href="#log-scale" id="toc-log-scale">Log scale</a></li>
+      <li><a href="#options" id="toc-options">Options</a>
+      <ul>
+      <li><a href="#log-scale-when-needed"
+      id="toc-log-scale-when-needed">Log scale (when needed)</a></li>
+      <li><a href="#colors" id="toc-colors">Colors</a></li>
+      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -228,7 +233,7 @@ Gallucci</p>
 <div class="version">
 <p>0.4.0</p>
 </div>
-<p><img src="pics/common/sensitivity.input.1.png" width="577" /></p>
+<p><img src="pics/common/sensitivity.input.1.png" width="585" /></p>
 <p>In all sub-modules of r modulename(), it is possible to conduct a
 sensitivity analysis. Sensitivity analysis allows users to explore
 various scenarios by observing how one power parameter changes as a
@@ -292,8 +297,10 @@ target value of around 230 cases, the expected power will decrease
 rapidly. For instance, with one collects only around 130 cases, the
 estimated power would drop to around 0.60.</p>
 </div>
-<div id="log-scale" class="section level1">
-<h1>Log scale</h1>
+<div id="options" class="section level1">
+<h1>Options</h1>
+<div id="log-scale-when-needed" class="section level2">
+<h2>Log scale (when needed)</h2>
 <p>Depending on the specific application and the combination of power
 parameters, some plots might appear unclear or distorted. In such cases,
 the <span class="option">Log scale (when needed)</span> option can be
@@ -310,11 +317,25 @@ less clear depending on the context.</p>
 <p>There are other cases in which the plots are clearer without the
 logarithm scale. Users can choose the scale that better suits their
 needs.</p>
+<p>Log transform, even when selected by the user, is often not applied
+to <code>Power curve plot</code> because this plot looks better in
+linear scale. For some effect size and N combinations, however, the log
+transformation is applied if the user select it.</p>
+</div>
+<div id="colors" class="section level2">
+<h2>Colors</h2>
+<p>The default colors of the plots use the popular
+<code>Viridis palette</code> from the <a
+href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">Viridis
+R package</a>. Form the same package, other palettes are available, plus
+a grey scale named <code>Husky</code> (not from viridis).</p>
+<p><img src="pics/common/sensitivity.6.png" width="904" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
+</div>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">

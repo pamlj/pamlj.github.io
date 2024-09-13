@@ -55,13 +55,24 @@ The second plot we can ask is the `Power curve by N` . It portraits how the powe
 
 The solid line in the plot illustrates how power changes as the sample size increases, given a fixed effect size (in this example, $es=.20$) and a fixed type I error rate ($\alpha$=.05). In this particular example, we observe that if the actual sample size is lower than the target value of around 230 cases, the expected power will decrease rapidly. For instance, with one collects only around 130 cases, the estimated power would drop to around 0.60.
 
-# Log scale
+# Options
+
+## Log scale (when needed)
 
 Depending on the specific application and the combination of power parameters, some plots might appear unclear or distorted. In such cases, the `r opt("Log scale (when needed)")` option can be helpful. It converts the axis scale from linear to logarithmic, making the values more readable. For instance, in the Power curve by N plot above, using a logarithmic scale evenly distributes the x-axis values, ranging from the minimum $N=19$ (yielding a power of 0.10) to the maximum $N=2359$ (yielding a power of 0.99). If the `r opt("Log scale (when needed)")` option is deselected, the plot would revert to a linear scale, which might look less clear depending on the context.
 
 `r pic("pics/common/sensitivity.5.png")`
 
 There are other cases in which the plots are clearer without the logarithm scale. Users can choose the scale that better suits their needs.
+
+Log transform, even when selected by the user, is often not applied to `Power curve plot` because this plot looks better in linear scale. For some effect size and N combinations, however, the log transformation is applied if the user select it.
+
+## Colors
+
+The default colors of the plots use the popular `Viridis palette` from the  [Viridis R package](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html). Form the same package, other palettes are available, plus a grey scale named `Husky` (not from viridis).
+
+`r pic("pics/common/sensitivity.6.png")`
+
 
 `r backto()`
 

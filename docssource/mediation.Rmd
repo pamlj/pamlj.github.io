@@ -7,13 +7,14 @@ bibliography:
      - bib.bib
 link-citations: true
         
+editor_options: 
+  chunk_output_type: console
 ---
 
 
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
-
 ```
 
 `r version("0.4.0")`
