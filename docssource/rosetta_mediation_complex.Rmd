@@ -1,0 +1,29 @@
+---
+title: "Mediation: Complex models"
+topic: mediation
+category: rosetta
+nickname: ros_mediation_complex
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+
+:::{ .version }
+0.4.0
+:::
+
+`r underconstruction`
+
+`r backto("rosetta")`
+
+`r issues()`
+
+# References
