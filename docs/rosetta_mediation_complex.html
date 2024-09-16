@@ -56,6 +56,75 @@
         </script>
     
     
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
     
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
         <link rel="stylesheet" href="down.css" type="text/css" />
@@ -202,6 +271,21 @@
     <h2><a href="#content">Mediation: Complex models</a></h2>
     <div id="toc">
       <ul>
+      <li><a href="#two-parallel-mediators"
+      id="toc-two-parallel-mediators">Two parallel mediators</a>
+      <ul>
+      <li><a href="#monte-carlo-shiny-app"
+      id="toc-monte-carlo-shiny-app">Monte Carlo shiny app</a></li>
+      <li><a href="#pwrss" id="toc-pwrss">pwrss</a></li>
+      </ul></li>
+      <li><a href="#three-parallel-mediators"
+      id="toc-three-parallel-mediators">Three parallel mediators</a>
+      <ul>
+      <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
+      <li><a href="#pwrss-1" id="toc-pwrss-1">pwrss</a></li>
+      <li><a href="#monte-carlo-shiny-app-1"
+      id="toc-monte-carlo-shiny-app-1">Monte Carlo shiny app</a></li>
+      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
@@ -219,20 +303,329 @@
 <div class="version">
 <p>0.4.0</p>
 </div>
-<div class="underconstruction">
-<div>
-<i class="fa fa-drafting-compass"></i>
+<p>Here we compare the results of <span class="modulename">PAMLj</span>
+with other software that performs power analysis for mediation in
+complex models. We consider three complex models: two parallel
+mediators, three parallel mediators, and two sequential mediators. At
+the moment, the only package that explicitly deals with these models is
+the <a href="https://schoemanna.shinyapps.io/mc_power_med/">Monte Carlo
+Power Analysis</a> Shiny app, which provides power estimates based
+solely on simulations. However, with a bit of work, one can also employ
+the <a href="https://CRAN.R-project.org/package=pwrss">pwrss R
+package</a> to test parameters for these models. The advantage of
+<code>pwrss</code> is that it provides estimates based on the Sobel
+test, joint significance, and Monte Carlo methods, allowing for better
+comparisons of the results.</p>
+<ul>
+<li><p><a href="https://CRAN.R-project.org/package=pwrss">pwrss R
+package</a> provides desired power and required sample size based on
+Sobel test and joint significance methods. It also provides desired
+power based on simulations. The simulations are based on Monte Carlo
+parametric re-sampling.</p></li>
+<li><p><a href="https://schoemanna.shinyapps.io/mc_power_med/">Monte
+Carlo Power Analysis</a> shiny app provides desired power based on
+simulations. The simulations are based on Monte Carlo semi-parametric
+re-sampling.</p></li>
+</ul>
+<p>We test the software finding power, because the two packages readily
+estimate the parameter.</p>
+<div id="two-parallel-mediators" class="section level1">
+<h1>Two parallel mediators</h1>
+<p><img src="pics/mediation/complex.input.1.png" width="578" /></p>
+<p><img src="pics/mediation/complex.diagram.1.png" width="547" /></p>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = Power</li>
+<li>Expected <span class="math inline">\(a1\)</span> = .3</li>
+<li>Expected <span class="math inline">\(b1\)</span> = .3</li>
+<li>Expected <span class="math inline">\(a2\)</span> = .4</li>
+<li>Expected <span class="math inline">\(b2\)</span> = .2</li>
+<li>Expected <span class="math inline">\(r12\)</span> = .25
+<strong>expected correlations among mediators</strong></li>
+<li>Expected <span class="math inline">\(c&#39;\)</span> = .15</li>
+<li>N = 100</li>
+<li>Alpha = .05</li>
+</ul>
 </div>
-<p class="underconstruction">
-This page is not yet available: Please come back soon
-</p>
+<p><img src="rosetta/pics/mediation/complex.input.1.png" width="583" /></p>
+<p>For <code>Joint significance</code> method:</p>
+<p><img src="rosetta/pics/mediation/complex.output.1.png" width="563" /></p>
+<p>For <code>Sobel test</code> method:</p>
+<p><img src="rosetta/pics/mediation/complex.output.2.png" width="577" /></p>
+<p>For <code>Monte Carlo</code> method:</p>
+<p><img src="rosetta/pics/mediation/complex.output.3.png" width="558" /></p>
+<p>As expected, <code>joint significance</code> and
+<code>Monte Carlo</code> methods agree in the estimated parameters,
+whereas <code>Sobel test</code> reports a lower power for both mediated
+effects as compared with the other methods estimation.</p>
+<div id="monte-carlo-shiny-app" class="section level2">
+<h2>Monte Carlo shiny app</h2>
+<p>By setting up the same parameters in the
+<code>Monte Carlo Shiny app</code>, we obtain very similar results,
+although the app seems to produce smaller power values than <span
+class="modulename">PAMLj</span>. The reason for this small but
+consistent discrepancy is the way different software computes the
+expected standard errors of the coefficients. Both <span
+class="modulename">PAMLj</span> and <code>pwrss</code> simulate a z-test
+when computing standard errors and the distribution of the parameters.
+The <code>Monte Carlo Shiny app</code>, however, assumes normality of
+the parameters but computes the standard errors based on the t-test. For
+small samples, this difference may yield slightly different final
+parameters.</p>
+<p><img src="rosetta/pics/mediation/complex.mc.input.1.png" width="981" />
+<img src="rosetta/pics/mediation/complex.mc.output.1.png" width="487" /></p>
 </div>
+<div id="pwrss" class="section level2">
+<h2>pwrss</h2>
+<p>To obtain results for the two parallel mediators model using
+<code>pwrss</code>, we need some preliminary computations. The
+<code>pwrss.z.mediation</code> function allows you to input, for each
+mediated effect, the expected R-squared in predicting the mediator
+(option <code>r2m.x</code> in the function) and the R-squared in
+predicting the dependent variable (option <code>r2y.mx</code> in the
+function). This is because the standard error of the coefficients
+depends on the R-squared values, and so does the standard error of the
+mediated effect. In other words, the presence of other mediators is
+taken into account in the computation by including their effects in the
+R-squared predicting the dependent variable. When the R-squared values
+are correctly specified, the pwrss.z.mediation function can be used to
+estimate power (or N) for complex models as well.</p>
+<p>Let’s start with the first mediated effect <span
+class="math inline">\(ME=a_1 \cdot b_1\)</span>. The computation is
+easy: <span class="math inline">\(R_{m.x}^2=a_1^2\)</span>, because
+<span class="math inline">\(a_1\)</span> is basically a Pearson
+correlation. For <span class="math inline">\(R_{y.mx}^2\)</span>
+(predicting Y), the computation is more complex. We can take the
+R-squared from <span class="modulename">PAMLj</span> results.</p>
+<p><img src="rosetta/pics/mediation/complex.output.4.png" width="205" /></p>
+<p>The R-squared is <span
+class="math inline">\(R_{y.mx}^2=.2335\)</span>. Plugging the parameters
+in we obtain the results, again in lines with the <span
+class="modulename">PAMLj</span> results.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>a1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>b1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>a2  <span class="ot">&lt;-</span> .<span class="dv">4</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>b2  <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>r1  <span class="ot">&lt;-</span> .<span class="dv">25</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>cp <span class="ot">&lt;-</span> .<span class="dv">15</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>r2y.mx<span class="ot">&lt;-</span>.<span class="dv">2335</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>pwrssp<span class="ot">&lt;-</span>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a1,<span class="at">b=</span>b1,<span class="at">r2y.mx=</span>r2y.mx,<span class="at">n=</span><span class="dv">100</span>,<span class="at">alpha=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<pre><code>##  Indirect Effect in Mediation Model
+##  H0: a * b = 0 
+##  HA: a * b != 0 
+##  --------------------------- 
+##         test power   n   ncp
+##        Sobel 0.620 100 2.266
+##       Aroian 0.600 100 2.213
+##      Goodman 0.642 100 2.323
+##        Joint 0.798 100    NA
+##  Monte Carlo 0.796 100    NA
+## ---------------------------- 
+##  Type I error rate = 0.05</code></pre>
+<p>For the second mediated effect, we have</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>a1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>b1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>a2  <span class="ot">&lt;-</span> .<span class="dv">4</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>b2  <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>r1  <span class="ot">&lt;-</span> .<span class="dv">25</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>cp <span class="ot">&lt;-</span> .<span class="dv">15</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>r2y.mx<span class="ot">&lt;-</span>.<span class="dv">2335</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>pwrssp<span class="ot">&lt;-</span>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a2,<span class="at">b=</span>b2,<span class="at">r2y.mx=</span>r2y.mx,<span class="at">n=</span><span class="dv">100</span>,<span class="at">alpha=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<pre><code>##  Indirect Effect in Mediation Model
+##  H0: a * b = 0 
+##  HA: a * b != 0 
+##  --------------------------- 
+##         test power   n   ncp
+##        Sobel 0.471 100 1.888
+##       Aroian 0.456 100 1.849
+##      Goodman 0.488 100 1.929
+##        Joint 0.549 100    NA
+##  Monte Carlo 0.551 100    NA
+## ---------------------------- 
+##  Type I error rate = 0.05</code></pre>
+<p>Nicely in line with <span class="modulename">PAMLj</span>
+results.</p>
+<p>Admittedly, taking the R-squared from <span
+class="modulename">PAMLj</span> and plug it into another software to
+check the results of <span class="modulename">PAMLj</span> it is not
+much of a test. So let’s check the R-squared.</p>
+<p>In multiple regression, the <span class="math inline">\(R^2\)</span>
+can be computed as: <span class="math display">\[
+R^2=\sum{\beta_i \cdot r_{yi}}
+\]</span> Now, we have the <strong>betas</strong>, we need the
+correlations. For the mediators let’s indicate as <span
+class="math inline">\(1\)</span> and <span
+class="math inline">\(2\)</span> the two mediators.</p>
+<p>For mediator <span class="math inline">\(M1\)</span> we have that</p>
+<p><span class="math display">\[
+r_{YM1}=b_1+b_2 \cdot r_{12} + c&#39; \cdot a_1
+\]</span></p>
+<p>For mediator <span class="math inline">\(M2\)</span> we have that</p>
+<p><span class="math display">\[
+r_{YM2}=b_2+b_1 \cdot r_{12} + c&#39; \cdot a_2
+\]</span></p>
+<p>For mediator <span class="math inline">\(X\)</span> we have that</p>
+<p><span class="math display">\[
+r_{YX}=c&#39;+a_1 \cdot b_1 + a_2 \cdot b_2  
+\]</span> Substituting the correlations into the <span
+class="math inline">\(R^2\)</span> formula, we obtain</p>
+<p><span class="math display">\[
+R^2 = b_1^2 + b_2^2 + c^2 + 2 \cdot b_1 \cdot b_2 \cdot r_{12} + 2 \cdot
+a_1 \cdot b_1 \cdot c + 2 \cdot a_2 \cdot b_2 \cdot c
+\]</span></p>
+<p>Numerically:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>a1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>b1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>a2  <span class="ot">&lt;-</span> .<span class="dv">4</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>b2  <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>r12  <span class="ot">&lt;-</span> .<span class="dv">25</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>cp <span class="ot">&lt;-</span> .<span class="dv">15</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>rym1<span class="ot">&lt;-</span>b1<span class="sc">+</span>b2<span class="sc">*</span>r12<span class="sc">+</span>cp<span class="sc">*</span>a1</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>rym2<span class="ot">&lt;-</span>b2<span class="sc">+</span>b1<span class="sc">*</span>r12<span class="sc">+</span>cp<span class="sc">*</span>a2</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>ryx<span class="ot">&lt;-</span> cp <span class="sc">+</span>a1<span class="sc">*</span>b1<span class="sc">+</span>a2<span class="sc">*</span>b2</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>b1<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>b2<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>cp<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>b1<span class="sc">*</span>b2<span class="sc">*</span>r12<span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> a1<span class="sc">*</span>b1<span class="sc">*</span>cp<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>a2<span class="sc">*</span>b2<span class="sc">*</span>cp</span></code></pre></div>
+<pre><code>## [1] 0.2335</code></pre>
+<p>So, it’s fine.</p>
+</div>
+</div>
+<div id="three-parallel-mediators" class="section level1">
+<h1>Three parallel mediators</h1>
+<p>We now add another mediator</p>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = Power</li>
+<li>Expected <span class="math inline">\(a1\)</span> = .3</li>
+<li>Expected <span class="math inline">\(b1\)</span> = .3</li>
+<li>Expected <span class="math inline">\(a2\)</span> = .4</li>
+<li>Expected <span class="math inline">\(b2\)</span> = .2</li>
+<li>Expected <span class="math inline">\(a3\)</span> = .25</li>
+<li>Expected <span class="math inline">\(b3\)</span> = .15</li>
+<li>Expected <span class="math inline">\(r12\)</span> = .25</li>
+<li>Expected <span class="math inline">\(r13\)</span> = .1</li>
+<li>Expected <span class="math inline">\(r23\)</span> = .4</li>
+<li>Expected <span class="math inline">\(c&#39;\)</span> = .15</li>
+<li>N = 100</li>
+<li>Alpha = .05</li>
+</ul>
+</div>
+<p><img src="rosetta/pics/mediation/complex.diagram.2.png" width="540" /></p>
+<div id="pamlj" class="section level2">
+<h2>PAMLj</h2>
+<p><img src="rosetta/pics/mediation/complex.input.2.png" width="577" /></p>
+<p>For <code>Joint significance</code> method:</p>
+<p><img src="rosetta/pics/mediation/complex.output.5.png" width="559" /></p>
+<p>For <code>Sobel test</code> method:</p>
+<p><img src="rosetta/pics/mediation/complex.output.6.png" width="542" /></p>
+<p>For <code>Monte Carlo</code> method:</p>
+<p><img src="rosetta/pics/mediation/complex.output.7.png" width="566" /></p>
+</div>
+<div id="pwrss-1" class="section level2">
+<h2>pwrss</h2>
+<p>To utilize <code>pwrss</code> we need to input, for each mediated
+effect, the <span class="math inline">\(R^2\)</span> predicting both the
+dependent variable and the mediators. We can take these estimates from
+<span class="modulename">PAMLj</span>.</p>
+<p><img src="rosetta/pics/mediation/complex.output.8.png" width="569" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>a1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>b1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>a2  <span class="ot">&lt;-</span> .<span class="dv">4</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>b2  <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>a3  <span class="ot">&lt;-</span> .<span class="dv">25</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>b3  <span class="ot">&lt;-</span> .<span class="dv">15</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>cp <span class="ot">&lt;-</span> .<span class="dv">15</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>r2y.mx<span class="ot">&lt;-</span>.<span class="dv">3003</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>rmx<span class="ot">&lt;-</span>a1<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>pwrssp<span class="ot">&lt;-</span>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a1,<span class="at">b=</span>b1,<span class="at">r2y.mx=</span>r2y.mx, <span class="at">r2m.x=</span>rmx  ,<span class="at">n=</span><span class="dv">100</span>,<span class="at">alpha=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<pre><code>##  Indirect Effect in Mediation Model
+##  H0: a * b = 0 
+##  HA: a * b != 0 
+##  --------------------------- 
+##         test power   n   ncp
+##        Sobel 0.639 100 2.315
+##       Aroian 0.619 100 2.263
+##      Goodman 0.659 100 2.371
+##        Joint 0.818 100    NA
+##  Monte Carlo 0.817 100    NA
+## ---------------------------- 
+##  Type I error rate = 0.05</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>rmx<span class="ot">&lt;-</span>a2<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>pwrssp<span class="ot">&lt;-</span>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a2,<span class="at">b=</span>b2,<span class="at">r2y.mx=</span>r2y.mx, <span class="at">r2m.x=</span>rmx  ,<span class="at">n=</span><span class="dv">100</span>,<span class="at">alpha=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<pre><code>##  Indirect Effect in Mediation Model
+##  H0: a * b = 0 
+##  HA: a * b != 0 
+##  --------------------------- 
+##         test power   n   ncp
+##        Sobel 0.499 100 1.958
+##       Aroian 0.484 100 1.919
+##      Goodman 0.516 100 2.001
+##        Joint 0.587 100    NA
+##  Monte Carlo 0.548 100    NA
+## ---------------------------- 
+##  Type I error rate = 0.05</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>rmx<span class="ot">&lt;-</span>a3<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>pwrssp<span class="ot">&lt;-</span>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a3,<span class="at">b=</span>b3,<span class="at">r2y.mx=</span>r2y.mx, <span class="at">r2m.x=</span>rmx  ,<span class="at">n=</span><span class="dv">100</span>,<span class="at">alpha=</span>.<span class="dv">05</span>)</span></code></pre></div>
+<pre><code>##  Indirect Effect in Mediation Model
+##  H0: a * b = 0 
+##  HA: a * b != 0 
+##  --------------------------- 
+##         test power   n   ncp
+##        Sobel 0.302 100 1.441
+##       Aroian 0.279 100 1.372
+##      Goodman 0.331 100 1.522
+##        Joint 0.302 100    NA
+##  Monte Carlo 0.264 100    NA
+## ---------------------------- 
+##  Type I error rate = 0.05</code></pre>
+</div>
+<div id="monte-carlo-shiny-app-1" class="section level2">
+<h2>Monte Carlo shiny app</h2>
+<p>Unfortunately, to obtain the correct power parameters in the app, we
+need to input the correlation matrix. Obtaining the correlation matrix
+starting from the betas coefficients is tedious, so I just list it
+here.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>sigma<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.0000</span>, <span class="fl">0.30</span>, <span class="fl">0.400</span>, <span class="fl">0.2500</span>, <span class="fl">0.3575</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>, <span class="fl">0.3000</span>, <span class="fl">1.00</span>, <span class="fl">0.250</span>, <span class="fl">0.1000</span>, <span class="fl">0.4100</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>, <span class="fl">0.4000</span>, <span class="fl">0.25</span>, <span class="fl">1.000</span>, <span class="fl">0.4000</span>, <span class="fl">0.3950</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>, <span class="fl">0.2500</span>, <span class="fl">0.10</span>, <span class="fl">0.400</span>, <span class="fl">1.0000</span>, <span class="fl">0.2975</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>, <span class="fl">0.3575</span>, <span class="fl">0.41</span>, <span class="fl">0.395</span>, <span class="fl">0.2975</span>, <span class="fl">1.0000</span>),<span class="at">ncol=</span><span class="dv">5</span>,<span class="at">nrow=</span><span class="dv">5</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>sigma</span></code></pre></div>
+<pre><code>##        [,1] [,2]  [,3]   [,4]   [,5]
+## [1,] 1.0000 0.30 0.400 0.2500 0.3575
+## [2,] 0.3000 1.00 0.250 0.1000 0.4100
+## [3,] 0.4000 0.25 1.000 0.4000 0.3950
+## [4,] 0.2500 0.10 0.400 1.0000 0.2975
+## [5,] 0.3575 0.41 0.395 0.2975 1.0000</code></pre>
+<p>To be sure that they are the correct correlations, just check if they
+produced the intended beta coefficients.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="dv">100</span>,<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>),sigma, <span class="at">empirical=</span>T))</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">names</span>(data)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;x&quot;</span>,<span class="st">&quot;m1&quot;</span>,<span class="st">&quot;m2&quot;</span>,<span class="st">&quot;m3&quot;</span>,<span class="st">&quot;y&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="fu">zapsmall</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(y<span class="sc">~</span>m1<span class="sc">+</span>m2<span class="sc">+</span>m3<span class="sc">+</span>x,<span class="at">data=</span>data)))</span></code></pre></div>
+<pre><code>## (Intercept)          m1          m2          m3           x 
+##        0.00        0.30        0.20        0.15        0.15</code></pre>
+<p>as expected, they are correct.</p>
+<p>At this point, we can insert the correlation in the app.</p>
+<p><img src="rosetta/pics/mediation/complex.mc.input.2.png" width="1194" /></p>
+<p><img src="rosetta/pics/mediation/complex.mc.output.2.png" width="592" /></p>
+<p>As expected, the power obtained is slightly lower than the one
+obtained with <code>pwrss</code> and <span
+class="modulename">PAMLj</span>, but it is substantially in line.</p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
 <a class="backto" href="./rosetta.html">PAMLj: rosetta</a>
+</div>
+</div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>

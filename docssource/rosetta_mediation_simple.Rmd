@@ -36,7 +36,6 @@ Finally we also check some results with  [bmen R package](https://CRAN.R-project
 As with any power analysis software comparison, results should be considered equivalent when their values are very close, even if they do not match exactly. This is because power parameters, such as effect sizes and sample sizes, are often rounded or approximated. The exact values may not correspond precisely across different software, but the key consideration is that the results are practically the same and provide similar insights for decision-making. Small differences in output do not invalidate the analysis as long as they are within an acceptable range.
 
 
-# Sobel test
 
 :::{ .adm .adm-setup}
 Setup
@@ -50,6 +49,7 @@ Setup
 
 :::
 
+# Sobel test
 
 ### PAMLj
 
