@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Marcello Gallucci" />
+    
+    
+    <title>SEM</title>
+
+        <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">SEM</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">SEM</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#input" id="toc-input">Input</a></li>
+      <li><a href="#results" id="toc-results">Results</a></li>
+      <li><a href="#options" id="toc-options">Options</a>
+      <ul>
+      <li><a href="#main-panel" id="toc-main-panel"><span class="panel">
+      <i class="fa fa-chevron-down"></i> | Main</span> panel</a></li>
+      <li><a href="#sensitivity-analysis-panel"
+      id="toc-sensitivity-analysis-panel"><span class="panel">
+      <i class="fa fa-chevron-down"></i> | Sensitivity Analysis</span>
+      panel</a></li>
+      <li><a href="#power-parameters-plot-panel"
+      id="toc-power-parameters-plot-panel"><span class="panel">
+      <i class="fa fa-chevron-down"></i> | Power Parameters plot</span>
+      panel</a></li>
+      <li><a href="#options-panel" id="toc-options-panel"><span
+      class="panel"> <i class="fa fa-chevron-down"></i> | Options</span>
+      panel</a></li>
+      </ul></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<div class="version">
+<p>
+0.6.0
+</p>
+</div>
+<div style="clear:both">
+
+</div>
+<p><img src="pics/sem/ui.png" width="1247" /></p>
+<p><code>SEM power analysis</code> enables the computation of power
+parameters (such as required N and power) for a wide range of structural
+equation models. It can be used to estimate power parameters based on
+both chi-square constraints and <code>Monte Carlo</code> methods.</p>
+<p>The module allows users to specify the prospective model using the
+syntax of the <a href="https://lavaan.ugent.be/">lavaan R package</a>,
+with some modifications necessary to input the expected parameters. The
+results are partially obtained using the <a
+href="https://CRAN.R-project.org/package=semPower">semPower R
+package</a>, though several solutions are also implemented natively
+within the module.</p>
+<div class="adm adm-note">
+<p>Important</p>
+<p>The capabilities (so far) of the module is to obtain power parameters
+associated with tests of single coefficients, or combinations of
+coefficients.</p>
+</div>
+<div id="input" class="section level1">
+<h1>Input</h1>
+<p>The crucial aspect of the module usage is to input the expected
+model. One can start from a lavaan syntax model, such as</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># latent variables </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>   ind60 <span class="ot">=</span><span class="er">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 </span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>   dem60 <span class="ot">=</span><span class="er">~</span> y1 <span class="sc">+</span> y2 <span class="sc">+</span> y3 <span class="sc">+</span> y4 </span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>   dem65 <span class="ot">=</span><span class="er">~</span> y5 <span class="sc">+</span> y6 <span class="sc">+</span> y7 <span class="sc">+</span> y8 </span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a> <span class="co"># regressions</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>   dem60 <span class="sc">~</span> ind60 </span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>   dem65 <span class="sc">~</span> ind60 <span class="sc">+</span> dem60 </span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="co"># residual correlations</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>   y1 <span class="sc">~</span><span class="er">~</span> y5    </span></code></pre></div>
+<p>To input the expected coefficients, one multiplies each variable for
+the associated coefficient</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># latent variables </span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    ind60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">6</span><span class="sc">*</span>x1 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x2 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x3</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    dem60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y1 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y2 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y3 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y4</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    dem65 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y5 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y6 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y7 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y8</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="co"># regressions</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    dem60 <span class="sc">~</span> .<span class="dv">3</span><span class="sc">*</span>a<span class="sc">*</span>ind60</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    dem65 <span class="sc">~</span>  .<span class="dv">4</span><span class="sc">*</span>b<span class="sc">*</span>ind60 <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>c<span class="sc">*</span>dem60</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="co"># residual correlations</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    y1 <span class="sc">~</span><span class="er">~</span> .<span class="dv">1</span><span class="sc">*</span>y5    </span></code></pre></div>
+<p>In this example, we specify that the latent variable
+<code>ind60</code> should have loadings equal to <span
+class="math inline">\(0.6\)</span>, and both the latent variables
+<code>dem60</code> and <code>dem65</code> should have loadings equal to
+<span class="math inline">\(0.9\)</span>. Additionally, the regression
+coefficients for the latent variables are set to <span
+class="math inline">\(0.3\)</span>, <span
+class="math inline">\(0.4\)</span>, and <span
+class="math inline">\(0.2\)</span>, respectively. The scale of the
+coefficients should be chosen under the assumption that all observed
+variables are standardized.</p>
+<p>Another requirement is to specify labels for the parameters we wish
+to test. In this example, we have labeled the three latent variables as
+<span class="math inline">\(a\)</span>, <span
+class="math inline">\(b\)</span>, and <span
+class="math inline">\(c\)</span>, respectively. This allows us to impose
+constraints on them and compute the required sample size (or power) to
+obtain a significant test (given a specified <span
+class="math inline">\(\alpha\)</span>) for those particular coefficients
+or combinations of coefficients. This is achieved by constraining the
+coefficients to zero.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># latent variables </span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    ind60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">6</span><span class="sc">*</span>x1 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x2 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x3</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    dem60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y1 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y2 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y3 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y4</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    dem65 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y5 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y6 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y7 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y8</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="co"># regressions</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    dem60 <span class="sc">~</span> .<span class="dv">3</span><span class="sc">*</span>a<span class="sc">*</span>ind60</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    dem65 <span class="sc">~</span>  .<span class="dv">4</span><span class="sc">*</span>b<span class="sc">*</span>ind60 <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>c<span class="sc">*</span>dem60</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="co"># residual correlations</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    y1 <span class="sc">~</span><span class="er">~</span> .<span class="dv">1</span><span class="sc">*</span>y5</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="co"># tests</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    a <span class="sc">==</span> <span class="dv">0</span></span></code></pre></div>
+<p>In this case, we are requesting the power parameter associated with
+the coefficient <span class="math inline">\(a*ind60 = 0.3\)</span>. The
+module will compute the required parameters to obtain a statistically
+significant test by comparing two models: one where the coefficient of
+<code>ind60</code> is freely estimated and another where the coefficient
+of <code>ind60</code> is constrained to <span
+class="math inline">\(0\)</span>. In the module, this model looks like
+this:</p>
+<p><img src="pics/sem/input.1.1.png" width="579" /></p>
+<p>After checking the usual input values (Type I error, required power,
+etc)</p>
+<p><img src="pics/sem/input.1.2.png" width="564" /></p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p><img src="pics/sem/input.1.1.png" width="579" /></p>
+<p>The main table reports the required N to achieve a statistically
+significant result when testing the <code>ind60</code> coefficient.
+Additionally, we are provided with the path diagram to verify whether
+the model aligns with our expectations. Admittedly, the path diagram may
+appear a bit cluttered at times, but its purpose is solely to confirm
+the model’s structure, not to look aesthetically pleasing.</p>
+<p><img src="pics/sem/input.1.2.png" width="564" /></p>
+</div>
+<div id="options" class="section level1">
+<h1>Options</h1>
+<div id="main-panel" class="section level2">
+<h2><span class="panel"> <i class="fa fa-chevron-down"></i> |
+Main</span> panel</h2>
+<p><span class="option"> <b>Parameters </b></span></p>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Minimal desired power</span>
+</td>
+<td>
+Minimal desired power
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">FALSE</span>
+</td>
+<td>
+Sample size
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Alpha (Type I rate)</span>
+</td>
+<td>
+Type I error rate (significance cut-off or alpha)
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Tails</span>
+</td>
+<td>
+Two-tailed vs one-tailed test
+</td>
+</tr>
+</table>
+<p><span class="option"> <b>Model Method &amp; Options </b></span></p>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Estimator</span>
+</td>
+<td>
+Estimator method used in SEM. <code>ML</code> for Maximum Likelihood
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Standardize (observed)</span>
+</td>
+<td>
+Assume the observed variables are standardized (selected) or not
+(unselected)
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Method</span>
+</td>
+<td>
+Use <code>Analytic</code> methods for computation of power parameter or
+<code>Monte Carlo</code>
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Explanatory text</span>
+</td>
+<td>
+Output some explanatory text of the results
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Path diagram</span>
+</td>
+<td>
+Output the path diagram corresponding to the input model
+</td>
+</tr>
+</table>
+</div>
+<div id="sensitivity-analysis-panel" class="section level2">
+<h2><span class="panel"> <i class="fa fa-chevron-down"></i> |
+Sensitivity Analysis</span> panel</h2>
+<p>Sensitivity analysis, which explores different plots of possible
+parameter combinations, can be conducted as in any other <span
+class="modulename">PAMLj</span> sub-module. Please visit the
+<a href="./sensitivity.html">Sensitivity analysis</a> page for more
+details. For the SEM sub-module, sensitivity analysis is available only
+for varying N values. When the Monte Carlo method is selected,
+sensitivity analysis is performed using the analytic method; otherwise,
+the computation time would be extremely long.</p>
+</div>
+<div id="power-parameters-plot-panel" class="section level2">
+<h2><span class="panel"> <i class="fa fa-chevron-down"></i> | Power
+Parameters plot</span> panel</h2>
+</div>
+<div id="options-panel" class="section level2">
+<h2><span class="panel"> <i class="fa fa-chevron-down"></i> |
+Options</span> panel</h2>
+<p><span class="option"> <b>Monte Carlo </b></span></p>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Parallel computation</span>
+</td>
+<td>
+Should parallel computing be used for the Monte Carlo method
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Use a seed</span>
+</td>
+<td>
+Should we use a seed for the Monte Carlo method
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Number of simulations</span>
+</td>
+<td>
+Number of repetitions for Monte Carlo method
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Seed</span>
+</td>
+<td>
+What seed should we use for Monte Carlo method. Default is Life, the
+Universe and Everything
+</td>
+</tr>
+</table>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+</div>
+</div>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

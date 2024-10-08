@@ -1,0 +1,143 @@
+---
+title: "SEM"
+author: Marcello Gallucci 
+topic: sem
+category: help
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+
+```
+
+`r version("0.6.0")`
+
+`r pic("pics/sem/ui.png")`
+
+
+`SEM power analysis` enables the computation of power parameters (such as required N and power) for a wide range of structural equation models. It can be used to estimate power parameters based on both chi-square constraints and `Monte Carlo` methods.
+
+The module allows users to specify the prospective model using the syntax of the [lavaan R package](https://lavaan.ugent.be/), with some modifications necessary to input the expected parameters. The results are partially obtained using the [semPower R package](https://CRAN.R-project.org/package=semPower), though several solutions are also implemented natively within the module.
+
+:::{ .adm .adm-note}
+Important
+
+The capabilities (so far) of the module is to obtain power parameters associated with tests of single coefficients, or combinations of coefficients.
+
+:::
+
+# Input
+
+The crucial aspect of the module usage is to input the expected model. One can start from a lavaan syntax model, such as 
+
+```{r eval=FALSE}
+
+# latent variables 
+   ind60 =~ x1 + x2 + x3 
+   dem60 =~ y1 + y2 + y3 + y4 
+   dem65 =~ y5 + y6 + y7 + y8 
+ # regressions
+   dem60 ~ ind60 
+   dem65 ~ ind60 + dem60 
+  # residual correlations
+   y1 ~~ y5    
+
+```
+
+
+To input the expected coefficients, one multiplies each variable for the associated coefficient
+
+```{r eval=FALSE}
+
+# latent variables 
+    ind60 =~ .6*x1 + .6*x2 + .6*x3
+    dem60 =~ .8*y1 + .8*y2 + .8*y3 + .8*y4
+    dem65 =~ .8*y5 + .8*y6 + .8*y7 + .8*y8
+  # regressions
+    dem60 ~ .3*a*ind60
+    dem65 ~  .4*b*ind60 + .2*c*dem60
+  # residual correlations
+    y1 ~~ .1*y5    
+
+```
+
+
+In this example, we specify that the latent variable `ind60` should have loadings equal to $0.6$, and both the latent variables `dem60` and `dem65` should have loadings equal to $0.9$. Additionally, the regression coefficients for the latent variables are set to $0.3$, $0.4$, and $0.2$, respectively. The scale of the coefficients should be chosen under the assumption that all observed variables are standardized.
+
+Another requirement is to specify labels for the parameters we wish to test. In this example, we have labeled the three latent variables as $a$, $b$, and $c$, respectively. This allows us to impose constraints on them and compute the required sample size (or power) to obtain a significant test (given a specified $\alpha$) for those particular coefficients or combinations of coefficients. This is achieved by constraining the coefficients to zero.
+
+```{r eval=FALSE}
+
+# latent variables 
+    ind60 =~ .6*x1 + .6*x2 + .6*x3
+    dem60 =~ .8*y1 + .8*y2 + .8*y3 + .8*y4
+    dem65 =~ .8*y5 + .8*y6 + .8*y7 + .8*y8
+  # regressions
+    dem60 ~ .3*a*ind60
+    dem65 ~  .4*b*ind60 + .2*c*dem60
+  # residual correlations
+    y1 ~~ .1*y5
+  # tests
+    a == 0
+    
+```
+
+
+In this case, we are requesting the power parameter associated with the coefficient $a*ind60 = 0.3$. The module will compute the required parameters to obtain a statistically significant test by comparing two models: one where the coefficient of `ind60` is freely estimated and another where the coefficient of `ind60` is constrained to $0$. In the module, this model looks like this:
+
+`r pic("pics/sem/input.1.1.png")`
+
+After checking the usual input values (Type I error, required power, etc)
+
+`r pic("pics/sem/input.1.2.png")`
+
+# Results
+
+`r pic("pics/sem/input.1.1.png")`
+
+
+The main table reports the required N to achieve a statistically significant result when testing the `ind60` coefficient. Additionally, we are provided with the path diagram to verify whether the model aligns with our expectations. Admittedly, the path diagram may appear a bit cluttered at times, but its purpose is solely to confirm the model's structure, not to look aesthetically pleasing.
+
+
+`r pic("pics/sem/input.1.2.png")`
+
+# Options
+
+## `r opt_panel("Main")`
+
+`r opt_label("Parameters")`
+
+`r panel_options('pamlsem','power_parameters')`
+
+`r opt_label("Model Method & Options")`
+
+`r panel_options('pamlsem','model_options')`
+
+## `r opt_panel("Sensitivity Analysis")`
+
+Sensitivity analysis, which explores different plots of possible parameter combinations, can be conducted as in any other `r modulename()` sub-module. Please visit the `r link_pages(nickname="sensitivity")` page for more details. For the SEM sub-module, sensitivity analysis is available only for varying N values. When the Monte Carlo method is selected, sensitivity analysis is performed using the analytic method; otherwise, the computation time would be extremely long.
+
+
+
+## `r opt_panel("Power Parameters plot")`
+
+## `r opt_panel("Options")`
+
+`r opt_label("Monte Carlo")`
+
+`r panel_options('pamlsem','label_montecarlo')`
+
+
+
+
+`r backto()`
+
+`r issues()`

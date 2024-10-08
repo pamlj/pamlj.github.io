@@ -149,3 +149,8 @@ span.little {
   font-size: 15px;
 }
 
+td.optionvalue {
+    
+    text-align: left;
+    
+}
