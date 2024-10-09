@@ -1,0 +1,23 @@
+---
+title: "powerplot_chunk"
+output: html_document
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+root<-paste0(PROJECT_FOLDER,"/",SOURCE_FOLDER,"/")
+```
+
+
+Another way to conduct sensitivity analysis in `r modulename()`, is to plot combinations of different parameters, choosing which parameters go in the Y-axis and the X-axis. 
+
+`r pic("pics/common/powerplot.input.1.png")`
+
+The advantage of `Power Parameters plot` over the other plots produced by sensitivity analysis is that the user can choose the range of values used for the X-axis (the `From` and `To` field), and can break down the plot for different values of a third parameter `r opt_label("Plot Different Curves by")`.
+
+`r pic("pics/common/powerplot.output.1.png")`
+
+In particular:
+`r  panel_options('pamlcorr','panel_customplot')`

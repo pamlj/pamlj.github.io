@@ -126,8 +126,12 @@ The main table reports the required N to achieve a statistically significant res
 Sensitivity analysis, which explores different plots of possible parameter combinations, can be conducted as in any other `r modulename()` sub-module. Please visit the `r link_pages(nickname="sensitivity")` page for more details. For the SEM sub-module, sensitivity analysis is available only for varying N values. When the Monte Carlo method is selected, sensitivity analysis is performed using the analytic method; otherwise, the computation time would be extremely long.
 
 
-
 ## `r opt_panel("Power Parameters plot")`
+
+```{r child_sensitivity_link, child='commons/powerplot_chunk.Rmd'}
+```
+
+
 
 ## `r opt_panel("Options")`
 

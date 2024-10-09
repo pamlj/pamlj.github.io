@@ -481,6 +481,14 @@ Use <code>Analytic</code> methods for computation of power parameter or
 </tr>
 <tr>
 <td class="optionname">
+<span class="option">Test</span>
+</td>
+<td class="optionvalue">
+Which test is used in Monte Carlo simulations: LRT or the Score test.
+</td>
+</tr>
+<tr>
+<td class="optionname">
 <span class="option">Explanatory text</span>
 </td>
 <td class="optionvalue">
@@ -512,6 +520,91 @@ the computation time would be extremely long.</p>
 <div id="power-parameters-plot-panel" class="section level2">
 <h2><span class="panel"> <i class="fa fa-chevron-down"></i> | Power
 Parameters plot</span> panel</h2>
+<p>Another way to conduct sensitivity analysis in <span
+class="modulename">PAMLj</span>, is to plot combinations of different
+parameters, choosing which parameters go in the Y-axis and the
+X-axis.</p>
+<p><img src="pics/common/powerplot.input.1.png" /><!-- --></p>
+<p>The advantage of <code>Power Parameters plot</code> over the other
+plots produced by sensitivity analysis is that the user can choose the
+range of values used for the X-axis (the <code>From</code> and
+<code>To</code> field), and can break down the plot for different values
+of a third parameter <span class="option"> <b>Plot Different Curves by
+</b></span>.</p>
+<p><img src="pics/common/powerplot.output.1.png" /><!-- --></p>
+In particular:
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Y-axis values</span>
+</td>
+<td class="optionvalue">
+Parameter in the Y-axis of custom power parameters plot. <code>N</code>,
+<code>Power</code> or <code>Effect Size</code>.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Show values</span>
+</td>
+<td class="optionvalue">
+Add value labels to the custom power parameters plot.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Show table</span>
+</td>
+<td class="optionvalue">
+Produce a table of the values plotted in custom power parameters plot
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">X-axis values</span>
+</td>
+<td class="optionvalue">
+Parameter in the X-axis of custom power parameters plot. <code>N</code>,
+<code>Power</code> or <code>Effect Size</code>.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">From</span>
+</td>
+<td class="optionvalue">
+Range for the parameter in the X-axis of custom power parameters plot.
+Starting value.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">To</span>
+</td>
+<td class="optionvalue">
+Range for the parameter in the X-axis of custom power parameters plot.
+Ending value.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Parameter</span>
+</td>
+<td class="optionvalue">
+break down the custom power parameters plot by a parameter.
+<code>N</code>, <code>Power</code>, <code>Type I error</code>
+(sig.level) or <code>Effect size</code>.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Number of curves</span>
+</td>
+<td class="optionvalue">
+Number of lines to plot
+</td>
+</tr>
+</table>
 </div>
 <div id="options-panel" class="section level2">
 <h2><span class="panel"> <i class="fa fa-chevron-down"></i> |

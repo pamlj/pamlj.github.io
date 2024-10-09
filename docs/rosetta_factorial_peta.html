@@ -631,14 +631,10 @@ al., we assume 60 participants, so the power estimates do not ceil up to
 <span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
 <span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
-<pre><code>##                   power partial_eta_squared cohen_f
-## Treatment      15.90956             0.01598 0.12742
-## TIME           67.91487             0.04717 0.22249
-## Treatment:TIME 37.65318             0.02418 0.15742
-##                non_centrality
-## Treatment             0.94169
-## TIME                  8.61356
-## Treatment:TIME        4.31189</code></pre>
+<pre><code>##                   power partial_eta_squared cohen_f non_centrality
+## Treatment      15.90956             0.01598 0.12742        0.94169
+## TIME           67.91487             0.04717 0.22249        8.61356
+## Treatment:TIME 37.65318             0.02418 0.15742        4.31189</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>exact_result<span class="sc">$</span>aov_result</span></code></pre></div>
 <pre><code>## Anova Table (Type 3 tests)
 ## 

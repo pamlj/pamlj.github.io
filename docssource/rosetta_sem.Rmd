@@ -1,0 +1,106 @@
+---
+title: "SEM"
+topic: sem
+category: rosetta
+nickname: ros_sem
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+
+:::{ .version }
+0.6.0
+:::
+
+
+Here we compare the results of `r modulename()` with other software that performs power analysis for SEM.  At the moment, the only R package that explicitly deals with SEM power analysis is the [semPower](https://CRAN.R-project.org/package=semPower), so we are going to compare results with it. The example are taken from @moshagen2024sempower, by the authors of `semPower`.
+
+
+# Factor Analysis
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   power            = .80
+*   Alpha            = .05
+*   Latent           = 2 factors
+*   Observed         = 3 variables for each factor
+*   Loadings         = all .5
+
+:::
+
+`r pic("rosetta/pics/sem/graph.1.png")`
+
+in `semPower` one can obtain the required N by issue the following command.
+
+```{r results='hide',message=FALSE}
+library(semPower)
+```
+```{r}
+model1<-semPower.powerCFA(type="a-priori", alpha=.05,power=.80,comparison="restricted",
+                          loadings=list(
+                              c(.5,.5,.5),
+                              c(.5,.5,.5)
+                          ),
+                          Phi=.2,
+                          nullEffect= 'cor = 0',
+                          plotShow=FALSE
+                          )
+
+summary(model1)
+
+```
+
+The same results can be obtained in `r modulename()`. In the module, we need to specify the model we have in mind, and which parameter is to be tested, that is constrained to zero.
+
+`r pic("rosetta/pics/sem/input.1.1.png")`
+
+Setting the power parameters as intended
+
+`r pic("rosetta/pics/sem/input.1.2.png")`
+
+we obtain the same results as before.
+
+`r pic("rosetta/pics/sem/output.1.png")`
+
+We can check now that both packages reaches the same conclusion also if we set $N=783$ and ask for the expected `power`.
+
+```{r}
+model1<-semPower.powerCFA(type="post-hoc", alpha=.05,N=783,comparison="restricted",
+                          loadings=list(
+                              c(.5,.5,.5),
+                              c(.5,.5,.5)
+                          ),
+                          Phi=.2,
+                          nullEffect= 'cor = 0',
+                          plotShow=FALSE
+                          )
+
+summary(model1)
+
+```
+
+`r pic("rosetta/pics/sem/input.2.1.png")`
+
+`r pic("rosetta/pics/sem/input.2.2.png")`
+
+`r pic("rosetta/pics/sem/output.2.1.png")`
+
+`r pic("rosetta/pics/sem/output.2.2.png")`
+
+It is useful to verify also the sensitivity analysis table `r tab("Power by Sample size")`
+
+`r backto("rosetta")`
+
+`r issues()`
+
+# References
