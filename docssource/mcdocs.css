@@ -152,3 +152,7 @@ span.little {
 td.optionvalue {
     text-align: left;
 }
+
+span.jamovi a:hover {
+    background-image: linear-gradient(180deg,#55d64a,#c5d64a) !important;
+}

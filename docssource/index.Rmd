@@ -56,7 +56,7 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 
 # Install in jamovi
 
-Please install [jamovi](https://www.jamovi.org/download.html) and run it. Select the jamovi modules library and install PAMLj from there
+Please install `r jamovi` and run it. Select the jamovi modules library and install PAMLj from there
 
 
 ## From GitHub
@@ -72,7 +72,7 @@ devtools::install_github("pamlj/pamlj")
 ## From source
 
 
-You will first need to download [jamovi](https://www.jamovi.org/download.html). 
+You will first need to download `r jamovi`. 
 
 You can clone this repository and compile the module within R with 
 

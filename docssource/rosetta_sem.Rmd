@@ -7,6 +7,8 @@ bibliography:
      - bib.bib
 link-citations: true
         
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -32,13 +34,13 @@ Setup
 *   Aim = N
 *   power            = .80
 *   Alpha            = .05
-*   Latent           = 2 factors
-*   Observed         = 3 variables for each factor
+*   Latent           =  2 factors
+*   Observed         =  variables for each factor
 *   Loadings         = all .5
 
 :::
 
-`r pic("rosetta/pics/sem/graph.1.png")`
+`r pic("rosetta/pics/sem/diag.1.png")`
 
 in `semPower` one can obtain the required N by issue the following command.
 
@@ -75,7 +77,7 @@ we obtain the same results as before.
 We can check now that both packages reaches the same conclusion also if we set $N=783$ and ask for the expected `power`.
 
 ```{r}
-model1<-semPower.powerCFA(type="post-hoc", alpha=.05,N=783,comparison="restricted",
+model2<-semPower.powerCFA(type="post-hoc", alpha=.05,N=783,comparison="restricted",
                           loadings=list(
                               c(.5,.5,.5),
                               c(.5,.5,.5)
@@ -85,7 +87,7 @@ model1<-semPower.powerCFA(type="post-hoc", alpha=.05,N=783,comparison="restricte
                           plotShow=FALSE
                           )
 
-summary(model1)
+summary(model2)
 
 ```
 
@@ -97,7 +99,125 @@ summary(model1)
 
 `r pic("rosetta/pics/sem/output.2.2.png")`
 
-It is useful to verify also the sensitivity analysis table `r tab("Power by Sample size")`
+It is useful to verify also the sensitivity analysis table `r tab("Power by Sample size")`. We can see that it says that for $N<383$, we should expect a power less than $.50$. We can verify this with `semPower`.
+
+```{r}
+model3<-semPower.powerCFA(type="post-hoc", alpha=.05,N=383,comparison="restricted",
+                          loadings=list(
+                              c(.5,.5,.5),
+                              c(.5,.5,.5)
+                          ),
+                          Phi=.2,
+                          nullEffect= 'cor = 0',
+                          plotShow=FALSE
+                          )
+
+summary(model3)
+
+```
+
+coherently, we obtain a power of $0.499817$.
+
+# Latent variables regression
+
+Let's now consider a popular model with three latent variables, one common cause of the other two, each measured with some indicators. We consider the `PoliticalDemocracy` example in (lavaan webpage)[https://lavaan.ugent.be/]. 
+
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   power            = .90
+*   Alpha            = .05
+*   Latent           =  3 factors: `ind60` `dem06` and `dem65`
+*   Observed         =  3 for `ind60`, 4 for `dem06` and 4 for `dem65`
+*   Loadings         =  .6 for `ind60`, .8 for `dem06` and .8 for `dem65`
+*   $\beta$          :
+
+$dem60=.3*ind60$
+
+$dem65=.3*ind60+.2*dem60$
+
+:::
+
+The model looks like this:
+
+`r pic("rosetta/pics/sem/diag.2.png")`
+
+we want to test that at least one effect on `dem65` is significant, and obtain the required N to achieve that. This means that we need to constrain both $dem65=.3*ind60$ and $dem65=.2*dem60$ to zero. In `r modulename()` we set the model like this.
+
+`r pic("rosetta/pics/sem/input.3.1.png")`
+
+and we obtain
+
+`r pic("rosetta/pics/sem/output.3.png")`
+
+In `semPower` we can obtain the required power parameters as follows:
+
+
+```{r}
+
+popModel<-'
+
+   ind60 =~ .6*x1 + .6*x2 + .6*x3
+    dem60 =~ .8*y1 + .8*y2 + .8*y3 + .8*y4
+    dem65 =~ .8*y5 + .8*y6 + .8*y7 + .8*y8
+  # regressions
+    dem60 ~ .3*ind60
+    dem65 ~  .3*ind60 + .2*dem60
+  # residual correlations
+    y1 ~~ .1*y5
+'
+
+h1Model<-'
+
+   ind60 =~  x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~  a*ind60
+    dem65 ~   b*ind60 + c*dem60
+  # residual correlations
+    y1 ~~ y5
+'
+
+h0Model<-'
+
+   ind60 =~  x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~  a*ind60
+    dem65 ~  b*ind60 + c*dem60
+  # residual correlations
+    y1 ~~ y5
+    b==0
+    c==0
+'
+model4<-semPower.powerLav("a-priori",modelPop=popModel,
+                          modelH0=h0Model, 
+                          modelH1=h1Model, 
+                          power=.90,alpha=.05,
+                          plotShow=FALSE)
+
+summary(model4)
+#lmod<-lavaan::sem(popModel)
+#lavaan::lavInspect(lmod,"cov.lv")
+#lavaan::lavInspect(lmod,"cor.lv")
+
+#lavaan::lavInspect(lmod,"std")
+
+
+```
+
+This is a remarkable difference!!! $N=103$ rather than $N=172$ us clearly a substantial difference, not an approximation error. The conundrum is easily solved. `r modulename()` assumes completely standardized variables, both observed and latent ones, whereas `semPower` does not. So, in  `semPower` is the user's responsibility to be sure that the scales of the variables are correct. As a proof,  0 `r modulename()` we can deselect `r opt("Standardized solution")` and we get exactly the results we got in in `semPower`.
+
+
+`r pic("rosetta/pics/sem/input.4.png")`
+
+`r pic("rosetta/pics/sem/output.4.png")`
+
+
 
 `r backto("rosetta")`
 

@@ -273,6 +273,9 @@
       <ul>
       <li><a href="#factor-analysis" id="toc-factor-analysis">Factor
       Analysis</a></li>
+      <li><a href="#latent-variables-regression"
+      id="toc-latent-variables-regression">Latent variables
+      regression</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
@@ -307,11 +310,11 @@ href="#ref-moshagen2024sempower">2024</a>)</span>, by the authors of
 <li>power = .80</li>
 <li>Alpha = .05</li>
 <li>Latent = 2 factors</li>
-<li>Observed = 3 variables for each factor</li>
+<li>Observed = variables for each factor</li>
 <li>Loadings = all .5</li>
 </ul>
 </div>
-<p><img src="rosetta/pics/sem/graph.1.png" width="562" /></p>
+<p><img src="rosetta/pics/sem/diag.1.png" width="562" /></p>
 <p>in <code>semPower</code> one can obtain the required N by issue the
 following command.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(semPower)</span></code></pre></div>
@@ -354,7 +357,7 @@ constrained to zero.</p>
 <p>We can check now that both packages reaches the same conclusion also
 if we set <span class="math inline">\(N=783\)</span> and ask for the
 expected <code>power</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>model1<span class="ot">&lt;-</span><span class="fu">semPower.powerCFA</span>(<span class="at">type=</span><span class="st">&quot;post-hoc&quot;</span>, <span class="at">alpha=</span>.<span class="dv">05</span>,<span class="at">N=</span><span class="dv">783</span>,<span class="at">comparison=</span><span class="st">&quot;restricted&quot;</span>,</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>model2<span class="ot">&lt;-</span><span class="fu">semPower.powerCFA</span>(<span class="at">type=</span><span class="st">&quot;post-hoc&quot;</span>, <span class="at">alpha=</span>.<span class="dv">05</span>,<span class="at">N=</span><span class="dv">783</span>,<span class="at">comparison=</span><span class="st">&quot;restricted&quot;</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                          <span class="at">loadings=</span><span class="fu">list</span>(</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                              <span class="fu">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">5</span>),</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                              <span class="fu">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">5</span>)</span>
@@ -364,7 +367,7 @@ expected <code>power</code>.</p>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>                          <span class="at">plotShow=</span><span class="cn">FALSE</span></span>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>                          )</span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code></pre></div>
 <pre><code>## 
 ##  semPower: Post hoc power analysis
 ##                                   
@@ -390,7 +393,159 @@ expected <code>power</code>.</p>
 <p><img src="rosetta/pics/sem/output.2.1.png" width="548" /></p>
 <p><img src="rosetta/pics/sem/output.2.2.png" width="380" /></p>
 <p>It is useful to verify also the sensitivity analysis table <span
-class="tablename">Power by Sample size</span></p>
+class="tablename">Power by Sample size</span>. We can see that it says
+that for <span class="math inline">\(N&lt;383\)</span>, we should expect
+a power less than <span class="math inline">\(.50\)</span>. We can
+verify this with <code>semPower</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>model3<span class="ot">&lt;-</span><span class="fu">semPower.powerCFA</span>(<span class="at">type=</span><span class="st">&quot;post-hoc&quot;</span>, <span class="at">alpha=</span>.<span class="dv">05</span>,<span class="at">N=</span><span class="dv">383</span>,<span class="at">comparison=</span><span class="st">&quot;restricted&quot;</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                          <span class="at">loadings=</span><span class="fu">list</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                              <span class="fu">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">5</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                              <span class="fu">c</span>(.<span class="dv">5</span>,.<span class="dv">5</span>,.<span class="dv">5</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>                          ),</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>                          <span class="at">Phi=</span>.<span class="dv">2</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>                          <span class="at">nullEffect=</span> <span class="st">&#39;cor = 0&#39;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>                          <span class="at">plotShow=</span><span class="cn">FALSE</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>                          )</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code></pre></div>
+<pre><code>## 
+##  semPower: Post hoc power analysis
+##                                   
+##  F0                       0.010050
+##  RMSEA                    0.100251
+##  SRMR                     0.032733
+##  Mc                       0.994987
+##  GFI                      0.996661
+##  AGFI                     0.929883
+##  CFI                      0.971272
+##                                   
+##  df                       1       
+##  Num Observations         383     
+##  NCP                      3.839228
+##                                   
+##  Critical Chi-Square      3.841459
+##  Alpha                    0.050000
+##  Beta                     0.500183
+##  Power (1 - Beta)         0.499817
+##  Implied Alpha/Beta Ratio 0.099963</code></pre>
+<p>coherently, we obtain a power of <span
+class="math inline">\(0.499817\)</span>.</p>
+</div>
+<div id="latent-variables-regression" class="section level1">
+<h1>Latent variables regression</h1>
+<p>Let’s now consider a popular model with three latent variables, one
+common cause of the other two, each measured with some indicators. We
+consider the <code>PoliticalDemocracy</code> example in (lavaan
+webpage)[<a href="https://lavaan.ugent.be/"
+class="uri">https://lavaan.ugent.be/</a>].</p>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = N</li>
+<li>power = .90</li>
+<li>Alpha = .05</li>
+<li>Latent = 3 factors: <code>ind60</code> <code>dem06</code> and
+<code>dem65</code></li>
+<li>Observed = 3 for <code>ind60</code>, 4 for <code>dem06</code> and 4
+for <code>dem65</code></li>
+<li>Loadings = .6 for <code>ind60</code>, .8 for <code>dem06</code> and
+.8 for <code>dem65</code></li>
+<li><span class="math inline">\(\beta\)</span> :</li>
+</ul>
+<p><span class="math inline">\(dem60=.3*ind60\)</span></p>
+<p><span class="math inline">\(dem65=.3*ind60+.2*dem60\)</span></p>
+</div>
+<p>The model looks like this:</p>
+<p><img src="rosetta/pics/sem/diag.2.png" width="473" /></p>
+<p>we want to test that at least one effect on <code>dem65</code> is
+significant, and obtain the required N to achieve that. This means that
+we need to constrain both <span
+class="math inline">\(dem65=.3*ind60\)</span> and <span
+class="math inline">\(dem65=.2*dem60\)</span> to zero. In <span
+class="modulename">PAMLj</span> we set the model like this.</p>
+<p><img src="rosetta/pics/sem/input.3.1.png" width="580" /></p>
+<p>and we obtain</p>
+<p><img src="rosetta/pics/sem/output.3.png" width="565" /></p>
+<p>In <code>semPower</code> we can obtain the required power parameters
+as follows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>popModel<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="st">   ind60 =~ .6*x1 + .6*x2 + .6*x3</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="st">    dem60 =~ .8*y1 + .8*y2 + .8*y3 + .8*y4</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="st">    dem65 =~ .8*y5 + .8*y6 + .8*y7 + .8*y8</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="st">  # regressions</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="st">    dem60 ~ .3*ind60</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="st">    dem65 ~  .3*ind60 + .2*dem60</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="st">  # residual correlations</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="st">    y1 ~~ .1*y5</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>h1Model<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="st">   ind60 =~  x1 + x2 + x3</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="st">    dem60 =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="st">    dem65 =~ y5 + y6 + y7 + y8</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="st">  # regressions</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="st">    dem60 ~  a*ind60</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="st">    dem65 ~   b*ind60 + c*dem60</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="st">  # residual correlations</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="st">    y1 ~~ y5</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>h0Model<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="st">   ind60 =~  x1 + x2 + x3</span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="st">    dem60 =~ y1 + y2 + y3 + y4</span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="st">    dem65 =~ y5 + y6 + y7 + y8</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a><span class="st">  # regressions</span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="st">    dem60 ~  a*ind60</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="st">    dem65 ~  b*ind60 + c*dem60</span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="st">  # residual correlations</span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a><span class="st">    y1 ~~ y5</span></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a><span class="st">    b==0</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="st">    c==0</span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>model4<span class="ot">&lt;-</span><span class="fu">semPower.powerLav</span>(<span class="st">&quot;a-priori&quot;</span>,<span class="at">modelPop=</span>popModel,</span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a>                          <span class="at">modelH0=</span>h0Model, </span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a>                          <span class="at">modelH1=</span>h1Model, </span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a>                          <span class="at">power=</span>.<span class="dv">90</span>,<span class="at">alpha=</span>.<span class="dv">05</span>,</span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a>                          <span class="at">plotShow=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="fu">summary</span>(model4)</span></code></pre></div>
+<pre><code>## 
+##  semPower: A priori power analysis
+##                                    
+##  F0                        0.074172
+##  RMSEA                     0.192578
+##  Mc                        0.963593
+##                                    
+##  df                        2       
+##  Required Num Observations 172     
+##                                    
+##  Critical Chi-Square       5.991465
+##  NCP                       12.68348
+##  Alpha                     0.050000
+##  Beta                      0.099293
+##  Power (1 - Beta)          0.900707
+##  Implied Alpha/Beta Ratio  0.503561</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#lmod&lt;-lavaan::sem(popModel)</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#lavaan::lavInspect(lmod,&quot;cov.lv&quot;)</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#lavaan::lavInspect(lmod,&quot;cor.lv&quot;)</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#lavaan::lavInspect(lmod,&quot;std&quot;)</span></span></code></pre></div>
+<p>This is a remarkable difference!!! <span
+class="math inline">\(N=103\)</span> rather than <span
+class="math inline">\(N=172\)</span> us clearly a substantial
+difference, not an approximation error. The conundrum is easily solved.
+<span class="modulename">PAMLj</span> assumes completely standardized
+variables, both observed and latent ones, whereas <code>semPower</code>
+does not. So, in <code>semPower</code> is the user’s responsibility to
+be sure that the scales of the variables are correct. As a proof, 0
+<span class="modulename">PAMLj</span> we can deselect <span
+class="option">Standardized solution</span> and we get exactly the
+results we got in in <code>semPower</code>.</p>
+<p><img src="rosetta/pics/sem/input.4.png" width="544" /></p>
+<p><img src="rosetta/pics/sem/output.4.png" width="599" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
