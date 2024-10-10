@@ -210,14 +210,28 @@ summary(model4)
 
 ```
 
-This is a remarkable difference!!! $N=103$ rather than $N=172$ us clearly a substantial difference, not an approximation error. The conundrum is easily solved. `r modulename()` assumes completely standardized variables, both observed and latent ones, whereas `semPower` does not. So, in  `semPower` is the user's responsibility to be sure that the scales of the variables are correct. As a proof,  0 `r modulename()` we can deselect `r opt("Standardized solution")` and we get exactly the results we got in in `semPower`.
+This is a remarkable difference! $N=103$ rather than $N=172$ is clearly a substantial difference, not just an approximation error. The conundrum is easily explained: `r modulename()` assumes that all variables, both observed and latent, are completely standardized, while `semPower` does not. Therefore, in `semPower`, it is the user's responsibility to ensure that the scales of the variables are correct. 
 
+As proof, in `r modulename()`, we can deselect the option `r opt("Standardized solution")`, and we will get exactly the same results as we did in `semPower`.
 
 `r pic("rosetta/pics/sem/input.4.png")`
 
 `r pic("rosetta/pics/sem/output.4.png")`
 
+However, if the user's intention is to insert standardized coefficients, the `r opt("standardized")` option must be selected. Otherwise, the implied coefficients will differ from the expected ones. To verify this, while keeping the model non-standardized, we can check the `r opt("Implied Latent Covariances")` and `r opt("Standardized regression")` coefficients in the `r opt_panel("Options")` "
 
+`r pic("rosetta/pics/sem/input.5.1.png")`
+
+`r pic("rosetta/pics/sem/output.5.1.png")`
+
+The first table lists the variance-covariance matrix of the latent variables. From the diagonal (variances), it is clear that the latent variables are not standardized. As a result, the `Standardized regression coefficients` are not the ones we input but a smaller version (in this case). For example, the coefficient from `ind60` to `dem65` is $.280$, even though we input $.30$. These are the actual coefficients implied by the unstandardized model and are the ones used to compute power. This explains why the unstandardized model requires a larger $N$.
+
+If we standardize the model (with the `r opt("Standardized solution")` option selected), the covariances appear correctly standardized, and the regression coefficients are the ones we intended to use.
+
+
+`r pic("rosetta/pics/sem/input.5.1.png")`
+
+`r pic("rosetta/pics/sem/output.5.2.png")`
 
 `r backto("rosetta")`
 

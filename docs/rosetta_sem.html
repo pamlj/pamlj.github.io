@@ -533,19 +533,48 @@ as follows:</p>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#lavaan::lavInspect(lmod,&quot;cor.lv&quot;)</span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#lavaan::lavInspect(lmod,&quot;std&quot;)</span></span></code></pre></div>
-<p>This is a remarkable difference!!! <span
+<p>This is a remarkable difference! <span
 class="math inline">\(N=103\)</span> rather than <span
-class="math inline">\(N=172\)</span> us clearly a substantial
-difference, not an approximation error. The conundrum is easily solved.
-<span class="modulename">PAMLj</span> assumes completely standardized
-variables, both observed and latent ones, whereas <code>semPower</code>
-does not. So, in <code>semPower</code> is the user’s responsibility to
-be sure that the scales of the variables are correct. As a proof, 0
-<span class="modulename">PAMLj</span> we can deselect <span
-class="option">Standardized solution</span> and we get exactly the
-results we got in in <code>semPower</code>.</p>
+class="math inline">\(N=172\)</span> is clearly a substantial
+difference, not just an approximation error. The conundrum is easily
+explained: <span class="modulename">PAMLj</span> assumes that all
+variables, both observed and latent, are completely standardized, while
+<code>semPower</code> does not. Therefore, in <code>semPower</code>, it
+is the user’s responsibility to ensure that the scales of the variables
+are correct.</p>
+<p>As proof, in <span class="modulename">PAMLj</span>, we can deselect
+the option <span class="option">Standardized solution</span>, and we
+will get exactly the same results as we did in
+<code>semPower</code>.</p>
 <p><img src="rosetta/pics/sem/input.4.png" width="544" /></p>
 <p><img src="rosetta/pics/sem/output.4.png" width="599" /></p>
+<p>However, if the user’s intention is to insert standardized
+coefficients, the <span class="option">standardized</span> option must
+be selected. Otherwise, the implied coefficients will differ from the
+expected ones. To verify this, while keeping the model non-standardized,
+we can check the <span class="option">Implied Latent Covariances</span>
+and <span class="option">Standardized regression</span> coefficients in
+the <span class="panel"> <i class="fa fa-chevron-down"></i> |
+Options</span> panel ”</p>
+<p><img src="rosetta/pics/sem/input.5.1.png" width="554" /></p>
+<p><img src="rosetta/pics/sem/output.5.1.png" width="378" /></p>
+<p>The first table lists the variance-covariance matrix of the latent
+variables. From the diagonal (variances), it is clear that the latent
+variables are not standardized. As a result, the
+<code>Standardized regression coefficients</code> are not the ones we
+input but a smaller version (in this case). For example, the coefficient
+from <code>ind60</code> to <code>dem65</code> is <span
+class="math inline">\(.280\)</span>, even though we input <span
+class="math inline">\(.30\)</span>. These are the actual coefficients
+implied by the unstandardized model and are the ones used to compute
+power. This explains why the unstandardized model requires a larger
+<span class="math inline">\(N\)</span>.</p>
+<p>If we standardize the model (with the <span
+class="option">Standardized solution</span> option selected), the
+covariances appear correctly standardized, and the regression
+coefficients are the ones we intended to use.</p>
+<p><img src="rosetta/pics/sem/input.5.1.png" width="554" /></p>
+<p><img src="rosetta/pics/sem/output.5.2.png" width="327" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
