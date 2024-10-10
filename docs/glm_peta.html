@@ -221,6 +221,7 @@
       size.</a></li>
       <li><a href="#sensitivity-analysis"
       id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
+      <li><a href="#options" id="toc-options">Options</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -415,6 +416,82 @@ combinations of parameters, can be carried out like for any other <span
 class="modulename">PAMLj</span> sub-modules. Please visit
 <a href="/home/mcfanda/Skinner/Forge/jamovi/pamlj/pamlj.github.io/docssource//sensitivity.html">Sensitivity
 analysis</a> page for more details.</p>
+</div>
+<div id="options" class="section level1">
+<h1>Options</h1>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Use as effect size</span>
+</td>
+<td class="optionvalue">
+Which of the converted effect size indices should be used as partial
+eta-squared
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Non-centrality Parameter (NCP)</span>
+</td>
+<td class="optionvalue">
+What type of non-centrality parameter (NCP) should be used. The effect
+size is always transformed into a Cohen’s <code>f2</code>, that is
+multiplied by the N to which is estimated based on the degrees of
+freedom such that <code>N=df+edf+1</code>. <code>Model-based</code>
+defines <code>df</code> as the model degrees of freedom. This is the
+method used by <code>G*Power</code> software. <code>Liberal</code> uses
+the effect <code>df</code>. <code>Strict</code> uses only the error df
+(df=0).
+</td>
+</tr>
+</table>
+<h4>
+<span class="option"> <b>Convert effect size indices </b></span>
+</h4>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Observed Partial Eta-squared</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Observed residuals degrees of freedom</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Partial Epsilon-squared</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Partial Omega-squared</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">G*Power Partial Eta-squared</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Cohen’s f2</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+</table>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>

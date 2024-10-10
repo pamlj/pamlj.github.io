@@ -96,6 +96,10 @@ Please see `r link_pages(nickname="check_es")` for details.
 ```{r child_sensitivity_link, child='commons/sensitivity_chunk.Rmd'}
 ```
 
+# Options
+
+`r panel_options("pamlglm","panel_options", labels=T)`
+
 `r issues()`
 
 `r backto("glm")`

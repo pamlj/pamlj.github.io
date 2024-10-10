@@ -1,14 +1,13 @@
 ---
 title: "SEM power analysis"
-author: Marcello Gallucci 
+author: "Marcello Gallucci"
 topic: sem
-category: help
-bibliography: 
-     - bib.bib
-link-citations: true
-        
-editor_options: 
+output: pdf_document
+bibliography: bib.bib
+link-citations: yes
+editor_options:
   chunk_output_type: console
+category: help
 ---
 
 
@@ -135,10 +134,7 @@ Sensitivity analysis, which explores different plots of possible parameter combi
 
 ## `r opt_panel("Options")`
 
-`r opt_label("Monte Carlo")`
-
-`r panel_options('pamlsem','label_montecarlo')`
-
+`r panel_options('pamlsem','panel_options',labels=T)`
 
 
 
