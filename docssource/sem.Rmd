@@ -100,13 +100,69 @@ After checking the usual input values (Type I error, required power, etc)
 
 # Results
 
-`r pic("pics/sem/input.1.1.png")`
+`r pic("pics/sem/output.1.1.png")`
 
 
 The main table reports the required N to achieve a statistically significant result when testing the `ind60` coefficient. Additionally, we are provided with the path diagram to verify whether the model aligns with our expectations. Admittedly, the path diagram may appear a bit cluttered at times, but its purpose is solely to confirm the model's structure, not to look aesthetically pleasing.
 
+`r pic("pics/sem/output.1.2.png")`
 
-`r pic("pics/sem/input.1.2.png")`
+# Multiple tests
+
+It is often the case that a researcher needs to test more than one coefficient in the same model. In our example, for instance, we may want to test both $a$ and $b$, meaning that the power results will depend on both coefficient tests. However, when multiple hypotheses are involved, it is important to carefully distinguish between _omnibus tests_ and _conjunction tests_.
+
+An _omnibus test_ refers to a statistical test that encompasses more than one null hypothesis, yielding a significant result if **any** of the null hypotheses are rejected. In SEM terms, an omnibus test is significant if any of the coefficients are significantly different from zero. For example, in linear models, the omnibus test of $R^2$ becomes significant if the explained variance is significantly different from zero, regardless of whether this variance is explained by one, two, or more terms in the model.
+
+A _conjunction test_, on the other hand, refers to a statistical test that also encompasses multiple null hypotheses but yields a significant result only if **all** null hypotheses are rejected. In SEM terms, a conjunction test is significant only if all coefficients are significantly different from zero.
+
+In PAMLj, both types of tests are available:
+
+- _Omnibus_ tests are specified by listing the coefficients to be tested, each with a separate constraint: $p1==0$, $p2==0$. In our example, assuming we want to test both $a$ and $b$, the code would look like this:
+
+
+```{r eval=FALSE}
+
+# latent variables 
+    ind60 =~ .6*x1 + .6*x2 + .6*x3
+    dem60 =~ .8*y1 + .8*y2 + .8*y3 + .8*y4
+    dem65 =~ .8*y5 + .8*y6 + .8*y7 + .8*y8
+  # regressions
+    dem60 ~ .3*a*ind60
+    dem65 ~  .4*b*ind60 + .2*c*dem60
+  # residual correlations
+    y1 ~~ .1*y5
+  # tests
+    a == 0
+    b == 0
+    
+```
+
+`r pic("pics/sem/output.2.png")`
+
+This code computes the power parameters for testing that **any** coefficients among $a$ and $b$ is significant. As expected, the required N is smaller than in the previous example (where only $a$ was tested), because it is easier —and thus more powerful — to detect any of two significant coefficients than to detect a specific one.
+
+- _Conjunction_ tests are specified by equating all coefficients to be tested and setting them to zero in a single constraint: $p1==p2==0$. In our example, assuming we want to test both $a$ and $b$, the code would look like this:
+
+```{r eval=FALSE}
+
+# latent variables 
+    ind60 =~ .6*x1 + .6*x2 + .6*x3
+    dem60 =~ .8*y1 + .8*y2 + .8*y3 + .8*y4
+    dem65 =~ .8*y5 + .8*y6 + .8*y7 + .8*y8
+  # regressions
+    dem60 ~ .3*a*ind60
+dem65 ~  .4*b*ind60 + .2*c*dem60
+  # residual correlations
+    y1 ~~ .1*y5
+  # tests
+    a == b == 0
+    
+```
+
+This code computes the power parameters for testing that **both** coefficients $a$ and $b$ are significant. As expected, the required N is much larger than in the previous examples because it is more difficult—and thus requires more power—to detect both coefficients as significant compared to detecting just one or either of the two.
+
+`r pic("pics/sem/output.3.png")`
+
 
 # Options
 

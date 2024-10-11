@@ -274,6 +274,8 @@
       <ul>
       <li><a href="#input" id="toc-input">Input</a></li>
       <li><a href="#results" id="toc-results">Results</a></li>
+      <li><a href="#multiple-tests" id="toc-multiple-tests">Multiple
+      tests</a></li>
       <li><a href="#options" id="toc-options">Options</a>
       <ul>
       <li><a href="#main-panel" id="toc-main-panel"><span class="panel">
@@ -402,14 +404,95 @@ etc)</p>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
-<p><img src="pics/sem/input.1.1.png" width="579" /></p>
+<p><img src="pics/sem/output.1.1.png" width="571" /></p>
 <p>The main table reports the required N to achieve a statistically
 significant result when testing the <code>ind60</code> coefficient.
 Additionally, we are provided with the path diagram to verify whether
 the model aligns with our expectations. Admittedly, the path diagram may
 appear a bit cluttered at times, but its purpose is solely to confirm
 the model’s structure, not to look aesthetically pleasing.</p>
-<p><img src="pics/sem/input.1.2.png" width="564" /></p>
+<p><img src="pics/sem/output.1.2.png" width="535" /></p>
+</div>
+<div id="multiple-tests" class="section level1">
+<h1>Multiple tests</h1>
+<p>It is often the case that a researcher needs to test more than one
+coefficient in the same model. In our example, for instance, we may want
+to test both <span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, meaning that the power results will
+depend on both coefficient tests. However, when multiple hypotheses are
+involved, it is important to carefully distinguish between <em>omnibus
+tests</em> and <em>conjunction tests</em>.</p>
+<p>An <em>omnibus test</em> refers to a statistical test that
+encompasses more than one null hypothesis, yielding a significant result
+if <strong>any</strong> of the null hypotheses are rejected. In SEM
+terms, an omnibus test is significant if any of the coefficients are
+significantly different from zero. For example, in linear models, the
+omnibus test of <span class="math inline">\(R^2\)</span> becomes
+significant if the explained variance is significantly different from
+zero, regardless of whether this variance is explained by one, two, or
+more terms in the model.</p>
+<p>A <em>conjunction test</em>, on the other hand, refers to a
+statistical test that also encompasses multiple null hypotheses but
+yields a significant result only if <strong>all</strong> null hypotheses
+are rejected. In SEM terms, a conjunction test is significant only if
+all coefficients are significantly different from zero.</p>
+<p>In PAMLj, both types of tests are available:</p>
+<ul>
+<li><em>Omnibus</em> tests are specified by listing the coefficients to
+be tested, each with a separate constraint: <span
+class="math inline">\(p1==0\)</span>, <span
+class="math inline">\(p2==0\)</span>. In our example, assuming we want
+to test both <span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, the code would look like this:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># latent variables </span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    ind60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">6</span><span class="sc">*</span>x1 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x2 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x3</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    dem60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y1 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y2 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y3 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y4</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    dem65 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y5 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y6 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y7 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y8</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="co"># regressions</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    dem60 <span class="sc">~</span> .<span class="dv">3</span><span class="sc">*</span>a<span class="sc">*</span>ind60</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    dem65 <span class="sc">~</span>  .<span class="dv">4</span><span class="sc">*</span>b<span class="sc">*</span>ind60 <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>c<span class="sc">*</span>dem60</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="co"># residual correlations</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    y1 <span class="sc">~</span><span class="er">~</span> .<span class="dv">1</span><span class="sc">*</span>y5</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="co"># tests</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    a <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    b <span class="sc">==</span> <span class="dv">0</span></span></code></pre></div>
+<p><img src="pics/sem/output.2.png" width="508" /></p>
+<p>This code computes the power parameters for testing that
+<strong>any</strong> coefficients among <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> is significant. As expected, the
+required N is smaller than in the previous example (where only <span
+class="math inline">\(a\)</span> was tested), because it is easier —and
+thus more powerful — to detect any of two significant coefficients than
+to detect a specific one.</p>
+<ul>
+<li><em>Conjunction</em> tests are specified by equating all
+coefficients to be tested and setting them to zero in a single
+constraint: <span class="math inline">\(p1==p2==0\)</span>. In our
+example, assuming we want to test both <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, the code would look like this:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># latent variables </span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    ind60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">6</span><span class="sc">*</span>x1 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x2 <span class="sc">+</span> .<span class="dv">6</span><span class="sc">*</span>x3</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    dem60 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y1 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y2 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y3 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y4</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    dem65 <span class="ot">=</span><span class="er">~</span> .<span class="dv">8</span><span class="sc">*</span>y5 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y6 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y7 <span class="sc">+</span> .<span class="dv">8</span><span class="sc">*</span>y8</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="co"># regressions</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    dem60 <span class="sc">~</span> .<span class="dv">3</span><span class="sc">*</span>a<span class="sc">*</span>ind60</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>dem65 <span class="sc">~</span>  .<span class="dv">4</span><span class="sc">*</span>b<span class="sc">*</span>ind60 <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>c<span class="sc">*</span>dem60</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="co"># residual correlations</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    y1 <span class="sc">~</span><span class="er">~</span> .<span class="dv">1</span><span class="sc">*</span>y5</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>  <span class="co"># tests</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    a <span class="sc">==</span> b <span class="sc">==</span> <span class="dv">0</span></span></code></pre></div>
+<p>This code computes the power parameters for testing that
+<strong>both</strong> coefficients <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> are significant. As expected, the
+required N is much larger than in the previous examples because it is
+more difficult—and thus requires more power—to detect both coefficients
+as significant compared to detecting just one or either of the two.</p>
+<p><img src="pics/sem/output.3.png" width="510" /></p>
 </div>
 <div id="options" class="section level1">
 <h1>Options</h1>
