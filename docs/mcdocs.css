@@ -5,18 +5,18 @@ span.modulename {
 }
 
 .backto {
-    
+
     margin-top: 10em;
-    
+
 }
 
 span.option {
-    
+
     background-color: #E6E6E6;
     padding-right: 5px;
     padding-left: 5px;
     color: black;
-    
+
 }
 
 span.panel {
@@ -24,27 +24,27 @@ span.panel {
     padding-right: 5px;
     padding-left: 5px;
     color: black;
-    
+
 }
 
 span.option_title {
-    
+
     background-color: #E6E6E6;
     padding-right: 5px;
     padding-left: 5px;
     color: black;
     font-size: 1.1em;
-    
+
 }
 span.option_mode {
-    
+
     background-color: #E6E6E6;
     padding-right: 5px;
     padding-left: 5px;
     color: black;
     border-bottom: solid 1px blue;
 
-    
+
 }
 
 div.underconstruction {
@@ -70,10 +70,10 @@ div.underconstruction {
 
 
 p.underconstruction {
-   text-align: center;        
+   text-align: center;
    font-size: 1.5em;
-   padding-top: 2em;    
-   padding-bottom: 2em;    
+   padding-top: 2em;
+   padding-bottom: 2em;
 
 }
 
@@ -84,7 +84,7 @@ span.keywords {
   color: #FFFFFF;
   font-size: 12px;
   font-style: italic;
-  border-radius: 5px; 
+  border-radius: 5px;
   background-color: #3E6DA9;
   margin-bottom: 25px;
 }
@@ -112,7 +112,7 @@ span.draft {
   padding: 5px;
   font-size: 12px;
   font-style: italic;
-  border-radius: 5px; 
+  border-radius: 5px;
   color: black;
   background-color: #FCF8E3;
   margin-bottom: 10px;
@@ -123,7 +123,7 @@ span.incomplete {
   padding: 5px;
   font-size: 12px;
   font-style: italic;
-  border-radius: 5px; 
+  border-radius: 5px;
   color: black;
   background-color: #FF0000;
   margin-bottom: 10px;
@@ -151,6 +151,10 @@ span.little {
 
 td.optionvalue {
     text-align: left;
+}
+td.optionname {
+    text-align: left;
+    min-width: 16em;
 }
 
 span.jamovi a:hover {

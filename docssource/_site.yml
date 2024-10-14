@@ -15,6 +15,9 @@ navbar:
     href:  factorial.html
   - text: "Mediation"
     href:  mediation.html
+  - text: "SEM"
+    href:  sem.html
+
   - text: "Rosetta"
     href:  rosetta.html
 
