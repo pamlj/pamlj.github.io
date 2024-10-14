@@ -470,11 +470,11 @@ class="math inline">\(a\)</span> was tested), because it is easier —and
 thus more powerful — to detect any of two significant coefficients than
 to detect a specific one.</p>
 <ul>
-<li><em>Conjunction</em> tests are specified by equating all
-coefficients to be tested and setting them to zero in a single
-constraint: <span class="math inline">\(p1==p2==0\)</span>. In our
-example, assuming we want to test both <span
-class="math inline">\(a\)</span> and <span
+<li><em>Conjunction</em> tests cannot not (yet) be specified in the
+syntax. However, one can obtain an estimation of power and required
+sample size by adding a multiplicative constraints, and constraining the
+smallest coefficient to zero. In our example, assuming we want to test
+both <span class="math inline">\(a\)</span> and <span
 class="math inline">\(b\)</span>, the code would look like this:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># latent variables </span></span>
@@ -487,11 +487,14 @@ class="math inline">\(b\)</span>, the code would look like this:</li>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="co"># residual correlations</span></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    y1 <span class="sc">~</span><span class="er">~</span> .<span class="dv">1</span><span class="sc">*</span>y5</span>
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>  <span class="co"># tests</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    a <span class="sc">==</span> b <span class="sc">==</span> <span class="dv">0</span></span></code></pre></div>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>    a <span class="sc">*</span> b <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>    a <span class="sc">==</span> <span class="dv">0</span></span></code></pre></div>
 <p>This code computes the power parameters for testing that
 <strong>both</strong> coefficients <span
 class="math inline">\(a\)</span> and <span
-class="math inline">\(b\)</span> are significant. As expected, the
+class="math inline">\(b\)</span> are significant. Please note, however,
+that the power parameters obtained with this method are only an
+approximation of the actual population parameters. As expected, the
 required N is much larger than in the previous examples because it is
 more difficult—and thus requires more power—to detect both coefficients
 as significant compared to detecting just one or either of the two.</p>

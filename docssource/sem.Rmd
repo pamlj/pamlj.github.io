@@ -141,7 +141,7 @@ In PAMLj, both types of tests are available:
 
 This code computes the power parameters for testing that **any** coefficients among $a$ and $b$ is significant. As expected, the required N is smaller than in the previous example (where only $a$ was tested), because it is easier —and thus more powerful — to detect any of two significant coefficients than to detect a specific one.
 
-- _Conjunction_ tests are specified by equating all coefficients to be tested and setting them to zero in a single constraint: $p1==p2==0$. In our example, assuming we want to test both $a$ and $b$, the code would look like this:
+- _Conjunction_ tests cannot not (yet) be specified in the syntax. However, one can obtain an estimation of power and required sample size by adding a multiplicative constraints, and constraining the smallest coefficient to zero. In our example, assuming we want to test both $a$ and $b$, the code would look like this:
 
 ```{r eval=FALSE}
 
@@ -155,11 +155,11 @@ dem65 ~  .4*b*ind60 + .2*c*dem60
   # residual correlations
     y1 ~~ .1*y5
   # tests
-    a == b == 0
-    
+    a * b == 0
+    a == 0
 ```
 
-This code computes the power parameters for testing that **both** coefficients $a$ and $b$ are significant. As expected, the required N is much larger than in the previous examples because it is more difficult—and thus requires more power—to detect both coefficients as significant compared to detecting just one or either of the two.
+This code computes the power parameters for testing that **both** coefficients $a$ and $b$ are significant. Please note, however, that the power parameters obtained with this method are only an approximation of the actual population parameters. As expected, the required N is much larger than in the previous examples because it is more difficult—and thus requires more power—to detect both coefficients as significant compared to detecting just one or either of the two.
 
 `r pic("pics/sem/output.3.png")`
 
