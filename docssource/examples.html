@@ -5,10 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="pandoc" />
 
-        <meta name="author" content="Marcello Gallucci" />
+        <meta name="author" content="(Marcello Gallucci)" />
     
     
-    <title>Independent samples t-test</title>
+    <title>Infos</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -199,25 +199,40 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Independent samples t-test</h1>
+      <h1 class="title">Infos</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Independent samples t-test</a></h2>
+    <h2><a href="#content">Infos</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#aim" id="toc-aim">Aim</a></li>
-      <li><a href="#input" id="toc-input">Input</a></li>
-      <li><a href="#sensitivity-analysis"
-      id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
-      <li><a href="#effect-size-conversion"
-      id="toc-effect-size-conversion">Effect Size Conversion</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
+      <li><a href="#details-1" id="toc-details-1">Details</a></li>
+      <li><a href="#examples" id="toc-examples">Examples</a>
+      <ul>
+      <li><a href="#glm" id="toc-glm">GLM</a></li>
+      </ul></li>
+      <li><a href="#examples-1" id="toc-examples-1">Examples</a></li>
+      <li><a href="#mixed-model" id="toc-mixed-model">Mixed
+      model</a></li>
+      <li><a href="#examples-2" id="toc-examples-2">Examples</a></li>
+      <li><a href="#generalized-linear-model"
+      id="toc-generalized-linear-model">Generalized Linear
+      Model</a></li>
+      <li><a href="#examples-3" id="toc-examples-3">Examples</a></li>
+      <li><a href="#generalized-mixed-models"
+      id="toc-generalized-mixed-models">Generalized Mixed
+      Models</a></li>
+      <li><a href="#examples-4" id="toc-examples-4">Examples</a></li>
+      <li><a href="#rosetta-store-results-across-software"
+      id="toc-rosetta-store-results-across-software">Rosetta store:
+      results across software</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
-                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
-Gallucci</p>
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> (Marcello
+Gallucci)</p>
                       </div>
    </div>
      
@@ -227,166 +242,127 @@ Gallucci</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="aim" class="section level1">
-<h1>Aim</h1>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Calculate</span>
-</td>
-<td class="optionvalue">
-The aim of the analysis: <code>N</code> for required N,
-<code>Power</code> for estimated power and <code>Effect Size</code> for
-minimal detectable effect size
-</td>
-</tr>
-</table>
+<div id="details" class="section level1">
+<h1>Details</h1>
+<p>Here you can find some explanation about how <span
+class="modulename">PAMLj</span> module does things.</p>
 </div>
-<div id="input" class="section level1">
-<h1>Input</h1>
-<h4>
-<span class="option"> <b>Effect information </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Expected Cohen’s d (δ)</span>
-</td>
-<td class="optionvalue">
-Expected Cohe’s d
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N of group 1</span>
-</td>
-<td class="optionvalue">
-Sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Relatve size of groups</span>
-</td>
-<td class="optionvalue">
-Relative size of the two groups. 1 means group of equal size,
-<code>ratio</code>&gt;1 means that one group is <code>ratio</code> times
-larger than the other.
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Parameters </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Minimal desired power</span>
-</td>
-<td class="optionvalue">
-Minimal desired power (1-Beta)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Alpha (Type I rate)</span>
-</td>
-<td class="optionvalue">
-Critical alpha (significance level to be used in the analysis)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Tails</span>
-</td>
-<td class="optionvalue">
-Wheather the test is two-tailed (<code>two.sided</code>) or one-tailed
-(<code>greater</code>).
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Equivalence Testing </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Perform equivalence testing</span>
-</td>
-<td class="optionvalue">
-Perform an equivalence test to show that a true effect is small enough
-to be considered practically negligible
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Equivalence limit</span>
-</td>
-<td class="optionvalue">
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Options </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Explanatory text</span>
-</td>
-<td class="optionvalue">
-Produces some text to help interpreting the results
-</td>
-</tr>
-</table>
-</div>
-<div id="sensitivity-analysis" class="section level1">
-<h1>Sensitivity Analysis</h1>
-<p>Sensitivity analysis, exploring different plots of possible
-combinations of parameters, can be carried out like for any other <span
-class="modulename">PAMLj</span> sub-modules. Please visit
-<a href="/home/mcfanda/Skinner/Forge/jamovi/pamlj/pamlj.github.io/docssource//sensitivity.html">Sensitivity
-analysis</a> page for more details.</p>
-</div>
-<div id="effect-size-conversion" class="section level1">
-<h1>Effect Size Conversion</h1>
-<h4>
-<span class="option"> <b>Convert from t-test </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Observed t-test</span>
-</td>
-<td class="optionvalue">
-The observed t-test value resulting an empirical study
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N per group</span>
-</td>
-<td class="optionvalue">
-The observed t-test sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Cohen’s d</span>
-</td>
-<td class="optionvalue">
-The resulting Cohen’s d corresponding to the observed t-test and N per
-group
-</td>
-</tr>
-</table>
-<div class="version">
+<div id="details-1" class="section level1 adm adm-seealso">
+<h1>Details</h1>
 <p>
-0.7.0
+Some more information about the module specs can be found here
+</p>
+<ul>
+<li>
+<a href="./details_failure.html">Extreme values warnings</a>
+</li>
+<li>
+<a href="./specs_fncp.html">F-Test Non-centrality parameters</a>
+</li>
+</ul>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples</h1>
+<p>Here you can find some applications of <span
+class="modulename">PAMLj</span> module.</p>
+<div id="glm" class="section level2">
+<h2>GLM</h2>
+</div>
+</div>
+<div id="examples-1" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<p>
+Some worked out practical examples can be found here
 </p>
 </div>
-<div style="clear:both">
-
+<div id="mixed-model" class="section level2">
+<h2>Mixed model</h2>
+</div>
+<div id="examples-2" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<p>
+Some worked out practical examples can be found here
+</p>
+</div>
+<div id="generalized-linear-model" class="section level2">
+<h2>Generalized Linear Model</h2>
+</div>
+<div id="examples-3" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<p>
+Some worked out practical examples can be found here
+</p>
+</div>
+<div id="generalized-mixed-models" class="section level2">
+<h2>Generalized Mixed Models</h2>
+</div>
+<div id="examples-4" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<p>
+Some worked out practical examples can be found here
+</p>
+</div>
+<div id="rosetta-store-results-across-software" class="section level1">
+<h1>Rosetta store: results across software</h1>
+<p>Comparisons with other software: Here you can find comparisons of
+results obtained in jamovi <span class="modulename">PAMLj</span>, and
+other software, usually jamovi (jmv), pure R, and SPSS. The pages are
+primarily meant to test convergence between <span
+class="modulename">PAMLj</span> and well-established packages, but they
+can be useful also to check how to get equivalent results across
+different programs.</p>
+<ul>
+<li>
+<a href="./rosetta_correlation.html">Correlation</a>
+</li>
+<li>
+<a href="./rosetta_factorial_means.html">Factorial designs: power from
+means and SD</a>
+</li>
+<li>
+<a href="./rosetta_factorial_peta.html">Factorial designs: power from
+effect size</a>
+</li>
+<li>
+<a href="./rosetta_glm_n.html">GLM: required sample size</a>
+</li>
+<li>
+<a href="./rosetta_glm_posthoc.html">GLM: posthoc power</a>
+</li>
+<li>
+<a href="./rosetta_mediation_complex.html">Mediation: Complex models</a>
+</li>
+<li>
+<a href="./rosetta_mediation_simple.html">Mediation: Simple models</a>
+</li>
+<li>
+<a href="./rosetta_prop_ind.html">Independent Samples Proportions</a>
+</li>
+<li>
+<a href="./rosetta_prop_paired.html">Paired Samples Proportions</a>
+</li>
+<li>
+<a href="./rosetta_sem.html">SEM</a>
+</li>
+<li>
+<a href="./rosetta_equi_ttest.html">Independent sample T-test:
+Equivalence tests</a>
+</li>
+<li>
+<a href="./rosetta_ttest_ind.html">Independent Samples t-test</a>
+</li>
+<li>
+<a href="./rosetta_ttest_one.html">One Sample t-test</a>
+</li>
+<li>
+<a href="./rosetta_ttest_paired.html">Pairted Samples t-test</a>
+</li>
+</ul>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
@@ -398,13 +374,6 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
-</div>
-<div class="adm adm-seealso backto">
-<p>
-Return to main help pages
-</p>
-<a class='backto' href='index.html'>Main page</a>
-<a class="backto" href="./ttest.html">T-test</a>
 </div>
 </div>
 

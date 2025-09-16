@@ -8,7 +8,7 @@
         <meta name="author" content="Marcello Gallucci" />
     
     
-    <title>Independent samples t-test</title>
+    <title>General Linear Model</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -199,19 +199,18 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Independent samples t-test</h1>
+      <h1 class="title">General Linear Model</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Independent samples t-test</a></h2>
+    <h2><a href="#content">General Linear Model</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#aim" id="toc-aim">Aim</a></li>
-      <li><a href="#input" id="toc-input">Input</a></li>
-      <li><a href="#sensitivity-analysis"
-      id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
-      <li><a href="#effect-size-conversion"
-      id="toc-effect-size-conversion">Effect Size Conversion</a></li>
+      <li><a href="#effect-size-indexes"
+      id="toc-effect-size-indexes">Effect size indexes</a></li>
+      <li><a href="#go-the-help-page-for"
+      id="toc-go-the-help-page-for">Go the help page for:</a></li>
+      <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -227,167 +226,66 @@ Gallucci</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="aim" class="section level1">
-<h1>Aim</h1>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Calculate</span>
-</td>
-<td class="optionvalue">
-The aim of the analysis: <code>N</code> for required N,
-<code>Power</code> for estimated power and <code>Effect Size</code> for
-minimal detectable effect size
-</td>
-</tr>
-</table>
-</div>
-<div id="input" class="section level1">
-<h1>Input</h1>
-<h4>
-<span class="option"> <b>Effect information </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Expected Cohen’s d (δ)</span>
-</td>
-<td class="optionvalue">
-Expected Cohe’s d
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N of group 1</span>
-</td>
-<td class="optionvalue">
-Sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Relatve size of groups</span>
-</td>
-<td class="optionvalue">
-Relative size of the two groups. 1 means group of equal size,
-<code>ratio</code>&gt;1 means that one group is <code>ratio</code> times
-larger than the other.
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Parameters </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Minimal desired power</span>
-</td>
-<td class="optionvalue">
-Minimal desired power (1-Beta)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Alpha (Type I rate)</span>
-</td>
-<td class="optionvalue">
-Critical alpha (significance level to be used in the analysis)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Tails</span>
-</td>
-<td class="optionvalue">
-Wheather the test is two-tailed (<code>two.sided</code>) or one-tailed
-(<code>greater</code>).
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Equivalence Testing </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Perform equivalence testing</span>
-</td>
-<td class="optionvalue">
-Perform an equivalence test to show that a true effect is small enough
-to be considered practically negligible
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Equivalence limit</span>
-</td>
-<td class="optionvalue">
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Options </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Explanatory text</span>
-</td>
-<td class="optionvalue">
-Produces some text to help interpreting the results
-</td>
-</tr>
-</table>
-</div>
-<div id="sensitivity-analysis" class="section level1">
-<h1>Sensitivity Analysis</h1>
-<p>Sensitivity analysis, exploring different plots of possible
-combinations of parameters, can be carried out like for any other <span
-class="modulename">PAMLj</span> sub-modules. Please visit
-<a href="/home/mcfanda/Skinner/Forge/jamovi/pamlj/pamlj.github.io/docssource//sensitivity.html">Sensitivity
-analysis</a> page for more details.</p>
-</div>
-<div id="effect-size-conversion" class="section level1">
-<h1>Effect Size Conversion</h1>
-<h4>
-<span class="option"> <b>Convert from t-test </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Observed t-test</span>
-</td>
-<td class="optionvalue">
-The observed t-test value resulting an empirical study
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N per group</span>
-</td>
-<td class="optionvalue">
-The observed t-test sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Cohen’s d</span>
-</td>
-<td class="optionvalue">
-The resulting Cohen’s d corresponding to the observed t-test and N per
-group
-</td>
-</tr>
-</table>
 <div class="version">
 <p>
-0.7.0
+0.2.0
 </p>
 </div>
 <div style="clear:both">
 
 </div>
+<p><img src="pics/glm/ui.png" width="1154" /></p>
+<p><code>GLM power analysis</code> allows for computing power parameters
+for testing a wide range of effect across several different designs. It
+can be used to estimate power parameters for regression, ANOVA, ANCOVA
+models, for different types of effects (main effects, interactions,
+etc.).</p>
+<p>The initial step is to determine the objective of the analysis (
+<em>aim</em> ). Further details regarding different objectives can be
+found in the <code>Info</code> results field.</p>
+<p><img src="pics/common/aim.1.png" width="560" /></p>
+<p>The second step is to decide what type of effect size we want to
+employ.</p>
+<div id="effect-size-indexes" class="section level1">
+<h1>Effect size indexes</h1>
+<ul>
+<li><p><strong>Partial Eta-Squared</strong> : valuable for any
+application of the GLM, such as ANOVA, ANCOVA, regression, for
+individual effects and overall test (<span
+class="math inline">\(R^2\)</span>).</p></li>
+<li><p><strong>Eta-Squared</strong> : valuable for any application of
+the GLM, such as ANOVA, ANCOVA, regression, for individual effects and
+blocks of effects (<span class="math inline">\(\Delta
+R^2\)</span>).</p></li>
+<li><p><strong>Beta coefficients</strong> : valuable in particular for
+regression for individual effects.</p></li>
+</ul>
+<p>Please select the effect size index to go to its dedicated page.</p>
+</div>
+<div id="go-the-help-page-for" class="section level1 adm adm-seealso">
+<h1>Go the help page for:</h1>
+<ul>
+<li>
+<a href="./glm_peta.html">GLM based on partial Eta-Squared</a>
+</li>
+<li>
+<a href="./glm_eta.html">GLM based on Eta-Squared</a>
+</li>
+<li>
+<a href="./glm_beta.html">GLM based on Beta coefficients</a>
+</li>
+</ul>
+</div>
+<div id="validation" class="section level1 adm adm-seealso">
+<h1>Validation</h1>
+<ul>
+<li>
+<a href="./rosetta_glm_n.html">GLM: required sample size</a>
+</li>
+<li>
+<a href="./rosetta_glm_posthoc.html">GLM: posthoc power</a>
+</li>
+</ul>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
@@ -404,7 +302,6 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
-<a class="backto" href="./ttest.html">T-test</a>
 </div>
 </div>
 

@@ -14,10 +14,32 @@ link-citations: true
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
-
 ```
 
-`r version("0.2.0")`
+# Aim
+
+`r panel_options('pamlttest','aim')`
+
+# Input
+
+`r panel_options('pamlttest','mode', labels=T,mode="ttestind")`
+
+`r panel_options('pamlttest','box_parameters', labels=T)`
+
+`r panel_options('pamlttest','box_equi_test', labels=T)`
+
+
+```{r child_sensitivity_link, child='commons/sensitivity_chunk.Rmd'}
+```
+
+# Effect Size Conversion
+
+With this panel is possible to estimate the expected effect size based on observed t-test, taken from empirical studies or other empirical sources
+
+`r panel_options('pamlttest','convert_es_ttestind', labels=T)`
+
+
+`r version("0.7.0")`
 
 
 `r issues()`

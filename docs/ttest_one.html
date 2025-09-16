@@ -10,7 +10,7 @@
     
     <title>One sample t-test</title>
 
-        <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -206,6 +206,12 @@
     <h2><a href="#content">One sample t-test</a></h2>
     <div id="toc">
       <ul>
+      <li><a href="#aim" id="toc-aim">Aim</a></li>
+      <li><a href="#input" id="toc-input">Input</a></li>
+      <li><a href="#sensitivity-analysis"
+      id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
+      <li><a href="#effect-size-conversion"
+      id="toc-effect-size-conversion">Effect Size Conversion</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -221,13 +227,159 @@ Gallucci</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
+<div id="aim" class="section level1">
+<h1>Aim</h1>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Calculate</span>
+</td>
+<td class="optionvalue">
+The aim of the analysis: <code>N</code> for required N,
+<code>Power</code> for estimated power and <code>Effect Size</code> for
+minimal detectable effect size
+</td>
+</tr>
+</table>
+</div>
+<div id="input" class="section level1">
+<h1>Input</h1>
+<h4>
+<span class="option"> <b>Effect information </b></span>
+</h4>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Expected Cohen’a d (δ)</span>
+</td>
+<td class="optionvalue">
+Expected Cohe’s d
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">N</span>
+</td>
+<td class="optionvalue">
+Expected sample size
+</td>
+</tr>
+</table>
+<h4>
+<span class="option"> <b>Parameters </b></span>
+</h4>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Minimal desired power</span>
+</td>
+<td class="optionvalue">
+Minimal desired power (1-Beta)
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Alpha (Type I rate)</span>
+</td>
+<td class="optionvalue">
+Critical alpha (significance level to be used in the analysis)
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Tails</span>
+</td>
+<td class="optionvalue">
+Wheather the test is two-tailed (<code>two.sided</code>) or one-tailed
+(<code>greater</code>).
+</td>
+</tr>
+</table>
+<h4>
+<span class="option"> <b>Equivalence Testing </b></span>
+</h4>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Perform equivalence testing</span>
+</td>
+<td class="optionvalue">
+Perform an equivalence test to show that a true effect is small enough
+to be considered practically negligible
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Equivalence limit</span>
+</td>
+<td class="optionvalue">
+</td>
+</tr>
+</table>
+<h4>
+<span class="option"> <b>Options </b></span>
+</h4>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Explanatory text</span>
+</td>
+<td class="optionvalue">
+Produces some text to help interpreting the results
+</td>
+</tr>
+</table>
+</div>
+<div id="sensitivity-analysis" class="section level1">
+<h1>Sensitivity Analysis</h1>
+<p>Sensitivity analysis, exploring different plots of possible
+combinations of parameters, can be carried out like for any other <span
+class="modulename">PAMLj</span> sub-modules. Please visit
+<a href="/home/mcfanda/Skinner/Forge/jamovi/pamlj/pamlj.github.io/docssource//sensitivity.html">Sensitivity
+analysis</a> page for more details.</p>
+</div>
+<div id="effect-size-conversion" class="section level1">
+<h1>Effect Size Conversion</h1>
+<p>With this panel is possible to estimate the expected effect size
+based on observed t-test, taken from empirical studies or other
+empirical sources.</p>
+<h4>
+<span class="option"> <b>Convert from t-test </b></span>
+</h4>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Observed t-test</span>
+</td>
+<td class="optionvalue">
+Observed t-test value
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">N</span>
+</td>
+<td class="optionvalue">
+Observed t-test sample size
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Cohen’s d</span>
+</td>
+<td class="optionvalue">
+Resulting Cohen’s d
+</td>
+</tr>
+</table>
 <div class="version">
 <p>
-0.2.0
+0.7.0
 </p>
 </div>
 <div style="clear:both">
 
+</div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>

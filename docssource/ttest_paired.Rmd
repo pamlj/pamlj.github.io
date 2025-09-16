@@ -14,10 +14,40 @@ link-citations: true
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
-
 ```
 
-`r version("0.2.0")`
+# Aim
+
+`r panel_options('pamlttest','aim')`
+
+# Input
+
+`r panel_options('pamlttest','mode', labels=T,mode="ttestpaired")`
+
+`r panel_options('pamlttest','box_parameters', labels=T)`
+
+`r panel_options('pamlttest','box_equi_test', labels=T)`
+
+
+```{r child_sensitivity_link, child='commons/sensitivity_chunk.Rmd'}
+```
+
+# Effect Size Conversion
+
+With this panel is possible to estimate the expected effect size based on observed t-test, taken from empirical studies or other empirical sources.
+
+
+`r panel_options('pamlttest','convert_es_ttestpaired', labels=T)`
+
+
+It should be noted that `r modulename()` uses **Cohen’s** $d_z$ as the effect size for power analysis. This is defined as the **mean of the difference scores divided by their standard deviation** [@cohen1988spa]. Some authors instead suggest starting from **Cohen’s** $d$ for independent samples, defined as the **mean difference divided by the square root of the sum of the variances** of the two measures. If you want to convert this independent-samples $d$ into a paired-samples $d_z$, accounting for the expected correlation $r$ between measures, you can use the `r opt_label("Convert to dz")`, which applies the following formula:
+
+$$
+d_z = \frac{d}{\sqrt{2(1 - r)}}
+$$
+
+
+`r version("0.7.0")`
 
 
 `r issues()`

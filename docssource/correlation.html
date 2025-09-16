@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Marcello Gallucci" />
+    
+    
+    <title>Correlation</title>
+
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Correlation</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Correlation</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#aim-n-required-sample-size"
+      id="toc-aim-n-required-sample-size">Aim: N (Required sample
+      size)</a>
+      <ul>
+      <li><a href="#sensitivity-analysis"
+      id="toc-sensitivity-analysis">Sensitivity analysis</a></li>
+      </ul></li>
+      <li><a href="#aim-power-posthoc-power"
+      id="toc-aim-power-posthoc-power">Aim: Power (posthoc power)</a>
+      <ul>
+      <li><a href="#sensitivity-analysis-1"
+      id="toc-sensitivity-analysis-1">Sensitivity analysis</a></li>
+      </ul></li>
+      <li><a href="#aim-effect-size" id="toc-aim-effect-size">Aim:
+      Effect size</a>
+      <ul>
+      <li><a href="#sensitivity-analysis-2"
+      id="toc-sensitivity-analysis-2">Sensitivity analysis</a></li>
+      </ul></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<p>Power Analysis</p>
+<div class="version">
+<p>0.2.0</p>
+</div>
+<p><img src="pics/correlation/ui.png" width="1346" /></p>
+<p><code>Correlation</code> allows for computing power parameters for
+testing the Pearson or Spearman correlation coefficient. The initial
+step is to determine the objective of the analysis ( <em>aim</em> ).
+Further details regarding different objectives can be found in the
+<code>Info</code> results field.</p>
+<p><img src="pics/common/aim.1.png" width="560" /></p>
+<p>We start with the first aim, finding the required sample size N.</p>
+<div id="aim-n-required-sample-size" class="section level1">
+<h1>Aim: N (Required sample size)</h1>
+<p>When estimating the required sample size for planned research, it’s
+essential to anticipate an effect size, which can be derived from
+pilots, meta-analyses, etc., (but see <span class="citation">Albers and
+Lakens (<a href="#ref-albers2017biased">2017</a>)</span>). In the case
+of correlation analysis, the effect size corresponds to the Pearson
+correlation coefficient.</p>
+<p>Let’s consider a scenario where we aim to estimate the required
+sample size (N) for a planned research project. Assuming an expected
+correlation of 0.20 between our target variables, and aiming for a power
+of 0.90 with a two-tailed test, evaluated at α = 0.05, we can simply
+input these parameters into <span class="modulename">PAMLj</span>.</p>
+<p><img src="pics/correlation/r.1.png" width="990" /></p>
+<p>From the result table we can see that the required N is 258, so we
+need 258 case to achieve a power of .90 given an expected correlation of
+.2.</p>
+<p>The second table we get is the <code>Power by Effect Size</code>
+table, which informs us on the different power levels associated with
+different possible effect sizes.</p>
+<p><img src="pics/correlation/r.2.png" width="472" /></p>
+<p>Based on the estimate <span class="math inline">\(N=258\)</span>, we
+should expected a very low power (<span
+class="math inline">\(1-\beta&lt;.5\)</span>) were the actual population
+effect size less than .122. A power of <span
+class="math inline">\(1-\beta&lt;\)</span> between .5 and .80 should be
+expected were our effect size be between .122 and .173. A power between
+.80 and .95 is to be expected if our population effect size is between
+.173 and .222, whereas a power greater than .95 can be expected is the
+population correlation is larger than .222.</p>
+<p>Based on the estimate <span class="math inline">\(N=258\)</span>, we
+should expected a very low power (<span
+class="math inline">\(1-\beta&lt;.5\)</span>) should the actual
+population effect size be less than .122. A power of <span
+class="math inline">\(1-\beta&lt;\)</span> between .5 and .80 should the
+expected effect size be between .112 and .173. A power between .80 and
+.95 is to be expected if our population effect size is between .173 and
+.222, whereas a power greater than .95 can be expected if the population
+correlation is larger than .222.</p>
+<div id="sensitivity-analysis" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p>Sensitivity analysis means exploring different scenarios. <span
+class="option">Power contour plot</span> visualizes the power from low
+(green) to high (yellow) as a function of possible sample sizes (x-axis)
+and effect (correlation) sizes.</p>
+<p><img src="pics/correlation/r.3.png" width="547" /></p>
+<p>In the power contour plot, we see the solid line representing the
+combinations of Sample Size (N) and effect size that yields the required
+power (in the example .90). So we know how the power will change had we
+underestimated the effect size (go down in y-axis) or underestimated the
+sample size (go left on the x-axis).</p>
+<p>The second plot we can ask is the <code>Power curve by N</code> . It
+portraits how the power (y-axis) chances as one increases the sample
+size (x-axis).</p>
+<p><img src="pics/correlation/r.4.png" width="465" /></p>
+<p>The solid line portraits the change in power as we increases sample
+size given the effect size (<span class="math inline">\(r=.2\)</span>)
+and the critical alpha (<span
+class="math inline">\(\alpha=.05\)</span>). In this example, for
+instance, we can see that if we were not able to collect more than 150
+cases, our expected power will not be more than .70 (to be
+optimistic).</p>
+</div>
+</div>
+<div id="aim-power-posthoc-power" class="section level1">
+<h1>Aim: Power (posthoc power)</h1>
+<p>Post-hoc power analysis serves to evaluate the likelihood of
+obtaining statistically significant results after conducting research,
+particularly when a pre-hoc (a priori) analysis was not performed. For
+instance, let’s consider a scenario where a research study involves 25
+participants, resulting in a Pearson correlation coefficient of 0.35,
+which is found to be statistically significant. In this context,
+post-hoc power analysis assesses the probability of consistently
+obtaining significant results if the research were to be replicated
+multiple times, drawing from the same population.</p>
+<p>So, let’s fill in the field for <code>Calculate: Power</code>. The
+effect size is .35, N (Sample size) is 25. The expected power is under
+the column <code>power</code>.</p>
+<p><img src="pics/correlation/r.5.png" width="1245" /></p>
+<p>The expected power, calculated as <span
+class="math inline">\(1−\beta=.414\)</span>, indicates that it’s less
+likely to replicate the results than to obtain significant results when
+drawing from the same population and employing the same sample size. If
+there are concerns about the lack of replication, increasing the sample
+size (N) would be recommended <span class="citation">(<a
+href="#ref-schonbrodt2013sample">Schönbrodt and Perugini
+2013</a>)</span>.</p>
+<div id="sensitivity-analysis-1" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p><strong>Power contour plot</strong> and <strong>Power curve by
+N</strong> have here the same interpretation as mentioned above.
+However, when the aim of the analysis is to find the achieved power, one
+can ask for <span class="option">Power curve by effect size</span>.</p>
+<p><img src="pics/correlation/r.6.png" width="460" /></p>
+<p>Here, we observe the relationship between the power of the test and
+the effect size. The solid curve illustrates how the power may vary
+across different effect sizes, given a fixed sample size (<span
+class="math inline">\(N=25\)</span>). In this example, it becomes
+evident that in our research one can consistently (i.e. <span
+class="math inline">\(1-\beta &gt; .90\)</span>) detect a significant
+correlation only for correlations exceeding 0.6.</p>
+</div>
+</div>
+<div id="aim-effect-size" class="section level1">
+<h1>Aim: Effect size</h1>
+<p>(AKA another sensitivity analysis)</p>
+<p>In recent years, there has been a growing interest towards the
+<em>minimum detectable effect size</em> (MDES). However, there seems to
+be some confusion surrounding its interpretation. In a proper power
+analysis aimed at determining the required sample size, utilizing a
+minimum detectable effect size can be beneficial. To clarify, the MDES
+represents the smallest effect size that a study aims to detect. It
+involves deciding the minimum value of correlation (for example, 0.08)
+that would be considered meaningful. Subsequently, the sample size is
+determined to ensure that if the observed correlation exceeds the MDES,
+it would yield a statistically significant result with a specified
+probability (<span class="math inline">\(1-\beta=power\)</span>)</p>
+<p>Computing <span class="option">Calculate: Effect size</span> serves a
+different purpose—it determines the minimum effect size that can be
+detected as significant with a specified probability (<span
+class="math inline">\(1-\beta\)</span>), given the sample size at hand.
+In essence, it is a post-hoc power analysis.</p>
+<p>While this analysis may not always be necessary, it can prove useful
+in certain scenarios. For instance, consider a situation where only a
+limited sample of 40 cases was collected due to constraints such as
+research topic, funding, or population size. In such cases, <span
+class="option">Calculate: Effect size</span> helps answer the question:
+What is the lowest effect size that would be detectable as significant
+with a certain probability (<span
+class="math inline">\(1-\beta\)</span>) given the sample size
+(N=40)?</p>
+<p>Imagine you have collected 40 cases and need to test several
+correlations. You can determine the lowest level of correlation that
+would be detectable in future studies with a probability greater than
+0.90. By inputting the available information — <span
+class="math inline">\(N=40\)</span>, required power of 0.90 (for
+instance), and an alpha of 0.05 — you can obtain valuable insights.</p>
+<p><img src="pics/correlation/r.7.png" width="1123" /></p>
+<p>Results show that any correlation less than .483 will be tested with
+a power less than .90.</p>
+<div id="sensitivity-analysis-2" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p><strong>Power contour plot</strong> and <strong>Power curve by
+N</strong> have here the same interpretation as mentioned above.</p>
+</div>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+</div>
+<p>’</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-albers2017biased" class="csl-entry">
+Albers, C, and D Lakens. 2017. <span>“Biased Sample Size Estimates in
+a-Priori Power Analysis Due to the Choice of Effect Size Index and
+Follow-up Bias.”</span> <em>Journal of Experimental Social
+Psychology</em>.
+</div>
+<div id="ref-schonbrodt2013sample" class="csl-entry">
+Schönbrodt, Felix D, and Marco Perugini. 2013. <span>“At What Sample
+Size Do Correlations Stabilize?”</span> <em>Journal of Research in
+Personality</em> 47 (5): 609–12.
+</div>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

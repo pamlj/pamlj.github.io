@@ -8,7 +8,7 @@
         <meta name="author" content="Marcello Gallucci" />
     
     
-    <title>Independent samples t-test</title>
+    <title>PAMLj</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -199,19 +199,32 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Independent samples t-test</h1>
+      <h1 class="title">PAMLj</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Independent samples t-test</a></h2>
+    <h2><a href="#content">PAMLj</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#aim" id="toc-aim">Aim</a></li>
-      <li><a href="#input" id="toc-input">Input</a></li>
-      <li><a href="#sensitivity-analysis"
-      id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
-      <li><a href="#effect-size-conversion"
-      id="toc-effect-size-conversion">Effect Size Conversion</a></li>
+      <li><a href="#power-analysis-for-linear-models-in-jamovi"
+      id="toc-power-analysis-for-linear-models-in-jamovi">Power analysis
+      for linear models in jamovi</a></li>
+      <li><a href="#main-help-pages" id="toc-main-help-pages">Main help
+      pages</a></li>
+      <li><a href="#validation" id="toc-validation">Validation</a></li>
+      <li><a href="#consistency"
+      id="toc-consistency">Consistency</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
+      <li><a href="#install-in-jamovi"
+      id="toc-install-in-jamovi">Install in jamovi</a>
+      <ul>
+      <li><a href="#from-github" id="toc-from-github">From
+      GitHub</a></li>
+      <li><a href="#from-source" id="toc-from-source">From
+      source</a></li>
+      </ul></li>
+      <li><a href="#programmatic-name"
+      id="toc-programmatic-name">Programmatic name</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -227,167 +240,183 @@ Gallucci</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="aim" class="section level1">
-<h1>Aim</h1>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Calculate</span>
-</td>
-<td class="optionvalue">
-The aim of the analysis: <code>N</code> for required N,
-<code>Power</code> for estimated power and <code>Effect Size</code> for
-minimal detectable effect size
-</td>
-</tr>
-</table>
+<div class="root">
+
 </div>
-<div id="input" class="section level1">
-<h1>Input</h1>
-<h4>
-<span class="option"> <b>Effect information </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Expected Cohen’s d (δ)</span>
-</td>
-<td class="optionvalue">
-Expected Cohe’s d
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N of group 1</span>
-</td>
-<td class="optionvalue">
-Sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Relatve size of groups</span>
-</td>
-<td class="optionvalue">
-Relative size of the two groups. 1 means group of equal size,
-<code>ratio</code>&gt;1 means that one group is <code>ratio</code> times
-larger than the other.
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Parameters </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Minimal desired power</span>
-</td>
-<td class="optionvalue">
-Minimal desired power (1-Beta)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Alpha (Type I rate)</span>
-</td>
-<td class="optionvalue">
-Critical alpha (significance level to be used in the analysis)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Tails</span>
-</td>
-<td class="optionvalue">
-Wheather the test is two-tailed (<code>two.sided</code>) or one-tailed
-(<code>greater</code>).
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Equivalence Testing </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Perform equivalence testing</span>
-</td>
-<td class="optionvalue">
-Perform an equivalence test to show that a true effect is small enough
-to be considered practically negligible
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Equivalence limit</span>
-</td>
-<td class="optionvalue">
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Options </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Explanatory text</span>
-</td>
-<td class="optionvalue">
-Produces some text to help interpreting the results
-</td>
-</tr>
-</table>
-</div>
-<div id="sensitivity-analysis" class="section level1">
-<h1>Sensitivity Analysis</h1>
-<p>Sensitivity analysis, exploring different plots of possible
-combinations of parameters, can be carried out like for any other <span
-class="modulename">PAMLj</span> sub-modules. Please visit
-<a href="/home/mcfanda/Skinner/Forge/jamovi/pamlj/pamlj.github.io/docssource//sensitivity.html">Sensitivity
-analysis</a> page for more details.</p>
-</div>
-<div id="effect-size-conversion" class="section level1">
-<h1>Effect Size Conversion</h1>
-<h4>
-<span class="option"> <b>Convert from t-test </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Observed t-test</span>
-</td>
-<td class="optionvalue">
-The observed t-test value resulting an empirical study
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N per group</span>
-</td>
-<td class="optionvalue">
-The observed t-test sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Cohen’s d</span>
-</td>
-<td class="optionvalue">
-The resulting Cohen’s d corresponding to the observed t-test and N per
-group
-</td>
-</tr>
-</table>
+<div id="power-analysis-for-linear-models-in-jamovi"
+class="section level1">
+<h1>Power analysis for linear models in jamovi</h1>
 <div class="version">
 <p>
-0.7.0
+0.2.0
 </p>
 </div>
 <div style="clear:both">
 
 </div>
+<center>
+<img width="800" src="https://pamlj.github.io/commons/pics/ui.png" class="img-responsive" alt="">
+</center>
+<p><br></p>
+<p>Estimation of power parameters (required sample size, posthoc power,
+minimal detectable effect size and required alpha) for General Linear
+Models and other commonly used statistics.</p>
+<ul>
+<li>Correlation</li>
+<li>Proportions</li>
+<li>Regression</li>
+<li>t-test</li>
+<li>ANOVA</li>
+<li>Partial eta-squared based analysis</li>
+<li>Eta-squared and <span class="math inline">\(R^2\)</span> based
+analysis</li>
+<li>Standardized coefficients based analysis</li>
+<li>Factorial designs (between, within and mixed)</li>
+<li>Mediation analysis, simple and complex</li>
+</ul>
+</div>
+<div id="main-help-pages" class="section level1 adm adm-seealso">
+<h1>Main help pages</h1>
+Please select the help page for a specific analysis
+<ul>
+<li>
+<a href="./correlation.html">Correlation</a>
+</li>
+<li>
+<a href="./factorial.html">Factorial Designs</a>
+</li>
+<li>
+<a href="./glm.html">General Linear Model</a>
+</li>
+<li>
+<a href="./mediation.html">Mediation</a>
+</li>
+<li>
+<a href="./prop.html">Proportions difference</a>
+</li>
+<li>
+<a href="./sem.html">SEM power analysis</a>
+</li>
+<li>
+<a href="./ttest.html">T-test</a>
+</li>
+<li>
+<a href="./sensitivity.html">Sensitivity analysis</a>
+</li>
+<li>
+<a href="./rosetta.html">PAMLj: rosetta</a>
+</li>
+</ul>
+</div>
+<div id="validation" class="section level1 adm adm-seealso">
+<h1>Validation</h1>
+Here we compare the results of PAMLj with other software that performs
+power analysis.
+<ul>
+<li>
+<a href="./rosetta_correlation.html">Correlation</a>
+</li>
+<li>
+<a href="./rosetta_factorial_means.html">Factorial designs: power from
+means and SD</a>
+</li>
+<li>
+<a href="./rosetta_factorial_peta.html">Factorial designs: power from
+effect size</a>
+</li>
+<li>
+<a href="./rosetta_glm_n.html">GLM: required sample size</a>
+</li>
+<li>
+<a href="./rosetta_glm_posthoc.html">GLM: posthoc power</a>
+</li>
+<li>
+<a href="./rosetta_mediation_complex.html">Mediation: Complex models</a>
+</li>
+<li>
+<a href="./rosetta_mediation_simple.html">Mediation: Simple models</a>
+</li>
+<li>
+<a href="./rosetta_prop_ind.html">Independent Samples Proportions</a>
+</li>
+<li>
+<a href="./rosetta_prop_paired.html">Paired Samples Proportions</a>
+</li>
+<li>
+<a href="./rosetta_sem.html">SEM</a>
+</li>
+<li>
+<a href="./rosetta_equi_ttest.html">Independent sample T-test:
+Equivalence tests</a>
+</li>
+<li>
+<a href="./rosetta_ttest_ind.html">Independent Samples t-test</a>
+</li>
+<li>
+<a href="./rosetta_ttest_one.html">One Sample t-test</a>
+</li>
+<li>
+<a href="./rosetta_ttest_paired.html">Pairted Samples t-test</a>
+</li>
+</ul>
+</div>
+<div id="consistency" class="section level1 adm adm-seealso">
+<h1>Consistency</h1>
+Here we check some of the options of the module to demonstrate that they
+hopefully work (or do not).
+<ul>
+<li>
+<a href="./check_glm_df.html">GLM options: computing degrees of
+freedom</a>
+</li>
+<li>
+<a href="./check_glm_es.html">GLM options: converting effect size</a>
+</li>
+</ul>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<p>
+Some more information about the module specs can be found here
+</p>
+<ul>
+<li>
+<a href="./details_failure.html">Extreme values warnings</a>
+</li>
+<li>
+<a href="./specs_fncp.html">F-Test Non-centrality parameters</a>
+</li>
+</ul>
+</div>
+<div id="install-in-jamovi" class="section level1">
+<h1>Install in jamovi</h1>
+<p>Please install <span
+class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>
+and run it. Select the jamovi modules library and install PAMLj from
+there</p>
+<div id="from-github" class="section level2">
+<h2>From GitHub</h2>
+<p>In your R script (or Rstudio) simply issue</p>
+<pre><code>library(jmvtools)
+devtools::install_github(&quot;pamlj/pamlj&quot;)
+</code></pre>
+</div>
+<div id="from-source" class="section level2">
+<h2>From source</h2>
+<p>You will first need to download <span
+class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>.</p>
+<p>You can clone this repository and compile the module within R
+with</p>
+<pre><code>library(jmvtools)
+
+jmvtools::install()
+</code></pre>
+</div>
+</div>
+<div id="programmatic-name" class="section level1">
+<h1>Programmatic name</h1>
+<pre><code>paste(paste(LETTERS[c(16,1,13,12)],collapse =&quot;&quot;),paste(letters[10]),sep=&quot;&quot;)
+</code></pre>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
@@ -399,13 +428,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 </div>
-<div class="adm adm-seealso backto">
-<p>
-Return to main help pages
-</p>
-<a class='backto' href='index.html'>Main page</a>
-<a class="backto" href="./ttest.html">T-test</a>
-</div>
+<p>’</p>
 </div>
 
    

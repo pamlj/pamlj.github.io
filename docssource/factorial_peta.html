@@ -8,7 +8,7 @@
         <meta name="author" content="Marcello Gallucci" />
     
     
-    <title>Independent samples t-test</title>
+    <title>Factorial: Partial Eta-squared</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -199,19 +199,13 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Independent samples t-test</h1>
+      <h1 class="title">Factorial: Partial Eta-squared</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Independent samples t-test</a></h2>
+    <h2><a href="#content">Factorial: Partial Eta-squared</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#aim" id="toc-aim">Aim</a></li>
-      <li><a href="#input" id="toc-input">Input</a></li>
-      <li><a href="#sensitivity-analysis"
-      id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
-      <li><a href="#effect-size-conversion"
-      id="toc-effect-size-conversion">Effect Size Conversion</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -227,167 +221,28 @@ Gallucci</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="aim" class="section level1">
-<h1>Aim</h1>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Calculate</span>
-</td>
-<td class="optionvalue">
-The aim of the analysis: <code>N</code> for required N,
-<code>Power</code> for estimated power and <code>Effect Size</code> for
-minimal detectable effect size
-</td>
-</tr>
-</table>
-</div>
-<div id="input" class="section level1">
-<h1>Input</h1>
-<h4>
-<span class="option"> <b>Effect information </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Expected Cohen’s d (δ)</span>
-</td>
-<td class="optionvalue">
-Expected Cohe’s d
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N of group 1</span>
-</td>
-<td class="optionvalue">
-Sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Relatve size of groups</span>
-</td>
-<td class="optionvalue">
-Relative size of the two groups. 1 means group of equal size,
-<code>ratio</code>&gt;1 means that one group is <code>ratio</code> times
-larger than the other.
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Parameters </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Minimal desired power</span>
-</td>
-<td class="optionvalue">
-Minimal desired power (1-Beta)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Alpha (Type I rate)</span>
-</td>
-<td class="optionvalue">
-Critical alpha (significance level to be used in the analysis)
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Tails</span>
-</td>
-<td class="optionvalue">
-Wheather the test is two-tailed (<code>two.sided</code>) or one-tailed
-(<code>greater</code>).
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Equivalence Testing </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Perform equivalence testing</span>
-</td>
-<td class="optionvalue">
-Perform an equivalence test to show that a true effect is small enough
-to be considered practically negligible
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Equivalence limit</span>
-</td>
-<td class="optionvalue">
-</td>
-</tr>
-</table>
-<h4>
-<span class="option"> <b>Options </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Explanatory text</span>
-</td>
-<td class="optionvalue">
-Produces some text to help interpreting the results
-</td>
-</tr>
-</table>
-</div>
-<div id="sensitivity-analysis" class="section level1">
-<h1>Sensitivity Analysis</h1>
-<p>Sensitivity analysis, exploring different plots of possible
-combinations of parameters, can be carried out like for any other <span
-class="modulename">PAMLj</span> sub-modules. Please visit
-<a href="/home/mcfanda/Skinner/Forge/jamovi/pamlj/pamlj.github.io/docssource//sensitivity.html">Sensitivity
-analysis</a> page for more details.</p>
-</div>
-<div id="effect-size-conversion" class="section level1">
-<h1>Effect Size Conversion</h1>
-<h4>
-<span class="option"> <b>Convert from t-test </b></span>
-</h4>
-<table class="options">
-<tr>
-<td class="optionname">
-<span class="option">Observed t-test</span>
-</td>
-<td class="optionvalue">
-The observed t-test value resulting an empirical study
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">N per group</span>
-</td>
-<td class="optionvalue">
-The observed t-test sample size per group
-</td>
-</tr>
-<tr>
-<td class="optionname">
-<span class="option">Cohen’s d</span>
-</td>
-<td class="optionvalue">
-The resulting Cohen’s d corresponding to the observed t-test and N per
-group
-</td>
-</tr>
-</table>
 <div class="version">
 <p>
-0.7.0
+0.2.6
 </p>
 </div>
 <div style="clear:both">
 
 </div>
+<div class="underconstruction">
+<div>
+<i class="fa fa-drafting-compass"></i>
+</div>
+<p class="underconstruction">
+This page is not yet available: Please come back soon
+</p>
+</div>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="./prop.html">Proportions difference</a>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
@@ -398,13 +253,6 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
-</div>
-<div class="adm adm-seealso backto">
-<p>
-Return to main help pages
-</p>
-<a class='backto' href='index.html'>Main page</a>
-<a class="backto" href="./ttest.html">T-test</a>
 </div>
 </div>
 
