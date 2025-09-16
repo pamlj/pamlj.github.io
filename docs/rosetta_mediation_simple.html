@@ -9,7 +9,7 @@
     
     <title>Mediation: Simple models</title>
 
-        <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -59,7 +59,7 @@
         <style type="text/css">code{white-space: pre;}</style>
     <style type="text/css">
       pre > code.sourceCode { white-space: pre; position: relative; }
-      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span { line-height: 1.25; }
       pre > code.sourceCode > span:empty { height: 1.2em; }
       .sourceCode { overflow: visible; }
       code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -438,18 +438,14 @@ In fact, as we have seen above:</li>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>r2y<span class="ot">&lt;-</span>b<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>cp<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>a<span class="sc">*</span>b<span class="sc">*</span>cp</span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">r2y.mx=</span>r2y,<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">alpha=</span>.<span class="dv">05</span>)</span></code></pre></div>
-<pre><code>##  Indirect Effect in Mediation Model
-##  H0: a * b = 0 
-##  HA: a * b != 0 
-##  --------------------------- 
-##         test power   n   ncp
-##        Sobel   0.8 145 2.802
-##       Aroian   0.8 149 2.802
-##      Goodman   0.8 140 2.802
-##        Joint    NA  NA    NA
-##  Monte Carlo    NA  NA    NA
-## ---------------------------- 
-##  Type I error rate = 0.05</code></pre>
+<pre><code>##  Indirect Effect in a Mediation Model
+##  ====================================
+##   method non-centrality   n     power
+##    Sobel       2.808013 145 0.8017955
+##   Aroian       2.803974 149 0.8006690
+##  Goodman       2.805152 140 0.8009979
+##  ------------------------------------
+##  Type 1 error rate: 0.05</code></pre>
 <p>The Sobel test yields a required sample size of <span
 class="math inline">\(N=145\)</span>, as the other software.</p>
 </div>
@@ -585,18 +581,16 @@ expected power.</p>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>r2y<span class="ot">&lt;-</span>b<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>cp<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>a<span class="sc">*</span>b<span class="sc">*</span>cp</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>N<span class="ot">&lt;-</span> <span class="dv">70</span></span>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>pwrss<span class="sc">::</span><span class="fu">pwrss.z.mediation</span>(<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">r2y.mx=</span>r2y,<span class="at">n=</span>N,<span class="at">alpha=</span>.<span class="dv">05</span>,<span class="at">mc=</span><span class="cn">TRUE</span>,<span class="at">nsims=</span><span class="dv">10000</span>,<span class="at">verbose=</span>T)</span></code></pre></div>
-<pre><code>##  Indirect Effect in Mediation Model
-##  H0: a * b = 0 
-##  HA: a * b != 0 
-##  --------------------------- 
-##         test power  n   ncp
-##        Sobel 0.380 70 1.654
-##       Aroian 0.373 70 1.636
-##      Goodman 0.387 70 1.672
-##        Joint 0.401 70    NA
-##  Monte Carlo 0.402 70    NA
-## ---------------------------- 
-##  Type I error rate = 0.05</code></pre>
+<pre><code>##  Indirect Effect in a Mediation Model
+##  ====================================
+##       method non-centrality  n     power
+##        Sobel       1.653684 70 0.3798468
+##       Aroian       1.636274 70 0.3732478
+##      Goodman       1.671662 70 0.3866988
+##        Joint             NA 70 0.4005886
+##  Monte Carlo             NA 70 0.4079000
+##  ------------------------------------
+##  Type 1 error rate: 0.05</code></pre>
 <p>Results are very close the the ones obtained with <span
 class="modulename">PAMLj</span>.</p>
 <p>As a further check for the <code>Monte Carlo</code> method, we can
