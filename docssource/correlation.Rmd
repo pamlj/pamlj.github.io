@@ -82,7 +82,7 @@ So, let’s complete the field Calculate: Power. With an effect size of 0.35 and
 
 The achievable power is $1-\beta = .414$. This means the study is more likely not to detect a significant result than to do so, indicating a high risk of being underpowered.
 
-Finally, note that Aim: Power can also be used to compute what is sometimes called post-hoc power. However, the use of post-hoc power in research is controversial [@nuzzo2021post].
+Finally, note that `r opt("Aim: Power")` can also be used to compute what is sometimes called post-hoc power. However, the use of post-hoc power in research is controversial [@nuzzo2021post].
 
 ## Sensitivity analysis
 
