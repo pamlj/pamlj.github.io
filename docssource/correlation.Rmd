@@ -19,7 +19,7 @@ Power Analysis
 
 
 :::{ .version}
-0.2.0
+> 0.2.0
 :::
 
 
@@ -70,15 +70,19 @@ The solid line portraits the change in power as we increases sample size given t
 In this example, for instance,  we can see that if we were not able to collect more than 150 cases, our expected power will not be more than .70 (to be optimistic).
 
 
-# Aim: Power (posthoc power)
+# Aim: Power (achievable power)
 
-Post-hoc power analysis serves to evaluate the likelihood of obtaining statistically significant results after conducting research, particularly when a pre-hoc (a priori) analysis was not performed. For instance, let's consider a scenario where a research study involves 25 participants, resulting in a Pearson correlation coefficient of 0.35, which is found to be statistically significant. In this context, post-hoc power analysis assesses the probability of consistently obtaining significant results if the research were to be replicated multiple times, drawing from the same population.
+Achievable power analysis evaluates the probability of obtaining statistically significant results given a fixed sample size and an assumed effect size.
 
-So, let's fill in the field for `Calculate: Power`. The effect size is .35, N (Sample size) is 25. The expected power is under the column `power`.
+Consider a scenario where the researcher cannot freely choose the sample size—for example, a clinical study limited to the patients of a single hospital department. Suppose the department has only 25 patients. Although this number is fixed and beyond the researcher’s control, it is still possible to estimate the study’s power by specifying an expected effect size, such as a correlation of 0.35. In this case, achievable power analysis answers the question: Given these constraints, what is the likelihood of detecting a significant effect?
 
-`r pic("pics/correlation/r.5.png")`
+So, let’s complete the field Calculate: Power. With an effect size of 0.35 and a sample size of 25, the expected power (see the power column) is:
 
-The expected power, calculated as $1−\beta=.414$, indicates that it's less likely to replicate the results than to obtain significant results when drawing from the same population and employing the same sample size. If there are concerns about the lack of replication, increasing the sample size (N) would be recommended [@schonbrodt2013sample]. 
+r pic("pics/correlation/r.5.png")
+
+The achievable power is $1-\beta = .414$. This means the study is more likely not to detect a significant result than to do so, indicating a high risk of being underpowered.
+
+Finally, note that Aim: Power can also be used to compute what is sometimes called post-hoc power. However, the use of post-hoc power in research is controversial [@nuzzo2021post].
 
 ## Sensitivity analysis
 
