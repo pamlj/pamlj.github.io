@@ -78,7 +78,7 @@ Consider a scenario where the researcher cannot freely choose the sample size—
 
 So, let’s complete the field Calculate: Power. With an effect size of 0.35 and a sample size of 25, the expected power (see the power column) is:
 
-r pic("pics/correlation/r.5.png")
+`r pic("pics/correlation/r.5.png")`
 
 The achievable power is $1-\beta = .414$. This means the study is more likely not to detect a significant result than to do so, indicating a high risk of being underpowered.
 
