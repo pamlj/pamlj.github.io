@@ -52,7 +52,7 @@ The first requirement of the analysis, however, is to specify a model and its co
 
 Power analysis for mixed model requires to input a mixed model with all the expected coefficients. `r modulename()` employs  a custom syntax based on R package `lme4` [@lme4] standard formulas, modified to easily pass coefficients.
 
-First, a model in the R package `lme4` [@lme4] is to be defined. For instance, a simple intercept only model may look like this
+First, a model in the R package `lme4` [@lme4] is to be defined. For instance, a simple random intercept-only model may look like this
 
 ```{r eval=FALSE}
 

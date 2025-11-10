@@ -396,8 +396,8 @@ class="citation">(<a href="#ref-lme4">Bates et al. 2015</a>)</span>
 standard formulas, modified to easily pass coefficients.</p>
 <p>First, a model in the R package <code>lme4</code> <span
 class="citation">(<a href="#ref-lme4">Bates et al. 2015</a>)</span> is
-to be defined. For instance, a simple intercept only model may look like
-this</p>
+to be defined. For instance, a simple random intercept-only model may
+look like this</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
 <p>Recall that <code>1</code> indicates the intercept: this model has a
 fixed intercept, a fixed effect of x and a random intercept across a
