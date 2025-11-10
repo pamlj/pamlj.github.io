@@ -319,11 +319,14 @@ Gallucci</p>
 <div id="main">
 <p>Power Analysis</p>
 <div class="version">
-<blockquote>
-<p>0.7.0</p>
-</blockquote>
+<p>
+0.7.0
+</p>
 </div>
-<p><img src="pics/mixed/ui.png" width="599" /></p>
+<div style="clear:both">
+
+</div>
+<p><img src="pics/mixed/ui.png" width="588" /></p>
 <div id="linear-mixed-models" class="section level1">
 <h1>Linear Mixed Models</h1>
 <p><code>Linear Mixed Models</code> allows users to compute achievable
@@ -350,14 +353,14 @@ class="math inline">\(K\)</span> indicates the number of clusters, and
 observations within each cluster.</p>
 <p>In <span class="modulename">PAMLj</span>, grouping variables are
 referred to as <em>clustering variables</em>, the number of clusters (or
-groups) as <em># of clusters</em>, and the number of observations per
-cluster as <em># of cases</em>.</p>
-<p>Power parameters are estimated by simulation. A sample with the
-required characteristics — such as independent variables, variable
-types, and clustering variables — is generated from a data-generating
-model (DGM) defined by the user. The DGM reproduces the structure and
-coefficients specified in the <code>Model Syntax</code> field of the
-interface.<br />
+groups) as <em># Clusters levels</em>, and the number of observations
+per cluster as <em>N per cluster</em>.</p>
+<p>Power parameters are estimated by Monte Carlo simulations. A sample
+with the required characteristics — such as independent variables,
+variable types, and clustering variables — is generated from a
+data-generating model (DGM) defined by the user. The DGM reproduces the
+structure and coefficients specified in the <code>Model Syntax</code>
+field of the interface.<br />
 For each simulation run, <span class="math inline">\(R\)</span> models
 are estimated, and power (the proportion of significant results) is
 computed.</p>
@@ -377,7 +380,7 @@ class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>
 the power analysis for mixed models does not update the results whenever
 an option is changed in the UI. This is because power analysis
 simulation algorithm may take very long time to achieve an estimation,
-and thus block the user work when setting several options. Thus, to run
+thus blocking the user work when setting several options. Thus, to run
 the analysis the user should always click the <span
 style="color:green; font-size:130%;">▶</span> run button.</p>
 <p>The first requirement of the analysis, however, is to specify a model
@@ -396,28 +399,28 @@ class="citation">(<a href="#ref-lme4">Bates et al. 2015</a>)</span> is
 to be defined. For instance, a simple intercept only model may look like
 this</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
-<p>Recall that <code>1</code> indicates the intercept this model has a
+<p>Recall that <code>1</code> indicates the intercept: this model has a
 fixed intercept, a fixed effect of x and a random intercept across a
-variable named clustervar.</p>
-<p>Second, one need to input the coefficients of each term in the model
+variable named <code>clustervar</code>.</p>
+<p>Second, one needs to input the coefficients of each term in the model
 using the syntax <code>value*x</code>. Thus, the syntax:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
-<p>means that we expect the fixed intercept to be <span
+<p>This means that we expect the fixed intercept to be <span
 class="math inline">\(1\)</span>, the fix coefficient associated with
 <span class="math inline">\(x\)</span> to be equal to <span
 class="math inline">\(.5\)</span> and we expect the variance of the
 random intercept to be <span class="math inline">\(1\)</span>. The
-residual variance of the model can be set in the UI in the field
-<code>Residual Variance</code>, default to 1.</p>
+residual variance of the model can be set in the UI in the field <span
+class="option">Residual Variance</span>, default to 1.</p>
 <p>If a model has also a random coefficient of the independent variable
 (random slopes), it should be added to the model with its expected
 coefficient. For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+1.5</span><span class="sc">*</span>x<span class="sc">|</span>clustervar)</span></code></pre></div>
 <p>indicates that <span class="math inline">\(x\)</span> has a random
-slope whose variance is <span class="math inline">\(1.5\)</span>. Random
-coefficients are expected to be independent in the population, but their
-correlation is estimated in the simulation model (if not explicitly
-denied, such as in model like
+slope whose variance is <span class="math inline">\(1.5\)</span> across
+levels of <code>clustervar</code>. Random coefficients are expected to
+be independent in the population, but their correlation is estimated in
+the simulation model (if not explicitly denied, such as in model like
 <code>y~1*1+.5*x+(1*1|clustervar)+(0*0+1.5*x|clustervar)</code>).</p>
 <p>Multiple clustering variables can specified, for instance:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+1.5</span><span class="sc">*</span>x<span class="sc">|</span>class)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span></code></pre></div>
@@ -437,37 +440,39 @@ analysis.</p>
 the number of cases (<span class="math inline">\(n\)</span>
 observations) within each cluster. So, the user should decide what the
 algorithm should find, either the required
-<code>Number of clusters</code> or the required
+<code>Number of cluster levels</code> or the required
 <code>Cases within cluster</code>.</p>
 <div id="find-number-of-clusters" class="section level2">
 <h2>Find: Number of clusters</h2>
-<p>When <code>Find:Number of clusters</code> is selected, the algorithm
-varies the number of levels of the (first) clustering variable until it
-finds the number that guarantees the required power, as specified in the
-option <code>required power</code> (default <span
+<p>When <code>Find: Number of cluster levels</code> is selected, the
+algorithm varies the number of levels of the (first) clustering variable
+until it finds the number that guarantees the required power, as
+specified in the option <code>required power</code> (default <span
 class="math inline">\(.90\)</span>). The sample is so expanded or
-shrinken along the clustering variable, while the number of cases within
+shrunken along the clustering variable, while the number of cases within
 each cluster is set constant to the value specified by the user in the
-<code># of cases</code> field, in <code>Clustering Variables</code>
-section.</p>
-<p><img src="pics/mixed/cluster.1.png" width="587" /></p>
+<code>N per cases</code> field, in <span class="option"> <b>Clustering
+variables </b></span> section.</p>
+<p><img src="pics/mixed/cluster.1.png" width="560" /></p>
 <p>In the example in the figure, user is searching for the Number of
 clusters in a model including <code>clustervar</code> as the clustering
-variable. Thus, the <code># of clusters</code> is left empty (or
-equivalently to <code>---</code>), and the <code># of cases</code> is
+variable. Thus, the <code># Clusters levels</code> is left empty (or
+equivalently to <code>?</code>), and the <code>N per cluster</code> is
 set to 10. As another example, if a mixed model is expected to be
 applied to a repeated measure design with three measures over time, with
 variable <code>ID</code> as clustering variable indicating the
-participant id code, the user would set the <code># of clusters</code>
-as empty (or equivalently to <code>---</code>), and the
-<code># of cases</code> is set to 4.</p>
+participant id code, the user would set the
+<code># Cluster levels</code> as empty (or equivalently to
+<code>?</code>), and the <code>N per cluster</code> is set to 4.</p>
+<p><img src="pics/mixed/cluster.2.png" width="564" /></p>
 <div class="adm adm-note">
 <p>Note</p>
-<p>When <code>Find: Number of clusters</code> is selected, if a user
-insert a value to the <code># of clusters</code> field, the value is
-used as starting point of the Monte Carlo algorithm. This can be usefull
-is the expected number of cluster is very large, so setting a large
-starting point for the parameter may speed up the algorithm search.</p>
+<p>When <code>Find: Number of cluster levels</code> is selected, if a
+user insert a value to the <code># Cluster levels</code> field, the
+value is used as starting point of the Monte Carlo algorithm. This can
+be useful is the expected number of cluster is very large, so setting a
+large starting point for the parameter may speed up the algorithm
+search.</p>
 </div>
 </div>
 <div id="find-cases-within-cluster" class="section level2">
@@ -478,32 +483,34 @@ algorithm varies the number of observations within each cluster of the
 the required power, as specified in the option
 <code>required power</code> (default <span
 class="math inline">\(.90\)</span>). The sample is so expanded or
-shrinken within each cluster, while the number of clusters is set
+shrunken within each cluster, while the number of clusters is set
 constant to the value specified by the user in the
-<code># of clusters</code> field, in <code>Clustering Variables</code>
-section.</p>
-<p><img src="pics/mixed/cluster.2.png" width="594" /></p>
+<code># Clusters levels</code> field, in
+<code>Clustering Variables</code> section. <code>N per cluster</code> is
+ignored (if empty or <code>?</code>, or used as starting value)</p>
+<p><img src="pics/mixed/cluster.3.png" width="563" /></p>
 <p>In the example in the figure, user is searching for the number of
 observations within clusters in a model including
 <code>clustervar</code> as the clustering variable. Thus, the
-<code># of cases</code> is left empty (or equivalently to
-<code>---</code>), and the <code># of clusters</code> is set to 50. As
-another example, if a mixed model is expected to be applied to a
-repeated measure design on 100 participants, and the researcher is
+<code>N per cluster</code> is left empty (or equivalently to
+<code>?</code>), and the <code># Clusters levels</code> is set to 100.
+As another example, if a mixed model is expected to be applied to a
+repeated measure design on 50 participants, and the researcher is
 looking for the required number of trials to achieve a given power, the
-user would set the <code># of cases</code> as empty (or equivalently to
-<code>---</code>), and the <code># of clusters</code> to 100.</p>
+user would set the <code>N per cluster</code> as empty (or equivalently
+to <code>?</code>), and the <code># Cluster levels</code> to 50.</p>
+<p><img src="pics/mixed/cluster.4.png" width="559" /></p>
 <div class="adm adm-note">
 <p>Note</p>
 <p>When <code>Find: Cases within clusters</code> is selected, if a user
-insert a value to the <code># of cases</code> field, the value is used
-as starting point of the Monte Carlo algorithm.</p>
+insert a value to the <code>N per cluster</code> field, the value is
+used as starting point of the Monte Carlo algorithm.</p>
 </div>
 </div>
 </div>
 <div id="variables" class="section level1">
 <h1>Variables</h1>
-<p><span class="modulename">PAMLj</span> extract from the imput model
+<p><span class="modulename">PAMLj</span> extracts from the input model
 the name of the independent variables included in the model. By default,
 they are considered as continuous variables. If a variable is
 categorical, it should be indicated in the panel and the number of

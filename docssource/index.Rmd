@@ -41,6 +41,7 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 * Standardized coefficients based analysis
 * Factorial designs (between, within and mixed)
 * Mediation analysis, simple and complex
+* Mixed Models (Multilevel and random coefficients models)
 
 `r include_pages(category="help",title="Main help pages",text="Please select the help page for a specific analysis ")`
 
