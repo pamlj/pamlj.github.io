@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Marcello Gallucci" />
+    
+    
+    <title>Mixed models</title>
+
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="mixed.html">Mixed Models</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Mixed models</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Mixed models</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#linear-mixed-models"
+      id="toc-linear-mixed-models">Linear Mixed Models</a></li>
+      <li><a href="#simulations"
+      id="toc-simulations">Simulations</a></li>
+      <li><a href="#user-interface-ui" id="toc-user-interface-ui">User
+      interface (UI)</a></li>
+      <li><a href="#model-syntax" id="toc-model-syntax">Model
+      Syntax</a></li>
+      <li><a href="#aim-n-required-sample-size"
+      id="toc-aim-n-required-sample-size">Aim: N (Required sample
+      size)</a>
+      <ul>
+      <li><a href="#find-number-of-clusters"
+      id="toc-find-number-of-clusters">Find: Number of clusters</a></li>
+      <li><a href="#find-cases-within-cluster"
+      id="toc-find-cases-within-cluster">Find: Cases within
+      cluster</a></li>
+      </ul></li>
+      <li><a href="#variables" id="toc-variables">Variables</a>
+      <ul>
+      <li><a href="#sensitivity-analysis"
+      id="toc-sensitivity-analysis">Sensitivity analysis</a></li>
+      </ul></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<p>Power Analysis</p>
+<div class="version">
+<blockquote>
+<p>0.7.0</p>
+</blockquote>
+</div>
+<p><img src="pics/mixed/ui.png" width="599" /></p>
+<div id="linear-mixed-models" class="section level1">
+<h1>Linear Mixed Models</h1>
+<p><code>Linear Mixed Models</code> allows users to compute achievable
+power and sample size parameters for testing coefficients in a random
+coefficients linear model.<br />
+Because of the complexity and flexibility of mixed models, this
+sub-module includes several features that differ from other sub-modules
+of <span class="modulename">PAMLj</span>.<br />
+Particular attention should therefore be paid to the specific options
+available and their implications. Furthermore, power analysis of mixed
+models is computed using complex simulations, that often require very
+long estimation times. So, some patience is required to perform a
+correct and complete analysis.</p>
+</div>
+<div id="simulations" class="section level1">
+<h1>Simulations</h1>
+<p>Mixed models can be considered as linear models applied to
+multi-level designs, where observations are sampled at different
+hierarchical levels. In a standard multi-level design, <em>clusters</em>
+(groups of observations) are randomly sampled, and within each cluster,
+a number of observations is sampled. Here, <span
+class="math inline">\(K\)</span> indicates the number of clusters, and
+<span class="math inline">\(n\)</span> indicates the number of
+observations within each cluster.</p>
+<p>In <span class="modulename">PAMLj</span>, grouping variables are
+referred to as <em>clustering variables</em>, the number of clusters (or
+groups) as <em># of clusters</em>, and the number of observations per
+cluster as <em># of cases</em>.</p>
+<p>Power parameters are estimated by simulation. A sample with the
+required characteristics — such as independent variables, variable
+types, and clustering variables — is generated from a data-generating
+model (DGM) defined by the user. The DGM reproduces the structure and
+coefficients specified in the <code>Model Syntax</code> field of the
+interface.<br />
+For each simulation run, <span class="math inline">\(R\)</span> models
+are estimated, and power (the proportion of significant results) is
+computed.</p>
+<p>When the aim is to determine the required sample size
+(<code>Aim: N</code>), the sample characteristics (<span
+class="math inline">\(K\)</span> or <span
+class="math inline">\(n\)</span>) are varied until the desired power is
+reached. When the aim is to assess achievable power, the <span
+class="math inline">\(R\)</span> simulations are run to estimate power
+given the <span class="math inline">\(K\)</span> and <span
+class="math inline">\(n\)</span> specified by the user.</p>
+</div>
+<div id="user-interface-ui" class="section level1">
+<h1>User interface (UI)</h1>
+<p>As opposed to other modules and command in <span
+class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>,
+the power analysis for mixed models does not update the results whenever
+an option is changed in the UI. This is because power analysis
+simulation algorithm may take very long time to achieve an estimation,
+and thus block the user work when setting several options. Thus, to run
+the analysis the user should always click the <span
+style="color:green; font-size:130%;">▶</span> run button.</p>
+<p>The first requirement of the analysis, however, is to specify a model
+and its coefficients. This can be done in <code>Model Syntax</code>
+field.</p>
+</div>
+<div id="model-syntax" class="section level1">
+<h1>Model Syntax</h1>
+<p>Power analysis for mixed model requires to input a mixed model with
+all the expected coefficients. <span class="modulename">PAMLj</span>
+employs a custom syntax based on R package <code>lme4</code> <span
+class="citation">(<a href="#ref-lme4">Bates et al. 2015</a>)</span>
+standard formulas, modified to easily pass coefficients.</p>
+<p>First, a model in the R package <code>lme4</code> <span
+class="citation">(<a href="#ref-lme4">Bates et al. 2015</a>)</span> is
+to be defined. For instance, a simple intercept only model may look like
+this</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
+<p>Recall that <code>1</code> indicates the intercept this model has a
+fixed intercept, a fixed effect of x and a random intercept across a
+variable named clustervar.</p>
+<p>Second, one need to input the coefficients of each term in the model
+using the syntax <code>value*x</code>. Thus, the syntax:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
+<p>means that we expect the fixed intercept to be <span
+class="math inline">\(1\)</span>, the fix coefficient associated with
+<span class="math inline">\(x\)</span> to be equal to <span
+class="math inline">\(.5\)</span> and we expect the variance of the
+random intercept to be <span class="math inline">\(1\)</span>. The
+residual variance of the model can be set in the UI in the field
+<code>Residual Variance</code>, default to 1.</p>
+<p>If a model has also a random coefficient of the independent variable
+(random slopes), it should be added to the model with its expected
+coefficient. For instance:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+1.5</span><span class="sc">*</span>x<span class="sc">|</span>clustervar)</span></code></pre></div>
+<p>indicates that <span class="math inline">\(x\)</span> has a random
+slope whose variance is <span class="math inline">\(1.5\)</span>. Random
+coefficients are expected to be independent in the population, but their
+correlation is estimated in the simulation model (if not explicitly
+denied, such as in model like
+<code>y~1*1+.5*x+(1*1|clustervar)+(0*0+1.5*x|clustervar)</code>).</p>
+<p>Multiple clustering variables can specified, for instance:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+1.5</span><span class="sc">*</span>x<span class="sc">|</span>class)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span></code></pre></div>
+<p>Notice, however, that the power sample size parameters (<span
+class="math inline">\(K\)</span> or <span
+class="math inline">\(n\)</span>) are solved for the first cluster
+specified, the other clusters parameters should be set by the user in
+the UI (see <code>Model Structure</code>).</p>
+<p>Once the model is set up, one should decide which is the aim of the
+analysis.</p>
+</div>
+<div id="aim-n-required-sample-size" class="section level1">
+<h1>Aim: N (Required sample size)</h1>
+<p><img src="pics/mixed/aim.1.png" width="720" /></p>
+<p>In mixed models, the sample size depends on the number of clusters
+(<span class="math inline">\(K\)</span> ) of the clustering variable or
+the number of cases (<span class="math inline">\(n\)</span>
+observations) within each cluster. So, the user should decide what the
+algorithm should find, either the required
+<code>Number of clusters</code> or the required
+<code>Cases within cluster</code>.</p>
+<div id="find-number-of-clusters" class="section level2">
+<h2>Find: Number of clusters</h2>
+<p>When <code>Find:Number of clusters</code> is selected, the algorithm
+varies the number of levels of the (first) clustering variable until it
+finds the number that guarantees the required power, as specified in the
+option <code>required power</code> (default <span
+class="math inline">\(.90\)</span>). The sample is so expanded or
+shrinken along the clustering variable, while the number of cases within
+each cluster is set constant to the value specified by the user in the
+<code># of cases</code> field, in <code>Clustering Variables</code>
+section.</p>
+<p><img src="pics/mixed/cluster.1.png" width="587" /></p>
+<p>In the example in the figure, user is searching for the Number of
+clusters in a model including <code>clustervar</code> as the clustering
+variable. Thus, the <code># of clusters</code> is left empty (or
+equivalently to <code>---</code>), and the <code># of cases</code> is
+set to 10. As another example, if a mixed model is expected to be
+applied to a repeated measure design with three measures over time, with
+variable <code>ID</code> as clustering variable indicating the
+participant id code, the user would set the <code># of clusters</code>
+as empty (or equivalently to <code>---</code>), and the
+<code># of cases</code> is set to 4.</p>
+<div class="adm adm-note">
+<p>Note</p>
+<p>When <code>Find: Number of clusters</code> is selected, if a user
+insert a value to the <code># of clusters</code> field, the value is
+used as starting point of the Monte Carlo algorithm. This can be usefull
+is the expected number of cluster is very large, so setting a large
+starting point for the parameter may speed up the algorithm search.</p>
+</div>
+</div>
+<div id="find-cases-within-cluster" class="section level2">
+<h2>Find: Cases within cluster</h2>
+<p>When <code>Find: Cases within cluster</code> is selected, the
+algorithm varies the number of observations within each cluster of the
+(first) clustering variable until it finds the number that guarantees
+the required power, as specified in the option
+<code>required power</code> (default <span
+class="math inline">\(.90\)</span>). The sample is so expanded or
+shrinken within each cluster, while the number of clusters is set
+constant to the value specified by the user in the
+<code># of clusters</code> field, in <code>Clustering Variables</code>
+section.</p>
+<p><img src="pics/mixed/cluster.2.png" width="594" /></p>
+<p>In the example in the figure, user is searching for the number of
+observations within clusters in a model including
+<code>clustervar</code> as the clustering variable. Thus, the
+<code># of cases</code> is left empty (or equivalently to
+<code>---</code>), and the <code># of clusters</code> is set to 50. As
+another example, if a mixed model is expected to be applied to a
+repeated measure design on 100 participants, and the researcher is
+looking for the required number of trials to achieve a given power, the
+user would set the <code># of cases</code> as empty (or equivalently to
+<code>---</code>), and the <code># of clusters</code> to 100.</p>
+<div class="adm adm-note">
+<p>Note</p>
+<p>When <code>Find: Cases within clusters</code> is selected, if a user
+insert a value to the <code># of cases</code> field, the value is used
+as starting point of the Monte Carlo algorithm.</p>
+</div>
+</div>
+</div>
+<div id="variables" class="section level1">
+<h1>Variables</h1>
+<p><span class="modulename">PAMLj</span> extract from the imput model
+the name of the independent variables included in the model. By default,
+they are considered as continuous variables. If a variable is
+categorical, it should be indicated in the panel and the number of
+levels of the variable needs to be specified. In the figure, <span
+class="math inline">\(z\)</span> is considered as categorical with 4
+levels.</p>
+<p><img src="pics/mixed/variables.1.png" width="579" /></p>
+<div class="adm adm-note">
+<p>Note</p>
+<p>For categorical variables, which are included in the model as a set
+(levels-1) dummy variables, the coefficient passed in the model is
+assumed to apply to the first dummy, whereas the other dummies are
+assumed to have null coefficient.</p>
+</div>
+<div id="sensitivity-analysis" class="section level2">
+<h2>Sensitivity analysis</h2>
+<p>SA is not yet available for <code>Mixed Models</code> sub-module.</p>
+</div>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+</div>
+<p>’</p>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-lme4" class="csl-entry">
+Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015.
+<span>“Fitting Linear Mixed-Effects Models Using <span
+class="nocase">lme4</span>.”</span> <em>Journal of Statistical
+Software</em> 67 (1): 1–48. <a
+href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>.
+</div>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

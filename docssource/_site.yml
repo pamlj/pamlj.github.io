@@ -17,6 +17,8 @@ navbar:
     href:  mediation.html
   - text: "SEM"
     href:  sem.html
+  - text: "Mixed Models"
+    href:  mixed.html
 
   - text: "Rosetta"
     href:  rosetta.html
