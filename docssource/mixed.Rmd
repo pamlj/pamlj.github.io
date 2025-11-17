@@ -150,7 +150,7 @@ If a variable is categorical, it should be indicated in the panel and the number
 
 `r pic("pics/mixed/variables.1.png")`
 
-The issue with categorical variables is that they are cast into the mixed model (like in any other linear model) as contrast variables (sometimes reffered to as _dummy variables_). Thus, to cast categorical variable with $K$ levels into a linear model, we need $K-1$ contrast variables, where $K$ is the number of levels. This means that if one has a 4-levels variable, 3 coefficients should be provided, and in general, $K-1$ coefficients are needed. 
+The issue with categorical variables is that they are cast into the mixed model (like in any other linear model) as contrast variables (sometimes refered to as _dummy variables_). Thus, to cast categorical variable with $K$ levels into a linear model, we need $K-1$ contrast variables, where $K$ is the number of levels. This means that if one has a 4-levels variable, 3 coefficients should be provided, and in general, $K-1$ coefficients are needed. 
 
 `r modulename()` allows for two different strategies to provide coefficients for categorical variables.
 

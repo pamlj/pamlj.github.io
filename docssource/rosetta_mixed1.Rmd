@@ -59,13 +59,13 @@ So, the RM-ANOVA results are equivalent to a mixed model with three contrast var
 
 `r pic("rosetta/pics/mixed/input.lme.2.png")`
 
-First, we use the `squared-brackets` syntax to attach three coefficients to the corresponding contrast variables representing _time_. Second, we multiply the random intercept (`1`) by the expected variance ($.0083$). This way, we pass the expected coefficients required to build the mixed model for simulating power and finding the required N. 
+First, we use the `squared-brackets` syntax to attach three coefficients to the corresponding contrast variables representing _time_. Second, we multiply the random intercept (`1` in `1|id`) by the expected variance ($.0083$). This way, we pass the expected coefficients required to build the mixed model for simulating power and finding the required N. Notice that the coefficient for the fixed intercept is set to zero `0*1+...` because its value is immaterial for the power computation.
 
 Because in this model participants are the clusters of the model, we set  `Calculate: N` as aim and `Number of cluster levels` as specific aim.
 
 `r pic("rosetta/pics/mixed/input.lme.3.png")`
 
-We then specify in the `r opt_label("Model Structure")` -> `r opt_label("Clustering vriables")` that the variable _id_ (the participants) has `N per cluster` equal to 4, because within each participant there will be 4 repeated measures.
+We then specify in the `r opt_label("Model Structure")` -> `r opt_label("Clustering variables")` that the variable _id_ (the participants) has `N per cluster` equal to 4, because within each participant there will be 4 repeated measures.
 
 Then, we specify that the variable _time_ is a categorical variable with 4 levels.
 

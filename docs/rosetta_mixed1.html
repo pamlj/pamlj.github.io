@@ -286,16 +286,19 @@ plug these values in the mixed model power analysis command.</p>
 <p><img src="rosetta/pics/mixed/input.lme.2.png" width="562" /></p>
 <p>First, we use the <code>squared-brackets</code> syntax to attach
 three coefficients to the corresponding contrast variables representing
-<em>time</em>. Second, we multiply the random intercept (<code>1</code>)
-by the expected variance (<span class="math inline">\(.0083\)</span>).
-This way, we pass the expected coefficients required to build the mixed
-model for simulating power and finding the required N.</p>
+<em>time</em>. Second, we multiply the random intercept (<code>1</code>
+in <code>1|id</code>) by the expected variance (<span
+class="math inline">\(.0083\)</span>). This way, we pass the expected
+coefficients required to build the mixed model for simulating power and
+finding the required N. Notice that the coefficient for the fixed
+intercept is set to zero <code>0*1+...</code> because its value is
+immaterial for the power computation.</p>
 <p>Because in this model participants are the clusters of the model, we
 set <code>Calculate: N</code> as aim and
 <code>Number of cluster levels</code> as specific aim.</p>
 <p><img src="rosetta/pics/mixed/input.lme.3.png" width="469" /></p>
 <p>We then specify in the <span class="option"> <b>Model Structure
-</b></span> -&gt; <span class="option"> <b>Clustering vriables
+</b></span> -&gt; <span class="option"> <b>Clustering variables
 </b></span> that the variable <em>id</em> (the participants) has
 <code>N per cluster</code> equal to 4, because within each participant
 there will be 4 repeated measures.</p>
