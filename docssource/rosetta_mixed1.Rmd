@@ -55,7 +55,7 @@ The same data, in long format, were analyzed with a mixed model, with _time_ as 
 
 `r pic("rosetta/pics/mixed/output.lme.1.png")`
 
-So, the RM-ANOVA results are equivalent to a mixed model with three contrast variables representing _time_, with coefficients $.5052$,$-.2952$, and $-.0043$. The random intercept variance was $\sigma_I^2=.00863$ and the residual variance $\sigma^2=1.009$. We can plug these values in the mixed model power analysis command.
+So, the RM-ANOVA results are equivalent to a mixed model with three contrast variables representing _time_, with coefficients $.5052$,$-.2952$, and $-.0043$. The random intercept variance was $\sigma_I^2=.0086$ and the residual variance $\sigma^2=1.009$. We can plug these values in the mixed model power analysis command.
 
 `r pic("rosetta/pics/mixed/input.lme.2.png")`
 
@@ -80,7 +80,7 @@ Running the analysis yield a required N (`Cluster levels`=number of participants
 `r pic("rosetta/pics/mixed/output.lme.2.png")`
 
 
-As an additional check, we compute the expected power of the mixed model test of time based on the original 50 participants. We get $1-\beta=.967$, remarkably similar to the one obtained with the RM-ANOVA power analysis ($1-\beta=.966$)
+As an additional check, we compute the expected power of the mixed model test of time based on the original 50 participants. We get $1-\beta=.966$, remarkably similar to the one obtained with the RM-ANOVA power analysis ($1-\beta=.966$)
 
 `r pic("rosetta/pics/mixed/output.lme.3.png")`
 
