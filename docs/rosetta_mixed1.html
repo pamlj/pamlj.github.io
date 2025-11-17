@@ -5,10 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="pandoc" />
 
-        <meta name="author" content="(Marcello Gallucci)" />
     
     
-    <title>Infos</title>
+    <title>MIxed vs RM-ANOVA</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -202,41 +201,22 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Infos</h1>
+      <h1 class="title">MIxed vs RM-ANOVA</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Infos</a></h2>
+    <h2><a href="#content">MIxed vs RM-ANOVA</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#details" id="toc-details">Details</a></li>
-      <li><a href="#details-1" id="toc-details-1">Details</a></li>
-      <li><a href="#examples" id="toc-examples">Examples</a>
-      <ul>
-      <li><a href="#glm" id="toc-glm">GLM</a></li>
-      </ul></li>
-      <li><a href="#examples-1" id="toc-examples-1">Examples</a></li>
+      <li><a href="#rm-avova" id="toc-rm-avova">RM-AVOVA</a></li>
       <li><a href="#mixed-model" id="toc-mixed-model">Mixed
       model</a></li>
-      <li><a href="#examples-2" id="toc-examples-2">Examples</a></li>
-      <li><a href="#generalized-linear-model"
-      id="toc-generalized-linear-model">Generalized Linear
-      Model</a></li>
-      <li><a href="#examples-3" id="toc-examples-3">Examples</a></li>
-      <li><a href="#generalized-mixed-models"
-      id="toc-generalized-mixed-models">Generalized Mixed
-      Models</a></li>
-      <li><a href="#examples-4" id="toc-examples-4">Examples</a></li>
-      <li><a href="#rosetta-store-results-across-software"
-      id="toc-rosetta-store-results-across-software">Rosetta store:
-      results across software</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      <li><a href="#references" id="toc-references">References</a></li>
       </ul>
     </div>
     <div id="postamble" data-toggle="wy-nav-shift" class="status">
-                  <p class="author"><span class="glyphicon glyphicon-user"></span> (Marcello
-Gallucci)</p>
-                      </div>
+                </div>
    </div>
      
 
@@ -245,130 +225,106 @@ Gallucci)</p>
    
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
-<div id="details" class="section level1">
-<h1>Details</h1>
-<p>Here you can find some explanation about how <span
-class="modulename">PAMLj</span> module does things.</p>
+<div class="version">
+<p>0.8.0</p>
 </div>
-<div id="details-1" class="section level1 adm adm-seealso">
-<h1>Details</h1>
-<p>
-Some more information about the module specs can be found here
-</p>
-<ul>
-<li>
-<a href="./details_failure.html">Extreme values warnings</a>
-</li>
-<li>
-<a href="./specs_fncp.html">F-Test Non-centrality parameters</a>
-</li>
-</ul>
+<p>Comparing software results in power analysis for mixed models is not
+straightforward. Only a few programs support this type of analysis, and
+those that do often implement different procedures. Here we compare
+equivalent designs using power analyses based on different statistical
+tests. The goal is to examine whether analyses conducted with different
+approaches yield similar power estimates.</p>
+<p>Specifically, we compare the required sample size estimated via
+repeated-measures ANOVA with that obtained from mixed-model power
+analysis. We use a simulated dataset that produces equivalent results
+under both ANOVA and mixed models, and we show that the corresponding
+power analyses converge to similar conclusions.</p>
+<div id="rm-avova" class="section level1">
+<h1>RM-AVOVA</h1>
+<p>The data mimic a repeated-measures design, with time as a categorical
+independent variable with four levels and a continuous dependent
+variable. To analyze them with repeated-measures ANOVA, we require a
+wide-format dataset, with one row per participant and the following
+structure:</p>
+<p><img src="rosetta/pics/mixed/r1.data.1.png" width="590" /></p>
+<p>The repeated-measure ANOVA has one categorical variable
+(<em>time</em>) measured over 4 times. The dependent variable is a
+continuous variables. Based the RM-ANOVA on a sample of 50 cases, we
+obtain a partial eta-squared <span
+class="math inline">\(\eta_p^2=.115\)</span>.</p>
+<p><img src="rosetta/pics/mixed/output.rm.1.png" width="603" /></p>
+<p>With this information, we estimated the required sample size to
+obtain a power of at least .90 using <span
+class="modulename">PAMLj</span> <code>Factorial Designs</code>
+command.</p>
+<p><img src="rosetta/pics/mixed/input.rm.2.png" width="583" /></p>
+<p>obtaining a sample size of <span
+class="math inline">\(N=39\)</span>.</p>
+<p><img src="rosetta/pics/mixed/output.rm.2.png" width="615" /></p>
+<p>With the original <span class="math inline">\(N=50\)</span> cases,
+the expected power would be <span
+class="math inline">\(1-\beta=.965\)</span>.</p>
+<p><img src="rosetta/pics/mixed/output.rm.3.png" width="620" /></p>
 </div>
-<div id="examples" class="section level1">
-<h1>Examples</h1>
-<p>Here you can find some applications of <span
-class="modulename">PAMLj</span> module.</p>
-<div id="glm" class="section level2">
-<h2>GLM</h2>
-</div>
-</div>
-<div id="examples-1" class="section level1 adm adm-seealso">
-<h1>Examples</h1>
-<p>
-Some worked out practical examples can be found here
-</p>
-</div>
-<div id="mixed-model" class="section level2">
-<h2>Mixed model</h2>
-</div>
-<div id="examples-2" class="section level1 adm adm-seealso">
-<h1>Examples</h1>
-<p>
-Some worked out practical examples can be found here
-</p>
-</div>
-<div id="generalized-linear-model" class="section level2">
-<h2>Generalized Linear Model</h2>
-</div>
-<div id="examples-3" class="section level1 adm adm-seealso">
-<h1>Examples</h1>
-<p>
-Some worked out practical examples can be found here
-</p>
-</div>
-<div id="generalized-mixed-models" class="section level2">
-<h2>Generalized Mixed Models</h2>
-</div>
-<div id="examples-4" class="section level1 adm adm-seealso">
-<h1>Examples</h1>
-<p>
-Some worked out practical examples can be found here
-</p>
-</div>
-<div id="rosetta-store-results-across-software" class="section level1">
-<h1>Rosetta store: results across software</h1>
-<p>Comparisons with other software: Here you can find comparisons of
-results obtained in jamovi <span class="modulename">PAMLj</span>, and
-other software, usually jamovi (jmv), pure R, and SPSS. The pages are
-primarily meant to test convergence between <span
-class="modulename">PAMLj</span> and well-established packages, but they
-can be useful also to check how to get equivalent results across
-different programs.</p>
-<ul>
-<li>
-<a href="./rosetta_correlation.html">Correlation</a>
-</li>
-<li>
-<a href="./rosetta_factorial_means.html">Factorial designs: power from
-means and SD</a>
-</li>
-<li>
-<a href="./rosetta_factorial_peta.html">Factorial designs: power from
-effect size</a>
-</li>
-<li>
-<a href="./rosetta_glm_n.html">GLM: required sample size</a>
-</li>
-<li>
-<a href="./rosetta_glm_posthoc.html">GLM: posthoc power</a>
-</li>
-<li>
-<a href="./rosetta_mediation_complex.html">Mediation: Complex models</a>
-</li>
-<li>
-<a href="./rosetta_mediation_simple.html">Mediation: Simple models</a>
-</li>
-<li>
-<a href="./rosetta_mixed1.html">MIxed vs RM-ANOVA</a>
-</li>
-<li>
-<a href="./rosetta_prop_ind.html">Independent Samples Proportions</a>
-</li>
-<li>
-<a href="./rosetta_prop_paired.html">Paired Samples Proportions</a>
-</li>
-<li>
-<a href="./rosetta_sem.html">SEM</a>
-</li>
-<li>
-<a href="./rosetta_equi_ttest.html">Independent sample T-test:
-Equivalence tests</a>
-</li>
-<li>
-<a href="./rosetta_ttest_ind.html">Independent Samples t-test</a>
-</li>
-<li>
-<a href="./rosetta_ttest_one.html">One Sample t-test</a>
-</li>
-<li>
-<a href="./rosetta_ttest_paired.html">Pairted Samples t-test</a>
-</li>
-</ul>
+<div id="mixed-model" class="section level1">
+<h1>Mixed model</h1>
+<p>The same data, in long format, were analyzed with a mixed model, with
+<em>time</em> as factor, coded with <code>deviation</code> coding
+(0’s,-1, and 1’s), and random intercept across participants. Results
+showed the same F-test of the RM-ANOVA, but give us the coefficients for
+the contrast variables and the random coefficients variances required to
+set up the power analysis model.</p>
+<p><img src="rosetta/pics/mixed/output.lme.1.png" width="714" /></p>
+<p>So, the RM-ANOVA results are equivalent to a mixed model with three
+contrast variables representing <em>time</em>, with coefficients <span
+class="math inline">\(.5052\)</span>,<span
+class="math inline">\(-.2952\)</span>, and <span
+class="math inline">\(-.0043\)</span>. The random intercept variance was
+<span class="math inline">\(\sigma_I^2=.00863\)</span> and the residual
+variance <span class="math inline">\(\sigma^2=1.009\)</span>. We can
+plug these values in the mixed model power analysis command.</p>
+<p><img src="rosetta/pics/mixed/input.lme.2.png" width="562" /></p>
+<p>First, we use the <code>squared-brackets</code> syntax to attach
+three coefficients to the corresponding contrast variables representing
+<em>time</em>. Second, we multiply the random intercept (<code>1</code>)
+by the expected variance (<span class="math inline">\(.0083\)</span>).
+This way, we pass the expected coefficients required to build the mixed
+model for simulating power and finding the required N.</p>
+<p>Because in this model participants are the clusters of the model, we
+set <code>Calculate: N</code> as aim and
+<code>Number of cluster levels</code> as specific aim.</p>
+<p><img src="rosetta/pics/mixed/input.lme.3.png" width="469" /></p>
+<p>We then specify in the <span class="option"> <b>Model Structure
+</b></span> -&gt; <span class="option"> <b>Clustering vriables
+</b></span> that the variable <em>id</em> (the participants) has
+<code>N per cluster</code> equal to 4, because within each participant
+there will be 4 repeated measures.</p>
+<p>Then, we specify that the variable <em>time</em> is a categorical
+variable with 4 levels.</p>
+<p><img src="rosetta/pics/mixed/input.lme.4.png" width="560" /></p>
+<p>Finally, we set the residual variance of the model to <span
+class="math inline">\(1.009\)</span> as we found in the mixed model.</p>
+<p><img src="rosetta/pics/mixed/input.lme.5.png" width="363" /></p>
+<p>Running the analysis yield a required N
+(<code>Cluster levels</code>=number of participants) of 39, as expected
+by the RM-ANOVA power analysis. Because the mixed model power analysis
+is based on Monte Carlo simulations, different runs may yield slightly
+different N, but the results substantially converge.</p>
+<p><img src="rosetta/pics/mixed/output.lme.2.png" width="647" /></p>
+<p>As an additional check, we compute the expected power of the mixed
+model test of time based on the original 50 participants. We get <span
+class="math inline">\(1-\beta=.967\)</span>, remarkably similar to the
+one obtained with the RM-ANOVA power analysis (<span
+class="math inline">\(1-\beta=.966\)</span>)</p>
+<p><img src="rosetta/pics/mixed/output.lme.3.png" width="736" /></p>
+<p>Again, repeating the calculation yields slightly different results,
+but all substantially congruent with the expected values.</p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="./rosetta.html">PAMLj: rosetta</a>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
@@ -380,6 +336,9 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 
 ">send me an email</a>
 </p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
 </div>
 </div>
 

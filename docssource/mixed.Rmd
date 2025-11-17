@@ -19,7 +19,7 @@ Power Analysis
 
 
 
-`r version("0.7.0")`
+`r version("0.8.0")`
 
 `r pic("pics/mixed/ui.png")`
 
@@ -142,22 +142,45 @@ When  `Find: Cases within clusters` is selected, if a user insert a value to the
 
 # Variables
 
-`r modulename()` extracts from the input model the name of the independent variables included in the model. By default, they are considered as continuous variables. If a variable is categorical, it should be indicated in the panel and the number of levels of the variable needs to be specified. In the figure, $z$ is considered as categorical with 4 levels.
+`r modulename()` extracts from the input model the name of the independent variables included in the model. By default, they are considered as continuous variables. 
+
+# Categorical Variables
+
+If a variable is categorical, it should be indicated in the panel and the number of levels of the variable needs to be specified. In the figure, $z$ is considered as categorical with 4 levels.
 
 `r pic("pics/mixed/variables.1.png")`
 
-:::{ .adm .adm-note}
-Note
+The issue with categorical variables is that they are cast into the mixed model (like in any other linear model) as contrast variables (sometimes reffered to as _dummy variables_). Thus, to cast categorical variable with $K$ levels into a linear model, we need $K-1$ contrast variables, where $K$ is the number of levels. This means that if one has a 4-levels variable, 3 coefficients should be provided, and in general, $K-1$ coefficients are needed. 
 
-For categorical variables, which are included in the model as a set (levels-1) dummy variables, the coefficient passed in the model is assumed to apply to the first dummy, whereas the other dummies are assumed to have null coefficient. 
+`r modulename()` allows for two different strategies to provide coefficients for categorical variables.
 
-:::
+* In one coefficient is provided, like in `y~1*1+1*time+(1*1|cluster`), the input coefficient is applied to the first contrast variable, and the other coefficients are assumed to zero. This can be useful when the user focuses on one comparison, assuming the others will be smaller or null. 
+
+* If the exact coefficient for each contrast is required, users can use the notation $[1,2,3]*time$, where $1$ $2$ and $3$ represents the expected coefficients of the three contrasts required for a 4-level variable (here `time`). This allows greater flexibility and precision on specifying the model.
+
+Contrasts variables are contrast coded, $(-1,0,1)$ so their coefficient should be interpreted as the expcted difference in mean of each level mean and the sample grand mean. 
+
+Thus, if one is expecting a, say, 3 levels categorical variable to have fixed coefficients of $.5$, $1$ and $-.6$, one would write:
+
+For an example of categorical independent variables, please check `r link_pages(nickname = "ros_mixed_rm")`.
+
+```{r eval=FALSE}
+
+y~1*1+[.5,1,-.6]*x+(1*1|clustervar)
+
+```
+
 
 
 
 ## Sensitivity analysis
 
 SA is not yet available for `Mixed Models` sub-module. 
+
+
+## Setup
+
+`r panel_options("pamlmixed","panel_options")`
 
 `r issues()`
 

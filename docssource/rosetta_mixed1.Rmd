@@ -1,0 +1,93 @@
+---
+title: "MIxed vs RM-ANOVA"
+topic: mixed
+category: rosetta
+nickname: ros_mixed_rm
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+
+:::{ .version }
+0.8.0
+:::
+
+Comparing software results in power analysis for mixed models is not straightforward. Only a few programs support this type of analysis, and those that do often implement different procedures. Here we compare equivalent designs using power analyses based on different statistical tests. The goal is to examine whether analyses conducted with different approaches yield similar power estimates.
+
+Specifically, we compare the required sample size estimated via repeated-measures ANOVA with that obtained from mixed-model power analysis. We use a simulated dataset that produces equivalent results under both ANOVA and mixed models, and we show that the corresponding power analyses converge to similar conclusions.
+
+# RM-AVOVA
+
+The data mimic a repeated-measures design, with time as a categorical independent variable with four levels and a continuous dependent variable. To analyze them with repeated-measures ANOVA, we require a wide-format dataset, with one row per participant and the following structure:
+
+`r pic("rosetta/pics/mixed/r1.data.1.png")`
+
+The repeated-measure ANOVA has one categorical variable (_time_) measured over 4 times. The dependent variable is a continuous variables. Based the RM-ANOVA on a sample of 50 cases, we obtain a partial eta-squared  $\eta_p^2=.115$. 
+
+`r pic("rosetta/pics/mixed/output.rm.1.png")`
+
+
+With this information, we estimated the required sample size to obtain a power of at least .90 using `r modulename()` `Factorial Designs` command.
+
+`r pic("rosetta/pics/mixed/input.rm.2.png")`
+
+obtaining a sample size of $N=39$.
+
+`r pic("rosetta/pics/mixed/output.rm.2.png")`
+
+With the original $N=50$ cases, the expected power would be $1-\beta=.965$.
+
+`r pic("rosetta/pics/mixed/output.rm.3.png")`
+
+# Mixed model
+
+The same data, in long format, were analyzed with a mixed model, with _time_ as factor, coded with `deviation` coding (0's,-1, and 1's), and random intercept across participants. Results showed the same F-test of the RM-ANOVA, but give us the coefficients for the contrast variables and the random coefficients variances required to set up the power analysis model.
+
+`r pic("rosetta/pics/mixed/output.lme.1.png")`
+
+So, the RM-ANOVA results are equivalent to a mixed model with three contrast variables representing _time_, with coefficients $.5052$,$-.2952$, and $-.0043$. The random intercept variance was $\sigma_I^2=.00863$ and the residual variance $\sigma^2=1.009$. We can plug these values in the mixed model power analysis command.
+
+`r pic("rosetta/pics/mixed/input.lme.2.png")`
+
+First, we use the `squared-brackets` syntax to attach three coefficients to the corresponding contrast variables representing _time_. Second, we multiply the random intercept (`1`) by the expected variance ($.0083$). This way, we pass the expected coefficients required to build the mixed model for simulating power and finding the required N. 
+
+Because in this model participants are the clusters of the model, we set  `Calculate: N` as aim and `Number of cluster levels` as specific aim.
+
+`r pic("rosetta/pics/mixed/input.lme.3.png")`
+
+We then specify in the `r opt_label("Model Structure")` -> `r opt_label("Clustering vriables")` that the variable _id_ (the participants) has `N per cluster` equal to 4, because within each participant there will be 4 repeated measures.
+
+Then, we specify that the variable _time_ is a categorical variable with 4 levels.
+
+`r pic("rosetta/pics/mixed/input.lme.4.png")`
+
+Finally, we set the residual variance of the model to $1.009$ as we found in the mixed model.
+
+`r pic("rosetta/pics/mixed/input.lme.5.png")`
+
+Running the analysis yield a required N (`Cluster levels`=number of participants) of 39, as expected by the RM-ANOVA power analysis. Because the mixed model power analysis is based on Monte Carlo simulations, different runs may yield slightly different N, but the results substantially converge.
+
+`r pic("rosetta/pics/mixed/output.lme.2.png")`
+
+
+As an additional check, we compute the expected power of the mixed model test of time based on the original 50 participants. We get $1-\beta=.967$, remarkably similar to the one obtained with the RM-ANOVA power analysis ($1-\beta=.966$)
+
+`r pic("rosetta/pics/mixed/output.lme.3.png")`
+
+Again, repeating the calculation yields slightly different results, but all substantially congruent with the expected values.
+
+`r backto("rosetta")`
+
+`r issues()`
+
+# References

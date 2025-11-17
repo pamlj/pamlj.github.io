@@ -297,10 +297,13 @@
       id="toc-find-cases-within-cluster">Find: Cases within
       cluster</a></li>
       </ul></li>
-      <li><a href="#variables" id="toc-variables">Variables</a>
+      <li><a href="#variables" id="toc-variables">Variables</a></li>
+      <li><a href="#categorical-variables"
+      id="toc-categorical-variables">Categorical Variables</a>
       <ul>
       <li><a href="#sensitivity-analysis"
       id="toc-sensitivity-analysis">Sensitivity analysis</a></li>
+      <li><a href="#setup" id="toc-setup">Setup</a></li>
       </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
@@ -320,7 +323,7 @@ Gallucci</p>
 <p>Power Analysis</p>
 <div class="version">
 <p>
-0.7.0
+0.8.0
 </p>
 </div>
 <div style="clear:both">
@@ -512,22 +515,112 @@ used as starting point of the Monte Carlo algorithm.</p>
 <h1>Variables</h1>
 <p><span class="modulename">PAMLj</span> extracts from the input model
 the name of the independent variables included in the model. By default,
-they are considered as continuous variables. If a variable is
-categorical, it should be indicated in the panel and the number of
-levels of the variable needs to be specified. In the figure, <span
-class="math inline">\(z\)</span> is considered as categorical with 4
-levels.</p>
-<p><img src="pics/mixed/variables.1.png" width="579" /></p>
-<div class="adm adm-note">
-<p>Note</p>
-<p>For categorical variables, which are included in the model as a set
-(levels-1) dummy variables, the coefficient passed in the model is
-assumed to apply to the first dummy, whereas the other dummies are
-assumed to have null coefficient.</p>
+they are considered as continuous variables.</p>
 </div>
+<div id="categorical-variables" class="section level1">
+<h1>Categorical Variables</h1>
+<p>If a variable is categorical, it should be indicated in the panel and
+the number of levels of the variable needs to be specified. In the
+figure, <span class="math inline">\(z\)</span> is considered as
+categorical with 4 levels.</p>
+<p><img src="pics/mixed/variables.1.png" width="686" /></p>
+<p>The issue with categorical variables is that they are cast into the
+mixed model (like in any other linear model) as contrast variables
+(sometimes reffered to as <em>dummy variables</em>). Thus, to cast
+categorical variable with <span class="math inline">\(K\)</span> levels
+into a linear model, we need <span class="math inline">\(K-1\)</span>
+contrast variables, where <span class="math inline">\(K\)</span> is the
+number of levels. This means that if one has a 4-levels variable, 3
+coefficients should be provided, and in general, <span
+class="math inline">\(K-1\)</span> coefficients are needed.</p>
+<p><span class="modulename">PAMLj</span> allows for two different
+strategies to provide coefficients for categorical variables.</p>
+<ul>
+<li><p>In one coefficient is provided, like in
+<code>y~1*1+1*time+(1*1|cluster</code>), the input coefficient is
+applied to the first contrast variable, and the other coefficients are
+assumed to zero. This can be useful when the user focuses on one
+comparison, assuming the others will be smaller or null.</p></li>
+<li><p>If the exact coefficient for each contrast is required, users can
+use the notation <span class="math inline">\([1,2,3]*time\)</span>,
+where <span class="math inline">\(1\)</span> <span
+class="math inline">\(2\)</span> and <span
+class="math inline">\(3\)</span> represents the expected coefficients of
+the three contrasts required for a 4-level variable (here
+<code>time</code>). This allows greater flexibility and precision on
+specifying the model.</p></li>
+</ul>
+<p>Contrasts variables are contrast coded, <span
+class="math inline">\((-1,0,1)\)</span> so their coefficient should be
+interpreted as the expcted difference in mean of each level mean and the
+sample grand mean.</p>
+<p>Thus, if one is expecting a, say, 3 levels categorical variable to
+have fixed coefficients of <span class="math inline">\(.5\)</span>,
+<span class="math inline">\(1\)</span> and <span
+class="math inline">\(-.6\)</span>, one would write:</p>
+<p>For an example of categorical independent variables, please check
+<a href="./rosetta_mixed1.html">MIxed vs RM-ANOVA</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">+</span>[.<span class="dv">5</span>,<span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">6</span>]<span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
 <div id="sensitivity-analysis" class="section level2">
 <h2>Sensitivity analysis</h2>
 <p>SA is not yet available for <code>Mixed Models</code> sub-module.</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<table class="options">
+<tr>
+<td class="optionname">
+<span class="option">Parallel computation</span>
+</td>
+<td class="optionvalue">
+Should parallel computing be used for the Monte Carlo method
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Use a seed</span>
+</td>
+<td class="optionvalue">
+Should we use a seed for the Monte Carlo method
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Number of simulations</span>
+</td>
+<td class="optionvalue">
+Number of repetitions for Monte Carlo method
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Seed</span>
+</td>
+<td class="optionvalue">
+What seed should we use for Monte Carlo method. Default is Life, the
+Universe and Everything
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Solution tolerance</span>
+</td>
+<td class="optionvalue">
+Tollerance to consider a solution found. 0.01, for instance, means that
+a power between .89 and .91 is considered a solution for required power
+.90.
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Results stability</span>
+</td>
+<td class="optionvalue">
+The aim of the analysis: <code>N</code> (default) for sample size,
+<code>Power</code> to estimate power
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
