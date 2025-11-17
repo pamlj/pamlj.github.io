@@ -144,7 +144,7 @@ When  `Find: Cases within clusters` is selected, if a user insert a value to the
 
 `r modulename()` extracts from the input model the name of the independent variables included in the model. By default, they are considered as continuous variables. 
 
-# Categorical Variables
+## Categorical Variables
 
 If a variable is categorical, it should be indicated in the panel and the number of levels of the variable needs to be specified. In the figure, $z$ is considered as categorical with 4 levels.
 
@@ -181,6 +181,9 @@ SA is not yet available for `Mixed Models` sub-module.
 ## Setup
 
 `r panel_options("pamlmixed","panel_options")`
+
+
+`r include_pages(topic="mixed",category="rosetta",title="Validation")`
 
 `r issues()`
 

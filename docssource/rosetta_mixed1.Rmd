@@ -1,5 +1,5 @@
 ---
-title: "MIxed vs RM-ANOVA"
+title: "Mixed vs RM-ANOVA"
 topic: mixed
 category: rosetta
 nickname: ros_mixed_rm

@@ -297,14 +297,15 @@
       id="toc-find-cases-within-cluster">Find: Cases within
       cluster</a></li>
       </ul></li>
-      <li><a href="#variables" id="toc-variables">Variables</a></li>
-      <li><a href="#categorical-variables"
-      id="toc-categorical-variables">Categorical Variables</a>
+      <li><a href="#variables" id="toc-variables">Variables</a>
       <ul>
+      <li><a href="#categorical-variables"
+      id="toc-categorical-variables">Categorical Variables</a></li>
       <li><a href="#sensitivity-analysis"
       id="toc-sensitivity-analysis">Sensitivity analysis</a></li>
       <li><a href="#setup" id="toc-setup">Setup</a></li>
       </ul></li>
+      <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -516,9 +517,8 @@ used as starting point of the Monte Carlo algorithm.</p>
 <p><span class="modulename">PAMLj</span> extracts from the input model
 the name of the independent variables included in the model. By default,
 they are considered as continuous variables.</p>
-</div>
-<div id="categorical-variables" class="section level1">
-<h1>Categorical Variables</h1>
+<div id="categorical-variables" class="section level2">
+<h2>Categorical Variables</h2>
 <p>If a variable is categorical, it should be indicated in the panel and
 the number of levels of the variable needs to be specified. In the
 figure, <span class="math inline">\(z\)</span> is considered as
@@ -559,8 +559,9 @@ have fixed coefficients of <span class="math inline">\(.5\)</span>,
 <span class="math inline">\(1\)</span> and <span
 class="math inline">\(-.6\)</span>, one would write:</p>
 <p>For an example of categorical independent variables, please check
-<a href="./rosetta_mixed1.html">MIxed vs RM-ANOVA</a>.</p>
+<a href="./rosetta_mixed1.html">Mixed vs RM-ANOVA</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">+</span>[.<span class="dv">5</span>,<span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">6</span>]<span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>clustervar)</span></code></pre></div>
+</div>
 <div id="sensitivity-analysis" class="section level2">
 <h2>Sensitivity analysis</h2>
 <p>SA is not yet available for <code>Mixed Models</code> sub-module.</p>
@@ -622,6 +623,14 @@ The aim of the analysis: <code>N</code> (default) for sample size,
 </tr>
 </table>
 </div>
+</div>
+<div id="validation" class="section level1 adm adm-seealso">
+<h1>Validation</h1>
+<ul>
+<li>
+<a href="./rosetta_mixed1.html">Mixed vs RM-ANOVA</a>
+</li>
+</ul>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
 <h1>Comments?</h1>
