@@ -246,25 +246,25 @@ independent variable with four levels and a continuous dependent
 variable. To analyze them with repeated-measures ANOVA, we require a
 wide-format dataset, with one row per participant and the following
 structure:</p>
-<p><img src="rosetta/pics/mixed/r1.data.1.png" width="590" /></p>
+<p><img src="rosetta/pics/mixed/ros1/r1.data.1.png" width="590" /></p>
 <p>The repeated-measure ANOVA has one categorical variable
 (<em>time</em>) measured over 4 times. The dependent variable is a
 continuous variables. Based the RM-ANOVA on a sample of 50 cases, we
 obtain a partial eta-squared <span
 class="math inline">\(\eta_p^2=.115\)</span>.</p>
-<p><img src="rosetta/pics/mixed/output.rm.1.png" width="603" /></p>
+<p><img src="rosetta/pics/mixed/ros1/output.rm.1.png" width="603" /></p>
 <p>With this information, we estimated the required sample size to
 obtain a power of at least .90 using <span
 class="modulename">PAMLj</span> <code>Factorial Designs</code>
 command.</p>
-<p><img src="rosetta/pics/mixed/input.rm.2.png" width="583" /></p>
+<p><img src="rosetta/pics/mixed/ros1/input.rm.2.png" width="583" /></p>
 <p>obtaining a sample size of <span
 class="math inline">\(N=39\)</span>.</p>
-<p><img src="rosetta/pics/mixed/output.rm.2.png" width="615" /></p>
+<p><img src="rosetta/pics/mixed/ros1/output.rm.2.png" width="615" /></p>
 <p>With the original <span class="math inline">\(N=50\)</span> cases,
 the expected power would be <span
 class="math inline">\(1-\beta=.965\)</span>.</p>
-<p><img src="rosetta/pics/mixed/output.rm.3.png" width="620" /></p>
+<p><img src="rosetta/pics/mixed/ros1/output.rm.3.png" width="620" /></p>
 </div>
 <div id="mixed-model" class="section level1">
 <h1>Mixed model</h1>
@@ -274,7 +274,7 @@ class="math inline">\(1-\beta=.965\)</span>.</p>
 showed the same F-test of the RM-ANOVA, but give us the coefficients for
 the contrast variables and the random coefficients variances required to
 set up the power analysis model.</p>
-<p><img src="rosetta/pics/mixed/output.lme.1.png" width="714" /></p>
+<p><img src="rosetta/pics/mixed/ros1/output.lme.1.png" width="714" /></p>
 <p>So, the RM-ANOVA results are equivalent to a mixed model with three
 contrast variables representing <em>time</em>, with coefficients <span
 class="math inline">\(.5052\)</span>,<span
@@ -283,10 +283,10 @@ class="math inline">\(-.0043\)</span>. The random intercept variance was
 <span class="math inline">\(\sigma_I^2=.0086\)</span> and the residual
 variance <span class="math inline">\(\sigma^2=1.009\)</span>. We can
 plug these values in the mixed model power analysis command.</p>
-<p><img src="rosetta/pics/mixed/input.lme.2.png" width="562" /></p>
+<p><img src="rosetta/pics/mixed/ros1/input.lme.2.png" width="562" /></p>
 <p>First, we use the <code>squared-brackets</code> syntax to attach
 three coefficients to the corresponding contrast variables representing
-<em>time</em>. Second, we multiply the random intercept (<code>1</code>
+<em>time</em>. Second, we multiply the random intercepts (<code>1</code>
 in <code>1|id</code>) by the expected variance (<span
 class="math inline">\(.0083\)</span>). This way, we pass the expected
 coefficients required to build the mixed model for simulating power and
@@ -296,7 +296,7 @@ immaterial for the power computation.</p>
 <p>Because in this model participants are the clusters of the model, we
 set <code>Calculate: N</code> as aim and
 <code>Number of cluster levels</code> as specific aim.</p>
-<p><img src="rosetta/pics/mixed/input.lme.3.png" width="469" /></p>
+<p><img src="rosetta/pics/mixed/ros1/input.lme.3.png" width="469" /></p>
 <p>We then specify in the <span class="option"> <b>Model Structure
 </b></span> -&gt; <span class="option"> <b>Clustering variables
 </b></span> that the variable <em>id</em> (the participants) has
@@ -304,22 +304,22 @@ set <code>Calculate: N</code> as aim and
 there will be 4 repeated measures.</p>
 <p>Then, we specify that the variable <em>time</em> is a categorical
 variable with 4 levels.</p>
-<p><img src="rosetta/pics/mixed/input.lme.4.png" width="560" /></p>
+<p><img src="rosetta/pics/mixed/ros1/input.lme.4.png" width="560" /></p>
 <p>Finally, we set the residual variance of the model to <span
 class="math inline">\(1.009\)</span> as we found in the mixed model.</p>
-<p><img src="rosetta/pics/mixed/input.lme.5.png" width="363" /></p>
+<p><img src="rosetta/pics/mixed/ros1/input.lme.5.png" width="363" /></p>
 <p>Running the analysis yield a required N
 (<code>Cluster levels</code>=number of participants) of 39, as expected
 by the RM-ANOVA power analysis. Because the mixed model power analysis
 is based on Monte Carlo simulations, different runs may yield slightly
 different N, but the results substantially converge.</p>
-<p><img src="rosetta/pics/mixed/output.lme.2.png" width="647" /></p>
+<p><img src="rosetta/pics/mixed/ros1/output.lme.2.png" width="647" /></p>
 <p>As an additional check, we compute the expected power of the mixed
 model test of time based on the original 50 participants. We get <span
 class="math inline">\(1-\beta=.966\)</span>, remarkably similar to the
 one obtained with the RM-ANOVA power analysis (<span
 class="math inline">\(1-\beta=.966\)</span>)</p>
-<p><img src="rosetta/pics/mixed/output.lme.3.png" width="736" /></p>
+<p><img src="rosetta/pics/mixed/ros1/output.lme.3.png" width="736" /></p>
 <p>Again, repeating the calculation yields slightly different results,
 but all substantially congruent with the expected values.</p>
 <div class="adm adm-seealso backto">

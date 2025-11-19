@@ -69,6 +69,7 @@ Setup
 *   Power = .90
 *   Alpha = .05
 *   Tails = Two
+
 :::    
 
 ## PAMLj

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+    
+    
+    <title>Mixed vs rsim R package</title>
+
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="mixed.html">Mixed Models</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Mixed vs rsim R package</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Mixed vs rsim R package</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#data" id="toc-data">Data</a>
+      <ul>
+      <li><a href="#simr" id="toc-simr">simr</a></li>
+      <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
+      </ul></li>
+      <li><a href="#expected-power" id="toc-expected-power">Expected
+      power</a>
+      <ul>
+      <li><a href="#simr-1" id="toc-simr-1">simr</a></li>
+      <li><a href="#pamlj-1" id="toc-pamlj-1">PAMLj</a></li>
+      </ul></li>
+      <li><a href="#required-n" id="toc-required-n">Required N</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      <li><a href="#references" id="toc-references">References</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<div class="version">
+<p>0.8.0</p>
+</div>
+<p>Comparing software results for power analysis in mixed models is not
+straightforward.<br />
+In this tutorial, we use the R package <strong>simr</strong> <span
+class="citation">(<a href="#ref-simr">Green and MacLeod
+2016</a>)</span>, which computes the power of a mixed model given a
+fixed number of cluster levels and a fixed <em>N</em> per cluster. Since
+our goal is to assess the congruence of results across software, we
+adopt a post-hoc power approach: we begin by computing power from an
+observed model, and then adjust its parameters to mimic a pre-study
+power analysis.</p>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>The data consist of example simulated observations from the
+<a href='https://gamlj.github.io/' target='_blank'>GAMLj3 module</a>
+dataset named <em>Beers</em>. The dataset includes a continuous
+dependent variable (<em>smile</em>) and a continuous predictor
+(<em>beer</em>). Cases are clustered within levels of the variable
+<em>bar</em>, representing a design where 15 bars are sampled, each
+containing a varying number of individuals. Bar sizes range from 3 to
+24, with an average of about 15.</p>
+<p>We estimate a mixed model with random intercepts and random slopes
+across <em>bar</em>, and with <em>beer</em> as a fixed effect. Results
+are shown below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(GAMLj3)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>data<span class="ot">&lt;-</span>beers_bars</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>model0<span class="ot">&lt;-</span><span class="fu">lmer</span>(smile<span class="sc">~</span>beer<span class="sc">+</span>(<span class="dv">1</span><span class="sc">+</span>beer<span class="sc">|</span>bar),<span class="at">data=</span>data)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">summary</span>(model0)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: smile ~ beer + (1 + beer | bar)
+##    Data: data
+## 
+## REML criterion at convergence: 810
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -3.02941 -0.63560  0.05347  0.67706  2.67218 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr 
+##  bar      (Intercept) 8.33527  2.8871        
+##           beer        0.02786  0.1669   -0.84
+##  Residual             1.43136  1.1964        
+## Number of obs: 234, groups:  bar, 15
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  5.67259    0.81472   6.963
+## beer         0.55546    0.09251   6.005
+## 
+## Correlation of Fixed Effects:
+##      (Intr)
+## beer -0.697</code></pre>
+<div id="simr" class="section level3">
+<h3>simr</h3>
+<p>We first estimate the power of this model using the R package
+<strong>simr</strong> <span class="citation">(<a href="#ref-simr">Green
+and MacLeod 2016</a>)</span>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(simr)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">powerSim</span>(model0,<span class="at">nsim=</span><span class="dv">1000</span>,<span class="at">test =</span> <span class="fu">fixed</span>(<span class="st">&quot;beer&quot;</span>,<span class="st">&quot;f&quot;</span>))</span></code></pre></div>
+<pre><code>Power for predictor &#39;beer&#39;, (95% confidence interval):
+      100.0% (99.63, 100.0)
+
+Test: Type-II F-test (package car)
+      Effect size for beer is 0.56
+
+Based on 1000 simulations, (35 warnings, 0 errors)
+alpha = 0.05, nrow = 234
+
+Time elapsed: 0 h 2 m 53 s
+
+nb: result might be an observed power calculation</code></pre>
+<p>Thus, we obtain a power estimate of 1 (we will later modify the model
+to obtain a more informative scenario).</p>
+</div>
+<div id="pamlj" class="section level2">
+<h2>PAMLj</h2>
+<p>We now replicate the results in <span
+class="modulename">PAMLj</span>.<br />
+First, we define the model using the mixed-model estimates, entering the
+fixed coefficients, random variances, and the residual variance.</p>
+<p><img src="rosetta/pics/mixed/ros2/e1.input.1.png" width="571" /><br />
+<img src="rosetta/pics/mixed/ros2/e1.input.2.png" width="573" /></p>
+<p>We then specify the structure of the data by declaring <em>bar</em>
+as the clustering variable with <code># Cluster Levels = 15</code> (the
+15 bars in the dataset) and <code>N per cluster = 15</code>, chosen
+based on the average bar size.</p>
+<p><img src="rosetta/pics/mixed/ros2/e1.input.3.png" width="559" /></p>
+<p>The aim of the analysis is set to
+<code>Aim: calculate Power</code>.</p>
+<p>The resulting power is 1, consistent with the estimate obtained with
+<code>simr</code>.</p>
+<p><img src="rosetta/pics/mixed/ros2/e1.output.1.png" width="747" /></p>
+</div>
+</div>
+<div id="expected-power" class="section level1">
+<h1>Expected power</h1>
+<p>Agreement between software when power = 1 is not very informative,
+since power = 1 is essentially an asymptotic result.<br />
+To generate a more meaningful comparison, we now modify the model as if
+performing a prospective power analysis and enter expected parameter
+values.</p>
+<p>We begin by changing the random variances of the model:</p>
+<div class="adm adm-setup">
+<p><strong>Setup</strong></p>
+<ul>
+<li>Fixed coefficients: 5.672, 0.555<br />
+</li>
+<li>Random intercept variance: 8<br />
+</li>
+<li>Random slope variance: 1<br />
+</li>
+<li><span class="math inline">\(\sigma^2\)</span>: 1<br />
+</li>
+<li>Number of Cluster Levels: 15<br />
+</li>
+<li>N per cluster: 15 (for <code>simr</code>, cluster size varies based
+on the observed data)</li>
+</ul>
+</div>
+<div id="simr-1" class="section level2">
+<h2>simr</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>fixed<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">5.672</span>,.<span class="dv">555</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>randomVar<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>model1<span class="ot">&lt;-</span><span class="fu">makeLmer</span>(smile<span class="sc">~</span>beer<span class="sc">+</span>(<span class="dv">1</span><span class="sc">+</span>beer<span class="sc">|</span>bar),<span class="at">fixef =</span> fixed,<span class="at">VarCorr =</span> randomVar,<span class="at">data=</span>data,<span class="at">sigma =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>Power for predictor &#39;beer&#39;, (95% confidence interval):
+      45.70% (42.58, 48.85)
+
+Test: Type-II F-test (package car)
+      Effect size for beer is 0.56
+
+Based on 1000 simulations, (1 warning, 0 errors)
+alpha = 0.05, nrow = 234
+
+Time elapsed: 0 h 2 m 24 s</code></pre>
+<p>This yields a power estimate of 0.457.</p>
+</div>
+<div id="pamlj-1" class="section level2">
+<h2>PAMLj</h2>
+<p>In <span class="modulename">PAMLj</span>, we update the parameters
+accordingly:</p>
+<p><img src="rosetta/pics/mixed/ros2/e2.input.1.png" width="573" /></p>
+<p>and we obtain a closely matching result (simulation-based estimates
+naturally vary slightly across runs):</p>
+<p><img src="rosetta/pics/mixed/ros2/e2.output.1.png" width="733" /></p>
+</div>
+</div>
+<div id="required-n" class="section level1">
+<h1>Required N</h1>
+<p>The package <code>simr</code> does not compute required sample sizes;
+it only computes power for a given model and sample size.<br />
+However, we can assess the <span class="modulename">PAMLj</span>
+<em>Required N</em> function as follows:</p>
+<p>Given the setup above, we use <span class="modulename">PAMLj</span>
+to compute the number of clusters needed to achieve a target power of
+.90, and then check whether <code>simr</code> produces a power close to
+.90 using the indicated sample size.</p>
+<p>To do this, we change the aim of the analysis in <span
+class="modulename">PAMLj</span> to <code>Aim: N</code> and set
+<code>Find: Number of cluster levels</code>.</p>
+<p><span class="modulename">PAMLj</span> indicates that a sample of 39
+bars would yield an approximate power of 0.907 (effectively .90).</p>
+<p><img src="rosetta/pics/mixed/ros2/e3.output.1.png" width="746" /></p>
+<p>To verify the result R, we extend the original sample to 39 clusters
+and run a new simulation with <code>simr</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">### extend the model to obtain 39 levels of bar</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>mod<span class="ot">&lt;-</span><span class="fu">extend</span>(model1,<span class="at">along=</span><span class="st">&quot;bar&quot;</span>,<span class="at">n=</span><span class="dv">39</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="do">### run the simulation</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>pow<span class="ot">&lt;-</span><span class="fu">powerSim</span>(mod,<span class="at">nsim=</span><span class="dv">1000</span>,<span class="at">test =</span> <span class="fu">fixed</span>(<span class="st">&quot;beer&quot;</span>,<span class="st">&quot;f&quot;</span>))</span></code></pre></div>
+<pre><code>Power for predictor &#39;beer&#39;, (95% confidence interval):
+      88.40% (86.25, 90.32)
+
+Test: Type-II F-test (package car)
+      Effect size for beer is 0.56
+
+Based on 1000 simulations, (3 warnings, 0 errors)
+alpha = 0.05, nrow = 614
+
+Time elapsed: 0 h 3 m 33 s</code></pre>
+<p>As expected, the estimated power is close to .90, consistent with the
+value suggested by <span class="modulename">PAMLj</span>.</p>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="./rosetta.html">PAMLj: rosetta</a>
+</div>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-simr" class="csl-entry">
+Green, P, and CJ MacLeod. 2016. <span>“SIMR: An r Package for Power
+Analysis of Generalised Linear Mixed Models by Simulation.”</span>
+<em>Methods in Ecology and Evolution</em> 7 (4): 493–98.
+</div>
+</div>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

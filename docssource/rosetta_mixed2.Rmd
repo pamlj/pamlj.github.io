@@ -1,0 +1,182 @@
+---
+title: "Mixed vs rsim R package"
+topic: mixed
+category: rosetta
+nickname: ros_mixed_rsim
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+
+:::{ .version }
+0.8.0
+:::
+
+Comparing software results for power analysis in mixed models is not straightforward.  
+In this tutorial, we use the R package __simr__ [@simr], which computes the power of a mixed model given a fixed number of cluster levels and a fixed *N* per cluster. Since our goal is to assess the congruence of results across software, we adopt a post-hoc power approach: we begin by computing power from an observed model, and then adjust its parameters to mimic a pre-study power analysis.
+
+# Data
+
+The data consist of example simulated observations from the `r ext_url("GAMLj3 module","https://gamlj.github.io/")` dataset named _Beers_. The dataset includes a continuous dependent variable (_smile_) and a continuous predictor (_beer_). Cases are clustered within levels of the variable _bar_, representing a design where 15 bars are sampled, each containing a varying number of individuals. Bar sizes range from 3 to 24, with an average of about 15.
+
+We estimate a mixed model with random intercepts and random slopes across _bar_, and with _beer_ as a fixed effect. Results are shown below.
+
+```{r, warning=FALSE,message=FALSE}
+library(GAMLj3)
+library(lme4)
+data<-beers_bars
+model0<-lmer(smile~beer+(1+beer|bar),data=data)
+summary(model0)
+```
+
+### simr
+
+We first estimate the power of this model using the R package __simr__ [@simr].
+
+```{r , eval=FALSE}
+library(simr)
+powerSim(model0,nsim=1000,test = fixed("beer","f"))
+```
+
+```
+Power for predictor 'beer', (95% confidence interval):
+      100.0% (99.63, 100.0)
+
+Test: Type-II F-test (package car)
+      Effect size for beer is 0.56
+
+Based on 1000 simulations, (35 warnings, 0 errors)
+alpha = 0.05, nrow = 234
+
+Time elapsed: 0 h 2 m 53 s
+
+nb: result might be an observed power calculation
+```
+
+Thus, we obtain a power estimate of 1 (we will later modify the model to obtain a more informative scenario).
+
+## PAMLj
+
+We now replicate the results in `r modulename()`.  
+First, we define the model using the mixed-model estimates, entering the fixed coefficients, random variances, and the residual variance.
+
+`r pic("rosetta/pics/mixed/ros2/e1.input.1.png")`  
+`r pic("rosetta/pics/mixed/ros2/e1.input.2.png")`
+
+We then specify the structure of the data by declaring _bar_ as the clustering variable with `# Cluster Levels = 15` (the 15 bars in the dataset) and `N per cluster = 15`, chosen based on the average bar size.
+
+`r pic("rosetta/pics/mixed/ros2/e1.input.3.png")`
+
+The aim of the analysis is set to `Aim: calculate Power`.
+
+The resulting power is 1, consistent with the estimate obtained with `simr`.
+
+`r pic("rosetta/pics/mixed/ros2/e1.output.1.png")`
+
+
+# Expected power
+
+Agreement between software when power = 1 is not very informative, since power = 1 is essentially an asymptotic result.  
+To generate a more meaningful comparison, we now modify the model as if performing a prospective power analysis and enter expected parameter values.
+
+We begin by changing the random variances of the model:
+
+:::{ .adm .adm-setup}
+**Setup**
+
+* Fixed coefficients: 5.672, 0.555  
+* Random intercept variance: 8  
+* Random slope variance: 1  
+* $\sigma^2$: 1  
+* Number of Cluster Levels: 15  
+* N per cluster: 15 (for `simr`, cluster size varies based on the observed data)
+:::
+
+## simr
+
+```{r, eval=FALSE}
+fixed<-c(5.672,.555)
+randomVar<-matrix(c(8,0,0,1),ncol=2)
+model1<-makeLmer(smile~beer+(1+beer|bar),fixef = fixed,VarCorr = randomVar,data=data,sigma = 1)
+```
+
+```
+Power for predictor 'beer', (95% confidence interval):
+      45.70% (42.58, 48.85)
+
+Test: Type-II F-test (package car)
+      Effect size for beer is 0.56
+
+Based on 1000 simulations, (1 warning, 0 errors)
+alpha = 0.05, nrow = 234
+
+Time elapsed: 0 h 2 m 24 s
+```
+
+This yields a power estimate of 0.457.
+
+## PAMLj
+
+In `r modulename()`, we update the parameters accordingly:
+
+`r pic("rosetta/pics/mixed/ros2/e2.input.1.png")`
+
+and we obtain a closely matching result (simulation-based estimates naturally vary slightly across runs):
+
+`r pic("rosetta/pics/mixed/ros2/e2.output.1.png")`
+
+
+# Required N
+
+The package `simr` does not compute required sample sizes; it only computes power for a given model and sample size.  
+However, we can assess the `r modulename()` *Required N* function as follows:
+
+Given the setup above, we use `r modulename()` to compute the number of clusters needed to achieve a target power of .90, and then check whether `simr` produces a power close to .90 using the indicated sample size.
+
+To do this, we change the aim of the analysis in `r modulename()` to `Aim: N` and set `Find: Number of cluster levels`.
+
+`r modulename()` indicates that a sample of 39 bars would yield an approximate power of 0.907 (effectively .90).
+
+`r pic("rosetta/pics/mixed/ros2/e3.output.1.png")`
+
+To verify the result R, we extend the original sample to 39 clusters and run a new simulation with `simr`:
+
+```{r, eval=FALSE}
+
+### extend the model to obtain 39 levels of bar
+mod<-extend(model1,along="bar",n=39)
+
+### run the simulation
+pow<-powerSim(mod,nsim=1000,test = fixed("beer","f"))
+```
+
+```
+Power for predictor 'beer', (95% confidence interval):
+      88.40% (86.25, 90.32)
+
+Test: Type-II F-test (package car)
+      Effect size for beer is 0.56
+
+Based on 1000 simulations, (3 warnings, 0 errors)
+alpha = 0.05, nrow = 614
+
+Time elapsed: 0 h 3 m 33 s
+```
+
+As expected, the estimated power is close to .90, consistent with the value suggested by `r modulename()`.
+
+`r backto("rosetta")`
+
+`r issues()`
+
+# References
