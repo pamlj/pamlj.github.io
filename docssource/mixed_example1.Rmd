@@ -18,17 +18,15 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-
 `r keywords("power analysis, mixed models, multiple clusters, participant by stimuli")`
-
 
 `r version("0.8.2")`
 
-Here we discuss some rule to handle clustering variables (grouping variables) in different designs.
+Here we discuss some rules for handling clustering variables (grouping variables) in different designs.
 
 # One clustering variable
 
-Simple design with one clustering variable are defined by simply specify in `r opt("Model Syntax")` the "bars" component of the formula, such as:
+Simple designs with one clustering variable are defined by specifying in `r opt("Model Syntax")` the “bars” component of the formula, such as:
 
 ```
 y~1*1+1*x+(1*1|cluster)
@@ -37,41 +35,39 @@ y~1*1+1*x+(1*1|cluster)
 :::{ .adm .adm-note}
 Note
 
-Hereinafter the coefficients are immaterial for our discussion, so we set them always to 1 and assume random intercepts only. The sample structure is not alter by the coefficients values or the definition of fixed and random effects. We also fill in all the clusters numerosities: `# Cluster Levels` and `N per cluster`. It is clear, that depending on the aim of the analysis, one of this parameter is found by the algorightm.
+Hereinafter the coefficients are immaterial for our discussion, so we always set them to 1 and assume random intercepts only. The sample structure is not altered by the coefficient values or the definition of fixed and random effects. We also fill in all the cluster numerosity fields: `# Cluster Levels` and `N per cluster`. It is clear that, depending on the aim of the analysis, one of these parameters will be determined by the algorithm.
 
 :::
 
-
-`r modulename()` reads `cluster` as the name of the clustering variable and shows the fields to be filled in to generate the correct sample based on the cluster variable definition. 
+`r modulename()` reads `cluster` as the name of the clustering variable and displays the fields to be filled in to generate the correct sample based on the cluster variable definition.
 
 `r pic("examples/mixed/example1/e1.input.1.png")`
 
-Now, depending on the aim of the analysis one needs to fill one of the fields (`# Cluster Levels` or `N per cluster`). Here we discuss the meaning of these fields, knowing that depending on the aim of the analysis one of them would be the target of the power function.
+Now, depending on the aim of the analysis, one needs to fill one of the fields (`# Cluster Levels` or `N per cluster`). Here we discuss the meaning of these fields, knowing that depending on the goal of the analysis, one of them will be the target of the power function.
 
-With one clustering variable, `# Cluster levels` is the number of groups clustering the observations. In a multilevel design, say, with pupils clustered within classes, `# Cluster levels` is the number of classes in the sample (or to be established by the power analysis). In a repeated measures design, with some condition repeated within participants, `# Cluster levels` is the number of participants.
+With one clustering variable, `# Cluster levels` is the number of groups clustering the observations. In a multilevel design, say with pupils clustered within classes, `# Cluster levels` is the number of classes in the sample (or the number to be established by the power analysis). In a repeated-measures design with conditions repeated within participants, `# Cluster levels` is the number of participants.
 
+`N per cluster` is the number of observations within each cluster level (group). In a multilevel design with pupils clustered within classes, `N per cluster` is the (average) number of pupils in the sample (or the number to be established by the power analysis). In a repeated-measures design with a condition repeated within participants, `N per cluster` is the number of measurements taken for each participant.
 
-`N per cluster` is the number of observations within each cluster level (group). In a multilevel design, say, with pupils clustered within classes, `N per cluster` is the (average) number of pupils in the sample (or to be established by the power analysis). In a repeated measures design, with some condition repeated within participants, `N per cluster` is the number of measurement taken for each participants.
+With one clustering variable, `N per cluster` should be at least 2, because without at least two measurements per cluster, not even a random intercept can be estimated. To estimate random slopes, `N per cluster` must be larger than 2; otherwise the model will not have sufficient degrees of freedom to estimate the variance of the coefficients.
 
-With one clustering variable, `N per cluster` should be at least 2, because without at least two measures for each cluster not even a random intercept can be estimated. In order to estimate random slopes, `N per cluster` larger than 2 is requires, otherwise the model would not have enough degrees of freedom to estimate the coefficients variance.
+### One-way repeated-measures ANOVA design
 
-### One-way repeated measure AVOVA design
-
-Assume we have a RM design with four times (see an example in `r link_pages(nickname="ros_mixed_rm")`) and one measure for participants (identified by the variable _ID_) for each time. To define this design, we would input
+Assume we have a repeated-measures design with four time points (see an example in `r link_pages(nickname="ros_mixed_rm")`), and one measurement per participant (identified by the variable _ID_) at each time point. To define this design, we would input:
 
 ```
 y~1*1+1*time+(1*1|ID)
 ```
 
-then we specify that `time` is a categorical variable with 4 levels.
+Then we specify that `time` is a categorical variable with 4 levels.
 
 `r pic("examples/mixed/example1/e1.input.2.png")`
 
-and we specify the cluster `N per cluster` to 4, indicating that one participant (the cluster group) has 4 observations.
+and we set the cluster `N per cluster` to 4, indicating that one participant (the cluster unit) has 4 observations.
 
 `r pic("examples/mixed/example1/e1.input.3.png")`
 
-The resulting data would look like this:
+The resulting data look like this:
 
 ```
              y time      ID
@@ -87,7 +83,6 @@ The resulting data would look like this:
 10 -1.61386528    2       3
 11 -0.68877198    3       3
 12  1.33885528    4       3
-
 ```
 
 We can see that time is repeated within ID, with one measurement for each level of time.
@@ -95,19 +90,17 @@ We can see that time is repeated within ID, with one measurement for each level 
 :::{ .adm .adm-note}
 Note
 
-To see an example of data generated by your model in `r modulename()`, simply select the option `r opt("Data structure")` in `r opt_panel("Options")` 
+To see an example of the data generated by your model in `r modulename()`, simply select the option `r opt("Data structure")` in `r opt_panel("Options")`.
 
 :::
 
-
-
-Assume now we have a similar design, but that within each time condition, the participant is measured 5 times (ten trials). We still have the same model
+Assume now we have a similar design, but within each time condition the participant is measured 5 times (5 trials). We still have the same model:
 
 ```
 y~1*1+1*time+(1*1|ID)
 ```
 
-and the same variable definition (time with 4 levels), but now the `N per cluster` is 20, which is 4 levels of time X 5 trials.
+and the same variable definition (time with 4 levels), but now `N per cluster` is 20, which is 4 levels of time × 5 trials.
 
 `r pic("examples/mixed/example1/e1.input.4.png")`
 
@@ -140,25 +133,25 @@ The resulting data look like this (first participant):
 :::{ .adm .adm-note}
 Note
 
-Notice that categorical variables are always build to vary within clusters. This is not a problem to model between-participants variables, because in power analysis a categorical variable without random slopes gives the same results whether is within or between subjects. The two types of variables gives different results only when the within-subject variable has random slopes, a feature a between-subject variable never has.
+Notice that categorical variables are always built to vary within clusters. This is not a problem for modelling between-participants variables, because in power analysis a categorical variable without random slopes gives the same results whether it is within- or between-participants. The two types of variables yield different results only when within-subject variables have random slopes, a characteristic that between-subjects variables never have.
 
 :::
 
 # Multi-cluster designs
 
-Here we tackle the cases with more than one cluster variable. Two cases are salient for researchers: cross-classified clustering and nested clustering. 
+Here we discuss cases with more than one clustering variable. Two cases are most relevant for researchers: __cross-classified__ clustering and __nested clustering__.
 
 ### Cross-classified clusters
 
-A typical example of cross-classified clustering is an experimental design in which $P$ participants (identified with variable _PID_) are tested with $S$ stimuli (variable _SID_). So, every participant is exapose to each stimuli, and each stimulus is seen by all participants. We start with the simpler example in which there is only one measurement for each combination of participant and stimulus (a participant sees a stimulus only once).
+A typical example of cross-classified clustering is an experimental design in which $P$ participants (identified by the variable _PID_) are tested with $S$ stimuli (variable _SID_). Every participant is exposed to each stimulus, and each stimulus is seen by all participants. We start with the simpler example in which there is only one measurement for each combination of participant and stimulus (a participant sees a stimulus only once).
 
-The mixed model is :
+The mixed model is:
 
 ```
 y~1*1+1*x+(1*1|PID)+(1*1|SID)
 ```
 
-Let's say we want a sample of 10 participants and 5 stimuli. In total, we have 50 observations in which each participant has a `N per cluster` equal to 1, and each stimulus has a `N per cluster` equal to 1 as well. It may seems counterintuive, but the participant is actually repeated only once, but their measurament is spread across 5 stimuli. Thus, we need to set
+Let’s say we want a sample of 10 participants and 5 stimuli. In total we have 50 observations, in which each participant has `N per cluster` equal to 1, and each stimulus has `N per cluster` equal to 1 as well. It may seem counterintuitive, but the participant is actually repeated only once, but their measurement is spread across 5 stimuli. Thus, we need to set:
 
 `r pic("examples/mixed/example1/e2.input.1.png")`
 
@@ -172,11 +165,9 @@ The resulting data (first participant) will look like this:
 4   0.649785351   1   4
 5  -1.373459856   1   5
 6  -2.073459856   1   6
-
-
 ```
 
-Now, what about a categorical variable (i.e. experimental factor named _cond_). If the variable is _between-subjctes_, we simply declare it as above. For a 4-levels _cond_, we have (first two participants):
+Now, what about a categorical variable (i.e., an experimental factor named _cond_)? If the variable is _between-subjects_, we simply declare it as above. For a 4-level _cond_, we have (first two participants):
 
 ```
              y    cond PID SID
@@ -192,12 +183,11 @@ Now, what about a categorical variable (i.e. experimental factor named _cond_). 
 10  0.01980561    2   2   4
 11 -0.67931988    3   2   5
 12  0.12628890    4   2   6
-
 ```
 
-(recall that for between-subjects factors their structure does not affect the results). 
+(Recall that for between-subjects factors, their structure does not affect the results.)
 
-If the variable is _within-subjctes_, we need to be sure that the number of observations per participant (here 6) is a multiple of its levels. With 6 observations, _cond_ can be a 2-levels, 3-levels or 6-levels, otherwise it cannot be repeated within participant. A 2-level factor would look like this:
+If the variable is _within-subjects_, we must ensure that the number of observations per participant (here 6) is a multiple of its levels. With 6 observations, _cond_ can have 2 levels, 3 levels, or 6 levels; otherwise it cannot be repeated within participant. A 2-level factor would look like this:
 
 ```
              y cond PID SID
@@ -207,15 +197,13 @@ If the variable is _within-subjctes_, we need to be sure that the number of obse
 4   0.86378973    2   1   4
 5  -0.13518382    1   1   5
 6   1.16554628    2   1   6
-
 ```
 
-A more complex design is when the repeated measure factor _cond_ is repeated both within participant and within stimulus. Say that each participant see each stimulus in both conditions of the factor _cond_. This implies that each stimulus has two observations, so we change its `N per cluster`.
-
+A more complex design arises when the repeated-measures factor _cond_ is repeated both within participants and within stimuli. Suppose each participant sees each stimulus in both conditions of factor _cond_. This implies that each stimulus has two observations, so we change its `N per cluster`:
 
 `r pic("examples/mixed/example1/e2.input.2.png")`
 
-and we get the design we need:
+and we obtain the desired design:
 
 ```
               y cond PID SID
@@ -233,27 +221,27 @@ and we get the design we need:
 12  -1.03945842    2   1   6
 ```
 
-with the same logic, we can simulate a design with several trials within each combinations of participant and stimulus. For instance, with the following setup
+With the same logic, we can simulate designs with several trials within each combination of participant and stimulus. For instance, with the following setup:
 
 `r pic("examples/mixed/example1/e2.input.3.png")`
 
-each participants sees all stimuli 9 times.
+each participant sees all stimuli 9 times.
 
-### Nested clusters classification
+### Nested cluster classification
 
-Let us consider one of the most classic multi-level design. Pupils with classes within schools. In this design, we have to clustering variables: _class_ and _school_. To use the multi-level jargon, pupils are level 0, classes are level 1 with pupils nested within classes, and schools are level 2 with classes nested with schools. To be practical, let us assume we want a sample with 10 schools, each with 6 classes, which each class (an everage of) 12 pupils.
+Let us consider one of the classic multilevel design: pupils within classes within schools. In this design we have two clustering variables: _class_ and _school_. In multilevel terminology, pupils are level 0, classes are level 1 with pupils nested within classes, and schools are level 2 with classes nested within schools. To be practical, let us assume we want a sample with 10 schools, each with 6 classes, and each class (on average) with 12 pupils.
 
-First, we set the model
+First, we set the model:
 
 ```
 y~1*1+1*x+(1*1|school/class)
 ```
 
-Then we specify that we have 10 schools each with 6 classes, with 12 observations (pupils) each.
+Then we specify that we have 10 schools, each with 6 classes, and each class has 12 observations (pupils).
 
 `r pic("examples/mixed/example1/e2.input.1.png")`
 
-The generated data looks pretty much like the cross-classified data.
+The generated data look similar to the cross-classified data:
 
 ```
 row   y             x           school  class
@@ -275,22 +263,24 @@ row   y             x           school  class
 16   0.099924682 -0.330729467      1     2
 17  -0.075449795 -2.424778270      1     2
 ....
-
 ```
 
-However, the estimated model is different. If one looks at the `Effect size indices` table, one finds that the clusters are now `school` and `school:class`, which is exactly how the model specifies the effects.
-
+However, the estimated model is different. If one looks at the `Effect size indices` table, one finds that the clusters are now `school` and `school:class`, which is exactly how the model specification expands.
 
 `r pic("examples/mixed/example1/e3.output.1.png")`
 
 :::{ .adm .adm-note}
 Note
 
-In mixed models estimated following R package lme4 grammar, the syntax `(1 | school/class)` is just a shorthand for specifying nested random effects. The operator `school/class` expands internally into two terms: one random intercept for the grouping factor `school` and one random intercept for the interaction (i.e., nesting) `school:class`. Formally, the model random component is `(1 | school) + (1 | school:class)`.
+In mixed models estimated following the R package **lme4** syntax, the expression `(1 | school/class)` is just a shorthand for specifying nested random effects. The operator `school/class` expands internally into two terms: one random intercept for the grouping factor `school`, and one random intercept for the interaction (i.e., nesting) `school:class`. Formally, the random structure is:
 
-Accordingly, `Effect size indices` table indicates that the cluster variables are `school` and `school:class`.
+```
+(1 | school) + (1 | school:class)
+```
 
-The __general rule__ is that in mixed models nesting does not exist, it is only a shortcut to identify the granular composition of groups of observations. In this example, random coefficients (whatever they are) are computed across groups of observations defined by `school` and across groups of observations defined by `school:class`. 
+Accordingly, the `Effect size indices` table indicates that the cluster variables are `school` and `school:class`.
+
+The __general rule__ is that, in mixed models, “nesting” is not a separate statistical concept—it is only a syntactic shortcut. What matters is the definition of the grouping factors, which in this example are `school` and `school:class`. Random coefficients (whatever they are) are computed across the groups defined by these two variables.
 
 :::
 
