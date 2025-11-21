@@ -54,6 +54,7 @@ Estimation of  power parameters (required sample size, posthoc power, minimal de
 
 `r include_details()`
 
+`r include_examples()`
 
 # Install in jamovi
 

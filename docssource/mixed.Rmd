@@ -112,14 +112,14 @@ In the example in the figure, user is searching for the Number of clusters in a 
 `r pic("pics/mixed/cluster.2.png")`
 
 
-
-
 :::{ .adm .adm-note}
 Note
 
 When  `Find: Number of cluster levels` is selected, if a user insert a value to the `# Cluster levels` field, the value is used as starting point of the Monte Carlo algorithm. This can be useful is the expected number of cluster is very large, so setting a large starting point for the parameter may speed up the algorithm search.
 
 :::
+
+
 
 
 ##  Find: Cases within cluster
@@ -139,6 +139,17 @@ Note
 When  `Find: Cases within clusters` is selected, if a user insert a value to the `N per cluster` field, the value is used as starting point of the Monte Carlo algorithm. 
 
 :::
+
+
+:::{ .adm .adm-seealso}
+See also
+
+Some example of setting cluster variables in different design are discussed in `r link_pages(nickname="mixed_clusters")`
+
+:::
+
+
+
 
 # Variables
 
@@ -169,7 +180,6 @@ For an example of categorical independent variables, please check `r link_pages(
 y~1*1+[.5,1,-.6]*x+(1*1|clustervar)
 
 ```
-
 
 
 
