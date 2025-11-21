@@ -290,7 +290,7 @@ In mixed models estimated following R package lme4 grammar, the syntax `(1 | sch
 
 Accordingly, `Effect size indices` table indicates that the cluster variables are `school` and `school:class`.
 
-The __general rule__ is that in mixed models nesting does not exist, it is only a shortcut to identify the granular composition of groups of observations.
+The __general rule__ is that in mixed models nesting does not exist, it is only a shortcut to identify the granular composition of groups of observations. In this example, random coefficients (whatever they are) are computed across groups of observations defined by `school` and across groups of observations defined by `school:class`. 
 
 :::
 
