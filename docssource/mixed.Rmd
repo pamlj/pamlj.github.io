@@ -188,10 +188,12 @@ y~1*1+[.5,1,-.6]*x+(1*1|clustervar)
 SA is not yet available for `Mixed Models` sub-module. Nonethelless, one can run different analyses with different parameters to obtain a sensitivity analysis anyway. 
 
 
-## Setup
+## Options
 
 `r panel_options("pamlmixed","panel_options")`
 
+
+# Additional material
 
 `r include_pages(topic="mixed",category="rosetta",title="Validation")`
 

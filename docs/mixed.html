@@ -303,8 +303,10 @@
       id="toc-categorical-variables">Categorical Variables</a></li>
       <li><a href="#sensitivity-analysis"
       id="toc-sensitivity-analysis">Sensitivity analysis</a></li>
-      <li><a href="#setup" id="toc-setup">Setup</a></li>
+      <li><a href="#options" id="toc-options">Options</a></li>
       </ul></li>
+      <li><a href="#additional-material"
+      id="toc-additional-material">Additional material</a></li>
       <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#examples" id="toc-examples">Examples</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
@@ -575,8 +577,8 @@ class="math inline">\(-.6\)</span>, one would write:</p>
 Nonethelless, one can run different analyses with different parameters
 to obtain a sensitivity analysis anyway.</p>
 </div>
-<div id="setup" class="section level2">
-<h2>Setup</h2>
+<div id="options" class="section level2">
+<h2>Options</h2>
 <table class="options">
 <tr>
 <td class="optionname">
@@ -644,12 +646,18 @@ a power between .89 and .91 is considered a solution for required power
 <span class="option">Results stability</span>
 </td>
 <td class="optionvalue">
-The aim of the analysis: <code>N</code> (default) for sample size,
-<code>Power</code> to estimate power
+Search for N algorithm stability across launches. <code>level1</code>
+algorithm is faster and more stable with a run, but may yield different
+results across different runs. <code>level2</code> algorithm is slower
+and more stochastic, but (tend to) yield results more similar across
+different runs
 </td>
 </tr>
 </table>
 </div>
+</div>
+<div id="additional-material" class="section level1">
+<h1>Additional material</h1>
 </div>
 <div id="validation" class="section level1 adm adm-seealso">
 <h1>Validation</h1>
