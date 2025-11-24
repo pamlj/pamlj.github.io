@@ -8,7 +8,7 @@
         <meta name="author" content="(Marcello Gallucci)" />
     
     
-    <title>Mixed models: handling clusters</title>
+    <title>Mixed models: model syntax</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -202,15 +202,14 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Mixed models: handling clusters</h1>
+      <h1 class="title">Mixed models: model syntax</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Mixed models: handling clusters</a></h2>
+    <h2><a href="#content">Mixed models: model syntax</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#one-clustering-variable"
-      id="toc-one-clustering-variable">One clustering variable</a>
+      <li><a href="#basic-syntax" id="toc-basic-syntax">Basic syntax</a>
       <ul>
       <li><a href="#one-way-repeated-measures-anova-design"
       id="toc-one-way-repeated-measures-anova-design">One-way
@@ -245,7 +244,7 @@ Gallucci)</p>
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
 <p><span class="keywords"> <span class="keytitle"> keywords </span>
-power analysis, mixed models, multiple clusters, participant by stimuli
+power analysis, mixed models, multiple clusters, participants by stimuli
 </span></p>
 <div class="version">
 <p>
@@ -255,14 +254,30 @@ power analysis, mixed models, multiple clusters, participant by stimuli
 <div style="clear:both">
 
 </div>
-<p>Here we discuss some rules for handling clustering variables
-(grouping variables) in different designs.</p>
-<div id="one-clustering-variable" class="section level1">
-<h1>One clustering variable</h1>
-<p>Simple designs with one clustering variable are defined by specifying
-in <span class="option">Model Syntax</span> the “bars” component of the
-formula, such as:</p>
-<pre><code>y~1*1+1*x+(1*1|cluster)</code></pre>
+<p>Here we discuss some rules in defining mixed models for mixed models
+power analysis in <span class="modulename">PAMLj</span>.</p>
+<div id="basic-syntax" class="section level1">
+<h1>Basic syntax</h1>
+<p>The input model should be specified using formulas in which one
+passes the variables, their coefficients, their fixed and random
+effects, and the clustering variables (grouping variables). The formula
+structure is taken from R package <code>lme4</code>, but the syntax is
+update to allow for numeric coefficients and other model
+characteristics. The model is specified by multiplying each coefficient
+for its numeric expected value: For fixed effects the expected value is
+the expected coefficient value, for random coefficients is the expected
+variance.</p>
+<p>For instance</p>
+<pre><code>y~2*1+.5*x+(1.5*1+1*x|cluster)</code></pre>
+<p>Specifies a model with one independent variable <span
+class="math inline">\(x\)</span>, whose fixed effect is <span
+class="math inline">\(.5\)</span> and its random slopes across the
+variable <em>cluster</em> have variance equal to <span
+class="math inline">\(1\)</span>. The model has also a fixed intercept
+<em>1</em> with expected value <span class="math inline">\(2\)</span>
+and random variance equal to <span class="math inline">\(1.5\)</span>
+(to complete the model remember to set also the residual variance in
+<span class="option">Residual Variance</span>).</p>
 <div class="adm adm-note">
 <p>Note</p>
 <p>Hereinafter the coefficients are immaterial for our discussion, so we

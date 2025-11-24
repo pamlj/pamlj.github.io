@@ -306,6 +306,7 @@
       <li><a href="#setup" id="toc-setup">Setup</a></li>
       </ul></li>
       <li><a href="#validation" id="toc-validation">Validation</a></li>
+      <li><a href="#examples" id="toc-examples">Examples</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
     </div>
@@ -352,7 +353,7 @@ multi-level designs, where observations are sampled at different
 hierarchical levels. In a standard multi-level design, <em>clusters</em>
 (groups of observations) are randomly sampled, and within each cluster,
 a number of observations is sampled. Here, <span
-class="math inline">\(K\)</span> indicates the number of clusters, and
+class="math inline">\(k\)</span> indicates the number of clusters, and
 <span class="math inline">\(n\)</span> indicates the number of
 observations within each cluster.</p>
 <p>In <span class="modulename">PAMLj</span>, grouping variables are
@@ -370,11 +371,11 @@ are estimated, and power (the proportion of significant results) is
 computed.</p>
 <p>When the aim is to determine the required sample size
 (<code>Aim: N</code>), the sample characteristics (<span
-class="math inline">\(K\)</span> or <span
+class="math inline">\(k\)</span> or <span
 class="math inline">\(n\)</span>) are varied until the desired power is
 reached. When the aim is to assess achievable power, the <span
 class="math inline">\(R\)</span> simulations are run to estimate power
-given the <span class="math inline">\(K\)</span> and <span
+given the <span class="math inline">\(k\)</span> and <span
 class="math inline">\(n\)</span> specified by the user.</p>
 </div>
 <div id="user-interface-ui" class="section level1">
@@ -429,7 +430,7 @@ the simulation model (if not explicitly denied, such as in model like
 <p>Multiple clustering variables can specified, for instance:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+1.5</span><span class="sc">*</span>x<span class="sc">|</span>class)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span></code></pre></div>
 <p>Notice, however, that the power sample size parameters (<span
-class="math inline">\(K\)</span> or <span
+class="math inline">\(k\)</span> or <span
 class="math inline">\(n\)</span>) are solved for the first cluster
 specified, the other clusters parameters should be set by the user in
 the UI (see <code>Model Structure</code>).</p>
@@ -440,7 +441,7 @@ analysis.</p>
 <h1>Aim: N (Required sample size)</h1>
 <p><img src="pics/mixed/aim.1.png" width="720" /></p>
 <p>In mixed models, the sample size depends on the number of clusters
-(<span class="math inline">\(K\)</span> ) of the clustering variable or
+(<span class="math inline">\(k\)</span> ) of the clustering variable or
 the number of cases (<span class="math inline">\(n\)</span>
 observations) within each cluster. So, the user should decide what the
 algorithm should find, either the required
@@ -533,9 +534,9 @@ categorical with 4 levels.</p>
 <p>The issue with categorical variables is that they are cast into the
 mixed model (like in any other linear model) as contrast variables
 (sometimes refered to as <em>dummy variables</em>). Thus, to cast
-categorical variable with <span class="math inline">\(K\)</span> levels
+categorical variable with <span class="math inline">\(k\)</span> levels
 into a linear model, we need <span class="math inline">\(K-1\)</span>
-contrast variables, where <span class="math inline">\(K\)</span> is the
+contrast variables, where <span class="math inline">\(k\)</span> is the
 number of levels. This means that if one has a 4-levels variable, 3
 coefficients should be provided, and in general, <span
 class="math inline">\(K-1\)</span> coefficients are needed.</p>
@@ -570,7 +571,9 @@ class="math inline">\(-.6\)</span>, one would write:</p>
 </div>
 <div id="sensitivity-analysis" class="section level2">
 <h2>Sensitivity analysis</h2>
-<p>SA is not yet available for <code>Mixed Models</code> sub-module.</p>
+<p>SA is not yet available for <code>Mixed Models</code> sub-module.
+Nonethelless, one can run different analyses with different parameters
+to obtain a sensitivity analysis anyway.</p>
 </div>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
@@ -656,6 +659,17 @@ The aim of the analysis: <code>N</code> (default) for sample size,
 </li>
 <li>
 <a href="./rosetta_mixed2.html">Mixed vs rsim R package</a>
+</li>
+</ul>
+</div>
+<div id="examples" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<ul>
+<li>
+<a href="./mixed_example1.html">Mixed models: handling clusters</a>
+</li>
+<li>
+<a href="./mixed_example2.html">Mixed models: model syntax</a>
 </li>
 </ul>
 </div>
