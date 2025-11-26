@@ -283,8 +283,9 @@
       <ul>
       <li><a href="#effect-size-indices"
       id="toc-effect-size-indices">Effect size indices</a></li>
-      </ul></li>
       <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
+      <li><a href="#gpower" id="toc-gpower">G*Power</a></li>
+      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
@@ -380,15 +381,14 @@ is the sum of squares residuals, and the <span
 class="math inline">\(f\)</span> effect size is simply</p>
 <p>The <span class="math inline">\(f\)</span> is simply</p>
 <p><span class="math display">\[
-f=\sqrt{\frac{\eta_p^2}{1+\eta_p^2}}
+f=\sqrt{\frac{SS_{eff}}{SS_{res}}}=\sqrt{\frac{\eta_p^2}{1-\eta_p^2}}
 \]</span></p>
 <p>In our data</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>SS_eff<span class="ot">&lt;-</span>n<span class="sc">*</span><span class="fu">sum</span>((mu<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>SS_res<span class="ot">&lt;-</span>(n<span class="dv">-1</span>)<span class="sc">*</span>(k<span class="dv">-1</span>)<span class="sc">*</span>sd<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>r)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>eta2p<span class="ot">&lt;-</span>SS_eff<span class="sc">/</span>(SS_eff<span class="sc">+</span>SS_res)</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>f<span class="ot">&lt;-</span><span class="fu">sqrt</span>(eta2p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>eta2p))</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;SS_eff=%g, SS_res=%g, eta2p=%.5f, f=%.5f&quot;</span>,SS_eff,SS_res,eta2p,f)</span></code></pre></div>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;SS_eff=%g, SS_res=%g, eta2p=%.5f, f=%.5f&quot;</span>,SS_eff,SS_res,eta2p,f)</span></code></pre></div>
 <pre><code>## [1] &quot;SS_eff=46800, SS_res=732065, eta2p=0.06009, f=0.25284&quot;</code></pre>
 <p>Thus, for the required N we have the following setup</p>
 <div class="adm adm-setup">
@@ -396,7 +396,7 @@ f=\sqrt{\frac{\eta_p^2}{1+\eta_p^2}}
 <ul>
 <li>Aim = N</li>
 <li>AXB <span class="math inline">\(p\eta^2\)</span> = 0.06</li>
-<li><span class="math inline">\(f\)</span> = 0.25265</li>
+<li><span class="math inline">\(f\)</span> = 0.25284</li>
 <li>Number of measures = 3</li>
 <li>Effect DF = 2</li>
 <li>Number of groups in the design = 1</li>
@@ -406,21 +406,43 @@ f=\sqrt{\frac{\eta_p^2}{1+\eta_p^2}}
 </ul>
 </div>
 </div>
-</div>
-<div id="pamlj" class="section level1">
-<h1>PAMLj</h1>
+<div id="pamlj" class="section level2">
+<h2>PAMLj</h2>
 <p>The setup in <span class="modulename">PAMLj</span> is straightforward
 and produced the expected results. In <code>Factorial Design</code>,
 <span class="option">Input Mode: Effect Size</span> we insert the input
 parameters</p>
 <p><img src="rosetta/pics/factorial/fac_n.1.input.1.png" width="634" />
 <img src="rosetta/pics/factorial/fac_n.1.output.1.png" width="685" /></p>
+<p>Thus, as expected from the results of Superpower command, the
+required N to obtain a power of .80 (or larger) is <span
+class="math inline">\(N=78\)</span>.</p>
+</div>
+<div id="gpower" class="section level2">
+<h2>G*Power</h2>
+<p>For this power analysis, GPower offers <em>F test: Fixed effects
+ANOVA</em> routine, which requires an <span
+class="math inline">\(f\)</span> as the effect size which is <span
+class="math inline">\(f=\sqrt{p\eta^2/(1-p\eta^2)}\)</span>, as stated
+above. However, the way GPower defines <span
+class="math inline">\(eta_p^2\)</span> and thus <span
+class="math inline">\(f\)</span> for within subject designs is different
+than the standard definition. To obtain the standard definition (<span
+class="math inline">\(SS_{eff}\)</span> over SS_{res}$) we need to
+explicitly select the <code>As in SPSS</code> definition in
+<code>Options</code>.</p>
+<p><img src="rosetta/pics/factorial/fac_n.1.gpower.1.png" width="592" /></p>
+<p>Now, we input the <span class="math inline">\(\eta_p^2=.06\)</span>
+in ‘Determine’ option and the other parameters and we obtain exactly the
+required <span class="math inline">\(N=78\)</span>.</p>
+<p><img src="rosetta/pics/factorial/fac_n.1.gpower.1.png" width="592" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
 <a class="backto" href="./rosetta.html">PAMLj: rosetta</a>
+</div>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">

@@ -74,7 +74,7 @@ where $SS_{eff}$ is the means sum of squares and $SS_{res}$ is the sum of square
 The $f$ is simply 
 
 $$
-f=\sqrt{\frac{\eta_p^2}{1+\eta_p^2}}
+f=\sqrt{\frac{SS_{eff}}{SS_{res}}}=\sqrt{\frac{\eta_p^2}{1-\eta_p^2}}
 $$
 
 In our data
@@ -85,12 +85,9 @@ SS_eff<-n*sum((mu-mean(mu))^2)
 SS_res<-(n-1)*(k-1)*sd^2*(1-r)
 eta2p<-SS_eff/(SS_eff+SS_res)
 f<-sqrt(eta2p/(1-eta2p))
-
 sprintf("SS_eff=%g, SS_res=%g, eta2p=%.5f, f=%.5f",SS_eff,SS_res,eta2p,f)
 
 ```
-
-
 
 
 
@@ -101,7 +98,7 @@ Setup
 
 *   Aim = N
 *   AXB $p\eta^2$      = 0.06
-*   $f$                = `r round(sqrt(0.06/(1-0.06)),digits=5)`
+*   $f$                = 0.25284
 *   Number of measures = 3
 *   Effect DF          = 2
 *   Number of groups in the design = 1
@@ -112,12 +109,28 @@ Setup
 :::
 
 
-# PAMLj
+## PAMLj
 
 The setup in `r modulename()` is straightforward and produced the expected results. In `Factorial Design`, `r opt("Input Mode: Effect Size")` we insert the input parameters
 
 `r pic("rosetta/pics/factorial/fac_n.1.input.1.png")`
 `r pic("rosetta/pics/factorial/fac_n.1.output.1.png")`
+
+Thus, as expected from the results of Superpower command, the required N to obtain a power of .80 (or larger) is $N=78$.
+
+## G*Power
+
+For this power analysis,  GPower offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size which is  $f=\sqrt{p\eta^2/(1-p\eta^2)}$, as stated above. However, the way GPower defines $eta_p^2$ and thus $f$ for within subject designs is different than the standard definition. To obtain the standard definition ($SS_{eff}$ over SS_{res}$) we need to explicitly select the `As in SPSS` definition in `Options`.
+
+`r pic("rosetta/pics/factorial/fac_n.1.gpower.1.png")`
+
+Now, we input the $\eta_p^2=.06$ in 'Determine' option and the other parameters and we obtain exactly the required $N=78$.
+
+`r pic("rosetta/pics/factorial/fac_n.1.gpower.1.png")`
+
+
+
+
 
 
 
