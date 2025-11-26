@@ -1,0 +1,130 @@
+---
+title: "Factorial designs: Required N"
+topic: factorial
+category: rosetta
+nickname: ros_fac_peta
+linklabel: "Rosetta: Required N in Factorial designs" 
+bibliography: 
+     - bib.bib
+link-citations: true
+        
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+
+```
+
+`r version("0.2.0")`
+
+Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf),  [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), and [WebPower](https://webpower.psychstat.org/wiki/). We check the results also using and `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`, which does not compute the required N, but can be used to confirm the power of the required N found with other software.
+
+
+
+# Repeated Measures ANOVA 
+
+To test the `Factorial design power analysis` sub-module for repeated measures or mixed designs, we can compare results with GPower and [WebPower](https://webpower.psychstat.org/wiki/). However, in G*Power the default effect size used for repeated-measures effects is defined in a different way as compared with  `Factorial design power analysis` sub-module, Superpower or even SPSS. Also [WebPower](https://webpower.psychstat.org/wiki/) has a different definition of the effect size, so some adjustment are required. We therefore simulate some data yielding the same effect sizes of the one we test, and employ `Superpower` to confirm the results.
+
+## Effect size indices
+
+We start with a simple one-way repeated measures design with three repeated measures: To have some data that would yield the parameters to test, while being able to control the different computations of the effect size indices, we employed the following set of means and standard deviations.
+
+```{r}
+### exptected means
+mu = c(700, 670, 670) 
+## expected sd
+sd <- 98.9
+### expected average correlations among repeated measures
+r <- 0.514
+## number of repeated measures
+k <- 3
+# a sample size 
+n<-78
+```
+
+When these values are passed to Superpower, we obtain the following results.
+
+```{r}
+string = "3w"
+alpha_level <- 0.05
+design_result <- Superpower::ANOVA_design(design = string,
+                              n = n, 
+                              mu = mu, 
+                              sd = sd, 
+                              r = r, plot=FALSE)
+exact_result <- Superpower::ANOVA_exact(design_result,
+                            alpha_level = alpha_level,
+                            verbose = FALSE)
+zapsmall(exact_result$main_results)
+
+
+```
+
+Thus, we $N=78$ we obtain a power of $.80$. The effect size is $\eta_p^2=.06$ and the we have a $f=.25$. To understand the comparisons across software, we should notice that Superpower computes the $\eta_p^2$ and the $f$ accordingly to @cohen1988spa. In particular, 
+
+$$
+\eta_p^2=\frac{SS_{eff}}{SS_{eff}+SS_{res}}
+$$
+where $SS_{eff}$ is the means sum of squares and $SS_{res}$ is the sum of squares residuals, and the $f$ effect size is simply
+
+The $f$ is simply 
+
+$$
+f=\sqrt{\frac{\eta_p^2}{1+\eta_p^2}}
+$$
+
+In our data
+
+```{r}
+
+SS_eff<-n*sum((mu-mean(mu))^2)
+SS_res<-(n-1)*(k-1)*sd^2*(1-r)
+eta2p<-SS_eff/(SS_eff+SS_res)
+f<-sqrt(eta2p/(1-eta2p))
+
+sprintf("SS_eff=%g, SS_res=%g, eta2p=%.5f, f=%.5f",SS_eff,SS_res,eta2p,f)
+
+```
+
+
+
+
+
+Thus, for the required N we have the following setup
+
+:::{ .adm .adm-setup}
+Setup
+
+*   Aim = N
+*   AXB $p\eta^2$      = 0.06
+*   $f$                = `r round(sqrt(0.06/(1-0.06)),digits=5)`
+*   Number of measures = 3
+*   Effect DF          = 2
+*   Number of groups in the design = 1
+*   Alpha              =  .05
+*   Required power     =.80
+*   __Correct answer__: N=78
+
+:::
+
+
+# PAMLj
+
+The setup in `r modulename()` is straightforward and produced the expected results. In `Factorial Design`, `r opt("Input Mode: Effect Size")` we insert the input parameters
+
+`r pic("rosetta/pics/factorial/fac_n.1.input.1.png")`
+`r pic("rosetta/pics/factorial/fac_n.1.output.1.png")`
+
+
+
+
+`r backto("rosetta")`
+
+`r issues()`
+
+
+# References
