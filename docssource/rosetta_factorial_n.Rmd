@@ -187,9 +187,9 @@ This effect size is dimensionless and implicitly treats the design as if it had 
 It depends on what the user wants to express:
 
 * If expectations are framed in terms of **partial eta-squared** or variance explained, **Approach 1** is appropriate.  
-* If the user intentionally adopts Cohen’s definition of \(f_v^2\), then **Approach 2** is correct, but its interpretation differs substantially from the usual ANOVA effect sizes.
+* If the user intentionally adopts a dimentioless definition of \(f_v^2\), then **Approach 2** is correct, but its interpretation differs substantially from the usual ANOVA effect sizes.
 
-In my opinion, approach 1 is typically more transparent and aligns with standard GLM practice, but users may have good reason to prefer the second approach.
+In my opinion, approach 1 is typically more transparent and aligns with standard GLM practice, but users may have good reasons to prefer the second approach.
 
 # Practical comparisons
 
