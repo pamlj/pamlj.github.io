@@ -44,7 +44,7 @@ When k > 2, Approach 2 always produces **larger required N**.
 
 # How to make them match
 
-To reproduce PAMLj / SPSS / Superpower results in WebPower or Cohen’s G*Power:
+To reproduce PAMLj / SPSS / Superpower results in WebPower or G*Power with `Cohen's option`:
 
 1. Compute  
    $$f^2_{\text{SPSS}} \quad\text{(the one you actually want)}$$
