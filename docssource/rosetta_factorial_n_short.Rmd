@@ -13,7 +13,7 @@ This short guide explains what each system does and how to make them agree.
 
 All systems use an effect size based on the ratio:
 
-- **Approach 1 (SPSS-style effect size)**  
+- **Approach 1 (Classical-style effect size)**  
   Uses  
   $$f^2 = \frac{\sigma_m^2}{(k-1)\sigma^2}$$  
   and noncentrality  
@@ -69,13 +69,13 @@ Now WebPower and G*Power will return the same N as PAMLj.
 
 - If you think about effects as **partial eta-squared** or variance explained, use **Approach 1** (PAMLj, SPSS, Superpower).  
 - Use **Approach 2** only if you explicitly want a dimensionless f for repeated measures.  
-- Always check G*Power’s **Options**: the default is *not* SPSS-consistent.
+- Always check G*Power’s **Options**: the default is *not* consistent with classical $\eta_p^2$.
 
 # Quick rule of thumb
 
 For repeated-measures with **k levels**:
 
-- **PAMLj/SPSS f²** is **(k−1) times smaller** than  
+- **PAMLj/Classical f²** is **(k−1) times smaller** than  
   WebPower/Cohen f².
 - Required N in WebPower is roughly **(k−1) times larger** unless you rescale.
 
