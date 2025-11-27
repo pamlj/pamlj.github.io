@@ -49,7 +49,7 @@ To reproduce PAMLj / SPSS / Superpower results in WebPower or Cohen’s G*Power:
 1. Compute  
    $$f^2_{\text{SPSS}} \quad\text{(the one you actually want)}$$
 
-2. Convert to Cohen/WebPower scale:  
+2. Convert to GPower-Cohen option/WebPower scale:  
    ```r
    f2_rescaled <- f2 * (k - 1)
    ```
@@ -68,7 +68,7 @@ Now WebPower and G*Power will return the same N as PAMLj.
 # Practical recommendations
 
 - If you think about effects as **partial eta-squared** or variance explained, use **Approach 1** (PAMLj, SPSS, Superpower).  
-- Use **Approach 2** only if you explicitly want Cohen’s original f for repeated measures.  
+- Use **Approach 2** only if you explicitly want a dimensionless f for repeated measures.  
 - Always check G*Power’s **Options**: the default is *not* SPSS-consistent.
 
 # Quick rule of thumb

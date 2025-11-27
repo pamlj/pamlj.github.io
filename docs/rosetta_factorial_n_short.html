@@ -394,7 +394,7 @@ G*Power:</p>
 <li><p>Compute<br />
 <span class="math display">\[f^2_{\text{SPSS}} \quad\text{(the one you
 actually want)}\]</span></p></li>
-<li><p>Convert to Cohen/WebPower scale:</p>
+<li><p>Convert to GPower-Cohen option/WebPower scale:</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>f2_rescaled <span class="ot">&lt;-</span> f2 <span class="sc">*</span> (k <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div></li>
 <li><p>Use <code>sqrt(f2_rescaled)</code> as <em>f</em> in WebPower or
@@ -412,8 +412,8 @@ in G*Power (“as in Cohen”).</p></li>
 or variance explained, use <strong>Approach 1</strong> (PAMLj, SPSS,
 Superpower).<br />
 </li>
-<li>Use <strong>Approach 2</strong> only if you explicitly want Cohen’s
-original f for repeated measures.<br />
+<li>Use <strong>Approach 2</strong> only if you explicitly want a
+dimensionless f for repeated measures.<br />
 </li>
 <li>Always check G<em>Power’s <strong>Options</strong>: the default is
 </em>not* SPSS-consistent.</li>
