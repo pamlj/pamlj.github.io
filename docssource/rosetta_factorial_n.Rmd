@@ -19,7 +19,7 @@ mcdocs_init()
 
 `r version("0.8.0")`
 
-Different software packages often return different results for repeated-measures ANOVA power analysis, even when all input parameters appear identical. In this document we inspect this issue by comparing `r modulename()`, the R **pwr** package, **G*Power**, **WebPower**, and the `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`.
+Different software packages often return different results for repeated-measures ANOVA power analysis, even when all input parameters appear identical. In this document we inspect this issue by comparing `r modulename()`, the [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf), [`G*Power`](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), [WebPower](https://webpower.psychstat.org/wiki/), and the `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`.
 
 # The issue 
 
@@ -187,7 +187,7 @@ This effect size is dimensionless and implicitly treats the design as if it had 
 It depends on what the user wants to express:
 
 * If expectations are framed in terms of **partial eta-squared** or variance explained, **Approach 1** is appropriate.  
-* If the user intentionally adopts a dimentioless definition of \(f_v^2\), then **Approach 2** is correct, but its interpretation differs substantially from the usual ANOVA effect sizes.
+* If the user intentionally adopts a dimensionless definition of \(f_v^2\), then **Approach 2** is correct, but its interpretation differs substantially from the usual ANOVA effect sizes.
 
 In my opinion, approach 1 is typically more transparent and aligns with standard GLM practice, but users may have good reasons to prefer the second approach.
 
@@ -272,7 +272,7 @@ exact_result <- Superpower::ANOVA_exact(design_result,
 zapsmall(exact_result$main_results)
 ```
 
-Superpower also offers a simulation-based power estimate. This is a crucal test, because simulations do not require any definition of effect size: data are generated based on the input means, SD and correlation, and the power is computed as a proportion of the simulation run that produced a significant result. 
+Superpower also offers a simulation-based power estimate. This is a crucal test, because simulations do not require any definition of effect size: data are generated based on the input means, SD and correlation, and the power is computed as a proportion of the simulation replications that produced a significant result. 
 
 ```{r, eval=FALSE}
 

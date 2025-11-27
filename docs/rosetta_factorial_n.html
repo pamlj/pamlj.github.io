@@ -336,8 +336,11 @@ inconsistency</a></h2>
 <p>Different software packages often return different results for
 repeated-measures ANOVA power analysis, even when all input parameters
 appear identical. In this document we inspect this issue by comparing
-<span class="modulename">PAMLj</span>, the R <strong>pwr</strong>
-package, **G*Power<strong>, </strong>WebPower**, and the
+<span class="modulename">PAMLj</span>, the <a
+href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
+package</a>, <a
+href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower"><code>G*Power</code></a>,
+<a href="https://webpower.psychstat.org/wiki/">WebPower</a>, and the
 <a href='https://aaroncaldwell.us/SuperpowerBook/' target='_blank'>Superpower
 R package</a>.</p>
 <div id="the-issue" class="section level1">
@@ -541,7 +544,7 @@ if it had only two levels.</p>
 eta-squared</strong> or variance explained, <strong>Approach 1</strong>
 is appropriate.<br />
 </li>
-<li>If the user intentionally adopts a dimentioless definition of <span
+<li>If the user intentionally adopts a dimensionless definition of <span
 class="math inline">\(f_v^2\)</span>, then <strong>Approach 2</strong>
 is correct, but its interpretation differs substantially from the usual
 ANOVA effect sizes.</li>
@@ -648,8 +651,8 @@ repeated measure designs, we can use it to verify that <strong>N =
 <p>Superpower also offers a simulation-based power estimate. This is a
 crucal test, because simulations do not require any definition of effect
 size: data are generated based on the input means, SD and correlation,
-and the power is computed as a proportion of the simulation run that
-produced a significant result.</p>
+and the power is computed as a proportion of the simulation replications
+that produced a significant result.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>sim_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_power</span>(design_result,</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                            <span class="at">nsims =</span> <span class="dv">1000</span>,</span>
