@@ -51,10 +51,13 @@ $$
 \sigma_t^2 = \sigma_m^2 + \tau^2 + \sigma^2.
 $$
 
-And the repeated measure wull be correlated. The correlation among repeated measures is:
+And the repeated measure will be correlated. The correlation among repeated measures is:
 $$
 r = \frac{\tau^2}{\tau^2 + \sigma^2}.
 $$
+```{r}
+
+```
 
 If we now define the variance unrelated to the effect as:
 $$
@@ -124,7 +127,7 @@ $$
 
 Software using this approach:
 
-* (`r modulename()`)
+* `r modulename()`
 * **Superpower::ANOVA_exact()**  
 * **pwr.f2.test()**  
 * **`G*Power`** with option **“As in SPSS”**
@@ -162,7 +165,7 @@ Thus, entering the same numerical value leads to entirely different noncentralit
 * Approach 1: \(\lambda_1 = N(k-1)f^2\)  
 * Approach 2: \(\lambda_2 = Nf^2\)
 
-For \(k = 4\), \(\lambda_1 = 3Nf^2\), three times larger than $lambda_2$.
+For \(k = 4\), \(\lambda_1 = 3Nf^2\), three times larger than $\lambda_2$.
 
 The expected partial eta-squared under approach 2 becomes:
 
