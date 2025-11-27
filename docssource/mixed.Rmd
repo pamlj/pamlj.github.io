@@ -3,6 +3,7 @@ title: "Mixed models"
 author: Marcello Gallucci
 topic: mixed
 category: help
+nickname: mixed_main
 bibliography: 
      - bib.bib
 link-citations: true

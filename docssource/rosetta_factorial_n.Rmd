@@ -1,9 +1,9 @@
 ---
-title: "Factorial designs: Required N"
+title: "Repeated Measures: software inconsistency "
 topic: factorial
 category: rosetta
 nickname: ros_fac_peta
-linklabel: "Rosetta: Required N in Factorial designs" 
+linklabel: "Rosetta: Software inconsistency in RM ANOVA" 
 bibliography: 
      - bib.bib
 link-citations: true
@@ -12,45 +12,252 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 ```{r echo=FALSE,results='hide'}
 library(mcdocs)
 mcdocs_init()
-
 ```
 
-`r version("0.2.0")`
+`r version("0.8.0")`
 
-Here we compare the results of `r modulename()` with other software that performs power analysis. In particular, we will compare our results with [R pwr package](https://cran.r-project.org/web/packages/pwr/pwr.pdf),  [G*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), and [WebPower](https://webpower.psychstat.org/wiki/). We check the results also using and `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`, which does not compute the required N, but can be used to confirm the power of the required N found with other software.
+Different software packages often return different results for repeated-measures ANOVA power analysis, even when all input parameters appear identical. In this document we inspect this issue by comparing `r modulename()`, the R **pwr** package, **G*Power**, **WebPower**, and the `r ext_url("Superpower R package","https://aaroncaldwell.us/SuperpowerBook/")`.
 
+# The issue 
 
+Consider a one-way repeated-measures design with three levels. Suppose we expect the effect to explain approximately 5% of the variance, that is, partial eta-squared $\eta_p^2 = .05$. Using this value in `r modulename()` yields a required sample size of **N = 94** for .80 power. Reproducing the same setup with `pwr::pwr.f2.test()` yields essentially identical results. Testing the scenario with **Superpower::ANOVA_exact()** at \(N=94\) also returns a power estimate of .80.
 
-# Repeated Measures ANOVA 
+However:
 
-To test the `Factorial design power analysis` sub-module for repeated measures or mixed designs, we can compare results with GPower and [WebPower](https://webpower.psychstat.org/wiki/). However, in G*Power the default effect size used for repeated-measures effects is defined in a different way as compared with  `Factorial design power analysis` sub-module, Superpower or even SPSS. Also [WebPower](https://webpower.psychstat.org/wiki/) has a different definition of the effect size, so some adjustment are required. We therefore simulate some data yielding the same effect sizes of the one we test, and employ `Superpower` to confirm the results.
+* G*Power (default *F-tests* settings) returns **N = 33**.  
+* WebPower returns **N = 185**.  
+* G*Power using the option **“as in Cohen (1988)”** also returns **N = 185**.  
+* G*Power using **“as in SPSS”** returns **N = 95**, consistent with `r modulename()`.
+
+These discrepancies are too large to be explained by rounding. All software is, in fact, internally consistent — the differences arise from different interpretations of the effect size, the residual variance, and the noncentrality parameter. Unfortunately, these differences are subtle and grounded in technical details.  To keep the discussion coherent, we frame repeated-measures ANOVA as a special case of a random-intercept linear model, and dive into statistical definitions and details.
+
+If you find this discussion boring or not necessary, please visit  `r link_pages(nickname="ros_fac_peta_short")`, for a more practical digest (in reality I asked chatgpt to make a short recap of this :-)).
+
+# Some theory
+
+A repeated-measures ANOVA can be expressed as a random-intercept model (Raudenbush & Bryk, 2002; McCulloch, Searle & Neuhaus, 2008):
+
+$$
+Y_{ij} = \alpha + \alpha_i + \mu_j + \varepsilon_{ij},
+$$
+
+where \(i\) indexes subjects and \(j = 1,\dots,k\) indexes repeated measurements. The subject-specific intercepts \(\alpha_i\) have variance \(\tau^2\), the condition means have variance \(\sigma_m^2\), and the within-subject residuals have variance \(\sigma^2\).
+
+In this model, the total variance is:
+$$
+\sigma_t^2 = \sigma_m^2 + \tau^2 + \sigma^2.
+$$
+
+And the repeated measure wull be correlated. The correlation among repeated measures is:
+$$
+r = \frac{\tau^2}{\tau^2 + \sigma^2}.
+$$
+
+If we now define the variance unrelated to the effect as:
+$$
+\sigma_{\text{res}}^2 = \tau^2 + \sigma^2.
+$$
+
+we can find $\sigma^2$ by solving for it the equation above:
+$$
+\sigma^2 = \sigma_{\text{res}}^2 (1 - r).
+$$
+
+We will see later how this definition is treated differently across software systems.
+
+# Power analysis
+
+All software systems ultimately rely on the effect size \(f\), defined as (Cohen, 1988) as the square-root of:
+
+$$
+f^2 = \frac{\sigma_m^2}{\sigma^2}.
+$$
+
+This relates to partial eta-squared via:
+
+$$
+\eta_p^2 = \frac{\sigma_m^2}{\sigma_m^2 + \sigma^2}
+           = \frac{f^2}{1 + f^2}.
+$$
+
+However, these relationships refer to *population variances*, not to *expected sample sums of squares*. When data are sampled, the expected sums of squares for a repeated-measures design are:
+
+$$
+E[SS_e] = N(k-1)\sigma^2,\qquad 
+E[SS_m] = N\sigma_m^2.
+$$
+
+Hence:
+
+$$
+\hat{f}^2 = \frac{\sigma_m^2}{(k-1)\sigma^2},\qquad
+\hat{\eta}_p^2 = \frac{\sigma_m^2}{\sigma_m^2 + (k-1)\sigma^2}.
+$$
+
+These are the *actual* effect sizes relevant for power analysis in a design with \(k\) repeated measures.
+
+Power calculations require also a noncentral F distribution with
+
+* \(df_1 = k - 1\)  
+* \(df_2 = (N - 1)(k - 1)\)  
+* noncentrality parameter \(\lambda\)
+
+A general form is:
+
+$$
+\lambda = N_f \cdot f^2,
+$$
+
+The noncentraly parameter is the actual effect size used to obtain the power parameters in the analysis, so it is crucuial that it is well defined. \(N_f\) is a sample-size-related quantity. Its definition differs across software and explains most inconsistencies.
+
+# Approach 1 (PAMLj, GPower with SPSS option, pwr, Superpower)
+
+Here \(N_f = N(k - 1)\) or, equivalently, \((N-1)(k-1)\). Then:
+
+$$
+\lambda_1 = N(k-1)\frac{\sigma_m^2}{(k-1)\sigma^2}
+          = N\frac{\sigma_m^2}{\sigma^2}.
+$$
+
+Software using this approach:
+
+* (`r modulename()`)
+* **Superpower::ANOVA_exact()**  
+* **pwr.f2.test()**  
+* **`G*Power`** with option **“As in SPSS”**
+
+This approach aligns with the classical GLM definition of \(f^2\) and with the interpretation of partial eta-squared used in standard ANOVA.
+
+# Approach 2 (WebPower, G*Power default “as in Cohen”)
+
+A second approach defines:
+
+$$
+f_v^2 = \frac{\sigma_m^2}{\sigma^2},
+$$
+
+but sets **\(N_f = N\)**. Thus:
+
+$$
+\lambda_2 = N \cdot \frac{\sigma_m^2}{\sigma^2}.
+$$
+
+This superficially resembles \(\lambda_1\), but notice that approach 1 uses:
+
+$$
+f^2 = \frac{\sigma_m^2}{(k-1)\sigma^2},
+$$
+
+so:
+
+$$
+f_v^2 = f^2 (k-1).
+$$
+
+Thus, entering the same numerical value leads to entirely different noncentrality parameters:
+
+* Approach 1: \(\lambda_1 = N(k-1)f^2\)  
+* Approach 2: \(\lambda_2 = Nf^2\)
+
+For \(k = 4\), \(\lambda_1 = 3Nf^2\), three times larger than $lambda_2$.
+
+The expected partial eta-squared under approach 2 becomes:
+
+$$
+\eta_{pv}^2 = \frac{f^2}{f^2 + (k-1)}.
+$$
+
+This means that in a design with four measures, an expected \(f_v^2 = .10\) produces \(\eta_{pv}^2 \approx .06\), not .16 as one would expect.
+
+Software using this approach:
+
+* **WebPower**  
+* **`G*Power`** (option “as in Cohen (1988)”)  
+
+This effect size is dimensionless and implicitly treats the design as if it had only two levels.
+
+# Which one is correct?
+
+It depends on what the user wants to express:
+
+* If expectations are framed in terms of **partial eta-squared** or variance explained, **Approach 1** is appropriate.  
+* If the user intentionally adopts Cohen’s definition of \(f_v^2\), then **Approach 2** is correct, but its interpretation differs substantially from the usual ANOVA effect sizes.
+
+In my opinion, approach 1 is typically more transparent and aligns with standard GLM practice, but users may have good reason to prefer the second approach.
+
+# Practical comparisons
+
+Even when software appears to use the same effect size, differences in the underlying definition lead to different required sample sizes. Below we verify these differences empirically.
 
 ## Effect size indices
 
-We start with a simple one-way repeated measures design with three repeated measures: To have some data that would yield the parameters to test, while being able to control the different computations of the effect size indices, we employed the following set of means and standard deviations.
+As a working example for a three-level repeated-measures design, we define means, SD, and correlations that yield \(f \approx 0.25\) and \(\eta_p^2 \approx 0.06\), values typical in applications.
 
 ```{r}
-### exptected means
-mu = c(700, 670, 670) 
+### expected means
+mu = c(100, 0, 0) 
 ## expected sd
-sd <- 98.9
+sd <- 323.4
 ### expected average correlations among repeated measures
-r <- 0.514
+r <- .50
 ## number of repeated measures
 k <- 3
-# a sample size 
-n<-78
+
+ESS_m<-sum((mu-mean(mu))^2)
+ESS_e<-(k-1)*sd^2*(1-r)
+f2<-ESS_m/ESS_e
+f<-sqrt(f2)
+# eta2p
+eta2p<-f2/(1+f2)
+sprintf("f=%.4f, f2=%.4f,eta2p=%.4f",sqrt(f2),f2,eta2p) 
 ```
 
-When these values are passed to Superpower, we obtain the following results.
+:::{ .adm .adm-setup}
+Setup
+
+* Aim = N  
+* AXB $p\eta^2$ = 0.06  
+* $f$ = 0.2525  
+* Number of measures = 3  
+* Effect DF = 2  
+* Number of groups = 1  
+* Alpha = .05  
+* Required power = .80  
+:::
+
+## PAMLj
+
+The `r modulename()` setup is straightforward and produces the expected results.
+
+`r pic("rosetta/pics/factorial/fac_n.1.input.1.png")`  
+`r pic("rosetta/pics/factorial/fac_n.1.output.1.png")`
+
+## G*Power
+
+Use:
+
+* *F test → Repeated measures: within factors*  
+* Effect size \(f = .2525\) or \(\eta_p^2 = .06\)  
+* In *Options*, select **“As in SPSS”**
+
+`r pic("rosetta/pics/factorial/fac_n.1.gpower.1.png")`
+
+Entering \(\eta_p^2 = .06\) yields **N = 78**, matching `r modulename()`.
+
+`r pic("rosetta/pics/factorial/fac_n.1.gpower.2.png")`
+
+## Superpower
+
+Because `Superpower` does not compute required N for repeated measure designs, we can use it to verify that **N = 78** indeed yields .80 power.
 
 ```{r}
+n<-78
 string = "3w"
 alpha_level <- 0.05
+
 design_result <- Superpower::ANOVA_design(design = string,
                               n = n, 
                               mu = mu, 
@@ -60,84 +267,97 @@ exact_result <- Superpower::ANOVA_exact(design_result,
                             alpha_level = alpha_level,
                             verbose = FALSE)
 zapsmall(exact_result$main_results)
-
-
 ```
 
-Thus, we $N=78$ we obtain a power of $.80$. The effect size is $\eta_p^2=.06$ and the we have a $f=.25$. To understand the comparisons across software, we should notice that Superpower computes the $\eta_p^2$ and the $f$ accordingly to @cohen1988spa. In particular, 
+Superpower also offers a simulation-based power estimate. This is a crucal test, because simulations do not require any definition of effect size: data are generated based on the input means, SD and correlation, and the power is computed as a proportion of the simulation run that produced a significant result. 
 
-$$
-\eta_p^2=\frac{SS_{eff}}{SS_{eff}+SS_{res}}
-$$
-where $SS_{eff}$ is the means sum of squares and $SS_{res}$ is the sum of squares residuals, and the $f$ effect size is simply
+```{r, eval=FALSE}
 
-The $f$ is simply 
+sim_result <- Superpower::ANOVA_power(design_result,
+                            alpha_level = alpha_level,
+                            nsims = 1000,
+                            verbose = FALSE)
+```
 
-$$
-f=\sqrt{\frac{SS_{eff}}{SS_{res}}}=\sqrt{\frac{\eta_p^2}{1-\eta_p^2}}
-$$
+```{r echo=FALSE}
+load(file="datastore/fac_n_sim1.Rdata")
+```
 
-In our data
+```{r }
+zapsmall(sim_result$main_results)
+```
+
+Simulation results are fully consistent with `r modulename()` and in general with software using approach 1.
+
+## WebPower & GPower (Cohen option)
+
+Running WebPower with the parameters set above, we have:
 
 ```{r}
-
-SS_eff<-n*sum((mu-mean(mu))^2)
-SS_res<-(n-1)*(k-1)*sd^2*(1-r)
-eta2p<-SS_eff/(SS_eff+SS_res)
-f<-sqrt(eta2p/(1-eta2p))
-sprintf("SS_eff=%g, SS_res=%g, eta2p=%.5f, f=%.5f",SS_eff,SS_res,eta2p,f)
-
+WebPower::wp.rmanova(ng=1,nm=k,f=f,power=.80,type = 1)
 ```
 
+This yields **N = 153**, identical to G*Power using the **Cohen** option.
 
 
-Thus, for the required N we have the following setup
-
-:::{ .adm .adm-setup}
-Setup
-
-*   Aim = N
-*   AXB $p\eta^2$      = 0.06
-*   $f$                = 0.25284
-*   Number of measures = 3
-*   Effect DF          = 2
-*   Number of groups in the design = 1
-*   Alpha              =  .05
-*   Required power     =.80
-*   __Correct answer__: N=78
-
-:::
+`r pic("rosetta/pics/factorial/fac_n.2.gpower.1.png")`
+`r pic("rosetta/pics/factorial/fac_n.2.gpower.2.png")`
 
 
-## PAMLj
+As shown above, this difference with `r modulename()` is expected: these programs use **Approach 2**. To match Approach 1, we need to rescale the effect size:
 
-The setup in `r modulename()` is straightforward and produced the expected results. In `Factorial Design`, `r opt("Input Mode: Effect Size")` we insert the input parameters
+```{r}
+f2_rescaled<-f2*(k-1)
+f2_rescaled
+WebPower::wp.rmanova(ng=1,nm=k,f=sqrt(f2_rescaled),power=.80,type = 1)
+```
 
-`r pic("rosetta/pics/factorial/fac_n.1.input.1.png")`
-`r pic("rosetta/pics/factorial/fac_n.1.output.1.png")`
+This now reproduces the `r modulename()` results.
 
-Thus, as expected from the results of Superpower command, the required N to obtain a power of .80 (or larger) is $N=78$.
+# A final test: Mixed models
 
-## G*Power
+Given that repeated-measures ANOVA is a special case of a random-intercept model, the mixed-model power analysis in `r modulename()` should produce nearly identical results. So, we convert the RM ANOVA scenario into a random-coefficients model (see `r link_pages(nickname='mixed_main')` for details of mixed model power analysis).
 
-For this power analysis,  GPower offers  _F test: Fixed effects ANOVA_ routine, which requires an $f$ as the effect size which is  $f=\sqrt{p\eta^2/(1-p\eta^2)}$, as stated above. However, the way GPower defines $eta_p^2$ and thus $f$ for within subject designs is different than the standard definition. To obtain the standard definition ($SS_{eff}$ over SS_{res}$) we need to explicitly select the `As in SPSS` definition in `Options`.
+Contrast coefficients (deviation-coded):
 
-`r pic("rosetta/pics/factorial/fac_n.1.gpower.1.png")`
+```{r}
+b1<-mu[1]-mean(mu)
+b2<-mu[2]-mean(mu)
+sprintf("b1=%.2f, b2=%.2f",b1,b2)
+```
 
-Now, we input the $\eta_p^2=.06$ in 'Determine' option and the other parameters and we obtain exactly the required $N=78$.
+Residual variance:
 
-`r pic("rosetta/pics/factorial/fac_n.1.gpower.1.png")`
+```{r}
+sigma2<-sd^2*(1-r)
+sprintf("sigma=%.2f",sigma2)
+```
 
+Random-intercept variance:
 
+$$
+\tau^2 = \frac{r}{1-r}\sigma^2
+$$
 
+```{r}
+tau2=(r/(1-r))*sigma2
+sprintf("tau2=%.2f",tau2)
+```
 
+Using these parameters in the mixed-model power analysis gives:
 
+`r pic("rosetta/pics/factorial/fac_n.1.mixed.1.png")`  
+`r pic("rosetta/pics/factorial/fac_n.1.mixed.2.png")`  
+`r pic("rosetta/pics/factorial/fac_n.1.mixed.3.png")`
 
+The required sample size is **N = 77**, exactly equivalent to the RM ANOVA result (differences due to simulation noise).
 
+# A note on the correlation among measures
+
+As shown earlier, all methods implicitly include the correlation between repeated measures in the definition of the effect size. G*Power allows users to manually enter a correlation, but this assumes an effect-size definition *not* already incorporating it. Unless the user understands this distinction, supplying a correlation can double-count or distort the effect size.
 
 `r backto("rosetta")`
 
 `r issues()`
-
 
 # References

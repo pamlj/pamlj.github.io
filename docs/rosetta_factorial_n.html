@@ -7,7 +7,7 @@
 
     
     
-    <title>Factorial designs: Required N</title>
+    <title>Repeated Measures: software inconsistency</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -271,21 +271,46 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Factorial designs: Required N</h1>
+      <h1 class="title">Repeated Measures: software inconsistency</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Factorial designs: Required N</a></h2>
+    <h2><a href="#content">Repeated Measures: software
+inconsistency</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#repeated-measures-anova"
-      id="toc-repeated-measures-anova">Repeated Measures ANOVA</a>
+      <li><a href="#the-issue" id="toc-the-issue">The issue</a></li>
+      <li><a href="#some-theory" id="toc-some-theory">Some
+      theory</a></li>
+      <li><a href="#power-analysis" id="toc-power-analysis">Power
+      analysis</a></li>
+      <li><a
+      href="#approach-1-pamlj-gpower-with-spss-option-pwr-superpower"
+      id="toc-approach-1-pamlj-gpower-with-spss-option-pwr-superpower">Approach
+      1 (PAMLj, GPower with SPSS option, pwr, Superpower)</a></li>
+      <li><a href="#approach-2-webpower-gpower-default-as-in-cohen"
+      id="toc-approach-2-webpower-gpower-default-as-in-cohen">Approach 2
+      (WebPower, G*Power default “as in Cohen”)</a></li>
+      <li><a href="#which-one-is-correct"
+      id="toc-which-one-is-correct">Which one is correct?</a></li>
+      <li><a href="#practical-comparisons"
+      id="toc-practical-comparisons">Practical comparisons</a>
       <ul>
       <li><a href="#effect-size-indices"
       id="toc-effect-size-indices">Effect size indices</a></li>
       <li><a href="#pamlj" id="toc-pamlj">PAMLj</a></li>
       <li><a href="#gpower" id="toc-gpower">G*Power</a></li>
+      <li><a href="#superpower" id="toc-superpower">Superpower</a></li>
+      <li><a href="#webpower-gpower-cohen-option"
+      id="toc-webpower-gpower-cohen-option">WebPower &amp; GPower (Cohen
+      option)</a></li>
       </ul></li>
+      <li><a href="#a-final-test-mixed-models"
+      id="toc-a-final-test-mixed-models">A final test: Mixed
+      models</a></li>
+      <li><a href="#a-note-on-the-correlation-among-measures"
+      id="toc-a-note-on-the-correlation-among-measures">A note on the
+      correlation among measures</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
@@ -302,147 +327,421 @@
 <div id="main">
 <div class="version">
 <p>
-0.2.0
+0.8.0
 </p>
 </div>
 <div style="clear:both">
 
 </div>
-<p>Here we compare the results of <span class="modulename">PAMLj</span>
-with other software that performs power analysis. In particular, we will
-compare our results with <a
-href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
-package</a>, <a
-href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">G*Power</a>,
-and <a href="https://webpower.psychstat.org/wiki/">WebPower</a>. We
-check the results also using and
+<p>Different software packages often return different results for
+repeated-measures ANOVA power analysis, even when all input parameters
+appear identical. In this document we inspect this issue by comparing
+<span class="modulename">PAMLj</span>, the R <strong>pwr</strong>
+package, **G*Power<strong>, </strong>WebPower**, and the
 <a href='https://aaroncaldwell.us/SuperpowerBook/' target='_blank'>Superpower
-R package</a>, which does not compute the required N, but can be used to
-confirm the power of the required N found with other software.</p>
-<div id="repeated-measures-anova" class="section level1">
-<h1>Repeated Measures ANOVA</h1>
-<p>To test the <code>Factorial design power analysis</code> sub-module
-for repeated measures or mixed designs, we can compare results with
-GPower and <a href="https://webpower.psychstat.org/wiki/">WebPower</a>.
-However, in G*Power the default effect size used for repeated-measures
-effects is defined in a different way as compared with
-<code>Factorial design power analysis</code> sub-module, Superpower or
-even SPSS. Also <a
-href="https://webpower.psychstat.org/wiki/">WebPower</a> has a different
-definition of the effect size, so some adjustment are required. We
-therefore simulate some data yielding the same effect sizes of the one
-we test, and employ <code>Superpower</code> to confirm the results.</p>
+R package</a>.</p>
+<div id="the-issue" class="section level1">
+<h1>The issue</h1>
+<p>Consider a one-way repeated-measures design with three levels.
+Suppose we expect the effect to explain approximately 5% of the
+variance, that is, partial eta-squared <span
+class="math inline">\(\eta_p^2 = .05\)</span>. Using this value in <span
+class="modulename">PAMLj</span> yields a required sample size of
+<strong>N = 94</strong> for .80 power. Reproducing the same setup with
+<code>pwr::pwr.f2.test()</code> yields essentially identical results.
+Testing the scenario with <strong>Superpower::ANOVA_exact()</strong> at
+<span class="math inline">\(N=94\)</span> also returns a power estimate
+of .80.</p>
+<p>However:</p>
+<ul>
+<li>G<em>Power (default </em>F-tests* settings) returns <strong>N =
+33</strong>.<br />
+</li>
+<li>WebPower returns <strong>N = 185</strong>.<br />
+</li>
+<li>G*Power using the option <strong>“as in Cohen (1988)”</strong> also
+returns <strong>N = 185</strong>.<br />
+</li>
+<li>G*Power using <strong>“as in SPSS”</strong> returns <strong>N =
+95</strong>, consistent with <span class="modulename">PAMLj</span>.</li>
+</ul>
+<p>These discrepancies are too large to be explained by rounding. All
+software is, in fact, internally consistent — the differences arise from
+different interpretations of the effect size, the residual variance, and
+the noncentrality parameter. Unfortunately, these differences are subtle
+and grounded in technical details. To keep the discussion coherent, we
+frame repeated-measures ANOVA as a special case of a random-intercept
+linear model, and dive into statistical definitions and details.</p>
+<p>If you find this discussion boring or not necessary, please visit
+<a href="./rosetta_factorial_n_short.html">Repeated Measures: software
+inconsistency (Practitioner Version)</a>, for a more practical digest
+(in reality I asked chatgpt to make a short recap of this :-)).</p>
+</div>
+<div id="some-theory" class="section level1">
+<h1>Some theory</h1>
+<p>A repeated-measures ANOVA can be expressed as a random-intercept
+model (Raudenbush &amp; Bryk, 2002; McCulloch, Searle &amp; Neuhaus,
+2008):</p>
+<p><span class="math display">\[
+Y_{ij} = \alpha + \alpha_i + \mu_j + \varepsilon_{ij},
+\]</span></p>
+<p>where <span class="math inline">\(i\)</span> indexes subjects and
+<span class="math inline">\(j = 1,\dots,k\)</span> indexes repeated
+measurements. The subject-specific intercepts <span
+class="math inline">\(\alpha_i\)</span> have variance <span
+class="math inline">\(\tau^2\)</span>, the condition means have variance
+<span class="math inline">\(\sigma_m^2\)</span>, and the within-subject
+residuals have variance <span
+class="math inline">\(\sigma^2\)</span>.</p>
+<p>In this model, the total variance is: <span class="math display">\[
+\sigma_t^2 = \sigma_m^2 + \tau^2 + \sigma^2.
+\]</span></p>
+<p>And the repeated measure wull be correlated. The correlation among
+repeated measures is: <span class="math display">\[
+r = \frac{\tau^2}{\tau^2 + \sigma^2}.
+\]</span></p>
+<p>If we now define the variance unrelated to the effect as: <span
+class="math display">\[
+\sigma_{\text{res}}^2 = \tau^2 + \sigma^2.
+\]</span></p>
+<p>we can find <span class="math inline">\(\sigma^2\)</span> by solving
+for it the equation above: <span class="math display">\[
+\sigma^2 = \sigma_{\text{res}}^2 (1 - r).
+\]</span></p>
+<p>We will see later how this definition is treated differently across
+software systems.</p>
+</div>
+<div id="power-analysis" class="section level1">
+<h1>Power analysis</h1>
+<p>All software systems ultimately rely on the effect size <span
+class="math inline">\(f\)</span>, defined as (Cohen, 1988) as the
+square-root of:</p>
+<p><span class="math display">\[
+f^2 = \frac{\sigma_m^2}{\sigma^2}.
+\]</span></p>
+<p>This relates to partial eta-squared via:</p>
+<p><span class="math display">\[
+\eta_p^2 = \frac{\sigma_m^2}{\sigma_m^2 + \sigma^2}
+           = \frac{f^2}{1 + f^2}.
+\]</span></p>
+<p>However, these relationships refer to <em>population variances</em>,
+not to <em>expected sample sums of squares</em>. When data are sampled,
+the expected sums of squares for a repeated-measures design are:</p>
+<p><span class="math display">\[
+E[SS_e] = N(k-1)\sigma^2,\qquad
+E[SS_m] = N\sigma_m^2.
+\]</span></p>
+<p>Hence:</p>
+<p><span class="math display">\[
+\hat{f}^2 = \frac{\sigma_m^2}{(k-1)\sigma^2},\qquad
+\hat{\eta}_p^2 = \frac{\sigma_m^2}{\sigma_m^2 + (k-1)\sigma^2}.
+\]</span></p>
+<p>These are the <em>actual</em> effect sizes relevant for power
+analysis in a design with <span class="math inline">\(k\)</span>
+repeated measures.</p>
+<p>Power calculations require also a noncentral F distribution with</p>
+<ul>
+<li><span class="math inline">\(df_1 = k - 1\)</span><br />
+</li>
+<li><span class="math inline">\(df_2 = (N - 1)(k - 1)\)</span><br />
+</li>
+<li>noncentrality parameter <span
+class="math inline">\(\lambda\)</span></li>
+</ul>
+<p>A general form is:</p>
+<p><span class="math display">\[
+\lambda = N_f \cdot f^2,
+\]</span></p>
+<p>The noncentraly parameter is the actual effect size used to obtain
+the power parameters in the analysis, so it is crucuial that it is well
+defined. <span class="math inline">\(N_f\)</span> is a
+sample-size-related quantity. Its definition differs across software and
+explains most inconsistencies.</p>
+</div>
+<div id="approach-1-pamlj-gpower-with-spss-option-pwr-superpower"
+class="section level1">
+<h1>Approach 1 (PAMLj, GPower with SPSS option, pwr, Superpower)</h1>
+<p>Here <span class="math inline">\(N_f = N(k - 1)\)</span> or,
+equivalently, <span class="math inline">\((N-1)(k-1)\)</span>. Then:</p>
+<p><span class="math display">\[
+\lambda_1 = N(k-1)\frac{\sigma_m^2}{(k-1)\sigma^2}
+          = N\frac{\sigma_m^2}{\sigma^2}.
+\]</span></p>
+<p>Software using this approach:</p>
+<ul>
+<li>(<span class="modulename">PAMLj</span>)</li>
+<li><strong>Superpower::ANOVA_exact()</strong><br />
+</li>
+<li><strong>pwr.f2.test()</strong><br />
+</li>
+<li><strong><code>G*Power</code></strong> with option <strong>“As in
+SPSS”</strong></li>
+</ul>
+<p>This approach aligns with the classical GLM definition of <span
+class="math inline">\(f^2\)</span> and with the interpretation of
+partial eta-squared used in standard ANOVA.</p>
+</div>
+<div id="approach-2-webpower-gpower-default-as-in-cohen"
+class="section level1">
+<h1>Approach 2 (WebPower, G*Power default “as in Cohen”)</h1>
+<p>A second approach defines:</p>
+<p><span class="math display">\[
+f_v^2 = \frac{\sigma_m^2}{\sigma^2},
+\]</span></p>
+<p>but sets <strong><span class="math inline">\(N_f =
+N\)</span></strong>. Thus:</p>
+<p><span class="math display">\[
+\lambda_2 = N \cdot \frac{\sigma_m^2}{\sigma^2}.
+\]</span></p>
+<p>This superficially resembles <span
+class="math inline">\(\lambda_1\)</span>, but notice that approach 1
+uses:</p>
+<p><span class="math display">\[
+f^2 = \frac{\sigma_m^2}{(k-1)\sigma^2},
+\]</span></p>
+<p>so:</p>
+<p><span class="math display">\[
+f_v^2 = f^2 (k-1).
+\]</span></p>
+<p>Thus, entering the same numerical value leads to entirely different
+noncentrality parameters:</p>
+<ul>
+<li>Approach 1: <span class="math inline">\(\lambda_1 =
+N(k-1)f^2\)</span><br />
+</li>
+<li>Approach 2: <span class="math inline">\(\lambda_2 =
+Nf^2\)</span></li>
+</ul>
+<p>For <span class="math inline">\(k = 4\)</span>, <span
+class="math inline">\(\lambda_1 = 3Nf^2\)</span>, three times larger
+than <span class="math inline">\(lambda_2\)</span>.</p>
+<p>The expected partial eta-squared under approach 2 becomes:</p>
+<p><span class="math display">\[
+\eta_{pv}^2 = \frac{f^2}{f^2 + (k-1)}.
+\]</span></p>
+<p>This means that in a design with four measures, an expected <span
+class="math inline">\(f_v^2 = .10\)</span> produces <span
+class="math inline">\(\eta_{pv}^2 \approx .06\)</span>, not .16 as one
+would expect.</p>
+<p>Software using this approach:</p>
+<ul>
+<li><strong>WebPower</strong><br />
+</li>
+<li><strong><code>G*Power</code></strong> (option “as in Cohen
+(1988)”)</li>
+</ul>
+<p>This effect size is dimensionless and implicitly treats the design as
+if it had only two levels.</p>
+</div>
+<div id="which-one-is-correct" class="section level1">
+<h1>Which one is correct?</h1>
+<p>It depends on what the user wants to express:</p>
+<ul>
+<li>If expectations are framed in terms of <strong>partial
+eta-squared</strong> or variance explained, <strong>Approach 1</strong>
+is appropriate.<br />
+</li>
+<li>If the user intentionally adopts Cohen’s definition of <span
+class="math inline">\(f_v^2\)</span>, then <strong>Approach 2</strong>
+is correct, but its interpretation differs substantially from the usual
+ANOVA effect sizes.</li>
+</ul>
+<p>In my opinion, approach 1 is typically more transparent and aligns
+with standard GLM practice, but users may have good reason to prefer the
+second approach.</p>
+</div>
+<div id="practical-comparisons" class="section level1">
+<h1>Practical comparisons</h1>
+<p>Even when software appears to use the same effect size, differences
+in the underlying definition lead to different required sample sizes.
+Below we verify these differences empirically.</p>
 <div id="effect-size-indices" class="section level2">
 <h2>Effect size indices</h2>
-<p>We start with a simple one-way repeated measures design with three
-repeated measures: To have some data that would yield the parameters to
-test, while being able to control the different computations of the
-effect size indices, we employed the following set of means and standard
-deviations.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">### exptected means</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">700</span>, <span class="dv">670</span>, <span class="dv">670</span>) </span>
+<p>As a working example for a three-level repeated-measures design, we
+define means, SD, and correlations that yield <span
+class="math inline">\(f \approx 0.25\)</span> and <span
+class="math inline">\(\eta_p^2 \approx 0.06\)</span>, values typical in
+applications.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">### expected means</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">0</span>) </span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## expected sd</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fl">98.9</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fl">323.4</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">### expected average correlations among repeated measures</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fl">0.514</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>r <span class="ot">&lt;-</span> .<span class="dv">50</span></span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## number of repeated measures</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># a sample size </span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">78</span></span></code></pre></div>
-<p>When these values are passed to Superpower, we obtain the following
-results.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>string <span class="ot">=</span> <span class="st">&quot;3w&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>alpha_level <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>design_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> string,</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>                              <span class="at">mu =</span> mu, </span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>                              <span class="at">sd =</span> sd, </span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>                              <span class="at">r =</span> r, <span class="at">plot=</span><span class="cn">FALSE</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design_result,</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
-<pre><code>##      power partial_eta_squared cohen_f non_centrality
-## a 80.08726             0.06009 0.25284        9.84503</code></pre>
-<p>Thus, we <span class="math inline">\(N=78\)</span> we obtain a power
-of <span class="math inline">\(.80\)</span>. The effect size is <span
-class="math inline">\(\eta_p^2=.06\)</span> and the we have a <span
-class="math inline">\(f=.25\)</span>. To understand the comparisons
-across software, we should notice that Superpower computes the <span
-class="math inline">\(\eta_p^2\)</span> and the <span
-class="math inline">\(f\)</span> accordingly to <span
-class="citation">Cohen (<a href="#ref-cohen1988spa">1988</a>)</span>. In
-particular,</p>
-<p><span class="math display">\[
-\eta_p^2=\frac{SS_{eff}}{SS_{eff}+SS_{res}}
-\]</span> where <span class="math inline">\(SS_{eff}\)</span> is the
-means sum of squares and <span class="math inline">\(SS_{res}\)</span>
-is the sum of squares residuals, and the <span
-class="math inline">\(f\)</span> effect size is simply</p>
-<p>The <span class="math inline">\(f\)</span> is simply</p>
-<p><span class="math display">\[
-f=\sqrt{\frac{SS_{eff}}{SS_{res}}}=\sqrt{\frac{\eta_p^2}{1-\eta_p^2}}
-\]</span></p>
-<p>In our data</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>SS_eff<span class="ot">&lt;-</span>n<span class="sc">*</span><span class="fu">sum</span>((mu<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>SS_res<span class="ot">&lt;-</span>(n<span class="dv">-1</span>)<span class="sc">*</span>(k<span class="dv">-1</span>)<span class="sc">*</span>sd<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>r)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>eta2p<span class="ot">&lt;-</span>SS_eff<span class="sc">/</span>(SS_eff<span class="sc">+</span>SS_res)</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>f<span class="ot">&lt;-</span><span class="fu">sqrt</span>(eta2p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>eta2p))</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;SS_eff=%g, SS_res=%g, eta2p=%.5f, f=%.5f&quot;</span>,SS_eff,SS_res,eta2p,f)</span></code></pre></div>
-<pre><code>## [1] &quot;SS_eff=46800, SS_res=732065, eta2p=0.06009, f=0.25284&quot;</code></pre>
-<p>Thus, for the required N we have the following setup</p>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>ESS_m<span class="ot">&lt;-</span><span class="fu">sum</span>((mu<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>ESS_e<span class="ot">&lt;-</span>(k<span class="dv">-1</span>)<span class="sc">*</span>sd<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>r)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>f2<span class="ot">&lt;-</span>ESS_m<span class="sc">/</span>ESS_e</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>f<span class="ot">&lt;-</span><span class="fu">sqrt</span>(f2)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co"># eta2p</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>eta2p<span class="ot">&lt;-</span>f2<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>f2)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;f=%.4f, f2=%.4f,eta2p=%.4f&quot;</span>,<span class="fu">sqrt</span>(f2),f2,eta2p) </span></code></pre></div>
+<pre><code>## [1] &quot;f=0.2525, f2=0.0637,eta2p=0.0599&quot;</code></pre>
 <div class="adm adm-setup">
 <p>Setup</p>
 <ul>
-<li>Aim = N</li>
-<li>AXB <span class="math inline">\(p\eta^2\)</span> = 0.06</li>
-<li><span class="math inline">\(f\)</span> = 0.25284</li>
-<li>Number of measures = 3</li>
-<li>Effect DF = 2</li>
-<li>Number of groups in the design = 1</li>
-<li>Alpha = .05</li>
-<li>Required power =.80</li>
-<li><strong>Correct answer</strong>: N=78</li>
+<li>Aim = N<br />
+</li>
+<li>AXB <span class="math inline">\(p\eta^2\)</span> = 0.06<br />
+</li>
+<li><span class="math inline">\(f\)</span> = 0.2525<br />
+</li>
+<li>Number of measures = 3<br />
+</li>
+<li>Effect DF = 2<br />
+</li>
+<li>Number of groups = 1<br />
+</li>
+<li>Alpha = .05<br />
+</li>
+<li>Required power = .80<br />
+</li>
 </ul>
 </div>
 </div>
 <div id="pamlj" class="section level2">
 <h2>PAMLj</h2>
-<p>The setup in <span class="modulename">PAMLj</span> is straightforward
-and produced the expected results. In <code>Factorial Design</code>,
-<span class="option">Input Mode: Effect Size</span> we insert the input
-parameters</p>
-<p><img src="rosetta/pics/factorial/fac_n.1.input.1.png" width="634" />
+<p>The <span class="modulename">PAMLj</span> setup is straightforward
+and produces the expected results.</p>
+<p><img src="rosetta/pics/factorial/fac_n.1.input.1.png" width="634" /><br />
 <img src="rosetta/pics/factorial/fac_n.1.output.1.png" width="685" /></p>
-<p>Thus, as expected from the results of Superpower command, the
-required N to obtain a power of .80 (or larger) is <span
-class="math inline">\(N=78\)</span>.</p>
 </div>
 <div id="gpower" class="section level2">
 <h2>G*Power</h2>
-<p>For this power analysis, GPower offers <em>F test: Fixed effects
-ANOVA</em> routine, which requires an <span
-class="math inline">\(f\)</span> as the effect size which is <span
-class="math inline">\(f=\sqrt{p\eta^2/(1-p\eta^2)}\)</span>, as stated
-above. However, the way GPower defines <span
-class="math inline">\(eta_p^2\)</span> and thus <span
-class="math inline">\(f\)</span> for within subject designs is different
-than the standard definition. To obtain the standard definition (<span
-class="math inline">\(SS_{eff}\)</span> over SS_{res}$) we need to
-explicitly select the <code>As in SPSS</code> definition in
-<code>Options</code>.</p>
+<p>Use:</p>
+<ul>
+<li><em>F test → Repeated measures: within factors</em><br />
+</li>
+<li>Effect size <span class="math inline">\(f = .2525\)</span> or <span
+class="math inline">\(\eta_p^2 = .06\)</span><br />
+</li>
+<li>In <em>Options</em>, select <strong>“As in SPSS”</strong></li>
+</ul>
 <p><img src="rosetta/pics/factorial/fac_n.1.gpower.1.png" width="592" /></p>
-<p>Now, we input the <span class="math inline">\(\eta_p^2=.06\)</span>
-in ‘Determine’ option and the other parameters and we obtain exactly the
-required <span class="math inline">\(N=78\)</span>.</p>
-<p><img src="rosetta/pics/factorial/fac_n.1.gpower.1.png" width="592" /></p>
+<p>Entering <span class="math inline">\(\eta_p^2 = .06\)</span> yields
+<strong>N = 78</strong>, matching <span
+class="modulename">PAMLj</span>.</p>
+<p><img src="rosetta/pics/factorial/fac_n.1.gpower.2.png" width="930" /></p>
+</div>
+<div id="superpower" class="section level2">
+<h2>Superpower</h2>
+<p>Because <code>Superpower</code> does not compute required N for
+repeated measure designs, we can use it to verify that <strong>N =
+78</strong> indeed yields .80 power.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">78</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>string <span class="ot">=</span> <span class="st">&quot;3w&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>alpha_level <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>design_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> string,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>                              <span class="at">mu =</span> mu, </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>                              <span class="at">sd =</span> sd, </span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>                              <span class="at">r =</span> r, <span class="at">plot=</span><span class="cn">FALSE</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design_result,</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<pre><code>##      power partial_eta_squared cohen_f non_centrality
+## a 80.50476             0.06065 0.25411        9.94382</code></pre>
+<p>Superpower also offers a simulation-based power estimate. This is a
+crucal test, because simulations do not require any definition of effect
+size: data are generated based on the input means, SD and correlation,
+and the power is computed as a proportion of the simulation run that
+produced a significant result.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>sim_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_power</span>(design_result,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                            <span class="at">nsims =</span> <span class="dv">1000</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">zapsmall</span>(sim_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<pre><code>##         power effect_size
+## anova_a  79.7      0.0707</code></pre>
+<p>Simulation results are fully consistent with <span
+class="modulename">PAMLj</span> and in general with software using
+approach 1.</p>
+</div>
+<div id="webpower-gpower-cohen-option" class="section level2">
+<h2>WebPower &amp; GPower (Cohen option)</h2>
+<p>Running WebPower with the parameters set above, we have:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>WebPower<span class="sc">::</span><span class="fu">wp.rmanova</span>(<span class="at">ng=</span><span class="dv">1</span>,<span class="at">nm=</span>k,<span class="at">f=</span>f,<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">type =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## Repeated-measures ANOVA analysis
+## 
+##            n         f ng nm nscor alpha power
+##     152.6532 0.2524727  1  3     1  0.05   0.8
+## 
+## NOTE: Power analysis for within-effect test
+## URL: http://psychstat.org/rmanova</code></pre>
+<p>This yields <strong>N = 153</strong>, identical to G*Power using the
+<strong>Cohen</strong> option.</p>
+<p><img src="rosetta/pics/factorial/fac_n.2.gpower.1.png" width="576" />
+<img src="rosetta/pics/factorial/fac_n.2.gpower.2.png" width="594" /></p>
+<p>As shown above, this difference with <span
+class="modulename">PAMLj</span> is expected: these programs use
+<strong>Approach 2</strong>. To match Approach 1, we need to rescale the
+effect size:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>f2_rescaled<span class="ot">&lt;-</span>f2<span class="sc">*</span>(k<span class="dv">-1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>f2_rescaled</span></code></pre></div>
+<pre><code>## [1] 0.1274849</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>WebPower<span class="sc">::</span><span class="fu">wp.rmanova</span>(<span class="at">ng=</span><span class="dv">1</span>,<span class="at">nm=</span>k,<span class="at">f=</span><span class="fu">sqrt</span>(f2_rescaled),<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">type =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## Repeated-measures ANOVA analysis
+## 
+##            n         f ng nm nscor alpha power
+##     77.08301 0.3570503  1  3     1  0.05   0.8
+## 
+## NOTE: Power analysis for within-effect test
+## URL: http://psychstat.org/rmanova</code></pre>
+<p>This now reproduces the <span class="modulename">PAMLj</span>
+results.</p>
+</div>
+</div>
+<div id="a-final-test-mixed-models" class="section level1">
+<h1>A final test: Mixed models</h1>
+<p>Given that repeated-measures ANOVA is a special case of a
+random-intercept model, the mixed-model power analysis in <span
+class="modulename">PAMLj</span> should produce nearly identical results.
+So, we convert the RM ANOVA scenario into a random-coefficients model
+(see <a href="./mixed.html">Mixed models</a> for details of mixed model
+power analysis).</p>
+<p>Contrast coefficients (deviation-coded):</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>b1<span class="ot">&lt;-</span>mu[<span class="dv">1</span>]<span class="sc">-</span><span class="fu">mean</span>(mu)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>b2<span class="ot">&lt;-</span>mu[<span class="dv">2</span>]<span class="sc">-</span><span class="fu">mean</span>(mu)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;b1=%.2f, b2=%.2f&quot;</span>,b1,b2)</span></code></pre></div>
+<pre><code>## [1] &quot;b1=66.67, b2=-33.33&quot;</code></pre>
+<p>Residual variance:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>sigma2<span class="ot">&lt;-</span>sd<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>r)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;sigma=%.2f&quot;</span>,sigma2)</span></code></pre></div>
+<pre><code>## [1] &quot;sigma=52293.78&quot;</code></pre>
+<p>Random-intercept variance:</p>
+<p><span class="math display">\[
+\tau^2 = \frac{r}{1-r}\sigma^2
+\]</span></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>tau2<span class="ot">=</span>(r<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>r))<span class="sc">*</span>sigma2</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">&quot;tau2=%.2f&quot;</span>,tau2)</span></code></pre></div>
+<pre><code>## [1] &quot;tau2=52293.78&quot;</code></pre>
+<p>Using these parameters in the mixed-model power analysis gives:</p>
+<p><img src="rosetta/pics/factorial/fac_n.1.mixed.1.png" width="637" /><br />
+<img src="rosetta/pics/factorial/fac_n.1.mixed.2.png" width="614" /><br />
+<img src="rosetta/pics/factorial/fac_n.1.mixed.3.png" width="868" /></p>
+<p>The required sample size is <strong>N = 77</strong>, exactly
+equivalent to the RM ANOVA result (differences due to simulation
+noise).</p>
+</div>
+<div id="a-note-on-the-correlation-among-measures"
+class="section level1">
+<h1>A note on the correlation among measures</h1>
+<p>As shown earlier, all methods implicitly include the correlation
+between repeated measures in the definition of the effect size.
+G<em>Power allows users to manually enter a correlation, but this
+assumes an effect-size definition </em>not* already incorporating it.
+Unless the user understands this distinction, supplying a correlation
+can double-count or distort the effect size.</p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
 <a class="backto" href="./rosetta.html">PAMLj: rosetta</a>
-</div>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">
@@ -455,15 +754,8 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
-<div id="ref-cohen1988spa" class="csl-entry">
-Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for
-the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.
-</div>
-</div>
+<div id="references" class="section level1">
+<h1>References</h1>
 </div>
 </div>
 

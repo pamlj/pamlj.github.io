@@ -1,0 +1,84 @@
+---
+title: "Repeated Measures: software inconsistency (Practitioner Version)"
+topic: factorial
+category: rosetta
+nickname: ros_fac_peta_short
+---
+
+Different software tools often produce very different sample-size requirements for repeated-measures ANOVA. This is normal: they use **different definitions of the effect size** behind the scenes.
+
+This short guide explains what each system does and how to make them agree.
+
+# Why software disagrees
+
+All systems use an effect size based on the ratio:
+
+- **Approach 1 (SPSS-style effect size)**  
+  Uses  
+  $$f^2 = \frac{\sigma_m^2}{(k-1)\sigma^2}$$  
+  and noncentrality  
+  $$\lambda = N(k-1)f^2$$  
+  → Larger λ → Smaller required N.
+
+- **Approach 2 (GPower Cohen option /WebPower-style)**  
+  Uses  
+  $$f_v^2 = \frac{\sigma_m^2}{\sigma^2} = (k-1)f^2$$  
+  and  
+  $$\lambda = N f_v^2$$  
+  → Much smaller λ → Larger required N.
+
+Thus, **entering the same f or η² into different programs does *not* mean the same thing**.
+
+When k > 2, Approach 2 always produces **larger required N**.
+
+# Which software uses which approach?
+
+| Software | Approach | Expected sample size |
+|---------|----------|----------------------|
+| **PAMLj (Factorial & Mixed Models)** | **Approach 1** | Smaller N |
+| **Superpower (exact + simulation)** | **Approach 1** | Smaller N |
+| **pwr::pwr.f2.test()** | **Approach 1** | Smaller N |
+| **`G*Power` (Option “As in SPSS”)** | **Approach 1** | Smaller N |
+| **`G*Power` (Default “As in Cohen 1988”)** | **Approach 2** | Larger N |
+| **WebPower** | **Approach 2** | Larger N |
+
+# How to make them match
+
+To reproduce PAMLj / SPSS / Superpower results in WebPower or Cohen’s G*Power:
+
+1. Compute  
+   $$f^2_{\text{SPSS}} \quad\text{(the one you actually want)}$$
+
+2. Convert to Cohen/WebPower scale:  
+   ```r
+   f2_rescaled <- f2 * (k - 1)
+   ```
+
+3. Use `sqrt(f2_rescaled)` as *f* in WebPower or in G*Power (“as in Cohen”).
+
+Example for k = 3:
+
+```r
+f2_rescaled <- f2 * 2
+WebPower::wp.rmanova(ng=1, nm=3, f=sqrt(f2_rescaled), power=.80)
+```
+
+Now WebPower and G*Power will return the same N as PAMLj.
+
+# Practical recommendations
+
+- If you think about effects as **partial eta-squared** or variance explained, use **Approach 1** (PAMLj, SPSS, Superpower).  
+- Use **Approach 2** only if you explicitly want Cohen’s original f for repeated measures.  
+- Always check G*Power’s **Options**: the default is *not* SPSS-consistent.
+
+# Quick rule of thumb
+
+For repeated-measures with **k levels**:
+
+- **PAMLj/SPSS f²** is **(k−1) times smaller** than  
+  WebPower/Cohen f².
+- Required N in WebPower is roughly **(k−1) times larger** unless you rescale.
+
+This explains all discrepancies among software.
+
+# End
