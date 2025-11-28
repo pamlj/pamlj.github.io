@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="(Marcello Gallucci)" />
+    
+    
+    <title>Mixed models: model syntax</title>
+
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="mixed.html">Mixed Models</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Mixed models: model syntax</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Mixed models: model syntax</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#basic-example" id="toc-basic-example">Basic
+      example</a></li>
+      <li><a href="#mixed-model-framing"
+      id="toc-mixed-model-framing">Mixed model framing</a>
+      <ul>
+      <li><a href="#repeated-factor-effects"
+      id="toc-repeated-factor-effects">Repeated factor effects</a></li>
+      <li><a href="#intercept-variance-and-residuals"
+      id="toc-intercept-variance-and-residuals">Intercept variance and
+      residuals</a></li>
+      </ul></li>
+      <li><a href="#checking-the-results"
+      id="toc-checking-the-results">Checking the results</a></li>
+      <li><a href="#standardization"
+      id="toc-standardization">Standardization</a></li>
+      <li><a href="#examples" id="toc-examples">Examples</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> (Marcello
+Gallucci)</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<p><span class="keywords"> <span class="keytitle"> keywords </span>
+power analysis, mixed models, multilevel models, participants by stimuli
+</span></p>
+<div class="version">
+<p>
+0.8.2
+</p>
+</div>
+<div style="clear:both">
+
+</div>
+<p>Here we discuss examples of defining mixed models parameters for
+mixed models power analysis in <span class="modulename">PAMLj</span>
+based on information taken from a repeated measure ANOVA. This can be
+useful when a researcher has gathered information regarding a planned
+study out of RM ANOVA results and intends to perform a power analysis
+for a corresponding mixed model. For instance, a researcher may have
+found a series of published studies reporting results on a 4-time
+longitudinal design analyzed with RM-ANOVA, and wishes to perform a
+power analysis for a study with four time points and a continuous
+covariate, so needing a mixed model.</p>
+<p>In other words, here we see how to frame a RM-ANOVA into a mixed
+model.</p>
+<p>In the following examples we need to do some simple calculations.
+Here I make them in R, that in jamovi can be accessed with the
+<code>Rj</code> module. However, the calculation needed are so simple
+they can be carried out also with a simple spreadsheet software.</p>
+<div id="basic-example" class="section level1">
+<h1>Basic example</h1>
+<p>As a working example consider a three-level repeated-measures design
+(say factor <em>time</em>), for which we can define expected means, SD,
+and correlation among repeated measure.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">### expected means</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>mu <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">0</span>) </span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## expected sd</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">### expected average correlations among repeated measures</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>r <span class="ot">&lt;-</span> .<span class="dv">60</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## number of repeated measures</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span></code></pre></div>
+<p>The quantity <span class="math inline">\(sd\)</span> is the
+within-subject standard deviation, which is simply the expected standard
+deviation of a measure of the repeated measures. Compound-symmetry
+requires the repeated measures to have similar standard deviations. so
+we can set it as an average SD. This is the same quantity one would need
+to figure out to estimate a Cohen’s d in a t-test power analysis.</p>
+<p>With this set up, we can anticipate what would be the expected
+partial-eta squared:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">## expected sum of squares</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>ESS_m<span class="ot">&lt;-</span><span class="fu">sum</span>((mu<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>ESS_e<span class="ot">&lt;-</span>(k<span class="dv">-1</span>)<span class="sc">*</span>sd<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>r)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>(eta2p<span class="ot">&lt;-</span>ESS_m<span class="sc">/</span>(ESS_m<span class="sc">+</span>ESS_e))</span></code></pre></div>
+<pre><code>## [1] 0.06493506</code></pre>
+<p>Alternatively, we may have information regarding the partial
+eta-squared in the repeated measure ANOVA, and a reasonable guess of the
+correlation among repeated measures (here set to .60).</p>
+</div>
+<div id="mixed-model-framing" class="section level1">
+<h1>Mixed model framing</h1>
+<p>A corresponding mixed model will have a a fixed effect of time,
+represented in the model as 2 contrast variables (dummy variables), a
+random intercept across the participant ID and a residual variance. In
+mixed models notation, we have</p>
+<pre><code>y~1+time+(1|ID)</code></pre>
+<div id="repeated-factor-effects" class="section level2">
+<h2>Repeated factor effects</h2>
+<p>We first need to figure out the coefficients for the two dummies
+representing <em>time</em> effect. In <span
+class="modulename">PAMLj</span> power analysis module, categorical
+variables are represented with <em>deviation contrast coding</em>,
+meaning that their coefficients represent the difference between each
+mean and the grand-mean, for the first <span
+class="math inline">\(K-1\)</span> means. Thus we can compute them based
+on the expectation we have on the means.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## coefficients</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>c1<span class="ot">&lt;-</span>mu[<span class="dv">1</span>]<span class="sc">-</span><span class="fu">mean</span>(mu)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>c2<span class="ot">&lt;-</span>mu[<span class="dv">2</span>]<span class="sc">-</span><span class="fu">mean</span>(mu)</span></code></pre></div>
+<pre><code>## [1] &quot;c1=5.0000, c2=0.0000&quot;</code></pre>
+</div>
+<div id="intercept-variance-and-residuals" class="section level2">
+<h2>Intercept variance and residuals</h2>
+<p>To figure out the correct values of the variances required, we should
+keep in mind the following relationship</p>
+<p><span class="math display">\[
+\tau^2 = \frac{r}{1-r}\sigma^2
+\]</span></p>
+<p>where <span class="math inline">\(\tau^2\)</span> is the variance of
+the intercept, <span class="math inline">\(r\)</span> is the expected
+correlation among repeated measures, and <span
+class="math inline">\(\sigma^2\)</span> is the residual variance. The
+residual variance <span class="math inline">\(\sigma2\)</span> is simply
+the square of the within subject standard deviation we set up above
+multiplied by $(1-r): <span
+class="math inline">\(\sigma^2=SD^2*(1-r)\)</span>.</p>
+<p>Now we can compute the two variances needed:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>sigma2<span class="ot">&lt;-</span>sd<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>r)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>tau2<span class="ot">&lt;-</span>(r<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>r))<span class="sc">*</span>sigma2</span></code></pre></div>
+<pre><code>## [1] &quot;sigma2=360.0000, tau2=540.0000&quot;</code></pre>
+<p>Now we are ready to go. The mixed model can be defined in <span
+class="modulename">PAMLj</span> mixed models (see
+<a href="./mixed_example2.html">Mixed models: model syntax</a>) for info
+on the syntax.</p>
+<pre><code>y~1*1+[5,0]*time+(540*1|ID)</code></pre>
+<p>we plug this into the module and set the residual variance to
+360.</p>
+<p><img src="examples/mixed/example3/p.1.input.1.png" width="625" /></p>
+<p>Then we set the cluster variable <em>ID</em> to have 3
+<code>N per cluster</code>, because each participant has three
+observations. With the same logic, we set the <em>time</em> variable to
+be categorical and to have three levels.</p>
+<p><img src="examples/mixed/example3/p.1.input.2.png" width="626" /></p>
+<p>We leave the default value for <span
+class="math inline">\(\alpha\)</span> and <code>power</code>, so we are
+asking to estimate the required N (<code>Number of cluster levels</code>
+i.e. number of participants) for our mixed model to achieve a power of
+at least .90.</p>
+<p><img src="examples/mixed/example3/p.1.output.1.png" width="872" /></p>
+<p>We need 93 participants.</p>
+</div>
+</div>
+<div id="checking-the-results" class="section level1">
+<h1>Checking the results</h1>
+<p>Because in this example the model is equivalent to a one-way RM
+ANOVA, we can check the results using <span
+class="modulename">PAMLj</span> <strong>Factorial Designs</strong> power
+analysis module. In it, we specify that we have a within-subjects effect
+with 2 degrees of freedom and 1 group (no between effects), and set the
+partial eta-squared to 0.64935 (see above).</p>
+<p><img src="examples/mixed/example3/p.2.input.1.png" width="619" />
+<img src="examples/mixed/example3/p.2.output.1.png" width="679" /></p>
+<p>We obtain 94 participants, which is equivalent to the results
+obtained with the mixed model. Results are not exactly the same because
+the mixed models power analysis employs simulations to estimate the
+required N, so results may slightly vary.</p>
+</div>
+<div id="standardization" class="section level1">
+<h1>Standardization</h1>
+<p>Assume now we want to include a continuous covariate with a small
+effect on the dependent variable. How can we figure out the coefficient?
+We can standardize (sort of) in such a way that we can figure out a
+coefficient representing a small effect.</p>
+<p>First, let us remind ourselves that, without any predictor, the
+variance of the dependent variable is given by <span
+class="math inline">\(VAR(y)=\tau^2+\sigma^2\)</span>. This means that
+we can change these quantity to change the scale of the dependent
+variable, and thus of the coefficients. If we set <span
+class="math inline">\(\sigma^2=1\)</span> it follows that</p>
+<p><span class="math display">\[
+\tau^2=\frac{r}{(1-r)}
+\]</span></p>
+<p>In our case</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>(tau2z<span class="ot">&lt;-</span>r<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>r))</span></code></pre></div>
+<pre><code>## [1] 1.5</code></pre>
+<p>This means that <span class="math inline">\(\tau^2\)</span> has been
+scaled of a factor of</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>scaling<span class="ot">&lt;-</span>tau2z<span class="sc">/</span>tau2</span></code></pre></div>
+<p>and so it is <span class="math inline">\(\sigma2\)</span></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>sigma2</span></code></pre></div>
+<pre><code>## [1] 0.002777778</code></pre>
+<p>This means that also the (squared) coefficients needs to be scaled of
+the same factor.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="do">## coefficients</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>z1<span class="ot">&lt;-</span><span class="fu">sqrt</span>((mu[<span class="dv">1</span>]<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>scaling)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>z2<span class="ot">&lt;-</span><span class="fu">sqrt</span>((mu[<span class="dv">2</span>]<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>scaling)</span></code></pre></div>
+<pre><code>## [1] &quot;c1=0.2635, c2=0.0000&quot;</code></pre>
+<p>plugging these values into the model yield the same results as above
+(simulation variability apart), because the two models are
+equivalent</p>
+<p><img src="examples/mixed/example3/p.3.input.1.png" width="621" />
+<img src="examples/mixed/example3/p.3.output.1.png" width="876" /></p>
+<p>Now we have a model in which the dependent variable variance is
+roughly 2.5, so the standard deviation is 1.58. Assuming we want the
+covariate to have an effect equivalent to a person correlation of .3, we
+know the covariate is standardized, so to obtain a coefficient
+equivalent to <span class="math inline">\(r=.3\)</span> we scale
+.30.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>b<span class="ot">&lt;-</span> .<span class="dv">30</span><span class="sc">*</span><span class="fl">2.5</span></span></code></pre></div>
+</div>
+<div id="examples" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<p>
+Some worked out practical examples can be found here
+</p>
+<ul>
+<li>
+<a href="./mixed_example1.html">Mixed models: handling clusters</a>
+</li>
+<li>
+<a href="./mixed_example2.html">Mixed models: model syntax</a>
+</li>
+</ul>
+</div>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="./mixed.html">Mixed models</a>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

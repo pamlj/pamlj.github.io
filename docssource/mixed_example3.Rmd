@@ -1,0 +1,189 @@
+---
+title: "Mixed models: model syntax"
+author: "(Marcello Gallucci)"
+nickname: mixed_rm2mix
+topic: mixed
+category: outcasr
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+
+```
+
+`r keywords("power analysis, mixed models, multilevel models, participants by stimuli")`
+
+`r version("0.8.2")`
+
+`r draft`
+
+Here we discuss examples of defining mixed models parameters for mixed models power analysis in `r modulename()` based on information taken from a repeated measure ANOVA. This can be useful when a researcher has gathered information regarding a planned study out of RM ANOVA results and intends to perform a power analysis for a corresponding mixed model. For instance, a researcher may have found a series of published studies reporting results on a 4-time longitudinal design analyzed with RM-ANOVA, and wishes to perform a power analysis for a study with four time points and a continuous covariate, so needing a mixed model.
+
+In other words, here we see how to frame a RM-ANOVA into a mixed model.
+
+In the following examples we need to do some simple calculations. Here I make them in R, that in jamovi can be accessed with the `Rj` module. However, the calculation needed are so simple they can be carried out also with a simple spreadsheet software.
+
+# Basic example
+
+As a working example consider a three-level repeated-measures design (say factor _time_), for which we can define expected means, SD, and correlation among repeated measure. 
+
+```{r}
+### expected means
+mu = c(10, 5, 0) 
+## expected sd
+sd <- 30
+### expected average correlations among repeated measures
+r <- .60
+## number of repeated measures
+k <- 3
+```
+
+The quantity $sd$ is the within-subject standard deviation, which is simply the expected standard deviation of a measure of the repeated measures. Compound-symmetry requires the repeated measures to have similar standard deviations. so we can set it as an average SD. This is the same quantity one would need to figure out to estimate a Cohen's d in a t-test power analysis.
+
+
+With this set up, we can anticipate what would be the expected partial-eta squared:
+
+```{r}
+## expected sum of squares
+ESS_m<-sum((mu-mean(mu))^2)
+ESS_e<-(k-1)*sd^2*(1-r)
+(eta2p<-ESS_m/(ESS_m+ESS_e))
+```
+Alternatively, we may have information regarding the partial eta-squared in the repeated measure ANOVA, and a reasonable guess of the correlation among repeated measures (here set to .60).
+
+# Mixed model framing
+
+A corresponding mixed model will have a a fixed effect of time, represented in the model as 2 contrast variables (dummy variables), a random intercept across the participant ID and a residual variance. In mixed models notation, we have
+
+```
+y~1+time+(1|ID)
+```
+
+
+## Repeated factor effects
+
+We first need to figure out the coefficients for the two dummies representing _time_ effect. In `r modulename()` power analysis module, categorical variables are represented with _deviation contrast coding_, meaning that their coefficients represent the difference between each mean and the grand-mean, for the first $K-1$ means. Thus we can compute them based on the expectation we have on the means.
+
+```{r}
+## coefficients
+c1<-mu[1]-mean(mu)
+c2<-mu[2]-mean(mu)
+```
+```{r echo=FALSE}
+sprintf("c1=%.4f, c2=%.4f",c1, c2)
+
+```
+
+## Intercept variance and residuals
+
+To figure out the correct values of the variances required, we should keep in mind the following relationship
+
+$$
+\tau^2 = \frac{r}{1-r}\sigma^2
+$$
+
+where $\tau^2$ is the variance of the intercept, $r$ is the expected correlation among repeated measures, and $\sigma^2$ is the residual variance. The residual variance $\sigma2$ is simply the square of the within subject standard deviation we set up above multiplied by $(1-r): $\sigma^2=SD^2*(1-r)$.
+
+Now we can compute the two variances needed:
+
+```{r}
+sigma2<-sd^2*(1-r)
+tau2<-(r/(1-r))*sigma2
+```
+```{r echo=FALSE}
+sprintf("sigma2=%.4f, tau2=%.4f",sigma2, tau2)
+
+```
+
+Now we are ready to go. The mixed model can be defined in `r modulename()` mixed models (see `r link_pages(nickname="mixed_syntax")`) for info on the syntax.
+
+```
+y~1*1+[5,0]*time+(540*1|ID)
+```
+
+we plug this into the module and set the residual variance to 360. 
+
+`r pic("examples/mixed/example3/p.1.input.1.png")`
+
+Then we set the cluster variable _ID_ to have 3 `N per cluster`, because each participant has three observations. With the same logic, we set the _time_ variable to be categorical and to have three levels.
+
+`r pic("examples/mixed/example3/p.1.input.2.png")`
+
+We leave the default value for $\alpha$ and `power`, so we are asking to estimate the required N (`Number of cluster levels` i.e. number of participants) for our mixed model to achieve a power of at least .90. 
+
+`r pic("examples/mixed/example3/p.1.output.1.png")`
+
+We need 93 participants.
+
+# Checking the results
+
+Because in this example the model is equivalent to a one-way RM ANOVA, we can check the results using `r modulename()` **Factorial Designs** power analysis module. In it, we specify that we have a within-subjects effect with 2 degrees of freedom and 1 group (no between effects), and set the partial eta-squared to 0.64935 (see above).
+
+`r pic("examples/mixed/example3/p.2.input.1.png")`
+`r pic("examples/mixed/example3/p.2.output.1.png")`
+
+We obtain 94 participants, which is equivalent to the results obtained with the mixed model. Results are not exactly the same because the mixed models power analysis employs simulations to estimate the required N, so results may slightly vary. 
+
+# Standardization
+
+Assume now we want to include a continuous covariate with a small effect on the dependent variable. How can we figure out the coefficient? We can standardize (sort of) in such a way that we can figure out a coefficient representing a small effect.
+
+First, let us remind ourselves that, without any predictor, the variance of the dependent variable is given by $VAR(y)=\tau^2+\sigma^2$. This means that we can change these quantity to change the scale of the dependent variable, and thus of the coefficients. If we set $\sigma^2=1$ it follows that 
+
+$$
+\tau^2=\frac{r}{(1-r)}
+$$
+
+In our case
+```{r}
+(tau2z<-r/(1-r))
+```
+
+This means that $\tau^2$ has been scaled of a factor of
+
+```{r}
+scaling<-tau2z/tau2
+```
+and so it is $\sigma2$
+```{r}
+1/sigma2
+```
+
+This means that also the (squared) coefficients needs to be scaled of the same factor.
+
+```{r}
+## coefficients
+z1<-sqrt((mu[1]-mean(mu))^2*scaling)
+z2<-sqrt((mu[2]-mean(mu))^2*scaling)
+```
+```{r echo=FALSE}
+sprintf("c1=%.4f, c2=%.4f",z1, z2)
+
+
+```
+
+plugging these values into the model yield the same results as above (simulation variability apart), because the two models are equivalent
+
+`r pic("examples/mixed/example3/p.3.input.1.png")`
+`r pic("examples/mixed/example3/p.3.output.1.png")`
+
+Now we have a model in which the dependent variable variance is roughly 2.5, so the standard deviation is 1.58. Assuming we want the covariate to have an effect equivalent to a person correlation of .3, we know the covariate is standardized, so to obtain a coefficient equivalent to $r=.3$ we scale .30.
+
+```{r}
+b<- .30*2.5
+```
+
+
+`r include_examples("mixed")`
+
+`r backto("mixed")`
+
+`r issues()`
