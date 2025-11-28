@@ -417,8 +417,8 @@ software systems.</p>
 <div id="power-analysis" class="section level1">
 <h1>Power analysis</h1>
 <p>All software systems ultimately rely on the effect size <span
-class="math inline">\(f\)</span>, defined as (Cohen, 1988) as the
-square-root of:</p>
+class="math inline">\(f\)</span>, defined as (Cohen, 1988) as the square
+root of:</p>
 <p><span class="math display">\[
 f^2 = \frac{\sigma_m^2}{\sigma^2}.
 \]</span></p>
@@ -648,11 +648,11 @@ repeated measure designs, we can use it to verify that <strong>N =
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
 <pre><code>##      power partial_eta_squared cohen_f non_centrality
 ## a 80.50476             0.06065 0.25411        9.94382</code></pre>
-<p>Superpower also offers a simulation-based power estimate. This is a
-crucal test, because simulations do not require any definition of effect
-size: data are generated based on the input means, SD and correlation,
-and the power is computed as a proportion of the simulation replications
-that produced a significant result.</p>
+<p>It clearly does. Superpower also offers a simulation-based power
+estimate. This is a crucal test, because simulations do not require any
+definition of effect size: data are generated based on the input means,
+SD and correlation, and the power is computed as a proportion of the
+simulation replications that produced a significant result.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>sim_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_power</span>(design_result,</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                            <span class="at">alpha_level =</span> alpha_level,</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                            <span class="at">nsims =</span> <span class="dv">1000</span>,</span>
@@ -683,10 +683,10 @@ approach 1.</p>
 class="modulename">PAMLj</span> is expected: these programs use
 <strong>Approach 2</strong>. To match Approach 1, we need to rescale the
 effect size:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>f2_rescaled<span class="ot">&lt;-</span>f2<span class="sc">*</span>(k<span class="dv">-1</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>f2_rescaled</span></code></pre></div>
-<pre><code>## [1] 0.1274849</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>WebPower<span class="sc">::</span><span class="fu">wp.rmanova</span>(<span class="at">ng=</span><span class="dv">1</span>,<span class="at">nm=</span>k,<span class="at">f=</span><span class="fu">sqrt</span>(f2_rescaled),<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">type =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>f_rescaled<span class="ot">&lt;-</span><span class="fu">sqrt</span>(f2<span class="sc">*</span>(k<span class="dv">-1</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>f_rescaled</span></code></pre></div>
+<pre><code>## [1] 0.3570503</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>WebPower<span class="sc">::</span><span class="fu">wp.rmanova</span>(<span class="at">ng=</span><span class="dv">1</span>,<span class="at">nm=</span>k,<span class="at">f=</span>f_rescaled,<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">type =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## Repeated-measures ANOVA analysis
 ## 
 ##            n         f ng nm nscor alpha power
@@ -735,10 +735,10 @@ class="section level1">
 <h1>A note on the correlation among measures</h1>
 <p>As shown earlier, all methods implicitly include the correlation
 between repeated measures in the definition of the effect size.
-G<em>Power allows users to manually enter a correlation, but this
-assumes an effect-size definition </em>not* already incorporating it.
-Unless the user understands this distinction, supplying a correlation
-can double-count or distort the effect size.</p>
+<code>G*Power</code> allows users to manually enter a correlation, but
+this assumes an effect-size definition <em>not</em> already
+incorporating it. Unless the user understands this distinction,
+supplying a correlation can double-count or distort the effect size.</p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages

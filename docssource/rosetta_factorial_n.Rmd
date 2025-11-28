@@ -73,7 +73,7 @@ We will see later how this definition is treated differently across software sys
 
 # Power analysis
 
-All software systems ultimately rely on the effect size \(f\), defined as (Cohen, 1988) as the square-root of:
+All software systems ultimately rely on the effect size \(f\), defined as (Cohen, 1988) as the square root of:
 
 $$
 f^2 = \frac{\sigma_m^2}{\sigma^2}.
@@ -272,7 +272,7 @@ exact_result <- Superpower::ANOVA_exact(design_result,
 zapsmall(exact_result$main_results)
 ```
 
-Superpower also offers a simulation-based power estimate. This is a crucal test, because simulations do not require any definition of effect size: data are generated based on the input means, SD and correlation, and the power is computed as a proportion of the simulation replications that produced a significant result. 
+It clearly does. Superpower also offers a simulation-based power estimate. This is a crucal test, because simulations do not require any definition of effect size: data are generated based on the input means, SD and correlation, and the power is computed as a proportion of the simulation replications that produced a significant result. 
 
 ```{r, eval=FALSE}
 
@@ -310,9 +310,9 @@ This yields **N = 153**, identical to G*Power using the **Cohen** option.
 As shown above, this difference with `r modulename()` is expected: these programs use **Approach 2**. To match Approach 1, we need to rescale the effect size:
 
 ```{r}
-f2_rescaled<-f2*(k-1)
-f2_rescaled
-WebPower::wp.rmanova(ng=1,nm=k,f=sqrt(f2_rescaled),power=.80,type = 1)
+f_rescaled<-sqrt(f2*(k-1))
+f_rescaled
+WebPower::wp.rmanova(ng=1,nm=k,f=f_rescaled,power=.80,type = 1)
 ```
 
 This now reproduces the `r modulename()` results.
@@ -357,7 +357,7 @@ The required sample size is **N = 77**, exactly equivalent to the RM ANOVA resul
 
 # A note on the correlation among measures
 
-As shown earlier, all methods implicitly include the correlation between repeated measures in the definition of the effect size. G*Power allows users to manually enter a correlation, but this assumes an effect-size definition *not* already incorporating it. Unless the user understands this distinction, supplying a correlation can double-count or distort the effect size.
+As shown earlier, all methods implicitly include the correlation between repeated measures in the definition of the effect size. `G*Power` allows users to manually enter a correlation, but this assumes an effect-size definition *not* already incorporating it. Unless the user understands this distinction, supplying a correlation can double-count or distort the effect size.
 
 `r backto("rosetta")`
 
