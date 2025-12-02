@@ -311,6 +311,12 @@ inconsistency</a></h2>
       <li><a href="#a-note-on-the-correlation-among-measures"
       id="toc-a-note-on-the-correlation-among-measures">A note on the
       correlation among measures</a></li>
+      <li><a href="#paired-samples-t-test"
+      id="toc-paired-samples-t-test">Paired-samples t-test</a>
+      <ul>
+      <li><a href="#pamlj-1" id="toc-pamlj-1">PAMLj</a></li>
+      <li><a href="#webpower" id="toc-webpower">WebPower</a></li>
+      </ul></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       <li><a href="#references" id="toc-references">References</a></li>
       </ul>
@@ -739,12 +745,58 @@ between repeated measures in the definition of the effect size.
 this assumes an effect-size definition <em>not</em> already
 incorporating it. Unless the user understands this distinction,
 supplying a correlation can double-count or distort the effect size.</p>
+</div>
+<div id="paired-samples-t-test" class="section level1">
+<h1>Paired-samples t-test</h1>
+<p>We have seen above that all software packages should converge to the
+same results when the number of repeated measures is <span
+class="math inline">\(k=2\)</span>. This is because the when <span
+class="math inline">\(k=2\)</span>, <span class="math inline">\(f_v^2 =
+f^2 (k-1)=f^2\)</span>. Would they agree with the paired sample t-test,
+which is equivalent to the repeated measure ANOVA with <span
+class="math inline">\(k=2\)</span>? Let’s try.</p>
+<p>Recall that for planning purposes based on population effect sizes,
+the following holds: <span class="math inline">\(f=d_z\)</span>, where
+<span class="math inline">\(d_z\)</span> is the Cohen’s d effect size
+already incorporating the correlation between measures.</p>
+<div class="adm adm-setup">
+<p>Setup</p>
+<ul>
+<li>Aim = N<br />
+</li>
+<li>AXB <span class="math inline">\(p\eta^2\)</span> = 0.06<br />
+</li>
+<li><span class="math inline">\(f\)</span> = 0.252<br />
+</li>
+<li><span class="math inline">\(d_z\)</span> = 0.252</li>
+<li>Number of measures = 2<br />
+</li>
+<li>Effect DF = 1</li>
+<li>Number of groups = 1<br />
+</li>
+<li>Alpha = .05<br />
+</li>
+<li>Required power = .80<br />
+</li>
+</ul>
+</div>
+<div id="pamlj-1" class="section level2">
+<h2>PAMLj</h2>
+<p><img src="rosetta/pics/factorial/fac_n.3.output.1.png" width="592" />
+<img src="rosetta/pics/factorial/fac_n.3.output.2.png" width="705" /></p>
+</div>
+<div id="webpower" class="section level2">
+<h2>WebPower</h2>
+<p><img src="rosetta/pics/factorial/fac_n.3.output.3.png" width="471" />
+<img src="rosetta/pics/factorial/fac_n.3.output.4.png" width="470" /></p>
+<p>Everything checks out.</p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
 </p>
 <a class='backto' href='index.html'>Main page</a>
 <a class="backto" href="./rosetta.html">PAMLj: rosetta</a>
+</div>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">

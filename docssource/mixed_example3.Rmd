@@ -166,8 +166,6 @@ z2<-sqrt((mu[2]-mean(mu))^2*scaling)
 ```
 ```{r echo=FALSE}
 sprintf("c1=%.4f, c2=%.4f",z1, z2)
-
-
 ```
 
 plugging these values into the model yield the same results as above (simulation variability apart), because the two models are equivalent

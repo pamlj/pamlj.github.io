@@ -359,6 +359,43 @@ The required sample size is **N = 77**, exactly equivalent to the RM ANOVA resul
 
 As shown earlier, all methods implicitly include the correlation between repeated measures in the definition of the effect size. `G*Power` allows users to manually enter a correlation, but this assumes an effect-size definition *not* already incorporating it. Unless the user understands this distinction, supplying a correlation can double-count or distort the effect size.
 
+
+
+# Paired-samples t-test
+
+We have seen above that all software packages should converge to the same results when the number of repeated measures is $k=2$. This is because the when $k=2$,  $f_v^2 = f^2 (k-1)=f^2$. Would they agree with the paired sample t-test, which is equivalent to the repeated measure ANOVA with $k=2$? Let's try.
+
+Recall that for planning purposes based on population effect sizes, the following holds: $f=d_z$, where $d_z$ is the Cohen's d effect size already incorporating the correlation between measures.  
+
+:::{ .adm .adm-setup}
+Setup
+
+* Aim = N  
+* AXB $p\eta^2$ = 0.06  
+* $f$ = 0.252  
+* $d_z$ = 0.252
+* Number of measures = 2  
+* Effect DF = 1
+* Number of groups = 1  
+* Alpha = .05  
+* Required power = .80  
+:::
+
+## PAMLj
+
+`r pic("rosetta/pics/factorial/fac_n.3.output.1.png")`
+`r pic("rosetta/pics/factorial/fac_n.3.output.2.png")`
+
+## WebPower
+
+`r pic("rosetta/pics/factorial/fac_n.3.output.3.png")`
+`r pic("rosetta/pics/factorial/fac_n.3.output.4.png")`
+
+Everything checks out.
+
+
+
+
 `r backto("rosetta")`
 
 `r issues()`
