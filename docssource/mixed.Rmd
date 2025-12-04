@@ -154,7 +154,7 @@ When  `Find: Cases within clusters` is selected, if a user insert a value to the
 :::{ .adm .adm-seealso}
 See also
 
-Some example of setting cluster variables in different design are discussed in `r link_pages(nickname="mixed_clusters")`
+Some example of setting cluster variables in different designs are discussed in `r link_pages(nickname="mixed_clusters")`
 
 :::
 

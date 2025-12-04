@@ -1,9 +1,9 @@
 ---
 title: "Mixed models: nested clusters"
 author: "(Marcello Gallucci)"
-nickname: mixed_clusters
+nickname: mixed_nested_clusters
 topic: mixed
-category: details
+category: examples
 output: 
   html_document:
      includes:

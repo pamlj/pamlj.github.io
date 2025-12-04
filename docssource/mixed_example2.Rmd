@@ -1,9 +1,9 @@
 ---
 title: "Mixed models: to be done"
 author: "(Marcello Gallucci)"
-nickname: mixed_syntax
+nickname: mixed_syntax_example
 topic: mixed
-category: outcast
+category: examples
 output: 
   html_document:
      includes:
