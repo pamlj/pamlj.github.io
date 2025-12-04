@@ -287,9 +287,14 @@
       id="toc-model-coefficients">Model Coefficients</a></li>
       <li><a href="#model-coefficients-sign"
       id="toc-model-coefficients-sign">Model Coefficients sign</a></li>
+      <li><a href="#symbolic-coefficients"
+      id="toc-symbolic-coefficients">Symbolic coefficients</a></li>
+      <li><a href="#additional-directives"
+      id="toc-additional-directives">Additional directives</a></li>
       </ul></li>
       <li><a href="#additional-material"
       id="toc-additional-material">Additional material</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
       <li><a href="#examples" id="toc-examples">Examples</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
@@ -393,20 +398,63 @@ in:</p>
 <p>Multiple clustering variables can specified, for instance:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+1.5</span><span class="sc">*</span>x<span class="sc">|</span>class)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span></code></pre></div>
 </div>
+<div id="symbolic-coefficients" class="section level3">
+<h3>Symbolic coefficients</h3>
+<p><span class="modulename">PAMLj</span> allow passing also symbolic
+coefficients in the formula. Symbolic coefficients are labels that can
+be used to refer to the term/coefficient in additional syntax lines.
+Here an example:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>.<span class="dv">5</span><span class="sc">*</span>x<span class="sc">+</span>b<span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>z<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span></code></pre></div>
+<p>In this example, <code>a</code> and <code>b</code> would refer to the
+coefficient of <code>x</code> and <code>z</code> respectively.</p>
+</div>
+<div id="additional-directives" class="section level3">
+<h3>Additional directives</h3>
+<p>The field <span class="option"> <b>Module Structure </b></span>
+accepts additional directive over the specified model. At the moment
+there is only one directive that is recognized.</p>
+<ul>
+<li><code>test: alabel</code></li>
+</ul>
+<p>This directive implies that the estimated sample size, <em>Required
+Number of cluster levels</em> or <em>Required N per cluster</em> are
+solved for the effect whose label is <code>alabel</code>. By default, in
+fact, <span class="modulename">PAMLj</span> estimated the required
+sample size for the smallest fixed effect in the model. If one wishes to
+estimate the required sample size for a coefficient which is not the
+smallest, simply use a symbolic coefficient for the target term and use
+<code>test:</code> directive. In practice:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>.<span class="dv">5</span><span class="sc">*</span>x<span class="sc">+</span>b<span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>z<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>test<span class="sc">:</span>b</span></code></pre></div>
+<p>computes the required sample size for <code>2*z</code>, irrespective
+of the fact that <code>.5*x</code> will have a smaller effect.</p>
+</div>
 </div>
 <div id="additional-material" class="section level1">
 <h1>Additional material</h1>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<p>
+Some more information about the module specs can be found here
+</p>
+<ul>
+<li>
+<a href="./mixed_clusters.html">Mixed models: handling clusters</a>
+</li>
+<li>
+<a href="./mixed_example1.html">Mixed models: nested clusters</a>
+</li>
+<li>
+<a href="./mixed_syntax.html">Mixed models: model syntax</a>
+</li>
+</ul>
 </div>
 <div id="examples" class="section level1 adm adm-seealso">
 <h1>Examples</h1>
 <p>
 Some worked out practical examples can be found here
 </p>
-<ul>
-<li>
-<a href="./mixed_example1.html">Mixed models: handling clusters</a>
-</li>
-</ul>
 </div>
 <div class="adm adm-seealso backto">
 <p>

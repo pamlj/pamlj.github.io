@@ -195,7 +195,7 @@ y~1*1+[.5,1,-.6]*x+(1*1|clustervar)
 
 ## Sensitivity analysis
 
-SA is not yet available for `Mixed Models` sub-module. Nonethelless, one can run different analyses with different parameters to obtain a sensitivity analysis anyway. 
+SA is not yet available for `Mixed Models` sub-module. Nonetheless, one can run different analyses with different parameters to obtain a sensitivity analysis anyway. 
 
 
 ## Options

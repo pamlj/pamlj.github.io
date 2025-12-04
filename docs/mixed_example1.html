@@ -8,7 +8,7 @@
         <meta name="author" content="(Marcello Gallucci)" />
     
     
-    <title>Mixed models: handling clusters</title>
+    <title>Mixed models: nested clusters</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -202,32 +202,16 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Mixed models: handling clusters</h1>
+      <h1 class="title">Mixed models: nested clusters</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Mixed models: handling clusters</a></h2>
+    <h2><a href="#content">Mixed models: nested clusters</a></h2>
     <div id="toc">
       <ul>
-      <li><a href="#one-clustering-variable"
-      id="toc-one-clustering-variable">One clustering variable</a>
-      <ul>
-      <li><a href="#one-way-repeated-measures-anova-design"
-      id="toc-one-way-repeated-measures-anova-design">One-way
-      repeated-measures ANOVA design</a></li>
-      </ul></li>
-      <li><a href="#multi-cluster-designs"
-      id="toc-multi-cluster-designs">Multi-cluster designs</a>
-      <ul>
-      <li><a href="#cross-classified-clusters"
-      id="toc-cross-classified-clusters">Cross-classified
-      clusters</a></li>
-      <li><a href="#nested-cluster-classification"
-      id="toc-nested-cluster-classification">Nested cluster
-      classification</a></li>
-      </ul></li>
       <li><a href="#additional-material"
       id="toc-additional-material">Additional material</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
       <li><a href="#examples" id="toc-examples">Examples</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
@@ -255,299 +239,39 @@ power analysis, mixed models, multiple clusters, participant by stimuli
 <div style="clear:both">
 
 </div>
-<p>Here we discuss some rules for handling clustering variables
-(grouping variables) in different designs.</p>
-<div id="one-clustering-variable" class="section level1">
-<h1>One clustering variable</h1>
-<p>Simple designs with one clustering variable are defined by specifying
-in <span class="option">Model Syntax</span> the “bars” component of the
-formula, such as:</p>
-<pre><code>y~1*1+1*x+(1*1|cluster)</code></pre>
-<div class="adm adm-note">
-<p>Note</p>
-<p>Hereinafter the coefficients are immaterial for our discussion, so we
-always set them to 1 and assume random intercepts only. The sample
-structure is not altered by the coefficient values or the definition of
-fixed and random effects. We also fill in all the cluster numerosity
-fields: <code># Cluster Levels</code> and <code>N per cluster</code>. It
-is clear that, depending on the aim of the analysis, one of these
-parameters will be determined by the algorithm.</p>
+<div class="underconstruction">
+<div>
+<i class="fa fa-drafting-compass"></i>
 </div>
-<p><span class="modulename">PAMLj</span> reads <code>cluster</code> as
-the name of the clustering variable and displays the fields to be filled
-in to generate the correct sample based on the cluster variable
-definition.</p>
-<p><img src="examples/mixed/example1/e1.input.1.png" width="567" /></p>
-<p>Now, depending on the aim of the analysis, one needs to fill one of
-the fields (<code># Cluster Levels</code> or
-<code>N per cluster</code>). Here we discuss the meaning of these
-fields, knowing that depending on the goal of the analysis, one of them
-will be the target of the power function.</p>
-<p>With one clustering variable, <code># Cluster levels</code> is the
-number of groups clustering the observations. In a multilevel design,
-say with pupils clustered within classes, <code># Cluster levels</code>
-is the number of classes in the sample (or the number to be established
-by the power analysis). In a repeated-measures design with conditions
-repeated within participants, <code># Cluster levels</code> is the
-number of participants.</p>
-<p><code>N per cluster</code> is the number of observations within each
-cluster level (group). In a multilevel design with pupils clustered
-within classes, <code>N per cluster</code> is the (average) number of
-pupils in the sample (or the number to be established by the power
-analysis). In a repeated-measures design with a condition repeated
-within participants, <code>N per cluster</code> is the number of
-measurements taken for each participant.</p>
-<p>With one clustering variable, <code>N per cluster</code> should be at
-least 2, because without at least two measurements per cluster, not even
-a random intercept can be estimated. To estimate random slopes,
-<code>N per cluster</code> must be larger than 2; otherwise the model
-will not have sufficient degrees of freedom to estimate the variance of
-the coefficients.</p>
-<div id="one-way-repeated-measures-anova-design" class="section level3">
-<h3>One-way repeated-measures ANOVA design</h3>
-<p>Assume we have a repeated-measures design with four time points (see
-an example in <a href="./rosetta_mixed1.html">Mixed vs RM-ANOVA</a>),
-and one measurement per participant (identified by the variable
-<em>ID</em>) at each time point. To define this design, we would
-input:</p>
-<pre><code>y~1*1+1*time+(1*1|ID)</code></pre>
-<p>Then we specify that <code>time</code> is a categorical variable with
-4 levels.</p>
-<p><img src="examples/mixed/example1/e1.input.2.png" width="554" /></p>
-<p>and we set the cluster <code>N per cluster</code> to 4, indicating
-that one participant (the cluster unit) has 4 observations.</p>
-<p><img src="examples/mixed/example1/e1.input.3.png" width="557" /></p>
-<p>The resulting data look like this:</p>
-<pre><code>             y time      ID
-1   0.64342217    1       1
-2   0.15874249    2       1
-3  -0.70961322    3       1
-4  -1.46269242    4       1
-5  -0.80773575    1       2
-6   0.38518147    2       2
-7  -1.95162686    3       2
-8   2.98249154    4       2
-9  -0.04821753    1       3
-10 -1.61386528    2       3
-11 -0.68877198    3       3
-12  1.33885528    4       3</code></pre>
-<p>We can see that time is repeated within ID, with one measurement for
-each level of time.</p>
-<div class="adm adm-note">
-<p>Note</p>
-<p>To see an example of the data generated by your model in <span
-class="modulename">PAMLj</span>, simply select the option <span
-class="option">Data structure</span> in <span class="panel">
-<i class="fa fa-chevron-down"></i> | Options</span> panel.</p>
-</div>
-<p>Assume now we have a similar design, but within each time condition
-the participant is measured 5 times (5 trials). We still have the same
-model:</p>
-<pre><code>y~1*1+1*time+(1*1|ID)</code></pre>
-<p>and the same variable definition (time with 4 levels), but now
-<code>N per cluster</code> is 20, which is 4 levels of time × 5
-trials.</p>
-<p><img src="examples/mixed/example1/e1.input.4.png" width="551" /></p>
-<p>The resulting data look like this (first participant):</p>
-<pre><code>              y time      ID
-1    0.38563267    1       1
-2    1.24833377    1       1
-3   -0.76549380    1       1
-4   -0.94633446    1       1
-5    0.72747486    1       1
-6   -0.58658441    2       1
-7   -1.01631241    2       1
-8   -2.66731584    2       1
-9    0.62401507    2       1
-10   0.15654240    2       1
-11  -0.26135861    3       1
-12   0.11923442    3       1
-13   0.66327673    3       1
-14  -0.63811091    3       1
-15   0.31462810    3       1
-16   0.27796168    4       1
-17   0.32836307    4       1
-18  -0.34867872    4       1
-19  -0.20470434    4       1
-20  -0.71480958    4       1</code></pre>
-<div class="adm adm-note">
-<p>Note</p>
-<p>Notice that categorical variables are always built to vary within
-clusters. This is not a problem for modelling between-participants
-variables, because in power analysis a categorical variable without
-random slopes gives the same results whether it is within- or
-between-participants. The two types of variables yield different results
-only when within-subject variables have random slopes, a characteristic
-that between-subjects variables never have.</p>
-</div>
-</div>
-</div>
-<div id="multi-cluster-designs" class="section level1">
-<h1>Multi-cluster designs</h1>
-<p>Here we discuss cases with more than one clustering variable. Two
-cases are most relevant for researchers:
-<strong>cross-classified</strong> clustering and <strong>nested
-clustering</strong>.</p>
-<div id="cross-classified-clusters" class="section level3">
-<h3>Cross-classified clusters</h3>
-<p>A typical example of cross-classified clustering is an experimental
-design in which <span class="math inline">\(P\)</span> participants
-(identified by the variable <em>PID</em>) are tested with <span
-class="math inline">\(S\)</span> stimuli (variable <em>SID</em>). Every
-participant is exposed to each stimulus, and each stimulus is seen by
-all participants. We start with the simpler example in which there is
-only one measurement for each combination of participant and stimulus (a
-participant sees a stimulus only once).</p>
-<p>The mixed model is:</p>
-<pre><code>y~1*1+1*x+(1*1|PID)+(1*1|SID)</code></pre>
-<p>Let’s say we want a sample of 10 participants and 5 stimuli. In total
-we have 50 observations, in which each participant has
-<code>N per cluster</code> equal to 1, and each stimulus has
-<code>N per cluster</code> equal to 1 as well. It may seem
-counterintuitive, but the participant is actually repeated only once,
-but their measurement is spread across 5 stimuli. Thus, we need to
-set:</p>
-<p><img src="examples/mixed/example1/e2.input.1.png" width="546" /></p>
-<p>The resulting data (first participant) will look like this:</p>
-<pre><code>        y       PID SID
-1   0.741008569   1   1
-2  -1.001295926   1   2
-3   0.728456584   1   3
-4   0.649785351   1   4
-5  -1.373459856   1   5
-6  -2.073459856   1   6</code></pre>
-<p>Now, what about a categorical variable (i.e., an experimental factor
-named <em>cond</em>)? If the variable is <em>between-subjects</em>, we
-simply declare it as above. For a 4-level <em>cond</em>, we have (first
-two participants):</p>
-<pre><code>             y    cond PID SID
-1   0.21678164    1   1   1
-2  -1.89497678    2   1   2
-3   0.68536365    3   1   3
-4  -0.50112451    4   1   4
-5  -0.03173882    1   1   5
-6   0.10935699    2   1   6
-7  -0.03479272    3   2   1
-8   0.79953612    4   2   2
-9   1.16768781    1   2   3
-10  0.01980561    2   2   4
-11 -0.67931988    3   2   5
-12  0.12628890    4   2   6</code></pre>
-<p>(Recall that for between-subjects factors, their structure does not
-affect the results.)</p>
-<p>If the variable is <em>within-subjects</em>, we must ensure that the
-number of observations per participant (here 6) is a multiple of its
-levels. With 6 observations, <em>cond</em> can have 2 levels, 3 levels,
-or 6 levels; otherwise it cannot be repeated within participant. A
-2-level factor would look like this:</p>
-<pre><code>             y cond PID SID
-1   0.49915152    1   1   1
-2   0.74412274    2   1   2
-3  -1.13346819    1   1   3
-4   0.86378973    2   1   4
-5  -0.13518382    1   1   5
-6   1.16554628    2   1   6</code></pre>
-<p>A more complex design arises when the repeated-measures factor
-<em>cond</em> is repeated both within participants and within stimuli.
-Suppose each participant sees each stimulus in both conditions of factor
-<em>cond</em>. This implies that each stimulus has two observations, so
-we change its <code>N per cluster</code>:</p>
-<p><img src="examples/mixed/example1/e2.input.2.png" width="547" /></p>
-<p>and we obtain the desired design:</p>
-<pre><code>              y cond PID SID
-1    1.61187894    1   1   1
-2    0.41588941    2   1   1
-3   -0.88306925    1   1   2
-4   -0.42600560    2   1   2
-5   -0.71458546    1   1   3
-6   -1.00448085    2   1   3
-7   -0.98879046    1   1   4
-8    0.91321802    2   1   4
-9    0.81331414    1   1   5
-10   0.54411584    2   1   5
-11  -0.15936292    1   1   6
-12  -1.03945842    2   1   6</code></pre>
-<p>With the same logic, we can simulate designs with several trials
-within each combination of participant and stimulus. For instance, with
-the following setup:</p>
-<p><img src="examples/mixed/example1/e2.input.3.png" width="542" /></p>
-<p>each participant sees all stimuli 9 times.</p>
-</div>
-<div id="nested-cluster-classification" class="section level3">
-<h3>Nested cluster classification</h3>
-<p>Let us consider one of the classic multilevel design: pupils within
-classes within schools. In this design we have two clustering variables:
-<em>class</em> and <em>school</em>. In multilevel terminology, pupils
-are level 0, classes are level 1 with pupils nested within classes, and
-schools are level 2 with classes nested within schools. To be practical,
-let us assume we want a sample with 10 schools, each with 6 classes, and
-each class (on average) with 12 pupils.</p>
-<p>First, we set the model:</p>
-<pre><code>y~1*1+1*x+(1*1|school/class)</code></pre>
-<p>Then we specify that we have 10 schools, each with 6 classes, and
-each class has 12 observations (pupils).</p>
-<p><img src="examples/mixed/example1/e2.input.1.png" width="546" /></p>
-<p>The generated data look similar to the cross-classified data:</p>
-<pre><code>row   y             x           school  class
-1    0.456717064 -1.017673137      1     1
-2   -1.495551991  0.694440645      1     1
-3   -0.480543438  0.194002872      1     1
-4    0.293003240 -0.116523555      1     1
-5   -1.702547420 -1.203825265      1     1
-6    1.014035495  0.461345298      1     1
-7   -0.415440850 -0.585482460      1     1
-8   -1.524924282  0.544323536      1     1
-9   -0.106578314 -0.196693360      1     1
-10  -0.035543818 -2.741920747      1     1
-11   0.229491601  0.170131727      1     1
-12  -1.909614050 -1.159812029      1     1
-13   1.190966855 -0.356247480      1     2
-14  -2.028748115  0.489991721      1     2
-15  -1.079830560  1.315918615      1     2
-16   0.099924682 -0.330729467      1     2
-17  -0.075449795 -2.424778270      1     2
-....</code></pre>
-<p>However, the estimated model is different. If one looks at the
-<code>Effect size indices</code> table, one finds that the clusters are
-now <code>school</code> and <code>school:class</code>, which is exactly
-how the model specification expands.</p>
-<p><img src="examples/mixed/example1/e3.output.1.png" width="518" /></p>
-<div class="adm adm-note">
-<p>Note</p>
-<p>In mixed models estimated following the R package
-<strong>lme4</strong> syntax, the expression
-<code>(1 | school/class)</code> is just a shorthand for specifying
-nested random effects. The operator <code>school/class</code> expands
-internally into two terms: one random intercept for the grouping factor
-<code>school</code>, and one random intercept for the interaction (i.e.,
-nesting) <code>school:class</code>. Formally, the random structure
-is:</p>
-<pre><code>(1 | school) + (1 | school:class)</code></pre>
-<p>Accordingly, the <code>Effect size indices</code> table indicates
-that the cluster variables are <code>school</code> and
-<code>school:class</code>.</p>
-<p>The <strong>general rule</strong> is that, in mixed models, “nesting”
-is not a separate statistical concept—it is only a syntactic shortcut.
-What matters is the definition of the grouping factors, which in this
-example are <code>school</code> and <code>school:class</code>. Random
-coefficients (whatever they are) are computed across the groups defined
-by these two variables.</p>
-</div>
-</div>
+<p class="underconstruction">
+This page is not yet available: Please come back soon
+</p>
 </div>
 <div id="additional-material" class="section level1">
 <h1>Additional material</h1>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<p>
+Some more information about the module specs can be found here
+</p>
+<ul>
+<li>
+<a href="./mixed_clusters.html">Mixed models: handling clusters</a>
+</li>
+<li>
+<a href="./mixed_example1.html">Mixed models: nested clusters</a>
+</li>
+<li>
+<a href="./mixed_syntax.html">Mixed models: model syntax</a>
+</li>
+</ul>
 </div>
 <div id="examples" class="section level1 adm adm-seealso">
 <h1>Examples</h1>
 <p>
 Some worked out practical examples can be found here
 </p>
-<ul>
-<li>
-<a href="./mixed_example1.html">Mixed models: handling clusters</a>
-</li>
-</ul>
 </div>
 <div class="adm adm-seealso backto">
 <p>

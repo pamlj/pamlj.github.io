@@ -27,6 +27,8 @@ mcdocs_init()
 
 # Additional material
 
+`r include_details("mixed")`
+
 `r include_examples("mixed")`
 
 `r backto("mixed")`

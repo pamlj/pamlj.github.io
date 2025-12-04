@@ -106,9 +106,36 @@ y~1*1+.5*x+(1*1+1.5*x|class)+(1*1|school)
 
 ```
 
+### Symbolic coefficients
+
+`r modulename()` allow passing also symbolic coefficients in the formula. Symbolic coefficients are labels that can be used to refer to the term/coefficient in additional syntax lines. Here an example:
+
+```{r eval=FALSE}
+y~1*1+a*.5*x+b*2*z+(1*1|school)
+```
+
+In this example, `a` and `b` would refer to the coefficient of `x` and `z` respectively. 
+
+
+### Additional directives
+
+The field `r opt_label("Module Structure")` accepts additional directive over the specified model. At the moment there is only one directive that is recognized.
+
+* `test: alabel`  
+
+This directive implies that the estimated sample size, _Required Number of cluster levels_ or _Required N per cluster_ are solved for the effect whose label is `alabel`. By default, in fact, `r modulename()` estimated the required sample size for the smallest fixed effect in the model. If one wishes to estimate the required sample size for a coefficient which is not the smallest, simply use a symbolic coefficient for the target term and use `test:` directive. In practice:
+
+```{r eval=FALSE}
+y~1*1+a*.5*x+b*2*z+(1*1|school)
+test:b
+```
+
+computes the required sample size for `2*z`, irrespective of the fact that `.5*x` will have a smaller effect.
 
 
 # Additional material
+
+`r include_details("mixed")`
 
 `r include_examples("mixed")`
 
