@@ -95,6 +95,15 @@ Notice, however, that the power sample size parameters ($k$ or $n$) are solved f
 
 Once the model is set up, one should decide which is the aim of the analysis.
 
+:::{ .adm .adm-seealso}
+See also
+
+More details about the model definition syntax can be found in `r link_pages(nickname="mixed_syntax")`
+
+:::
+
+
+
 # Aim: N  (Required sample size)
 
 
@@ -195,6 +204,8 @@ SA is not yet available for `Mixed Models` sub-module. Nonethelless, one can run
 
 
 # Additional material
+
+`r include_pages(topic="mixed",category="details",title="Details")`
 
 `r include_pages(topic="mixed",category="rosetta",title="Validation")`
 

@@ -1,0 +1,117 @@
+---
+title: "Mixed models: model syntax"
+author: "(Marcello Gallucci)"
+nickname: mixed_syntax
+topic: mixed
+category: details
+bibliography: 
+     - bib.bib
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r keywords("power analysis, mixed models, multiple clusters, participants by stimuli")`
+
+`r version("0.8.2")`
+
+Here we discuss some rules in defining mixed models for mixed models power analysis in `r modulename()`.
+
+# Model Syntax
+
+Power analysis for mixed model requires to input a mixed model with all the expected coefficients. `r modulename()` employs  a custom syntax based on R package `lme4` [@lme4] standard formulas, modified to easily pass coefficients.
+
+### Model Terms
+
+First, a model in the R package `lme4` [@lme4] is to be defined. For instance, a simple random intercept-only model may look like this
+
+```{r eval=FALSE}
+
+y~1+x+(1|clustervar)
+
+```
+
+Recall that `1` indicates the intercept: this model has a fixed intercept, a fixed effect of `x` and a random intercept across a variable named `clustervar`. The definition of terms is pretty much like the R syntax, woth a few restrictions:
+
+* Interactions are always defined with the column `:`, never with the star.
+* Intercepts should always be defined with `1` or `0`. For fixed effect, the intercept may be omitted but a warning is issued. Better explicitly declare it.
+
+### Model Coefficients
+
+Second, one needs to input the coefficients of each term in the model using the syntax `value*x`. Thus, the syntax:
+
+```{r eval=FALSE}
+
+y~1*1+.5*x+(1*1|clustervar)
+
+```
+
+This means that we expect the fixed intercept to be $1$, the fix coefficient associated with $x$ to be equal to $.5$ and we expect the variance of the random intercept to be $1$. There are a few rules to follows:
+
+* Each term should have a coefficient.
+* Coefficients for categorical variables are passed with the syntax `[1,2,3]*x`, where `x` has 4 levels, so it requires 3 contrast variables to estimate the effect. 
+
+For instance, if `x` is categorical with 3 levels, the syntax would be:
+```{r eval=FALSE}
+y~1*1+[.5,1,1.5]*x+(1*1|clustervar)
+```
+
+If a model has also a random coefficient of the independent variable (random slopes), it should be added to the model with its expected coefficient. For instance:
+
+```{r eval=FALSE}
+y~1*1+.5*x+(1*1+1.5*x|clustervar)
+```
+
+indicates that `x` has a random slopes whose variance is $1.5$ across levels of `clustervar`. If the random slopes regards a categorical variable, the variance coefficients corresponding to the contrasts variable representing the variable should be cast with the _brackets_ syntax:
+
+```{r eval=FALSE}
+y~1*1+[.5,1,1.5]*x+(1*1+[1.1,2,3.1]*x|clustervar)
+```
+
+indicating a random coefficient for the three contrasts variables representing the effect of `x`, with variances $1.1$, $2$, and $3.1$ respectively.
+
+```{r eval=FALSE}
+y~1*1-.5*x+(1*1+1.5*x|clustervar)
+```
+
+For categorical variable, indicate the sign of the coefficient within the brackets:
+
+```{r eval=FALSE}
+y~1*1+[.5,-1,-1.5]*x+(1*1|clustervar)
+```
+
+
+
+### Model Coefficients sign
+
+Coefficients can be positive or negative. For continuous independent variables (terms) simply use the the negative sign in the formula, like in:
+
+
+
+
+Multiple clustering variables can specified, for instance:
+
+```{r eval=FALSE}
+
+y~1*1+.5*x+(1*1+1.5*x|class)+(1*1|school)
+
+```
+
+
+
+# Additional material
+
+`r include_examples("mixed")`
+
+`r backto("mixed")`
+
+`r issues()`

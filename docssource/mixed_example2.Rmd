@@ -1,9 +1,9 @@
 ---
-title: "Mixed models: model syntax"
+title: "Mixed models: to be done"
 author: "(Marcello Gallucci)"
 nickname: mixed_syntax
 topic: mixed
-category: example
+category: outcast
 output: 
   html_document:
      includes:
@@ -22,21 +22,7 @@ mcdocs_init()
 
 `r version("0.8.2")`
 
-Here we discuss some rules in defining mixed models for mixed models power analysis in `r modulename()`.
-
-# Basic syntax
-
-The input model should be specified using formulas in which one passes the variables, their coefficients, their fixed and random effects, and the clustering variables (grouping variables). The formula structure is taken from R package `lme4`, but the syntax is update to allow for numeric coefficients and other model characteristics. The model is specified by multiplying each coefficient for its numeric expected value: For fixed effects the expected value is the expected coefficient value, for random coefficients is the expected variance.
-
-For instance
-```
-y~2*1+.5*x+(1.5*1+1*x|cluster)
-```
-
-Specifies a model with one independent variable $x$, whose fixed effect is $.5$ and its random slopes across the variable _cluster_ have variance equal to $1$. The model has also a fixed intercept _1_ with expected value $2$ and random variance equal to $1.5$ (to complete the model remember to set also the residual variance in `r opt("Residual Variance")`).
-
-
-
+`r underconstruction`
 
 
 # Additional material
