@@ -26,6 +26,11 @@ mcdocs_init()
 
 `r underconstruction`
 
+`r include_pages(topic="factorial",category="subhelp",title="Go the help page for:")`
+
+`r include_pages(topic="factorial",category="rosetta",title="Validation")`
+
+`r include_pages(topic="factorial",category="exemples",title="Examples")`
 
 
 `r backto("prop")`
