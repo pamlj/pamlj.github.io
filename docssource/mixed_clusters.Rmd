@@ -56,7 +56,7 @@ With one clustering variable, `N per cluster` should be at least 2, because with
 Assume we have a repeated-measures design with four time points (see an example in `r link_pages(nickname="ros_mixed_rm")`), and one measurement per participant (identified by the variable _ID_) at each time point. To define this design, we would input:
 
 ```
-y~1*1+1*time+(1*1|ID)
+y~1*1+[1,1,1]*time+(1*1|ID)
 ```
 
 Then we specify that `time` is a categorical variable with 4 levels.
@@ -89,7 +89,7 @@ We can see that time is repeated within ID, with one measurement for each level 
 
 `r pic("examples/mixed/example1/e1.output.1.png")`
 
-At the bottom is clearly stated that `PID` clusters have 6 observations each, and `SID` has 10 observations.
+At the bottom is clearly stated that `PID` clusters have 4 observations each.
 
 :::{ .adm .adm-note}
 Note
@@ -210,7 +210,7 @@ Now, what about a categorical variable (i.e., an experimental factor named _cond
 
 ```
 
-The data structure can be seen also in `Variables parameters table
+The data structure can be seen also in `Variables parameters table` showing that each `PID` cluster (participant) has 6 observations and each stimulus (`SID`) is seen 10 times, once per participant.
 
 `r pic("examples/mixed/example1/e2.output.2.png")`
 
