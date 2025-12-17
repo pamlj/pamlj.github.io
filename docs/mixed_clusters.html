@@ -384,8 +384,7 @@ model within-cluster variables are more common. However, <span
 class="modulename">PAMLj</span> allows to specify between-clusters
 categorical variables (and also continuous variables). Please read
 <a href="./mixed_designs.html">Mixed models: Building factorial
-designs</a> <a href="./mixed_example2.html">Mixed models: to be done</a>
-for help on that.</p>
+designs</a> for help on that.</p>
 </div>
 </div>
 </div>
@@ -425,25 +424,44 @@ set:</p>
 6  -2.073459856   1   6</code></pre>
 <p>Now, what about a categorical variable (i.e., an experimental factor
 named <em>cond</em>)? If the variable is <em>between-subjects</em>, we
-simply declare it as above. For a 4-level <em>cond</em>, we have (first
-two participants):</p>
-<pre><code>             y    cond PID SID
-1   0.21678164    1   1   1
-2  -1.89497678    2   1   2
-3   0.68536365    3   1   3
-4  -0.50112451    4   1   4
-5  -0.03173882    1   1   5
-6   0.10935699    2   1   6
-7  -0.03479272    3   2   1
-8   0.79953612    4   2   2
-9   1.16768781    1   2   3
-10  0.01980561    2   2   4
-11 -0.67931988    3   2   5
-12  0.12628890    4   2   6</code></pre>
-<p>(Recall that one can specify between-subjects factors, see
-<a href="./mixed_designs.html">Mixed models: Building factorial
-designs</a> <a href="./mixed_example2.html">Mixed models: to be
-done</a>).</p>
+simply declare it with the syntax keyword <code>bet: cond|PID</code>
+(see <a href="./mixed_syntax.html">Mixed models: model syntax</a>). For
+a 4-level <em>cond</em>, we have (first two participants):</p>
+<pre><code>  Row  x  PID  SID 
+ 1.00  b    1    1 
+ 2.00  b    1    2 
+ 3.00  b    1    3 
+ 4.00  b    1    4 
+ 5.00  b    1    5 
+ 6.00  b    1    6 
+ 7.00  b    2    1 
+ 8.00  b    2    2 
+ 9.00  b    2    3 
+10.00  b    2    4 
+11.00  b    2    5 
+12.00  b    2    6 
+13.00  b    3    1 
+14.00  b    3    2 
+15.00  b    3    3 
+16.00  b    3    4 
+17.00  b    3    5 
+18.00  b    3    6 
+19.00  a    4    1 
+20.00  a    4    2 
+21.00  a    4    3 
+22.00  a    4    4 
+23.00  a    4    5 
+24.00  a    4    6 
+25.00  a    5    1 
+26.00  a    5    2 
+27.00  a    5    3 
+28.00  a    5    4 
+29.00  a    5    5 
+30.00  a    5    6 
+</code></pre>
+<p>The data structure can be seen also in `Variables parameters
+table</p>
+<p><img src="examples/mixed/example1/e2.output.2.png" width="510" /></p>
 <p>If the variable is <em>within-subjects</em>, we must ensure that the
 number of observations per participant (here 6) is a multiple of its
 levels. With 6 observations, <em>cond</em> can have 2 levels, 3 levels,

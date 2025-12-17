@@ -1,7 +1,7 @@
 ---
 title: "Mixed models: to be done"
 author: "(Marcello Gallucci)"
-nickname: mixed_designs
+nickname: mixed_tobedone
 topic: mixed
 category: outcast
 output: 
