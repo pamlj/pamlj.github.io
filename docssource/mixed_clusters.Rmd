@@ -143,7 +143,9 @@ Notice that categorical variables are built to vary within clusters by default. 
 
 # Multi-cluster designs
 
-Here we discuss cases with more than one clustering variable. Two cases are most relevant for researchers: __cross-classified__ clustering and __nested clustering__.
+Here we discuss cases with more than one clustering variable. When more than one cluster variable is involved, things gets a bit complex (a dare I say ugly), but still those designs are doable in `r modulename()`. One needs a bit more patience.
+
+Two cases are most relevant for researchers: __cross-classified__ clustering and __nested clustering__.
 
 ### Cross-classified clusters
 
@@ -248,11 +250,20 @@ and we obtain the desired design:
 12  -1.03945842    2   1   6
 ```
 
+This means that each stimulus has $20$ observation (2 for each of the 10 participants), and each participants has $12$ observations, 2 per stimulus times 6 stimuli. Indeed, the data are generated accordinglu.
+
+`r pic("examples/mixed/example1/e2.output.1.png")`
+
+
 With the same logic, we can simulate designs with several trials within each combination of participant and stimulus. For instance, with the following setup:
 
 `r pic("examples/mixed/example1/e2.input.3.png")`
 
-each participant sees all stimuli 9 times.
+each participant sees all stimuli 9 times. Accordingly, each participants has 54 observations (9 trials X 6 stimuli), and each stimulus features 90 observations (9 trials X 10 participants). Indeed:
+
+`r pic("examples/mixed/example1/e2.output.3.png")`
+
+
 
 ### Nested cluster classification
 

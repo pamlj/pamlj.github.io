@@ -390,8 +390,11 @@ designs</a> for help on that.</p>
 </div>
 <div id="multi-cluster-designs" class="section level1">
 <h1>Multi-cluster designs</h1>
-<p>Here we discuss cases with more than one clustering variable. Two
-cases are most relevant for researchers:
+<p>Here we discuss cases with more than one clustering variable. When
+more than one cluster variable is involved, things gets a bit complex (a
+dare I say ugly), but still those designs are doable in <span
+class="modulename">PAMLj</span>. One needs a bit more patience.</p>
+<p>Two cases are most relevant for researchers:
 <strong>cross-classified</strong> clustering and <strong>nested
 clustering</strong>.</p>
 <div id="cross-classified-clusters" class="section level3">
@@ -494,11 +497,21 @@ we change its <code>N per cluster</code>:</p>
 10   0.54411584    2   1   5
 11  -0.15936292    1   1   6
 12  -1.03945842    2   1   6</code></pre>
+<p>This means that each stimulus has <span
+class="math inline">\(20\)</span> observation (2 for each of the 10
+participants), and each participants has <span
+class="math inline">\(12\)</span> observations, 2 per stimulus times 6
+stimuli. Indeed, the data are generated accordinglu.</p>
+<p><img src="examples/mixed/example1/e2.output.1.png" width="459" /></p>
 <p>With the same logic, we can simulate designs with several trials
 within each combination of participant and stimulus. For instance, with
 the following setup:</p>
 <p><img src="examples/mixed/example1/e2.input.3.png" width="542" /></p>
-<p>each participant sees all stimuli 9 times.</p>
+<p>each participant sees all stimuli 9 times. Accordingly, each
+participants has 54 observations (9 trials X 6 stimuli), and each
+stimulus features 90 observations (9 trials X 10 participants).
+Indeed:</p>
+<p><img src="examples/mixed/example1/e2.output.3.png" width="466" /></p>
 </div>
 <div id="nested-cluster-classification" class="section level3">
 <h3>Nested cluster classification</h3>
