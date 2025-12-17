@@ -1,0 +1,201 @@
+---
+title: "Mixed models: Building Factorial designs"
+author: "(Marcello Gallucci)"
+nickname: mixed_designs
+topic: mixed
+category: details
+output: 
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r keywords("power analysis, mixed models, multiple clusters, participants by stimuli")`
+
+`r version("0.8.4")`
+
+
+Here we show how to build mixed models for some common design. We focus on the definition of clusters and variables, whereas we do not discuss fixed or random coefficients and their syntax (for that, see `r link_pages(nickname="mixed_syntax")`).
+
+# One-way ANOVA design
+
+Although it is a misnomer, it is clear what a one-way ANOVA design is: it is a design with one dependent variable and one independent factor. To be interesting for mixed models, the simpler one-way ANOVA design should be a repeated measure design. Let assume that our repeated measure factor has three levels. 
+
+<table>
+  <thead>
+    <tr>
+      <th style="border-right:1px solid black;"></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border-right:1px solid black;">Participant 1</td>
+      <td>1 obs</td>
+      <td>1 obs</td>
+      <td>1 obs</td>
+    </tr>
+    <tr>
+      <td style="border-right:1px solid black;">Participant 2</td>
+      <td>1 obs</td>
+      <td>1 obs</td>
+      <td>1 obs</td>
+    </tr>
+    <tr>
+      <td style="border-right:1px solid black;">.....</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+In each condition, one participant has 1 observation, so each participant has 3 observations in total. Thus, in terms of mixed models, we have a design where participants are the cluster variable (`ID`) levels, and each cluster level has three observation, thus `r opt("N per cluster")` is 3.
+
+In `r modulename()`, we can proceed as follows:
+
+First, define the model
+
+`r pic("details/mixed/designs/e1.input.1.png")`
+
+then define the variable `x` as a categorical variable with three levels
+
+`r pic("details/mixed/designs/e1.input.2.png")`
+
+Now, because each participant (cluster) has three observations, `r opt("N per cluster")` should be set to 3.
+
+`r pic("details/mixed/designs/e1.input.3.png")`
+
+To verify that the data used by the module to estimate power do have the intended structure, we can check the table `Variables parameters (one sample)`. To produce this table, a sample is generated according to our specifications and the structure of the variables is revealed.
+
+`r pic("details/mixed/designs/e1.output.1.png")`
+
+We can see that the variable `x`, with respect to cluster variable `ID` shows 3 levels and this three levels are within clusters. The cluster `ID` has indeed $3$ observations (this info seems redundant but in some complex design the number of observations per cluster does not correspond to the input `N per cluster`). Here, the data are ok.
+
+# Factorial RM-ANOVA designs
+
+Assume now we plan a study with two factors, `x` and `z`, one with three levels and one with 2 levels. Each participant is measured in each combination of the 3 (`x`) X 2 (`z`) design. Overall, each participant is measured 6 times. 
+
+So, we have a different model
+
+`r pic("details/mixed/designs/e3.input.1.png")`
+
+with two categorical variables
+
+`r pic("details/mixed/designs/e3.input.2.png")`
+
+Being a 3 X 2 repeated measure design, we need $6$ observations per participants.
+
+`r pic("details/mixed/designs/e3.input.3.png")`
+
+and the data are as expected 
+
+`r pic("details/mixed/designs/e3.output.1.png")`
+
+We can also look at the `Data Structure` table that list the first rows of a generated data set. As expected, the first `ID` features all combinations of the two factors.
+
+`r pic("details/mixed/designs/e3.output.2.png")`
+
+# Factorial between/within ANOVA designs
+
+Assume the same design as above, but now one variable is between-participants, for instance `z`. To indicate that a variable is between cluster levels , so it varies only across clusters and not within clusters, we should use the syntax keyword `bet: var|cluster` (see `r link_pages(nickname="mixed_syntax")`). We use it in the syntax field.
+
+`r pic("details/mixed/designs/e4.input.1.png")`
+
+If `z` is between-participants, however, the number of observation within each participant are now 3, so we set it accordingly in `r opt("Clustering Variables")`
+
+`r pic("details/mixed/designs/e4.input.2.png")`
+
+and the resulting data are as intended.
+
+`r pic("details/mixed/designs/e4.output.1.png")`
+
+Notice the table results for the row `Levels within` for variable `z`. Because `z` is between-clusters, each cluster belongs to only one level of `z`, so the table shows `Value=1`. Because of that, the column `Level` shows `between`, as intended.
+
+# Factorial between ANOVA designs
+
+Although rare in mixed models, one can have a factorial between-participants design. It may also be only one part of the design, with other variables varying at other levels. Nonetheless, to obtain a full between-participants design, we simply specify that all factors are between.
+First, we declare both variables as between
+
+`r pic("details/mixed/designs/e5.input.1.png")`
+
+However, if the aim of the analysis is the `Number of clusters levels` (here number of participants) the module may fail. The reason is that when looking for number of clusters ($K$), the algorithm starts with $K=2$. If we have more than two levels there are not enough cases to build the designs. The solution is to set `# Cluster Levels` to a number larger than the number of cells in the design. In fact, when the aim is to find `Number of clusters levels`, setting `# Cluster Levels` sets the starting point of the function that looks for the right K. Thus, by setting  `# Cluster Levels` to a feasable number, the algorithm works.
+
+`r pic("details/mixed/designs/e5.input.1.png")`
+
+In our example we have a 3 X 2 designs, so we need at least 24 (6*4) participants to have at least 4 participants in each cell. 35 (6*5) would be recommended. 
+
+
+
+# Multi-trial One-way ANOVA design
+
+Assume now the same designs as above, but with several trials within each condition. Recall the one-way repeated measure ANOVA design, and assume that in each condition the participant is measured several times, and each participant is measured in all conditions. Say that for each condition the participant is measured 10 times. This means that each participant is measured 30 times in total. In general, if $T$ trials are repeated within each of $C$ conditions, the number of observations per participant is $N_c=T \cdot C$. 
+
+<table>
+  <thead>
+    <tr>
+      <th style="border-right:1px solid black;"></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border-right:1px solid black;">Participant 1</td>
+      <td>10 obs</td>
+      <td>10 obs</td>
+      <td>10 obs</td>
+    </tr>
+    <tr>
+      <td style="border-right:1px solid black;">Participant 2</td>
+      <td>10 obs</td>
+      <td>10 obs</td>
+      <td>10 obs</td>
+    </tr>
+    <tr>
+      <td style="border-right:1px solid black;">.....</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+Accordingly, we only need to change the `N per cluster` value setting it to 30.
+
+`r pic("details/mixed/designs/e2.input.1.png")`
+
+And the data are exactly as intended
+
+`r pic("details/mixed/designs/e2.output.1.png")`
+
+Also for the factorial design we can have multi-trial cells. Practically, whatever is out design, if each repeated measure condition has $T$ trials, we simply need to set `N per cluster` to $T \cdot C$, where $C$ is the number of the within participant cells. In a 3 X 2 design, we have 6 cells, if each cell has 10 observations, the overall number of observations per cluster is 60.
+
+`r pic("details/mixed/designs/e6.input.1.png")`
+
+`r pic("details/mixed/designs/e6.output.1.png")`
+
+
+
+# Additional material
+
+`r include_details("mixed")`
+
+`r include_examples("mixed")`
+
+`r backto("mixed")`
+
+`r issues()`

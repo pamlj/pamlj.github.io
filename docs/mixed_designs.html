@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="(Marcello Gallucci)" />
+    
+    
+    <title>Mixed models: Building Factorial designs</title>
+
+        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="mixed.html">Mixed Models</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Mixed models: Building Factorial designs</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Mixed models: Building Factorial
+designs</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#one-way-anova-design"
+      id="toc-one-way-anova-design">One-way ANOVA design</a></li>
+      <li><a href="#factorial-rm-anova-designs"
+      id="toc-factorial-rm-anova-designs">Factorial RM-ANOVA
+      designs</a></li>
+      <li><a href="#factorial-betweenwithin-anova-designs"
+      id="toc-factorial-betweenwithin-anova-designs">Factorial
+      between/within ANOVA designs</a></li>
+      <li><a href="#factorial-between-anova-designs"
+      id="toc-factorial-between-anova-designs">Factorial between ANOVA
+      designs</a></li>
+      <li><a href="#multi-trial-one-way-anova-design"
+      id="toc-multi-trial-one-way-anova-design">Multi-trial One-way
+      ANOVA design</a></li>
+      <li><a href="#additional-material"
+      id="toc-additional-material">Additional material</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
+      <li><a href="#examples" id="toc-examples">Examples</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> (Marcello
+Gallucci)</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<p><span class="keywords"> <span class="keytitle"> keywords </span>
+power analysis, mixed models, multiple clusters, participants by stimuli
+</span></p>
+<div class="version">
+<p>
+0.8.4
+</p>
+</div>
+<div style="clear:both">
+
+</div>
+<p>Here we show how to build mixed models for some common design. We
+focus on the definition of clusters and variables, whereas we do not
+discuss fixed or random coefficients and their syntax (for that, see
+<a href="./mixed_syntax.html">Mixed models: model syntax</a>).</p>
+<div id="one-way-anova-design" class="section level1">
+<h1>One-way ANOVA design</h1>
+<p>Although it is a misnomer, it is clear what a one-way ANOVA design
+is: it is a design with one dependent variable and one independent
+factor. To be interesting for mixed models, the simpler one-way ANOVA
+design should be a repeated measure design. Let assume that our repeated
+measure factor has three levels.</p>
+<table>
+<thead>
+<tr>
+<th style="border-right:1px solid black;">
+</th>
+<th>
+A
+</th>
+<th>
+B
+</th>
+<th>
+C
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border-right:1px solid black;">
+Participant 1
+</td>
+<td>
+1 obs
+</td>
+<td>
+1 obs
+</td>
+<td>
+1 obs
+</td>
+</tr>
+<tr>
+<td style="border-right:1px solid black;">
+Participant 2
+</td>
+<td>
+1 obs
+</td>
+<td>
+1 obs
+</td>
+<td>
+1 obs
+</td>
+</tr>
+<tr>
+<td style="border-right:1px solid black;">
+…..
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+</tbody>
+</table>
+<p>In each condition, one participant has 1 observation, so each
+participant has 3 observations in total. Thus, in terms of mixed models,
+we have a design where participants are the cluster variable
+(<code>ID</code>) levels, and each cluster level has three observation,
+thus <span class="option">N per cluster</span> is 3.</p>
+<p>In <span class="modulename">PAMLj</span>, we can proceed as
+follows:</p>
+<p>First, define the model</p>
+<p><img src="details/mixed/designs/e1.input.1.png" width="678" /></p>
+<p>then define the variable <code>x</code> as a categorical variable
+with three levels</p>
+<p><img src="details/mixed/designs/e1.input.2.png" width="671" /></p>
+<p>Now, because each participant (cluster) has three observations, <span
+class="option">N per cluster</span> should be set to 3.</p>
+<p><img src="details/mixed/designs/e1.input.3.png" width="687" /></p>
+<p>To verify that the data used by the module to estimate power do have
+the intended structure, we can check the table
+<code>Variables parameters (one sample)</code>. To produce this table, a
+sample is generated according to our specifications and the structure of
+the variables is revealed.</p>
+<p><img src="details/mixed/designs/e1.output.1.png" width="468" /></p>
+<p>We can see that the variable <code>x</code>, with respect to cluster
+variable <code>ID</code> shows 3 levels and this three levels are within
+clusters. The cluster <code>ID</code> has indeed <span
+class="math inline">\(3\)</span> observations (this info seems redundant
+but in some complex design the number of observations per cluster does
+not correspond to the input <code>N per cluster</code>). Here, the data
+are ok.</p>
+</div>
+<div id="factorial-rm-anova-designs" class="section level1">
+<h1>Factorial RM-ANOVA designs</h1>
+<p>Assume now we plan a study with two factors, <code>x</code> and
+<code>z</code>, one with three levels and one with 2 levels. Each
+participant is measured in each combination of the 3 (<code>x</code>) X
+2 (<code>z</code>) design. Overall, each participant is measured 6
+times.</p>
+<p>So, we have a different model</p>
+<p><img src="details/mixed/designs/e3.input.1.png" width="673" /></p>
+<p>with two categorical variables</p>
+<p><img src="details/mixed/designs/e3.input.2.png" width="676" /></p>
+<p>Being a 3 X 2 repeated measure design, we need <span
+class="math inline">\(6\)</span> observations per participants.</p>
+<p><img src="details/mixed/designs/e3.input.3.png" width="676" /></p>
+<p>and the data are as expected</p>
+<p><img src="details/mixed/designs/e3.output.1.png" width="482" /></p>
+<p>We can also look at the <code>Data Structure</code> table that list
+the first rows of a generated data set. As expected, the first
+<code>ID</code> features all combinations of the two factors.</p>
+<p><img src="details/mixed/designs/e3.output.2.png" width="308" /></p>
+</div>
+<div id="factorial-betweenwithin-anova-designs" class="section level1">
+<h1>Factorial between/within ANOVA designs</h1>
+<p>Assume the same design as above, but now one variable is
+between-participants, for instance <code>z</code>. To indicate that a
+variable is between cluster levels , so it varies only across clusters
+and not within clusters, we should use the syntax keyword
+<code>bet: var|cluster</code> (see <a href="./mixed_syntax.html">Mixed
+models: model syntax</a>). We use it in the syntax field.</p>
+<p><img src="details/mixed/designs/e4.input.1.png" width="667" /></p>
+<p>If <code>z</code> is between-participants, however, the number of
+observation within each participant are now 3, so we set it accordingly
+in <span class="option">Clustering Variables</span></p>
+<p><img src="details/mixed/designs/e4.input.2.png" width="662" /></p>
+<p>and the resulting data are as intended.</p>
+<p><img src="details/mixed/designs/e4.output.1.png" width="512" /></p>
+<p>Notice the table results for the row <code>Levels within</code> for
+variable <code>z</code>. Because <code>z</code> is between-clusters,
+each cluster belongs to only one level of <code>z</code>, so the table
+shows <code>Value=1</code>. Because of that, the column
+<code>Level</code> shows <code>between</code>, as intended.</p>
+</div>
+<div id="factorial-between-anova-designs" class="section level1">
+<h1>Factorial between ANOVA designs</h1>
+<p>Although rare in mixed models, one can have a factorial
+between-participants design. It may also be only one part of the design,
+with other variables varying at other levels. Nonetheless, to obtain a
+full between-participants design, we simply specify that all factors are
+between. First, we declare both variables as between</p>
+<p><img src="details/mixed/designs/e5.input.1.png" width="650" /></p>
+<p>However, if the aim of the analysis is the
+<code>Number of clusters levels</code> (here number of participants) the
+module may fail. The reason is that when looking for number of clusters
+(<span class="math inline">\(K\)</span>), the algorithm starts with
+<span class="math inline">\(K=2\)</span>. If we have more than two
+levels there are not enough cases to build the designs. The solution is
+to set <code># Cluster Levels</code> to a number larger than the number
+of cells in the design. In fact, when the aim is to find
+<code>Number of clusters levels</code>, setting
+<code># Cluster Levels</code> sets the starting point of the function
+that looks for the right K. Thus, by setting
+<code># Cluster Levels</code> to a feasable number, the algorithm
+works.</p>
+<p><img src="details/mixed/designs/e5.input.1.png" width="650" /></p>
+<p>In our example we have a 3 X 2 designs, so we need at least 24
+(6<em>4) participants to have at least 4 participants in each cell. 35
+(6</em>5) would be recommended.</p>
+</div>
+<div id="multi-trial-one-way-anova-design" class="section level1">
+<h1>Multi-trial One-way ANOVA design</h1>
+<p>Assume now the same designs as above, but with several trials within
+each condition. Recall the one-way repeated measure ANOVA design, and
+assume that in each condition the participant is measured several times,
+and each participant is measured in all conditions. Say that for each
+condition the participant is measured 10 times. This means that each
+participant is measured 30 times in total. In general, if <span
+class="math inline">\(T\)</span> trials are repeated within each of
+<span class="math inline">\(C\)</span> conditions, the number of
+observations per participant is <span class="math inline">\(N_c=T \cdot
+C\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="border-right:1px solid black;">
+</th>
+<th>
+A
+</th>
+<th>
+B
+</th>
+<th>
+C
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border-right:1px solid black;">
+Participant 1
+</td>
+<td>
+10 obs
+</td>
+<td>
+10 obs
+</td>
+<td>
+10 obs
+</td>
+</tr>
+<tr>
+<td style="border-right:1px solid black;">
+Participant 2
+</td>
+<td>
+10 obs
+</td>
+<td>
+10 obs
+</td>
+<td>
+10 obs
+</td>
+</tr>
+<tr>
+<td style="border-right:1px solid black;">
+…..
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+<td>
+…
+</td>
+</tr>
+</tbody>
+</table>
+<p>Accordingly, we only need to change the <code>N per cluster</code>
+value setting it to 30.</p>
+<p><img src="details/mixed/designs/e2.input.1.png" width="672" /></p>
+<p>And the data are exactly as intended</p>
+<p><img src="details/mixed/designs/e2.output.1.png" width="497" /></p>
+<p>Also for the factorial design we can have multi-trial cells.
+Practically, whatever is out design, if each repeated measure condition
+has <span class="math inline">\(T\)</span> trials, we simply need to set
+<code>N per cluster</code> to <span class="math inline">\(T \cdot
+C\)</span>, where <span class="math inline">\(C\)</span> is the number
+of the within participant cells. In a 3 X 2 design, we have 6 cells, if
+each cell has 10 observations, the overall number of observations per
+cluster is 60.</p>
+<p><img src="details/mixed/designs/e6.input.1.png" width="688" /></p>
+<p><img src="details/mixed/designs/e6.output.1.png" width="480" /></p>
+</div>
+<div id="additional-material" class="section level1">
+<h1>Additional material</h1>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<p>
+Some more information about the module specs can be found here
+</p>
+<ul>
+<li>
+<a href="./mixed_clusters.html">Mixed models: handling clusters</a>
+</li>
+<li>
+<a href="./mixed_designs.html">Mixed models: Building Factorial
+designs</a>
+</li>
+<li>
+<a href="./mixed_syntax.html">Mixed models: model syntax</a>
+</li>
+</ul>
+</div>
+<div id="examples" class="section level1 adm adm-seealso">
+<h1>Examples</h1>
+<p>
+Some worked out practical examples can be found here
+</p>
+</div>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="./mixed.html">Mixed models</a>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

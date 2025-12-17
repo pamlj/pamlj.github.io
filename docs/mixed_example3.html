@@ -8,7 +8,7 @@
         <meta name="author" content="(Marcello Gallucci)" />
     
     
-    <title>Mixed models: model syntax</title>
+    <title>Mixed models: RM to Mixed</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -272,11 +272,11 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Mixed models: model syntax</h1>
+      <h1 class="title">Mixed models: RM to Mixed</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Mixed models: model syntax</a></h2>
+    <h2><a href="#content">Mixed models: RM to Mixed</a></h2>
     <div id="toc">
       <ul>
       <li><a href="#basic-example" id="toc-basic-example">Basic
@@ -292,8 +292,6 @@
       </ul></li>
       <li><a href="#checking-the-results"
       id="toc-checking-the-results">Checking the results</a></li>
-      <li><a href="#standardization"
-      id="toc-standardization">Standardization</a></li>
       <li><a href="#examples" id="toc-examples">Examples</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
@@ -446,49 +444,6 @@ partial eta-squared to 0.64935 (see above).</p>
 obtained with the mixed model. Results are not exactly the same because
 the mixed models power analysis employs simulations to estimate the
 required N, so results may slightly vary.</p>
-</div>
-<div id="standardization" class="section level1">
-<h1>Standardization</h1>
-<p>Assume now we want to include a continuous covariate with a small
-effect on the dependent variable. How can we figure out the coefficient?
-We can standardize (sort of) in such a way that we can figure out a
-coefficient representing a small effect.</p>
-<p>First, let us remind ourselves that, without any predictor, the
-variance of the dependent variable is given by <span
-class="math inline">\(VAR(y)=\tau^2+\sigma^2\)</span>. This means that
-we can change these quantity to change the scale of the dependent
-variable, and thus of the coefficients. If we set <span
-class="math inline">\(\sigma^2=1\)</span> it follows that</p>
-<p><span class="math display">\[
-\tau^2=\frac{r}{(1-r)}
-\]</span></p>
-<p>In our case</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>(tau2z<span class="ot">&lt;-</span>r<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>r))</span></code></pre></div>
-<pre><code>## [1] 1.5</code></pre>
-<p>This means that <span class="math inline">\(\tau^2\)</span> has been
-scaled of a factor of</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>scaling<span class="ot">&lt;-</span>tau2z<span class="sc">/</span>tau2</span></code></pre></div>
-<p>and so it is <span class="math inline">\(\sigma2\)</span></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>sigma2</span></code></pre></div>
-<pre><code>## [1] 0.002777778</code></pre>
-<p>This means that also the (squared) coefficients needs to be scaled of
-the same factor.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="do">## coefficients</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>z1<span class="ot">&lt;-</span><span class="fu">sqrt</span>((mu[<span class="dv">1</span>]<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>scaling)</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>z2<span class="ot">&lt;-</span><span class="fu">sqrt</span>((mu[<span class="dv">2</span>]<span class="sc">-</span><span class="fu">mean</span>(mu))<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>scaling)</span></code></pre></div>
-<pre><code>## [1] &quot;c1=0.2635, c2=0.0000&quot;</code></pre>
-<p>plugging these values into the model yield the same results as above
-(simulation variability apart), because the two models are
-equivalent</p>
-<p><img src="examples/mixed/example3/p.3.input.1.png" width="621" />
-<img src="examples/mixed/example3/p.3.output.1.png" width="876" /></p>
-<p>Now we have a model in which the dependent variable variance is
-roughly 2.5, so the standard deviation is 1.58. Assuming we want the
-covariate to have an effect equivalent to a person correlation of .3, we
-know the covariate is standardized, so to obtain a coefficient
-equivalent to <span class="math inline">\(r=.3\)</span> we scale
-.30.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>b<span class="ot">&lt;-</span> .<span class="dv">30</span><span class="sc">*</span><span class="fl">2.5</span></span></code></pre></div>
 </div>
 <div id="examples" class="section level1 adm adm-seealso">
 <h1>Examples</h1>

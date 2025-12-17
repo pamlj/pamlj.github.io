@@ -1,9 +1,9 @@
 ---
 title: "Mixed models: to be done"
 author: "(Marcello Gallucci)"
-nickname: mixed_syntax_example
+nickname: mixed_designs
 topic: mixed
-category: examples
+category: outcast
 output: 
   html_document:
      includes:
@@ -20,9 +20,8 @@ mcdocs_init()
 
 `r keywords("power analysis, mixed models, multiple clusters, participants by stimuli")`
 
-`r version("0.8.2")`
+`r version("0.8.4")`
 
-`r underconstruction`
 
 
 # Additional material

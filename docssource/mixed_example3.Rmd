@@ -1,9 +1,9 @@
 ---
-title: "Mixed models: model syntax"
+title: "Mixed models: RM to Mixed"
 author: "(Marcello Gallucci)"
 nickname: mixed_rm2mix
 topic: mixed
-category: outcasr
+category: examples
 output: 
   html_document:
      includes:
@@ -132,52 +132,6 @@ Because in this example the model is equivalent to a one-way RM ANOVA, we can ch
 
 We obtain 94 participants, which is equivalent to the results obtained with the mixed model. Results are not exactly the same because the mixed models power analysis employs simulations to estimate the required N, so results may slightly vary. 
 
-# Standardization
-
-Assume now we want to include a continuous covariate with a small effect on the dependent variable. How can we figure out the coefficient? We can standardize (sort of) in such a way that we can figure out a coefficient representing a small effect.
-
-First, let us remind ourselves that, without any predictor, the variance of the dependent variable is given by $VAR(y)=\tau^2+\sigma^2$. This means that we can change these quantity to change the scale of the dependent variable, and thus of the coefficients. If we set $\sigma^2=1$ it follows that 
-
-$$
-\tau^2=\frac{r}{(1-r)}
-$$
-
-In our case
-```{r}
-(tau2z<-r/(1-r))
-```
-
-This means that $\tau^2$ has been scaled of a factor of
-
-```{r}
-scaling<-tau2z/tau2
-```
-and so it is $\sigma2$
-```{r}
-1/sigma2
-```
-
-This means that also the (squared) coefficients needs to be scaled of the same factor.
-
-```{r}
-## coefficients
-z1<-sqrt((mu[1]-mean(mu))^2*scaling)
-z2<-sqrt((mu[2]-mean(mu))^2*scaling)
-```
-```{r echo=FALSE}
-sprintf("c1=%.4f, c2=%.4f",z1, z2)
-```
-
-plugging these values into the model yield the same results as above (simulation variability apart), because the two models are equivalent
-
-`r pic("examples/mixed/example3/p.3.input.1.png")`
-`r pic("examples/mixed/example3/p.3.output.1.png")`
-
-Now we have a model in which the dependent variable variance is roughly 2.5, so the standard deviation is 1.58. Assuming we want the covariate to have an effect equivalent to a person correlation of .3, we know the covariate is standardized, so to obtain a coefficient equivalent to $r=.3$ we scale .30.
-
-```{r}
-b<- .30*2.5
-```
 
 
 `r include_examples("mixed")`
