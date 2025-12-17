@@ -1,5 +1,5 @@
 ---
-title: "Mixed models: Building Factorial designs"
+title: "Mixed models: Building factorial designs"
 author: "(Marcello Gallucci)"
 nickname: mixed_designs
 topic: mixed
@@ -18,16 +18,20 @@ library(mcdocs)
 mcdocs_init()
 ```
 
-`r keywords("power analysis, mixed models, multiple clusters, participants by stimuli")`
+`r keywords("power analysis, mixed models, factorial designs, repeated measures, multi-trial")`
 
 `r version("0.8.4")`
 
 
-Here we show how to build mixed models for some common design. We focus on the definition of clusters and variables, whereas we do not discuss fixed or random coefficients and their syntax (for that, see `r link_pages(nickname="mixed_syntax")`).
+Here we show how to build mixed models for some common experimental designs.  
+We focus on how to define clusters and variables, and on how these definitions translate into the data structure used for power analysis. We do **not** discuss fixed or random effects specification here; for that, see `r link_pages(nickname="mixed_syntax")`.
 
 # One-way ANOVA design
 
-Although it is a misnomer, it is clear what a one-way ANOVA design is: it is a design with one dependent variable and one independent factor. To be interesting for mixed models, the simpler one-way ANOVA design should be a repeated measure design. Let assume that our repeated measure factor has three levels. 
+Although technically a misnomer, the meaning of a *one-way ANOVA design* is usually clear: one dependent variable and one independent factor.  
+To make such a design relevant for mixed models, we consider the repeated-measures case.
+
+Assume that our repeated-measures factor has three levels.
 
 <table>
   <thead>
@@ -52,95 +56,117 @@ Although it is a misnomer, it is clear what a one-way ANOVA design is: it is a d
       <td>1 obs</td>
     </tr>
     <tr>
-      <td style="border-right:1px solid black;">.....</td>
+      <td style="border-right:1px solid black;">...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
     </tr>
-    
   </tbody>
 </table>
 
-In each condition, one participant has 1 observation, so each participant has 3 observations in total. Thus, in terms of mixed models, we have a design where participants are the cluster variable (`ID`) levels, and each cluster level has three observation, thus `r opt("N per cluster")` is 3.
+In each condition, each participant provides one observation, so each participant contributes three observations in total.  
+From a mixed-model perspective, participants define the cluster variable (`ID`). Each cluster level has three observations, therefore `r opt("N per cluster")` is equal to 3.
 
-In `r modulename()`, we can proceed as follows:
+In `r modulename()`, we proceed as follows.
 
-First, define the model
+First, define the model:
 
 `r pic("details/mixed/designs/e1.input.1.png")`
 
-then define the variable `x` as a categorical variable with three levels
+Then define the variable `x` as a categorical variable with three levels:
 
 `r pic("details/mixed/designs/e1.input.2.png")`
 
-Now, because each participant (cluster) has three observations, `r opt("N per cluster")` should be set to 3.
+Because each participant (cluster) has three observations, `r opt("N per cluster")` should be set to 3:
 
 `r pic("details/mixed/designs/e1.input.3.png")`
 
-To verify that the data used by the module to estimate power do have the intended structure, we can check the table `Variables parameters (one sample)`. To produce this table, a sample is generated according to our specifications and the structure of the variables is revealed.
+To verify that the data used by the module for power estimation have the intended structure, we can inspect the table *Variables parameters (one sample)*.  
+This table is produced from a generated sample that follows the specified design.
 
 `r pic("details/mixed/designs/e1.output.1.png")`
 
-We can see that the variable `x`, with respect to cluster variable `ID` shows 3 levels and this three levels are within clusters. The cluster `ID` has indeed $3$ observations (this info seems redundant but in some complex design the number of observations per cluster does not correspond to the input `N per cluster`). Here, the data are ok.
+We can see that the variable `x` has three levels *within* each cluster (`ID`). The cluster variable itself has three observations per level.  
+Although this information may seem redundant in this simple design, in more complex settings the number of observations per cluster does not always coincide with the input `N per cluster`. Here, everything is as expected.
 
 # Factorial RM-ANOVA designs
 
-Assume now we plan a study with two factors, `x` and `z`, one with three levels and one with 2 levels. Each participant is measured in each combination of the 3 (`x`) X 2 (`z`) design. Overall, each participant is measured 6 times. 
+Assume now a study with two factors, `x` and `z`, with three and two levels respectively.  
+Each participant is measured in every combination of the 3 (`x`) × 2 (`z`) design, for a total of six measurements per participant.
 
-So, we have a different model
+We therefore specify a different model:
 
 `r pic("details/mixed/designs/e3.input.1.png")`
 
-with two categorical variables
+with two categorical variables:
 
 `r pic("details/mixed/designs/e3.input.2.png")`
 
-Being a 3 X 2 repeated measure design, we need $6$ observations per participants.
+Because this is a 3 × 2 repeated-measures design, we need six observations per participant:
 
 `r pic("details/mixed/designs/e3.input.3.png")`
 
-and the data are as expected 
+The resulting data structure matches the intended design:
 
 `r pic("details/mixed/designs/e3.output.1.png")`
 
-We can also look at the `Data Structure` table that list the first rows of a generated data set. As expected, the first `ID` features all combinations of the two factors.
+We can also inspect the *Data Structure* table, which lists the first rows of a generated dataset.  
+As expected, the first participant (`ID`) shows all combinations of the two factors.
 
 `r pic("details/mixed/designs/e3.output.2.png")`
 
 # Factorial between/within ANOVA designs
 
-Assume the same design as above, but now one variable is between-participants, for instance `z`. To indicate that a variable is between cluster levels , so it varies only across clusters and not within clusters, we should use the syntax keyword `bet: var|cluster` (see `r link_pages(nickname="mixed_syntax")`). We use it in the syntax field.
+Now consider the same factorial design, but assume that one factor (say `z`) is between participants.  
+To indicate that a variable varies *between* clusters (i.e., across participants but not within participants), we use the syntax keyword `bet: var|cluster` (see `r link_pages(nickname="mixed_syntax")`).
+
+We specify this directly in the syntax field:
 
 `r pic("details/mixed/designs/e4.input.1.png")`
 
-If `z` is between-participants, however, the number of observation within each participant are now 3, so we set it accordingly in `r opt("Clustering Variables")`
+If `z` is between participants, the number of observations within each participant is now three (one for each level of `x`).  
+Accordingly, we set this value in `r opt("Clustering Variables")`:
 
 `r pic("details/mixed/designs/e4.input.2.png")`
 
-and the resulting data are as intended.
+The resulting data structure is again correct:
 
 `r pic("details/mixed/designs/e4.output.1.png")`
 
-Notice the table results for the row `Levels within` for variable `z`. Because `z` is between-clusters, each cluster belongs to only one level of `z`, so the table shows `Value=1`. Because of that, the column `Level` shows `between`, as intended.
+Notice the row *Levels within* for variable `z`.  
+Because `z` is a between-cluster variable, each cluster belongs to only one level of `z`. For this reason, the table reports `Value = 1`, and the column *Level* correctly shows `between`.
 
 # Factorial between ANOVA designs
 
-Although rare in mixed models, one can have a factorial between-participants design. It may also be only one part of the design, with other variables varying at other levels. Nonetheless, to obtain a full between-participants design, we simply specify that all factors are between.
-First, we declare both variables as between
+Although less common in mixed models, a fully between-participants factorial design is also possible.  
+This may occur as part of a larger design, or in studies where clustering is still required for other reasons.
+
+To specify a fully between-participants design, we simply declare all factors as between:
 
 `r pic("details/mixed/designs/e5.input.1.png")`
 
-However, if the aim of the analysis is the `Number of clusters levels` (here number of participants) the module may fail. The reason is that when looking for number of clusters ($K$), the algorithm starts with $K=2$. If we have more than two levels there are not enough cases to build the designs. The solution is to set `# Cluster Levels` to a number larger than the number of cells in the design. In fact, when the aim is to find `Number of clusters levels`, setting `# Cluster Levels` sets the starting point of the function that looks for the right K. Thus, by setting  `# Cluster Levels` to a feasable number, the algorithm works.
+However, when the analysis goal is to determine the *Number of cluster levels* (i.e., the number of participants), the module may initially fail.  
+The reason is that the algorithm searching for the required number of clusters starts from $K = 2$. With more than two cells, this may be insufficient to build the design.
+
+The solution is to manually set `# Cluster Levels` to a value larger than the number of design cells.  
+In this context, `# Cluster Levels` defines the starting point of the search algorithm. Setting it to a feasible value allows the procedure to work correctly.
 
 `r pic("details/mixed/designs/e5.input.1.png")`
 
-In our example we have a 3 X 2 designs, so we need at least 24 (6*4) participants to have at least 4 participants in each cell. 35 (6*5) would be recommended. 
+In our example, we have a 3 × 2 design (6 cells).  
+To have at least four participants per cell, we need a minimum of 24 participants (6 × 4).  
+A more reasonable choice would be 35 participants (6 × 5).
 
+# Multi-trial one-way ANOVA design
 
+Finally, consider again the one-way repeated-measures ANOVA design, but assume that each condition contains multiple trials.  
+Suppose that, in each condition, each participant is measured 10 times. Each participant then provides 30 observations in total.
 
-# Multi-trial One-way ANOVA design
+In general, if $T$ trials are repeated within each of $C$ conditions, the number of observations per participant is
 
-Assume now the same designs as above, but with several trials within each condition. Recall the one-way repeated measure ANOVA design, and assume that in each condition the participant is measured several times, and each participant is measured in all conditions. Say that for each condition the participant is measured 10 times. This means that each participant is measured 30 times in total. In general, if $T$ trials are repeated within each of $C$ conditions, the number of observations per participant is $N_c=T \cdot C$. 
+$$
+N_c = T \cdot C
+$$
 
 <table>
   <thead>
@@ -165,30 +191,30 @@ Assume now the same designs as above, but with several trials within each condit
       <td>10 obs</td>
     </tr>
     <tr>
-      <td style="border-right:1px solid black;">.....</td>
+      <td style="border-right:1px solid black;">...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
     </tr>
-    
   </tbody>
 </table>
 
-Accordingly, we only need to change the `N per cluster` value setting it to 30.
+Accordingly, we only need to change `N per cluster` and set it to 30:
 
 `r pic("details/mixed/designs/e2.input.1.png")`
 
-And the data are exactly as intended
+The generated data have exactly the intended structure:
 
 `r pic("details/mixed/designs/e2.output.1.png")`
 
-Also for the factorial design we can have multi-trial cells. Practically, whatever is out design, if each repeated measure condition has $T$ trials, we simply need to set `N per cluster` to $T \cdot C$, where $C$ is the number of the within participant cells. In a 3 X 2 design, we have 6 cells, if each cell has 10 observations, the overall number of observations per cluster is 60.
+The same logic applies to factorial designs.  
+Whatever the design, if each repeated-measures cell contains $T$ trials, we simply set `N per cluster` to $T \cdot C$, where $C$ is the number of within-participant cells.
+
+For example, in a 3 × 2 design with 10 trials per cell, each participant contributes 60 observations:
 
 `r pic("details/mixed/designs/e6.input.1.png")`
 
 `r pic("details/mixed/designs/e6.output.1.png")`
-
-
 
 # Additional material
 

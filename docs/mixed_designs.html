@@ -8,7 +8,7 @@
         <meta name="author" content="(Marcello Gallucci)" />
     
     
-    <title>Mixed models: Building Factorial designs</title>
+    <title>Mixed models: Building factorial designs</title>
 
         <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -202,11 +202,11 @@
         </div><!--/.container -->
       </div><!--/.navbar -->
         
-      <h1 class="title">Mixed models: Building Factorial designs</h1>
+      <h1 class="title">Mixed models: Building factorial designs</h1>
       
          <!-- readthedown authors -->
    <div id="sidebar">
-    <h2><a href="#content">Mixed models: Building Factorial
+    <h2><a href="#content">Mixed models: Building factorial
 designs</a></h2>
     <div id="toc">
       <ul>
@@ -222,7 +222,7 @@ designs</a></h2>
       id="toc-factorial-between-anova-designs">Factorial between ANOVA
       designs</a></li>
       <li><a href="#multi-trial-one-way-anova-design"
-      id="toc-multi-trial-one-way-anova-design">Multi-trial One-way
+      id="toc-multi-trial-one-way-anova-design">Multi-trial one-way
       ANOVA design</a></li>
       <li><a href="#additional-material"
       id="toc-additional-material">Additional material</a></li>
@@ -244,8 +244,8 @@ Gallucci)</p>
 <!-- Don't indent these lines or it will mess pre blocks indentation --> 
 <div id="main">
 <p><span class="keywords"> <span class="keytitle"> keywords </span>
-power analysis, mixed models, multiple clusters, participants by stimuli
-</span></p>
+power analysis, mixed models, factorial designs, repeated measures,
+multi-trial </span></p>
 <div class="version">
 <p>
 0.8.4
@@ -254,17 +254,21 @@ power analysis, mixed models, multiple clusters, participants by stimuli
 <div style="clear:both">
 
 </div>
-<p>Here we show how to build mixed models for some common design. We
-focus on the definition of clusters and variables, whereas we do not
-discuss fixed or random coefficients and their syntax (for that, see
-<a href="./mixed_syntax.html">Mixed models: model syntax</a>).</p>
+<p>Here we show how to build mixed models for some common experimental
+designs.<br />
+We focus on how to define clusters and variables, and on how these
+definitions translate into the data structure used for power analysis.
+We do <strong>not</strong> discuss fixed or random effects specification
+here; for that, see <a href="./mixed_syntax.html">Mixed models: model
+syntax</a>.</p>
 <div id="one-way-anova-design" class="section level1">
 <h1>One-way ANOVA design</h1>
-<p>Although it is a misnomer, it is clear what a one-way ANOVA design
-is: it is a design with one dependent variable and one independent
-factor. To be interesting for mixed models, the simpler one-way ANOVA
-design should be a repeated measure design. Let assume that our repeated
-measure factor has three levels.</p>
+<p>Although technically a misnomer, the meaning of a <em>one-way ANOVA
+design</em> is usually clear: one dependent variable and one independent
+factor.<br />
+To make such a design relevant for mixed models, we consider the
+repeated-measures case.</p>
+<p>Assume that our repeated-measures factor has three levels.</p>
 <table>
 <thead>
 <tr>
@@ -312,7 +316,7 @@ Participant 2
 </tr>
 <tr>
 <td style="border-right:1px solid black;">
-…..
+…
 </td>
 <td>
 …
@@ -326,115 +330,119 @@ Participant 2
 </tr>
 </tbody>
 </table>
-<p>In each condition, one participant has 1 observation, so each
-participant has 3 observations in total. Thus, in terms of mixed models,
-we have a design where participants are the cluster variable
-(<code>ID</code>) levels, and each cluster level has three observation,
-thus <span class="option">N per cluster</span> is 3.</p>
-<p>In <span class="modulename">PAMLj</span>, we can proceed as
-follows:</p>
-<p>First, define the model</p>
+<p>In each condition, each participant provides one observation, so each
+participant contributes three observations in total.<br />
+From a mixed-model perspective, participants define the cluster variable
+(<code>ID</code>). Each cluster level has three observations, therefore
+<span class="option">N per cluster</span> is equal to 3.</p>
+<p>In <span class="modulename">PAMLj</span>, we proceed as follows.</p>
+<p>First, define the model:</p>
 <p><img src="details/mixed/designs/e1.input.1.png" width="678" /></p>
-<p>then define the variable <code>x</code> as a categorical variable
-with three levels</p>
+<p>Then define the variable <code>x</code> as a categorical variable
+with three levels:</p>
 <p><img src="details/mixed/designs/e1.input.2.png" width="671" /></p>
-<p>Now, because each participant (cluster) has three observations, <span
-class="option">N per cluster</span> should be set to 3.</p>
+<p>Because each participant (cluster) has three observations, <span
+class="option">N per cluster</span> should be set to 3:</p>
 <p><img src="details/mixed/designs/e1.input.3.png" width="687" /></p>
-<p>To verify that the data used by the module to estimate power do have
-the intended structure, we can check the table
-<code>Variables parameters (one sample)</code>. To produce this table, a
-sample is generated according to our specifications and the structure of
-the variables is revealed.</p>
+<p>To verify that the data used by the module for power estimation have
+the intended structure, we can inspect the table <em>Variables
+parameters (one sample)</em>.<br />
+This table is produced from a generated sample that follows the
+specified design.</p>
 <p><img src="details/mixed/designs/e1.output.1.png" width="468" /></p>
-<p>We can see that the variable <code>x</code>, with respect to cluster
-variable <code>ID</code> shows 3 levels and this three levels are within
-clusters. The cluster <code>ID</code> has indeed <span
-class="math inline">\(3\)</span> observations (this info seems redundant
-but in some complex design the number of observations per cluster does
-not correspond to the input <code>N per cluster</code>). Here, the data
-are ok.</p>
+<p>We can see that the variable <code>x</code> has three levels
+<em>within</em> each cluster (<code>ID</code>). The cluster variable
+itself has three observations per level.<br />
+Although this information may seem redundant in this simple design, in
+more complex settings the number of observations per cluster does not
+always coincide with the input <code>N per cluster</code>. Here,
+everything is as expected.</p>
 </div>
 <div id="factorial-rm-anova-designs" class="section level1">
 <h1>Factorial RM-ANOVA designs</h1>
-<p>Assume now we plan a study with two factors, <code>x</code> and
-<code>z</code>, one with three levels and one with 2 levels. Each
-participant is measured in each combination of the 3 (<code>x</code>) X
-2 (<code>z</code>) design. Overall, each participant is measured 6
-times.</p>
-<p>So, we have a different model</p>
+<p>Assume now a study with two factors, <code>x</code> and
+<code>z</code>, with three and two levels respectively.<br />
+Each participant is measured in every combination of the 3
+(<code>x</code>) × 2 (<code>z</code>) design, for a total of six
+measurements per participant.</p>
+<p>We therefore specify a different model:</p>
 <p><img src="details/mixed/designs/e3.input.1.png" width="673" /></p>
-<p>with two categorical variables</p>
+<p>with two categorical variables:</p>
 <p><img src="details/mixed/designs/e3.input.2.png" width="676" /></p>
-<p>Being a 3 X 2 repeated measure design, we need <span
-class="math inline">\(6\)</span> observations per participants.</p>
+<p>Because this is a 3 × 2 repeated-measures design, we need six
+observations per participant:</p>
 <p><img src="details/mixed/designs/e3.input.3.png" width="676" /></p>
-<p>and the data are as expected</p>
+<p>The resulting data structure matches the intended design:</p>
 <p><img src="details/mixed/designs/e3.output.1.png" width="482" /></p>
-<p>We can also look at the <code>Data Structure</code> table that list
-the first rows of a generated data set. As expected, the first
-<code>ID</code> features all combinations of the two factors.</p>
+<p>We can also inspect the <em>Data Structure</em> table, which lists
+the first rows of a generated dataset.<br />
+As expected, the first participant (<code>ID</code>) shows all
+combinations of the two factors.</p>
 <p><img src="details/mixed/designs/e3.output.2.png" width="308" /></p>
 </div>
 <div id="factorial-betweenwithin-anova-designs" class="section level1">
 <h1>Factorial between/within ANOVA designs</h1>
-<p>Assume the same design as above, but now one variable is
-between-participants, for instance <code>z</code>. To indicate that a
-variable is between cluster levels , so it varies only across clusters
-and not within clusters, we should use the syntax keyword
-<code>bet: var|cluster</code> (see <a href="./mixed_syntax.html">Mixed
-models: model syntax</a>). We use it in the syntax field.</p>
+<p>Now consider the same factorial design, but assume that one factor
+(say <code>z</code>) is between participants.<br />
+To indicate that a variable varies <em>between</em> clusters (i.e.,
+across participants but not within participants), we use the syntax
+keyword <code>bet: var|cluster</code> (see
+<a href="./mixed_syntax.html">Mixed models: model syntax</a>).</p>
+<p>We specify this directly in the syntax field:</p>
 <p><img src="details/mixed/designs/e4.input.1.png" width="667" /></p>
-<p>If <code>z</code> is between-participants, however, the number of
-observation within each participant are now 3, so we set it accordingly
-in <span class="option">Clustering Variables</span></p>
+<p>If <code>z</code> is between participants, the number of observations
+within each participant is now three (one for each level of
+<code>x</code>).<br />
+Accordingly, we set this value in <span class="option">Clustering
+Variables</span>:</p>
 <p><img src="details/mixed/designs/e4.input.2.png" width="662" /></p>
-<p>and the resulting data are as intended.</p>
+<p>The resulting data structure is again correct:</p>
 <p><img src="details/mixed/designs/e4.output.1.png" width="512" /></p>
-<p>Notice the table results for the row <code>Levels within</code> for
-variable <code>z</code>. Because <code>z</code> is between-clusters,
-each cluster belongs to only one level of <code>z</code>, so the table
-shows <code>Value=1</code>. Because of that, the column
-<code>Level</code> shows <code>between</code>, as intended.</p>
+<p>Notice the row <em>Levels within</em> for variable
+<code>z</code>.<br />
+Because <code>z</code> is a between-cluster variable, each cluster
+belongs to only one level of <code>z</code>. For this reason, the table
+reports <code>Value = 1</code>, and the column <em>Level</em> correctly
+shows <code>between</code>.</p>
 </div>
 <div id="factorial-between-anova-designs" class="section level1">
 <h1>Factorial between ANOVA designs</h1>
-<p>Although rare in mixed models, one can have a factorial
-between-participants design. It may also be only one part of the design,
-with other variables varying at other levels. Nonetheless, to obtain a
-full between-participants design, we simply specify that all factors are
-between. First, we declare both variables as between</p>
+<p>Although less common in mixed models, a fully between-participants
+factorial design is also possible.<br />
+This may occur as part of a larger design, or in studies where
+clustering is still required for other reasons.</p>
+<p>To specify a fully between-participants design, we simply declare all
+factors as between:</p>
 <p><img src="details/mixed/designs/e5.input.1.png" width="650" /></p>
-<p>However, if the aim of the analysis is the
-<code>Number of clusters levels</code> (here number of participants) the
-module may fail. The reason is that when looking for number of clusters
-(<span class="math inline">\(K\)</span>), the algorithm starts with
-<span class="math inline">\(K=2\)</span>. If we have more than two
-levels there are not enough cases to build the designs. The solution is
-to set <code># Cluster Levels</code> to a number larger than the number
-of cells in the design. In fact, when the aim is to find
-<code>Number of clusters levels</code>, setting
-<code># Cluster Levels</code> sets the starting point of the function
-that looks for the right K. Thus, by setting
-<code># Cluster Levels</code> to a feasable number, the algorithm
-works.</p>
+<p>However, when the analysis goal is to determine the <em>Number of
+cluster levels</em> (i.e., the number of participants), the module may
+initially fail.<br />
+The reason is that the algorithm searching for the required number of
+clusters starts from <span class="math inline">\(K = 2\)</span>. With
+more than two cells, this may be insufficient to build the design.</p>
+<p>The solution is to manually set <code># Cluster Levels</code> to a
+value larger than the number of design cells.<br />
+In this context, <code># Cluster Levels</code> defines the starting
+point of the search algorithm. Setting it to a feasible value allows the
+procedure to work correctly.</p>
 <p><img src="details/mixed/designs/e5.input.1.png" width="650" /></p>
-<p>In our example we have a 3 X 2 designs, so we need at least 24
-(6<em>4) participants to have at least 4 participants in each cell. 35
-(6</em>5) would be recommended.</p>
+<p>In our example, we have a 3 × 2 design (6 cells).<br />
+To have at least four participants per cell, we need a minimum of 24
+participants (6 × 4).<br />
+A more reasonable choice would be 35 participants (6 × 5).</p>
 </div>
 <div id="multi-trial-one-way-anova-design" class="section level1">
-<h1>Multi-trial One-way ANOVA design</h1>
-<p>Assume now the same designs as above, but with several trials within
-each condition. Recall the one-way repeated measure ANOVA design, and
-assume that in each condition the participant is measured several times,
-and each participant is measured in all conditions. Say that for each
-condition the participant is measured 10 times. This means that each
-participant is measured 30 times in total. In general, if <span
-class="math inline">\(T\)</span> trials are repeated within each of
-<span class="math inline">\(C\)</span> conditions, the number of
-observations per participant is <span class="math inline">\(N_c=T \cdot
-C\)</span>.</p>
+<h1>Multi-trial one-way ANOVA design</h1>
+<p>Finally, consider again the one-way repeated-measures ANOVA design,
+but assume that each condition contains multiple trials.<br />
+Suppose that, in each condition, each participant is measured 10 times.
+Each participant then provides 30 observations in total.</p>
+<p>In general, if <span class="math inline">\(T\)</span> trials are
+repeated within each of <span class="math inline">\(C\)</span>
+conditions, the number of observations per participant is</p>
+<p><span class="math display">\[
+N_c = T \cdot C
+\]</span></p>
 <table>
 <thead>
 <tr>
@@ -482,7 +490,7 @@ Participant 2
 </tr>
 <tr>
 <td style="border-right:1px solid black;">
-…..
+…
 </td>
 <td>
 …
@@ -496,19 +504,19 @@ Participant 2
 </tr>
 </tbody>
 </table>
-<p>Accordingly, we only need to change the <code>N per cluster</code>
-value setting it to 30.</p>
+<p>Accordingly, we only need to change <code>N per cluster</code> and
+set it to 30:</p>
 <p><img src="details/mixed/designs/e2.input.1.png" width="672" /></p>
-<p>And the data are exactly as intended</p>
+<p>The generated data have exactly the intended structure:</p>
 <p><img src="details/mixed/designs/e2.output.1.png" width="497" /></p>
-<p>Also for the factorial design we can have multi-trial cells.
-Practically, whatever is out design, if each repeated measure condition
-has <span class="math inline">\(T\)</span> trials, we simply need to set
+<p>The same logic applies to factorial designs.<br />
+Whatever the design, if each repeated-measures cell contains <span
+class="math inline">\(T\)</span> trials, we simply set
 <code>N per cluster</code> to <span class="math inline">\(T \cdot
 C\)</span>, where <span class="math inline">\(C\)</span> is the number
-of the within participant cells. In a 3 X 2 design, we have 6 cells, if
-each cell has 10 observations, the overall number of observations per
-cluster is 60.</p>
+of within-participant cells.</p>
+<p>For example, in a 3 × 2 design with 10 trials per cell, each
+participant contributes 60 observations:</p>
 <p><img src="details/mixed/designs/e6.input.1.png" width="688" /></p>
 <p><img src="details/mixed/designs/e6.output.1.png" width="480" /></p>
 </div>
@@ -525,7 +533,7 @@ Some more information about the module specs can be found here
 <a href="./mixed_clusters.html">Mixed models: handling clusters</a>
 </li>
 <li>
-<a href="./mixed_designs.html">Mixed models: Building Factorial
+<a href="./mixed_designs.html">Mixed models: Building factorial
 designs</a>
 </li>
 <li>
