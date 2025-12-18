@@ -118,7 +118,7 @@ As expected, the first participant (`ID`) shows all combinations of the two fact
 # Factorial between/within ANOVA designs
 
 Now consider the same factorial design, but assume that one factor (say `z`) is between participants.  
-To indicate that a variable varies *between* clusters (i.e., across participants but not within participants), we use the syntax keyword `bet: var|cluster` (see `r link_pages(nickname="mixed_syntax")`).
+To indicate that a variable varies *between* clusters (i.e., across participants but not within participants), we use the syntax keyword `between: var|cluster` (can be abbreviated to `bet: var|cluster`) (see `r link_pages(nickname="mixed_syntax")`).
 
 We specify this directly in the syntax field:
 

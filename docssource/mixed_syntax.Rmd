@@ -145,21 +145,21 @@ computes the required sample size for `2*z`, irrespective of the fact that `.5*x
 
 Variables can be defined as varying either within or between. By defaults, all categorical variables are assumed to be within cluster, or within combinations of clusters levels. Continuous variables are draw from a random normal distribution across the whole sample (observation) so they have variability both within and between clusters. 
 
-If one want to specify a variable to be within cluster, meaning to vary only within a cluster, one can use the keyword `wit: var|cluster`
+If one want to specify a variable to be within cluster, meaning to vary only within a cluster, one can use the keyword `witthin: var|cluster` (can be abbreviated to `wit: var|cluster`)
 
 ```{r eval=FALSE}
 y~1*1+.5*x+2*z+(1*1|school)
-wit: x|school 
+within: x|school 
 ```
 
 this indicates that the variable `x` varies within each school. If `x` is categorical, all levels of `x` are repeated within each level of the clustering variable. If `x` is continuous,  `x` is standardized with each level of the clustering variable. 
 
 
-If one want to specify a variable to be between clusters, meaning to vary only across clusters, one can use the keyword `bet: var|cluster`
+If one want to specify a variable to be between clusters, meaning to vary only across clusters, one can use the keyword `between: var|cluster` (can be abbreviated to `bet: var|cluster`)
 
 ```{r eval=FALSE}
 y~1*1+.5*x+2*z+(1*1|school)
-bet: x|school 
+between: x|school 
 ```
 
 this indicates that the variable `x` is constant within each school and varies across schools. If `x` is categorical, each cluster level has only one level of `x`. If `x` is continuous,  `x` is constant within each school and is standardized across levels of the clustering variable. 
