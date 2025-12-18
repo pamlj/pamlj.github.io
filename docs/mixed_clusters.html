@@ -528,7 +528,7 @@ each class (on average) with 12 pupils.</p>
 <pre><code>y~1*1+1*x+(1*1|school/class)</code></pre>
 <p>Then we specify that we have 10 schools, each with 6 classes, and
 each class has 12 observations (pupils).</p>
-<p><img src="examples/mixed/example1/e2.input.1.png" width="546" /></p>
+<p><img src="examples/mixed/example1/e3.input.1.png" width="550" /></p>
 <p>The generated data look similar to the cross-classified data:</p>
 <pre><code>row   y             x           school  class
 1    0.456717064 -1.017673137      1     1
@@ -554,6 +554,11 @@ each class has 12 observations (pupils).</p>
 now <code>school</code> and <code>school:class</code>, which is exactly
 how the model specification expands.</p>
 <p><img src="examples/mixed/example1/e3.output.1.png" width="518" /></p>
+<p>In terms of cluster size, we obtain the resultas we intended</p>
+<p><img src="examples/mixed/example1/e3.output.2.png" width="498" /></p>
+<p>Let’s check if the setup is correct: each school has 6 classes with
+12 pupils, so within each school there are 72 observations. Within each
+class nested in school there are 12 pupils. The data are ok.</p>
 <div class="adm adm-note">
 <p>Note</p>
 <p>In mixed models estimated following the R package

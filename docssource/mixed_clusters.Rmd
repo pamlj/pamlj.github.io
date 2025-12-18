@@ -277,7 +277,7 @@ y~1*1+1*x+(1*1|school/class)
 
 Then we specify that we have 10 schools, each with 6 classes, and each class has 12 observations (pupils).
 
-`r pic("examples/mixed/example1/e2.input.1.png")`
+`r pic("examples/mixed/example1/e3.input.1.png")`
 
 The generated data look similar to the cross-classified data:
 
@@ -306,6 +306,12 @@ row   y             x           school  class
 However, the estimated model is different. If one looks at the `Effect size indices` table, one finds that the clusters are now `school` and `school:class`, which is exactly how the model specification expands.
 
 `r pic("examples/mixed/example1/e3.output.1.png")`
+
+In terms of cluster size, we obtain the resultas we intended
+
+`r pic("examples/mixed/example1/e3.output.2.png")`
+
+Let's check if the setup is correct:  each school has 6 classes with 12 pupils, so within each school there are 72 observations. Within each class nested in school there are 12 pupils. The data are ok.
 
 :::{ .adm .adm-note}
 Note

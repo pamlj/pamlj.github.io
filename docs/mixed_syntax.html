@@ -457,9 +457,10 @@ from a random normal distribution across the whole sample (observation)
 so they have variability both within and between clusters.</p>
 <p>If one want to specify a variable to be within cluster, meaning to
 vary only within a cluster, one can use the keyword
-<code>wit: var|cluster</code></p>
+<code>witthin: var|cluster</code> (can be abbreviated to
+<code>wit: var|cluster</code>)</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>z<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>wit<span class="sc">:</span> x<span class="sc">|</span>school </span></code></pre></div>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>within<span class="sc">:</span> x<span class="sc">|</span>school </span></code></pre></div>
 <p>this indicates that the variable <code>x</code> varies within each
 school. If <code>x</code> is categorical, all levels of <code>x</code>
 are repeated within each level of the clustering variable. If
@@ -467,9 +468,10 @@ are repeated within each level of the clustering variable. If
 level of the clustering variable.</p>
 <p>If one want to specify a variable to be between clusters, meaning to
 vary only across clusters, one can use the keyword
-<code>bet: var|cluster</code></p>
+<code>between: var|cluster</code> (can be abbreviated to
+<code>bet: var|cluster</code>)</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>y<span class="sc">~</span><span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="fl">+.5</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>z<span class="sc">+</span>(<span class="dv">1</span><span class="sc">*</span><span class="dv">1</span><span class="sc">|</span>school)</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>bet<span class="sc">:</span> x<span class="sc">|</span>school </span></code></pre></div>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>between<span class="sc">:</span> x<span class="sc">|</span>school </span></code></pre></div>
 <p>this indicates that the variable <code>x</code> is constant within
 each school and varies across schools. If <code>x</code> is categorical,
 each cluster level has only one level of <code>x</code>. If
