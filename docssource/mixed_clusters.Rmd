@@ -143,7 +143,7 @@ Notice that categorical variables are built to vary within clusters by default. 
 
 # Multi-cluster designs
 
-Here we discuss cases with more than one clustering variable. When more than one cluster variable is involved, things gets a bit complex (a dare I say ugly), but still those designs are doable in `r modulename()`. One needs a bit more patience.
+Here we discuss cases with more than one clustering variable. When more than one cluster variable is involved, things gets a bit complex (a dare I say wild), but still those designs are doable in `r modulename()`. One needs a bit more patience.
 
 Two cases are most relevant for researchers: __cross-classified__ clustering and __nested clustering__.
 
@@ -157,7 +157,7 @@ The mixed model is:
 y~1*1+1*x+(1*1|PID)+(1*1|SID)
 ```
 
-Let’s say we want a sample of 10 participants and 5 stimuli. In total we have 50 observations, in which each participant has `N per cluster` equal to 1, and each stimulus has `N per cluster` equal to 1 as well. It may seem counterintuitive, but the participant is actually repeated only once, but their measurement is spread across 5 stimuli. Thus, we need to set:
+Let’s say we want a sample of 10 participants and 6 stimuli. In total we have 60 observations, in which each participant has `N per cluster` equal to 1, and each stimulus has `N per cluster` equal to 1 as well. It may seem counter intuitive, but the participant is actually repeated only once, but their measurement is spread across 6 stimuli. Thus, we need to set:
 
 `r pic("examples/mixed/example1/e2.input.1.png")`
 
@@ -172,6 +172,9 @@ The resulting data (first participant) will look like this:
 5  -1.373459856   1   5
 6  -2.073459856   1   6
 ```
+
+`r pic("examples/mixed/example1/e2.output.4.png")`
+
 
 Now, what about a categorical variable (i.e., an experimental factor named _cond_)? If the variable is _between-subjects_, we simply declare it with the syntax keyword `bet: cond|PID` (see `r link_pages(nickname="mixed_syntax")`). For a 4-level _cond_, we have (first two participants):
 
@@ -212,8 +215,6 @@ Now, what about a categorical variable (i.e., an experimental factor named _cond
 
 The data structure can be seen also in `Variables parameters table` showing that each `PID` cluster (participant) has 6 observations and each stimulus (`SID`) is seen 10 times, once per participant.
 
-`r pic("examples/mixed/example1/e2.output.2.png")`
-
 
 
 If the variable is _within-subjects_, we must ensure that the number of observations per participant (here 6) is a multiple of its levels. With 6 observations, _cond_ can have 2 levels, 3 levels, or 6 levels; otherwise it cannot be repeated within participant. A 2-level factor would look like this:
@@ -250,7 +251,7 @@ and we obtain the desired design:
 12  -1.03945842    2   1   6
 ```
 
-This means that each stimulus has $20$ observation (2 for each of the 10 participants), and each participants has $12$ observations, 2 per stimulus times 6 stimuli. Indeed, the data are generated accordinglu.
+This means that each stimulus has $20$ observation (2 for each of the 10 participants), and each participants has $12$ observations, 2 per stimulus times 6 stimuli. Indeed, the data are generated accordingly.
 
 `r pic("examples/mixed/example1/e2.output.1.png")`
 
@@ -263,11 +264,11 @@ each participant sees all stimuli 9 times. Accordingly, each participants has 54
 
 `r pic("examples/mixed/example1/e2.output.3.png")`
 
-
+Notice that the total number of observation is 540. This is because we have 54 observations per participant (PID) and 10 participants, so it makes 540. Alternatively, we can say that we have 90 observations per stimulus and 6 stimuli, again 540.
 
 ### Nested cluster classification
 
-Let us consider one of the classic multilevel design: pupils within classes within schools. In this design we have two clustering variables: _class_ and _school_. In multilevel terminology, pupils are level 0, classes are level 1 with pupils nested within classes, and schools are level 2 with classes nested within schools. To be practical, let us assume we want a sample with 10 schools, each with 6 classes, and each class (on average) with 12 pupils.
+Here things get ugly: Let us consider one of the classic multilevel design: pupils within classes within schools. In this design we have two clustering variables: _class_ and _school_. In multilevel terminology, pupils are level 0, classes are level 1 with pupils nested within classes, and schools are level 2 with classes nested within schools. To be practical, let us assume we want a sample with 10 schools, each with 6 classes, and each class (on average) with 12 pupils.
 
 First, we set the model:
 
@@ -311,7 +312,7 @@ In terms of cluster size, we obtain the resultas we intended
 
 `r pic("examples/mixed/example1/e3.output.2.png")`
 
-Let's check if the setup is correct:  each school has 6 classes with 12 pupils, so within each school there are 72 observations. Within each class nested in school there are 12 pupils. The data are ok.
+Let's check if the setup is correct:  each school has 6 classes with 12 pupils, so within each school there are 72 observations. Within each class nested in school there are 12 pupils. But how many observations we'll have in the sample? Well, 720, because we have 72 observations per school and we have 10 school. So, the data are ok.
 
 :::{ .adm .adm-note}
 Note
@@ -327,6 +328,11 @@ Accordingly, the `Effect size indices` table indicates that the cluster variable
 The __general rule__ is that, in mixed models, “nesting” is not a separate statistical concept—it is only a syntactic shortcut. What matters is the definition of the grouping factors, which in this example are `school` and `school:class`. Random coefficients (whatever they are) are computed across the groups defined by these two variables.
 
 :::
+
+### Apparently nested desings
+
+A good rule of thumbs in mixed models is that _when you are in doubt about how the clustering variables are related, they are probably not nested_. Consider this design. We have 10 _labs_ (or any number you like), each lab conducts an experiment with with 20 participants (_PID_), each responding to 15 stimuli (_SID_). Thus, apparently we have a cross-classified experiment nested within labs. What this design actually means is that for each level of _labs_ has all 20 X 15 observations corresponding to the cross-classified clustering we have seen above. Thus, we do not have nesting at all, but simply a 3-way classification.
+
 
 # Additional material
 

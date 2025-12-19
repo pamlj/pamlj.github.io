@@ -225,6 +225,9 @@
       <li><a href="#nested-cluster-classification"
       id="toc-nested-cluster-classification">Nested cluster
       classification</a></li>
+      <li><a href="#apparently-nested-desings"
+      id="toc-apparently-nested-desings">Apparently nested
+      desings</a></li>
       </ul></li>
       <li><a href="#additional-material"
       id="toc-additional-material">Additional material</a></li>
@@ -392,7 +395,7 @@ designs</a> for help on that.</p>
 <h1>Multi-cluster designs</h1>
 <p>Here we discuss cases with more than one clustering variable. When
 more than one cluster variable is involved, things gets a bit complex (a
-dare I say ugly), but still those designs are doable in <span
+dare I say wild), but still those designs are doable in <span
 class="modulename">PAMLj</span>. One needs a bit more patience.</p>
 <p>Two cases are most relevant for researchers:
 <strong>cross-classified</strong> clustering and <strong>nested
@@ -409,13 +412,12 @@ only one measurement for each combination of participant and stimulus (a
 participant sees a stimulus only once).</p>
 <p>The mixed model is:</p>
 <pre><code>y~1*1+1*x+(1*1|PID)+(1*1|SID)</code></pre>
-<p>Let’s say we want a sample of 10 participants and 5 stimuli. In total
-we have 50 observations, in which each participant has
+<p>Let’s say we want a sample of 10 participants and 6 stimuli. In total
+we have 60 observations, in which each participant has
 <code>N per cluster</code> equal to 1, and each stimulus has
-<code>N per cluster</code> equal to 1 as well. It may seem
-counterintuitive, but the participant is actually repeated only once,
-but their measurement is spread across 5 stimuli. Thus, we need to
-set:</p>
+<code>N per cluster</code> equal to 1 as well. It may seem counter
+intuitive, but the participant is actually repeated only once, but their
+measurement is spread across 6 stimuli. Thus, we need to set:</p>
 <p><img src="examples/mixed/example1/e2.input.1.png" width="546" /></p>
 <p>The resulting data (first participant) will look like this:</p>
 <pre><code>        y       PID SID
@@ -425,6 +427,7 @@ set:</p>
 4   0.649785351   1   4
 5  -1.373459856   1   5
 6  -2.073459856   1   6</code></pre>
+<p><img src="examples/mixed/example1/e2.output.4.png" width="477" /></p>
 <p>Now, what about a categorical variable (i.e., an experimental factor
 named <em>cond</em>)? If the variable is <em>between-subjects</em>, we
 simply declare it with the syntax keyword <code>bet: cond|PID</code>
@@ -466,7 +469,6 @@ a 4-level <em>cond</em>, we have (first two participants):</p>
 <code>Variables parameters table</code> showing that each
 <code>PID</code> cluster (participant) has 6 observations and each
 stimulus (<code>SID</code>) is seen 10 times, once per participant.</p>
-<p><img src="examples/mixed/example1/e2.output.2.png" width="510" /></p>
 <p>If the variable is <em>within-subjects</em>, we must ensure that the
 number of observations per participant (here 6) is a multiple of its
 levels. With 6 observations, <em>cond</em> can have 2 levels, 3 levels,
@@ -503,8 +505,8 @@ we change its <code>N per cluster</code>:</p>
 class="math inline">\(20\)</span> observation (2 for each of the 10
 participants), and each participants has <span
 class="math inline">\(12\)</span> observations, 2 per stimulus times 6
-stimuli. Indeed, the data are generated accordinglu.</p>
-<p><img src="examples/mixed/example1/e2.output.1.png" width="459" /></p>
+stimuli. Indeed, the data are generated accordingly.</p>
+<p><img src="examples/mixed/example1/e2.output.1.png" width="475" /></p>
 <p>With the same logic, we can simulate designs with several trials
 within each combination of participant and stimulus. For instance, with
 the following setup:</p>
@@ -513,17 +515,22 @@ the following setup:</p>
 participants has 54 observations (9 trials X 6 stimuli), and each
 stimulus features 90 observations (9 trials X 10 participants).
 Indeed:</p>
-<p><img src="examples/mixed/example1/e2.output.3.png" width="466" /></p>
+<p><img src="examples/mixed/example1/e2.output.3.png" width="497" /></p>
+<p>Notice that the total number of observation is 540. This is because
+we have 54 observations per participant (PID) and 10 participants, so it
+makes 540. Alternatively, we can say that we have 90 observations per
+stimulus and 6 stimuli, again 540.</p>
 </div>
 <div id="nested-cluster-classification" class="section level3">
 <h3>Nested cluster classification</h3>
-<p>Let us consider one of the classic multilevel design: pupils within
-classes within schools. In this design we have two clustering variables:
-<em>class</em> and <em>school</em>. In multilevel terminology, pupils
-are level 0, classes are level 1 with pupils nested within classes, and
-schools are level 2 with classes nested within schools. To be practical,
-let us assume we want a sample with 10 schools, each with 6 classes, and
-each class (on average) with 12 pupils.</p>
+<p>Here things get ugly: Let us consider one of the classic multilevel
+design: pupils within classes within schools. In this design we have two
+clustering variables: <em>class</em> and <em>school</em>. In multilevel
+terminology, pupils are level 0, classes are level 1 with pupils nested
+within classes, and schools are level 2 with classes nested within
+schools. To be practical, let us assume we want a sample with 10
+schools, each with 6 classes, and each class (on average) with 12
+pupils.</p>
 <p>First, we set the model:</p>
 <pre><code>y~1*1+1*x+(1*1|school/class)</code></pre>
 <p>Then we specify that we have 10 schools, each with 6 classes, and
@@ -558,7 +565,9 @@ how the model specification expands.</p>
 <p><img src="examples/mixed/example1/e3.output.2.png" width="498" /></p>
 <p>Let’s check if the setup is correct: each school has 6 classes with
 12 pupils, so within each school there are 72 observations. Within each
-class nested in school there are 12 pupils. The data are ok.</p>
+class nested in school there are 12 pupils. But how many observations
+we’ll have in the sample? Well, 720, because we have 72 observations per
+school and we have 10 school. So, the data are ok.</p>
 <div class="adm adm-note">
 <p>Note</p>
 <p>In mixed models estimated following the R package
@@ -580,6 +589,19 @@ example are <code>school</code> and <code>school:class</code>. Random
 coefficients (whatever they are) are computed across the groups defined
 by these two variables.</p>
 </div>
+</div>
+<div id="apparently-nested-desings" class="section level3">
+<h3>Apparently nested desings</h3>
+<p>A good rule of thumbs in mixed models is that <em>when you are in
+doubt about how the clustering variables are related, they are probably
+not nested</em>. Consider this design. We have 10 <em>labs</em> (or any
+number you like), each lab conducts an experiment with with 20
+participants (<em>PID</em>), each responding to 15 stimuli
+(<em>SID</em>). Thus, apparently we have a cross-classified experiment
+nested within labs. What this design actually means is that for each
+level of <em>labs</em> has all 20 X 15 observations corresponding to the
+cross-classified clustering we have seen above. Thus, we do not have
+nesting at all, but simply a 3-way classification.</p>
 </div>
 </div>
 <div id="additional-material" class="section level1">

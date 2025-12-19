@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+author: "mc"
+date: "2025-12-18"
+output: html_document
+---
+
+La prima alpha non è corretta. Alpha con r negativa è sempre errata
+
+non sono stati ricodificati gli item con r negativa
+
+perchè sono stati eliminati gli item a4 e a7?
+
+mancano le correlazioni item-scale base della selezione o un criterio di selezione
+
+
+
+la rotazione non è possibile con un solo fattore
+mancano gli autovalori o varianze spiegate
+mancano le saturazioni
+manca indentificare eventuali item con poca coerenza
+manca % varianza spiegata
+
+
+mancano i test inferenziali dei post-hoc
+mancano tutti i risultati numerici
+manca l'interpretazione della direzione dell'effetto
+mancano le medie
+
+
+manca la discussione della direzione dell'effetto e le medie attese. Quale personalità genera più (meno) bias?
+si deve spiegare quale sia l'analisi condotta, come è stato impostata. Nel caso nel modello misto, vanno riportate anche le varianze defgli effetti random.
+
+se si riporta un p-value, va sempre riportato il test che lo ha prodotto
+
+L'effetto va sempre discusso in termini di grandezza (R-quadro), direzione (medie attese), significatività ( F-test e eventualmente post-hoc)
+
+qui assumo che l'analisi riportato in Q1 sia applicata a questa risposta
