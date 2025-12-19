@@ -22,7 +22,9 @@ mcdocs_init()
 
 `r version("0.8.2")`
 
-Here we discuss some rules for handling clustering variables (grouping variables) in different designs.
+Here we discuss some rules for handling clustering variables (grouping variables) in different designs. We focus on building the clustering variables in the correct way and checking the results sample structure, so  we set _expected power_ as the aim of the analysis, and we fill all cluster variables required sizes (`r opt("# Cluster Levels")` and `r opt("N per cluster")`). When the the aim of the analysis is N (with `r opt("Find")` being `Number of cluster levels` or `Cases within clusters`), the rules are the same, but one of size parameter is left empty. It is also a good idea while experimenting with different designs to set `r opt("Algorithm")` to `r opt("Raw approximation")` which is very fast and does not require us to wait for a simulation to check the resulting sample structure. 
+
+
 
 # One clustering variable
 
@@ -323,7 +325,7 @@ In mixed models estimated following the R package **lme4** syntax, the expressio
 (1 | school) + (1 | school:class)
 ```
 
-Accordingly, the `Effect size indices` table indicates that the cluster variables are `school` and `school:class`.
+This means that we estimate one random intercept (or whatever random coefficient we include) per school, and one random intercept per class, and class are uniquely identified by che combination of school and class. Accordingly, the `Effect size indices` table indicates that the cluster variables are `school` and `school:class`.
 
 The __general rule__ is that, in mixed models, “nesting” is not a separate statistical concept—it is only a syntactic shortcut. What matters is the definition of the grouping factors, which in this example are `school` and `school:class`. Random coefficients (whatever they are) are computed across the groups defined by these two variables.
 
@@ -331,8 +333,58 @@ The __general rule__ is that, in mixed models, “nesting” is not a separate s
 
 ### Apparently nested desings
 
-A good rule of thumbs in mixed models is that _when you are in doubt about how the clustering variables are related, they are probably not nested_. Consider this design. We have 10 _labs_ (or any number you like), each lab conducts an experiment with with 20 participants (_PID_), each responding to 15 stimuli (_SID_). Thus, apparently we have a cross-classified experiment nested within labs. What this design actually means is that for each level of _labs_ has all 20 X 15 observations corresponding to the cross-classified clustering we have seen above. Thus, we do not have nesting at all, but simply a 3-way classification.
+(Here things remain ugly, but computation gets very slow)
 
+A good rule of thumb in mixed models is that _when you are in doubt about how the clustering variables are related, they are probably not nested_. The second rule is that if nesting (i.e `|cluster1/cluster2`) does not come intuitively, and things are clearer if one explicitly thinks in terms of combinations of clusters levels. The third rule of thumbs is: clusters defined in different blocks (`(1|cluster)` being a block) are cross-classified.
+
+Consider the following design. We have 10 labs (_LAB_) (or any number you like), each lab conducts an experiment with with 20 participants (_PID_), each responding to 15 stimuli (_SID_). Thus, apparently we have a cross-classified experiment nested within labs. What this design actually means is that each level of _labs_ has all 20 X 15 observations corresponding to the cross-classified clustering we have seen above. Thus, we do not have nesting at all, but simply a 3-way classification. Assume the experiment involves a dichotomous factor (_cond_) with two levels, repeated within-participants. That is, each participant respond to the 15 stimuli in two different conditions.
+
+Now we have to think carefully: we have 10 unique labs, so each labs requires a random intercept: `(1|LAB)`. Than we have 20 participants for each lab, and each participant is uniquely identified by being in a particular lab (participant 1 in lab 1 is different than participant 1 in lab 2):  `(1|LAB:PID)`. Stimuli, however, are not different across labs, because each lab uses the same stimuli. Thus, we need one random intercept for each stimulus (SID), and they are not identified by being in a particular labs. Thus:  `(1|SID)`
+
+To set it up, we simply need to specify 3 clustering variable, _LABS_, _PID_ and _SID_ and their variances in the model.
+
+```
+y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|SID)
+```
+
+Now we focus on clusters size. We have 10 labs, each labs is "measured" once (there is only one experiment per lab). Thus  `# Cluster levels`=10 and `N per cluster`=1. We have 20 participants, each participant sees the stimuli 2 times (one per condition), so we have `# Cluster levels`=20 and `N per cluster`=2. Finally, we have 15 stimuli, each stimulus has one replication (one version), so `# Cluster levels`=15 and `N per cluster`=1.
+
+`r pic("examples/mixed/example1/e4.input.1.png")`
+`r pic("examples/mixed/example1/e4.input.2.png")`
+
+This is the resulting sample structure (first rows of the generated dataset):
+
+`r pic("examples/mixed/example1/e4.output.2.png")`
+....
+
+It is clear that each lab has all PID (here not visible) and each participants sees each stimuli twice, in cond=1 and cond=2. To appreciate the full sample characteristics we can look at the Variable structure:
+
+`r pic("examples/mixed/example1/e4.output.1.png")`
+
+Each participant has 30 observations, because it sees 15 stimuli twice. Each stimulus is seen by 20 participant twice in 10 labs, so each stimulus has 400 observations. Within each lab, however, the experiment implies $20 \cdot 15$ observations, so each lab has 600 observations. Finally, the 600 observations per lab, summed across 10 labs, yields 6000 observations in total.
+
+
+### Apparently fully nested desings
+
+Now consider a design that is structurally very similar to the one above. We have 10 labs (_LAB_) , each lab conducts an experiment with with 20 participants (_PID_), each responding to 15 stimuli (_SID_). The difference here is that we have that each lab uses different stimuli. As an example, assume the stimuli are words and that the labs are located in different regions where different languages are used. Everything is the same as above, but each stimulus is uniquely identified by being in a particular lab. Therefore, its random block is:  `(1|LAB:SID)`. This means that we are estimating one random intercept (or whatever random coefficient) per stimulus in each lab. In other words, in the previous example _LAB_ random intercept variance was computed on 15 coefficients, now is computed on 150 coefficients.
+
+Let's do it.
+
+```
+y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|LAB:SID)
+```
+
+`r pic("examples/mixed/example1/e4.input.1.png")`
+`r pic("examples/mixed/example1/e4.input.2.png")`
+
+`r pic("examples/mixed/example1/e4.output.2.png")`
+....
+
+So far nothing changed in the results as comapred with the previous example. However, the structure is different.
+
+`r pic("examples/mixed/example1/e4.output.3.png")`
+
+Each participant has still 30 observations, because it sees 15 stimuli twice. Each stimulus is seen by 20 participant twice in only one lab, so each stimulus has 40 observations. Within each lab the experiment implies $20 \cdot 15$ observations, so each lab has 600 observations. Finally, the 600 observations per lab, summed across 10 labs, yields again 6000 observations in total.
 
 # Additional material
 
