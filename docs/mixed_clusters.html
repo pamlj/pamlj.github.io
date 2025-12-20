@@ -228,9 +228,6 @@
       <li><a href="#apparently-nested-desings"
       id="toc-apparently-nested-desings">Apparently nested
       desings</a></li>
-      <li><a href="#apparently-fully-nested-desings"
-      id="toc-apparently-fully-nested-desings">Apparently fully nested
-      desings</a></li>
       </ul></li>
       <li><a href="#additional-material"
       id="toc-additional-material">Additional material</a></li>
@@ -539,14 +536,14 @@ ok.</p>
 </div>
 <div id="apparently-nested-desings" class="section level3">
 <h3>Apparently nested desings</h3>
-<p>(Here things remain ugly, but computation gets very slow)</p>
+<p>(Here things remain ugly, and computation gets very slow)</p>
 <p>A good rule of thumb in mixed models is that <em>when you are in
 doubt about how the clustering variables are related, they are probably
 not nested</em>. The second rule is that if nesting (i.e
-<code>|cluster1/cluster2</code>) does not come intuitively, and things
-are clearer if one explicitly thinks in terms of combinations of
-clusters levels. The third rule of thumbs is: clusters defined in
-different blocks (<code>(1|cluster)</code> being a block) are
+<code>|cluster1/cluster2</code>) does not come intuitively, things get
+clearer if one explicitly thinks in terms of combinations of clusters
+levels. The third rule of thumbs is: clusters defined in different
+blocks (<code>(1|cluster)</code> being a block) are
 cross-classified.</p>
 <p>Consider the following design. We have 10 labs (<em>LAB</em>) (or any
 number you like), each lab conducts an experiment with with 20
@@ -579,55 +576,37 @@ condition), so we have <code># Cluster levels</code>=20 and
 <code>N per cluster</code>=2. Finally, we have 15 stimuli, each stimulus
 has one replication (one version), so <code># Cluster levels</code>=15
 and <code>N per cluster</code>=1.</p>
-<p><img src="examples/mixed/example1/e4.input.1.png" width="697" />
-<img src="examples/mixed/example1/e4.input.2.png" width="694" /></p>
+<p><img src="details/mixed/clusters/e5.input.1.png" width="697" />
+<img src="details/mixed/clusters/e5.input.2.png" width="694" /></p>
 <p>This is the resulting sample structure (first rows of the generated
 dataset):</p>
-<p><img src="examples/mixed/example1/e4.output.2.png" width="452" />
-….</p>
+<p><img src="details/mixed/clusters/e5.output.1.png" width="392" /></p>
+<p>`…</p>
 <p>It is clear that each lab has all PID (here not visible) and each
 participants sees each stimuli twice, in cond=1 and cond=2. To
-appreciate the full sample characteristics we can look at the Variable
-structure:</p>
-<p><img src="examples/mixed/example1/e4.output.1.png" width="392" /></p>
-<p>Each participant has 30 observations, because it sees 15 stimuli
-twice. Each stimulus is seen by 20 participant twice in 10 labs, so each
-stimulus has 400 observations. Within each lab, however, the experiment
-implies <span class="math inline">\(20 \cdot 15\)</span> observations,
-so each lab has 600 observations. Finally, the 600 observations per lab,
-summed across 10 labs, yields 6000 observations in total.</p>
-</div>
-<div id="apparently-fully-nested-desings" class="section level3">
-<h3>Apparently fully nested desings</h3>
-<p>Now consider a design that is structurally very similar to the one
-above. We have 10 labs (<em>LAB</em>) , each lab conducts an experiment
-with with 20 participants (<em>PID</em>), each responding to 15 stimuli
-(<em>SID</em>). The difference here is that we have that each lab uses
-different stimuli. As an example, assume the stimuli are words and that
-the labs are located in different regions where different languages are
-used. Everything is the same as above, but each stimulus is uniquely
-identified by being in a particular lab. Therefore, its random block is:
-<code>(1|LAB:SID)</code>. This means that we are estimating one random
-intercept (or whatever random coefficient) per stimulus in each lab. In
-other words, in the previous example <em>LAB</em> random intercept
-variance was computed on 15 coefficients, now is computed on 150
-coefficients.</p>
-<p>Let’s do it.</p>
+appreciate the full sample characteristics we can look at the
+<code>Clusters structure</code> table:</p>
+<p><img src="details/mixed/clusters/e5.output.2.png" width="444" /></p>
+<p>Each participant, identified by the combination <code>LAB:PID</code>
+has 30 observations, because it sees 15 stimuli twice. Each stimulus is
+seen by 20 participant twice in 10 labs, so each stimulus has 400
+observations. Within each lab, however, the experiment implies <span
+class="math inline">\(20 \cdot 15\)</span> observations, so each lab has
+600 observations. Finally, the 600 observations per lab, summed across
+10 labs, yields 6000 observations in total.</p>
+<p>What is, however, each labs uses different stimuli. For instant, if
+the stimuli are words and different labs conduct the experiment in
+different languages, each unique stimulus is identified by the
+combination of <code>LAB:SID</code>. Thus, we need to cast this
+information in the model. The remaing input definitions are the
+same.</p>
 <pre><code>y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|LAB:SID)</code></pre>
-<p><img src="examples/mixed/example1/e4.input.1.png" width="697" />
-<img src="examples/mixed/example1/e4.input.2.png" width="694" /></p>
-<p><img src="examples/mixed/example1/e4.output.2.png" width="452" />
-….</p>
-<p>So far nothing changed in the results as comapred with the previous
-example. However, the structure is different.</p>
-<p><img src="examples/mixed/example1/e4.output.3.png" width="440" /></p>
-<p>Each participant has still 30 observations, because it sees 15
-stimuli twice. Each stimulus is seen by 20 participant twice in only one
-lab, so each stimulus has 40 observations. Within each lab the
-experiment implies <span class="math inline">\(20 \cdot 15\)</span>
-observations, so each lab has 600 observations. Finally, the 600
-observations per lab, summed across 10 labs, yields again 6000
-observations in total.</p>
+<p><img src="details/mixed/clusters/e6.output.1.png" width="446" /></p>
+<p>Coherently, we still have 30 observation per participants, that are
+200 in total. Each of the 10 labs has 600 observations. Now, however, we
+have 150 stimuli (<code>LAB:SID</code>, 15 stimuli for each of the 10
+labs), each with 40 observations within (20 participants see each
+stimulus twice). The total number of observations are still 6000.</p>
 </div>
 </div>
 <div id="additional-material" class="section level1">

@@ -250,9 +250,9 @@ In terms of cluster size, we obtain the results we intended. Let's check if the 
 
 ### Apparently nested desings
 
-(Here things remain ugly, but computation gets very slow)
+(Here things remain ugly, and computation gets very slow)
 
-A good rule of thumb in mixed models is that _when you are in doubt about how the clustering variables are related, they are probably not nested_. The second rule is that if nesting (i.e `|cluster1/cluster2`) does not come intuitively, and things are clearer if one explicitly thinks in terms of combinations of clusters levels. The third rule of thumbs is: clusters defined in different blocks (`(1|cluster)` being a block) are cross-classified.
+A good rule of thumb in mixed models is that _when you are in doubt about how the clustering variables are related, they are probably not nested_. The second rule is that if nesting (i.e `|cluster1/cluster2`) does not come intuitively, things get clearer if one explicitly thinks in terms of combinations of clusters levels. The third rule of thumbs is: clusters defined in different blocks (`(1|cluster)` being a block) are cross-classified.
 
 Consider the following design. We have 10 labs (_LAB_) (or any number you like), each lab conducts an experiment with with 20 participants (_PID_), each responding to 15 stimuli (_SID_). Thus, apparently we have a cross-classified experiment nested within labs. What this design actually means is that each level of _labs_ has all 20 X 15 observations corresponding to the cross-classified clustering we have seen above. Thus, we do not have nesting at all, but simply a 3-way classification. Assume the experiment involves a dichotomous factor (_cond_) with two levels, repeated within-participants. That is, each participant respond to the 15 stimuli in two different conditions.
 
@@ -266,42 +266,32 @@ y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|SID)
 
 Now we focus on clusters size. We have 10 labs, each labs is "measured" once (there is only one experiment per lab). Thus  `# Cluster levels`=10 and `N per cluster`=1. We have 20 participants, each participant sees the stimuli 2 times (one per condition), so we have `# Cluster levels`=20 and `N per cluster`=2. Finally, we have 15 stimuli, each stimulus has one replication (one version), so `# Cluster levels`=15 and `N per cluster`=1.
 
-`r pic("examples/mixed/example1/e4.input.1.png")`
-`r pic("examples/mixed/example1/e4.input.2.png")`
+
+`r pic("details/mixed/clusters/e5.input.1.png")`
+`r pic("details/mixed/clusters/e5.input.2.png")`
+
 
 This is the resulting sample structure (first rows of the generated dataset):
 
-`r pic("examples/mixed/example1/e4.output.2.png")`
-....
+`r pic("details/mixed/clusters/e5.output.1.png")`
 
-It is clear that each lab has all PID (here not visible) and each participants sees each stimuli twice, in cond=1 and cond=2. To appreciate the full sample characteristics we can look at the Variable structure:
+`...
 
-`r pic("examples/mixed/example1/e4.output.1.png")`
+It is clear that each lab has all PID (here not visible) and each participants sees each stimuli twice, in cond=1 and cond=2. To appreciate the full sample characteristics we can look at the `Clusters structure` table:
 
-Each participant has 30 observations, because it sees 15 stimuli twice. Each stimulus is seen by 20 participant twice in 10 labs, so each stimulus has 400 observations. Within each lab, however, the experiment implies $20 \cdot 15$ observations, so each lab has 600 observations. Finally, the 600 observations per lab, summed across 10 labs, yields 6000 observations in total.
+`r pic("details/mixed/clusters/e5.output.2.png")`
 
+Each participant, identified by the combination `LAB:PID` has 30 observations, because it sees 15 stimuli twice. Each stimulus is seen by 20 participant twice in 10 labs, so each stimulus has 400 observations. Within each lab, however, the experiment implies $20 \cdot 15$ observations, so each lab has 600 observations. Finally, the 600 observations per lab, summed across 10 labs, yields 6000 observations in total.
 
-### Apparently fully nested desings
-
-Now consider a design that is structurally very similar to the one above. We have 10 labs (_LAB_) , each lab conducts an experiment with with 20 participants (_PID_), each responding to 15 stimuli (_SID_). The difference here is that we have that each lab uses different stimuli. As an example, assume the stimuli are words and that the labs are located in different regions where different languages are used. Everything is the same as above, but each stimulus is uniquely identified by being in a particular lab. Therefore, its random block is:  `(1|LAB:SID)`. This means that we are estimating one random intercept (or whatever random coefficient) per stimulus in each lab. In other words, in the previous example _LAB_ random intercept variance was computed on 15 coefficients, now is computed on 150 coefficients.
-
-Let's do it.
+What is, however, each labs uses different stimuli. For instant, if the stimuli are words and different labs conduct the experiment in different languages, each unique stimulus is identified by the combination of `LAB:SID`. Thus, we need to cast this information in the model. The remaing input definitions are the same.
 
 ```
 y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|LAB:SID)
 ```
 
-`r pic("examples/mixed/example1/e4.input.1.png")`
-`r pic("examples/mixed/example1/e4.input.2.png")`
+`r pic("details/mixed/clusters/e6.output.1.png")`
 
-`r pic("examples/mixed/example1/e4.output.2.png")`
-....
-
-So far nothing changed in the results as comapred with the previous example. However, the structure is different.
-
-`r pic("examples/mixed/example1/e4.output.3.png")`
-
-Each participant has still 30 observations, because it sees 15 stimuli twice. Each stimulus is seen by 20 participant twice in only one lab, so each stimulus has 40 observations. Within each lab the experiment implies $20 \cdot 15$ observations, so each lab has 600 observations. Finally, the 600 observations per lab, summed across 10 labs, yields again 6000 observations in total.
+Coherently, we still have 30 observation per participants, that are 200 in total. Each of the 10 labs has 600 observations. Now, however, we have 150 stimuli (`LAB:SID`, 15 stimuli for each of the 10 labs), each with 40 observations within (20 participants see each stimulus twice).  The total number of observations are still 6000.  
 
 # Additional material
 
