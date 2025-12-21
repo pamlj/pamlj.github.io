@@ -228,6 +228,10 @@
       <li><a href="#apparently-nested-desings"
       id="toc-apparently-nested-desings">Apparently nested
       desings</a></li>
+      <li><a href="#understanding-the-output-design"
+      id="toc-understanding-the-output-design">Understanding the output
+      design</a></li>
+      <li><a href="#a-variant" id="toc-a-variant">A variant</a></li>
       </ul></li>
       <li><a href="#additional-material"
       id="toc-additional-material">Additional material</a></li>
@@ -594,7 +598,42 @@ observations. Within each lab, however, the experiment implies <span
 class="math inline">\(20 \cdot 15\)</span> observations, so each lab has
 600 observations. Finally, the 600 observations per lab, summed across
 10 labs, yields 6000 observations in total.</p>
-<p>What is, however, each labs uses different stimuli. For instant, if
+</div>
+<div id="understanding-the-output-design" class="section level3">
+<h3>Understanding the output design</h3>
+<p>In all the examples above we set the clusters parameters
+(<code># Cluster Levels (k)</code> and <code>N per cluster (n)</code>)
+because we focused on understanding how the different parameters yild a
+given sample structure. Let’s try now to change the aim of the analysis
+to <code>aim:N</code> and <code>Find: Number of cluster levels</code>.
+For simplicity, let us assume that we are looking for the minimum number
+of <em>labs</em> (LAB) required to obtain a power of at least .90. To
+replicate the simulations, let set the <span class="option">Residual
+Variance</span> parameter to 500 and use <code>raw approximation</code>
+as the finding algorithm.</p>
+<p>Running the analysis with these parameters, one obtain (with a small
+variability) a <code>Cluster Levels (k)</code> equal to 9. So, given all
+the other parameters, we need 9 labs to get at least a power of .90.
+Let’s see what the structure of the data is.</p>
+<p><img src="details/mixed/clusters/e7.output.1.png" width="444" /></p>
+<p>Does it make sense? We need <span class="math inline">\(9\)</span>
+labs, and each experiment requires <span
+class="math inline">\(600\)</span> observations. Each participant,
+identified by the combination <code>LAB:PID</code> has <span
+class="math inline">\(30\)</span> observations, because it sees <span
+class="math inline">\(15\)</span> stimuli twice, but now there are <span
+class="math inline">\(9\)</span> labs, so the participants are <span
+class="math inline">\(20 \cdot 9= 180\)</span>, and within each
+participant we still have <span class="math inline">\(30\)</span>
+observations as in the previous example. The <span
+class="math inline">\(15\)</span> stimuli (<em>SID</em>) are seen by
+<span class="math inline">\(180\)</span> participants twice, so <span
+class="math inline">\(180 \cdot 2=360\)</span>. Pretty good sense, it
+makes.</p>
+</div>
+<div id="a-variant" class="section level3">
+<h3>A variant</h3>
+<p>What if, however, each labs uses different stimuli. For instant, if
 the stimuli are words and different labs conduct the experiment in
 different languages, each unique stimulus is identified by the
 combination of <code>LAB:SID</code>. Thus, we need to cast this

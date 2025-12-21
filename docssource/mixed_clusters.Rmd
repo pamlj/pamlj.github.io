@@ -283,7 +283,20 @@ It is clear that each lab has all PID (here not visible) and each participants s
 
 Each participant, identified by the combination `LAB:PID` has 30 observations, because it sees 15 stimuli twice. Each stimulus is seen by 20 participant twice in 10 labs, so each stimulus has 400 observations. Within each lab, however, the experiment implies $20 \cdot 15$ observations, so each lab has 600 observations. Finally, the 600 observations per lab, summed across 10 labs, yields 6000 observations in total.
 
-What is, however, each labs uses different stimuli. For instant, if the stimuli are words and different labs conduct the experiment in different languages, each unique stimulus is identified by the combination of `LAB:SID`. Thus, we need to cast this information in the model. The remaing input definitions are the same.
+### Understanding the output design
+
+In all the examples above we set the clusters parameters (`# Cluster Levels (k)` and `N per cluster (n)`) because we focused on understanding how the different parameters yild a given sample structure. Let's try now to change the aim of the analysis to `aim:N` and `Find: Number of cluster levels`. For simplicity, let us assume that we are looking for the minimum number of _labs_ (LAB) required to obtain a power of at least .90. To replicate the simulations, let set the `r opt("Residual Variance")` parameter to 500 and use `raw approximation` as the finding algorithm. 
+
+Running the analysis with these parameters, one obtain (with a small variability) a `Cluster Levels (k)` equal to 9. So, given all the other parameters, we need 9 labs to get at least a power of .90. Let's see what the structure of the data is.
+
+
+`r pic("details/mixed/clusters/e7.output.1.png")`
+
+Does it make sense? We need $9$ labs, and each experiment requires $600$ observations. Each participant, identified by the combination `LAB:PID` has $30$ observations, because it sees $15$ stimuli twice, but now there are $9$ labs, so the participants are $20 \cdot 9= 180$, and within each participant we still have $30$ observations as in the previous example. The $15$ stimuli (_SID_) are seen by $180$ participants twice, so $180 \cdot 2=360$. Pretty good sense, it makes. 
+
+### A variant
+
+What if, however, each labs uses different stimuli. For instant, if the stimuli are words and different labs conduct the experiment in different languages, each unique stimulus is identified by the combination of `LAB:SID`. Thus, we need to cast this information in the model. The remaing input definitions are the same.
 
 ```
 y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|LAB:SID)
