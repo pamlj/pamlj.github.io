@@ -1,6 +1,7 @@
 ---
 title: "Mediation"
-author: Marcello Gallucci 
+author: Marcello Gallucci
+nickname: mediation
 topic: mediation
 category: help
 bibliography: 
@@ -42,6 +43,8 @@ The second step is to decide what type of model we are dealing with.
 * __Complex (multiple mediators)__ : Allows computation of power parameters for more complex models: two parallel mediator, three parallel mediator and serial mediation with two mediators. They are, respectively:
 
 `r pic("pics/mediation/diagram.2.png")`
+
+* __Free (model syntax)__ : Allows computation of power parameters for any recursive mediation model, specified by typing its equations in a model syntax. See `r link_pages(nickname="mediation_free")` for details.
 
 
 
@@ -114,6 +117,8 @@ The Monte Carlo (MC) and joint significance methods yield nearly identical requi
 # Sensitivity Analysis
 
 Sensitivity analysis, exploring different plots of possible combinations of parameters, can be carried out like for any other `r modulename()` sub-modules. Please visit `r link_pages(nickname="sensitivity")` page for more details.
+
+`r include_pages(topic="mediation",category="details",title="Details")`
 
 `r include_pages(topic="mediation",category="rosetta",title="Validation")`
 

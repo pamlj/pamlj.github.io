@@ -1,0 +1,136 @@
+---
+title: "Mediation: free models (model syntax)"
+author: "Marcello Gallucci"
+nickname: mediation_free
+topic: mediation
+category: details
+bibliography:
+     - bib.bib
+link-citations: true
+output:
+  html_document:
+     includes:
+         in_header: ganalytics.txt
+     toc: true
+     toc_float:
+        collapsed: false
+---
+
+```{r echo=FALSE,results='hide'}
+library(mcdocs)
+mcdocs_init()
+```
+
+`r keywords("power analysis, mediation, indirect effects, model syntax, parallel mediators")`
+
+`r version("1.1.0")`
+
+Besides the `r opt("Simple (3 variables)")` and `r opt("Complex (multiple mediators)")` models, `r modulename()` offers a `r opt("Free (model syntax)")` interface that lets you specify _any_ recursive mediation model by typing its equations directly. This is useful when your model does not match one of the predefined templates: several independent variables, an arbitrary number of mediators, serial and parallel pathways combined, multiple outcomes, and so on.
+
+`r pic("pics/mediation/free.input.png")`
+
+When `r opt("Free (model syntax)")` is selected, a syntax editor appears in which the model is written as a set of regression equations. From those equations `r modulename()` builds the path model, finds every indirect (mediated) effect, and computes the power parameters for each of them.
+
+# Model syntax
+
+The model is described with one regression equation per _endogenous_ variable (every variable that is predicted by others), written in the familiar `lm()`/`lavaan` style:
+
+```{r eval=FALSE}
+m ~ .3*x
+y ~ .2*x + .4*m
+```
+
+Each line reads as _outcome `~` predictors_. The example above is the classical simple mediation: `x` predicts the mediator `m` with a standardized coefficient of `.3`, and `y` is predicted by both `x` (direct effect `c' = .2`) and `m` (`b = .4`). The mediated effect `x → m → y` is the product of the path coefficients, `.3 * .4 = .12`.
+
+There are a few rules:
+
+* __Every predictor needs a numeric coefficient__, passed with the syntax `value*variable` (e.g. `.4*m`). Coefficients are completely standardized path coefficients and their absolute value must lie between `.001` and `.99`.
+* __One equation per outcome.__ A variable can appear on the left-hand side of at most one equation; list all its predictors on that single line.
+* __No intercepts, interactions or categorical terms.__ The model works on standardized coefficients between single variables, so intercept tokens (`1`) are ignored and interaction (`x:z`) or categorical (`[...]`) terms are not allowed.
+* __The model must be a proper mediation model__: it has to be _recursive_ (no feedback loops) and contain at least one indirect path, i.e. at least one variable that is both an outcome and a predictor. If these conditions are not met, a message explains what is missing.
+
+A typical model with two parallel mediators looks like this:
+
+```{r eval=FALSE}
+m1 ~ .4*x
+m2 ~ .5*x
+y  ~ .1*x + .2*m1 + .3*m2
+```
+
+Here `x` influences `y` through two parallel mediators `m1` and `m2`, plus a direct effect of `.1`.
+
+# Indirect effects
+
+`r modulename()` automatically enumerates every indirect effect in the model — each simple directed path of at least two edges that goes from an exogenous variable (a _source_, never predicted by others) to a final outcome (a _sink_, that predicts nothing). Each such effect becomes one row of the results table, labelled with its path (e.g. `x → m1 → y`).
+
+For every indirect effect the table reports, as in the other mediation models, the first path coefficient (`a`), the remainder of the product (`b`), the direct effect (`c`) and the mediated effect size `ME` (the product of all coefficients along the path).
+
+`r pic("pics/mediation/free.output.png")`
+
+:::{ .adm .adm-note}
+Note
+
+The power of each indirect effect depends on the test selected (see below). With the `r opt("joint significance")` test, two effects that share their weakest path can require the same sample size even when their other coefficients differ, because the shared (weaker) coefficient drives the power.
+:::
+
+# Correlated variables
+
+Variables can be correlated with the `cor()` directive, written on its own line:
+
+```{r eval=FALSE}
+m1 ~ .4*x
+m2 ~ .5*x
+y  ~ .1*x + .2*m1 + .3*m2
+cor(m1,m2) = .3
+```
+
+`cor(m1,m2) = .3` sets the correlation between `m1` and `m2` to `.3`. The most common use is exactly this one: two _parallel mediators_ whose residuals are correlated. The separator can be either `:` or `=`, so `cor(m1,m2):.3` is equivalent.
+
+The correlation is entered directly as the (residual) correlation between the two variables, following the `lavaan` convention `m1 ~~ .3*m2`. Several `cor()` lines can be specified. If the requested correlations imply an impossible (non positive-definite) covariance matrix, a message asks you to adjust them.
+
+The model-implied correlations among all variables can be displayed by selecting `r opt("Implied correlations")` under the `r opt_label("Options")` (see [Results](#results) below), which is handy to check the correlation actually entered into the model.
+
+# Symbolic coefficients and the sensitivity analysis
+
+When the analysis `r opt_label("aim")` is the effect size (the minimum detectable effect), `r modulename()` needs to know _which_ coefficient to resize while solving for the required effect. By default it works on each indirect effect separately, shrinking the first edge (the `a` path) of that effect.
+
+You can instead pick a specific coefficient by giving it a __symbolic label__ in the syntax and selecting it with the `test:` directive. A label is a letter placed before the value, with the syntax `label*value*variable`:
+
+```{r eval=FALSE}
+m1 ~ .4*x
+m2 ~ .5*x
+y  ~ .1*x + a*.2*m1 + .3*m2
+test: a
+```
+
+Here the coefficient of `m1 → y` is labelled `a`, and `test: a` (or `test = a`) tells `r modulename()` to find the minimum detectable effect by resizing that coefficient. The search drives the indirect effect(s) that travel through the labelled coefficient to the required power, and every affected effect is recomputed at the solved value.
+
+If the label is not defined in the syntax, or the labelled coefficient is not part of any indirect effect, a message is issued and the analysis falls back to the per-effect default.
+
+# Results
+
+## A Priori Power Analysis
+
+The main table reports one row per indirect effect, recapping the input parameters and the quantity requested in the `r opt("Compute")` option (sample size, power, or minimum detectable effect). The `Effect` column names the pathway each row refers to.
+
+`r pic("pics/mediation/free.output.png")`
+
+## Model-implied correlations
+
+Selecting `r opt("Implied correlations")` adds a table with the model-implied correlation matrix among all the variables of the model, including any correlation set with `cor()`.
+
+`r pic("pics/mediation/free.cors.png")`
+
+## Path diagram
+
+When `r opt("Path diagram")` is selected, `r modulename()` draws the model implied by the syntax, with the variables laid out from the independent variables on the left to the outcome on the right, and the path coefficients printed on the arrows. Correlations entered with `cor()` are shown as curved double-headed arrows.
+
+`r pic("pics/mediation/free.diagram.png")`
+
+# Tests and sensitivity
+
+The free interface supports the same tests as the other mediation models — `r opt("joint significance")` [@yzerbyt2018new], the `r opt("Sobel test")` [@sobel1982asymptotic], and the `r opt("Monte Carlo")` confidence-interval methods [@mackinnon2004confidence] — and the same sensitivity plots. Please refer to the main `r link_pages(nickname="mediation")` page for the description of the tests and to the `r link_pages(nickname="sensitivity")` page for the sensitivity analysis.
+
+`r backto("mediation")`
+
+`r issues()`

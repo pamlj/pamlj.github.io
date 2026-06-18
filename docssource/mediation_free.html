@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Marcello Gallucci" />
+    
+    
+    <title>Mediation: free models (model syntax)</title>
+
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      html { -webkit-text-size-adjust: 100%; }
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #ffffff;
+          color: #a0a0a0;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+      div.sourceCode
+        { color: #1f1c1b; background-color: #ffffff; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span { color: #1f1c1b; } /* Normal */
+      code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+      code span.an { color: #ca60ca; } /* Annotation */
+      code span.at { color: #0057ae; } /* Attribute */
+      code span.bn { color: #b08000; } /* BaseN */
+      code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+      code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #924c9d; } /* Char */
+      code span.cn { color: #aa5500; } /* Constant */
+      code span.co { color: #898887; } /* Comment */
+      code span.cv { color: #0095ff; } /* CommentVar */
+      code span.do { color: #607880; } /* Documentation */
+      code span.dt { color: #0057ae; } /* DataType */
+      code span.dv { color: #b08000; } /* DecVal */
+      code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+      code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+      code span.fl { color: #b08000; } /* Float */
+      code span.fu { color: #644a9b; } /* Function */
+      code span.im { color: #ff5500; } /* Import */
+      code span.in { color: #b08000; } /* Information */
+      code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+      code span.op { color: #1f1c1b; } /* Operator */
+      code span.ot { color: #006e28; } /* Other */
+      code span.pp { color: #006e28; } /* Preprocessor */
+      code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #ff5500; } /* SpecialString */
+      code span.st { color: #bf0303; } /* String */
+      code span.va { color: #0057ae; } /* Variable */
+      code span.vs { color: #bf0303; } /* VerbatimString */
+      code span.wa { color: #bf0303; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="mixed.html">Mixed Models</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Mediation: free models (model syntax)</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Mediation: free models (model
+syntax)</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#model-syntax" id="toc-model-syntax">Model
+      syntax</a></li>
+      <li><a href="#indirect-effects" id="toc-indirect-effects">Indirect
+      effects</a></li>
+      <li><a href="#correlated-variables"
+      id="toc-correlated-variables">Correlated variables</a></li>
+      <li><a href="#symbolic-coefficients-and-the-sensitivity-analysis"
+      id="toc-symbolic-coefficients-and-the-sensitivity-analysis">Symbolic
+      coefficients and the sensitivity analysis</a></li>
+      <li><a href="#results" id="toc-results">Results</a>
+      <ul>
+      <li><a href="#a-priori-power-analysis"
+      id="toc-a-priori-power-analysis">A Priori Power Analysis</a></li>
+      <li><a href="#model-implied-correlations"
+      id="toc-model-implied-correlations">Model-implied
+      correlations</a></li>
+      <li><a href="#path-diagram" id="toc-path-diagram">Path
+      diagram</a></li>
+      </ul></li>
+      <li><a href="#tests-and-sensitivity"
+      id="toc-tests-and-sensitivity">Tests and sensitivity</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<p><span class="keywords"> <span class="keytitle"> keywords </span>
+power analysis, mediation, indirect effects, model syntax, parallel
+mediators </span></p>
+<div class="version">
+<p>
+1.1.0
+</p>
+</div>
+<div style="clear:both">
+
+</div>
+<p>Besides the <span class="option">Simple (3 variables)</span> and
+<span class="option">Complex (multiple mediators)</span> models, <span
+class="modulename">PAMLj</span> offers a <span class="option">Free
+(model syntax)</span> interface that lets you specify <em>any</em>
+recursive mediation model by typing its equations directly. This is
+useful when your model does not match one of the predefined templates:
+several independent variables, an arbitrary number of mediators, serial
+and parallel pathways combined, multiple outcomes, and so on.</p>
+<p><img src="pics/mediation/free.input.png" alt="" width="588" /></p>
+<p>When <span class="option">Free (model syntax)</span> is selected, a
+syntax editor appears in which the model is written as a set of
+regression equations. From those equations <span
+class="modulename">PAMLj</span> builds the path model, finds every
+indirect (mediated) effect, and computes the power parameters for each
+of them.</p>
+<div id="model-syntax" class="section level1">
+<h1>Model syntax</h1>
+<p>The model is described with one regression equation per
+<em>endogenous</em> variable (every variable that is predicted by
+others), written in the familiar <code>lm()</code>/<code>lavaan</code>
+style:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>m <span class="sc">~</span> .<span class="dv">3</span><span class="sc">*</span>x</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>y <span class="sc">~</span> .<span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> .<span class="dv">4</span><span class="sc">*</span>m</span></code></pre></div>
+<p>Each line reads as <em>outcome <code>~</code> predictors</em>. The
+example above is the classical simple mediation: <code>x</code> predicts
+the mediator <code>m</code> with a standardized coefficient of
+<code>.3</code>, and <code>y</code> is predicted by both <code>x</code>
+(direct effect <code>c' = .2</code>) and <code>m</code>
+(<code>b = .4</code>). The mediated effect <code>x → m → y</code> is the
+product of the path coefficients, <code>.3 * .4 = .12</code>.</p>
+<p>There are a few rules:</p>
+<ul>
+<li><strong>Every predictor needs a numeric coefficient</strong>, passed
+with the syntax <code>value*variable</code> (e.g. <code>.4*m</code>).
+Coefficients are completely standardized path coefficients and their
+absolute value must lie between <code>.001</code> and
+<code>.99</code>.</li>
+<li><strong>One equation per outcome.</strong> A variable can appear on
+the left-hand side of at most one equation; list all its predictors on
+that single line.</li>
+<li><strong>No intercepts, interactions or categorical terms.</strong>
+The model works on standardized coefficients between single variables,
+so intercept tokens (<code>1</code>) are ignored and interaction
+(<code>x:z</code>) or categorical (<code>[...]</code>) terms are not
+allowed.</li>
+<li><strong>The model must be a proper mediation model</strong>: it has
+to be <em>recursive</em> (no feedback loops) and contain at least one
+indirect path, i.e. at least one variable that is both an outcome and a
+predictor. If these conditions are not met, a message explains what is
+missing.</li>
+</ul>
+<p>A typical model with two parallel mediators looks like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>m1 <span class="sc">~</span> .<span class="dv">4</span><span class="sc">*</span>x</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>m2 <span class="sc">~</span> .<span class="dv">5</span><span class="sc">*</span>x</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>y  <span class="sc">~</span> .<span class="dv">1</span><span class="sc">*</span>x <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>m1 <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>m2</span></code></pre></div>
+<p>Here <code>x</code> influences <code>y</code> through two parallel
+mediators <code>m1</code> and <code>m2</code>, plus a direct effect of
+<code>.1</code>.</p>
+</div>
+<div id="indirect-effects" class="section level1">
+<h1>Indirect effects</h1>
+<p><span class="modulename">PAMLj</span> automatically enumerates every
+indirect effect in the model — each simple directed path of at least two
+edges that goes from an exogenous variable (a <em>source</em>, never
+predicted by others) to a final outcome (a <em>sink</em>, that predicts
+nothing). Each such effect becomes one row of the results table,
+labelled with its path (e.g. <code>x → m1 → y</code>).</p>
+<p>For every indirect effect the table reports, as in the other
+mediation models, the first path coefficient (<code>a</code>), the
+remainder of the product (<code>b</code>), the direct effect
+(<code>c</code>) and the mediated effect size <code>ME</code> (the
+product of all coefficients along the path).</p>
+<p><img src="pics/mediation/free.output.png" alt="" width="624" /></p>
+<div class="adm adm-note">
+<p>Note</p>
+<p>The power of each indirect effect depends on the test selected (see
+below). With the <span class="option">joint significance</span> test,
+two effects that share their weakest path can require the same sample
+size even when their other coefficients differ, because the shared
+(weaker) coefficient drives the power.</p>
+</div>
+</div>
+<div id="correlated-variables" class="section level1">
+<h1>Correlated variables</h1>
+<p>Variables can be correlated with the <code>cor()</code> directive,
+written on its own line:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>m1 <span class="sc">~</span> .<span class="dv">4</span><span class="sc">*</span>x</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>m2 <span class="sc">~</span> .<span class="dv">5</span><span class="sc">*</span>x</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>y  <span class="sc">~</span> .<span class="dv">1</span><span class="sc">*</span>x <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>m1 <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>m2</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">cor</span>(m1,m2) <span class="ot">=</span> .<span class="dv">3</span></span></code></pre></div>
+<p><code>cor(m1,m2) = .3</code> sets the correlation between
+<code>m1</code> and <code>m2</code> to <code>.3</code>. The most common
+use is exactly this one: two <em>parallel mediators</em> whose residuals
+are correlated. The separator can be either <code>:</code> or
+<code>=</code>, so <code>cor(m1,m2):.3</code> is equivalent.</p>
+<p>The correlation is entered directly as the (residual) correlation
+between the two variables, following the <code>lavaan</code> convention
+<code>m1 ~~ .3*m2</code>. Several <code>cor()</code> lines can be
+specified. If the requested correlations imply an impossible (non
+positive-definite) covariance matrix, a message asks you to adjust
+them.</p>
+<p>The model-implied correlations among all variables can be displayed
+by selecting <span class="option">Implied correlations</span> under the
+<span class="option"> <b>Options </b></span> (see <a
+href="#results">Results</a> below), which is handy to check the
+correlation actually entered into the model.</p>
+</div>
+<div id="symbolic-coefficients-and-the-sensitivity-analysis"
+class="section level1">
+<h1>Symbolic coefficients and the sensitivity analysis</h1>
+<p>When the analysis <span class="option"> <b>aim </b></span> is the
+effect size (the minimum detectable effect), <span
+class="modulename">PAMLj</span> needs to know <em>which</em> coefficient
+to resize while solving for the required effect. By default it works on
+each indirect effect separately, shrinking the first edge (the
+<code>a</code> path) of that effect.</p>
+<p>You can instead pick a specific coefficient by giving it a
+<strong>symbolic label</strong> in the syntax and selecting it with the
+<code>test:</code> directive. A label is a letter placed before the
+value, with the syntax <code>label*value*variable</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>m1 <span class="sc">~</span> .<span class="dv">4</span><span class="sc">*</span>x</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>m2 <span class="sc">~</span> .<span class="dv">5</span><span class="sc">*</span>x</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>y  <span class="sc">~</span> .<span class="dv">1</span><span class="sc">*</span>x <span class="sc">+</span> a<span class="sc">*</span>.<span class="dv">2</span><span class="sc">*</span>m1 <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>m2</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>test<span class="sc">:</span> a</span></code></pre></div>
+<p>Here the coefficient of <code>m1 → y</code> is labelled
+<code>a</code>, and <code>test: a</code> (or <code>test = a</code>)
+tells <span class="modulename">PAMLj</span> to find the minimum
+detectable effect by resizing that coefficient. The search drives the
+indirect effect(s) that travel through the labelled coefficient to the
+required power, and every affected effect is recomputed at the solved
+value.</p>
+<p>If the label is not defined in the syntax, or the labelled
+coefficient is not part of any indirect effect, a message is issued and
+the analysis falls back to the per-effect default.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div id="a-priori-power-analysis" class="section level2">
+<h2>A Priori Power Analysis</h2>
+<p>The main table reports one row per indirect effect, recapping the
+input parameters and the quantity requested in the <span
+class="option">Compute</span> option (sample size, power, or minimum
+detectable effect). The <code>Effect</code> column names the pathway
+each row refers to.</p>
+<p><img src="pics/mediation/free.output.png" alt="" width="624" /></p>
+</div>
+<div id="model-implied-correlations" class="section level2">
+<h2>Model-implied correlations</h2>
+<p>Selecting <span class="option">Implied correlations</span> adds a
+table with the model-implied correlation matrix among all the variables
+of the model, including any correlation set with <code>cor()</code>.</p>
+<p><img src="pics/mediation/free.cors.png" alt="" width="448" /></p>
+</div>
+<div id="path-diagram" class="section level2">
+<h2>Path diagram</h2>
+<p>When <span class="option">Path diagram</span> is selected, <span
+class="modulename">PAMLj</span> draws the model implied by the syntax,
+with the variables laid out from the independent variables on the left
+to the outcome on the right, and the path coefficients printed on the
+arrows. Correlations entered with <code>cor()</code> are shown as curved
+double-headed arrows.</p>
+<p><img src="pics/mediation/free.diagram.png" alt="" width="509" /></p>
+</div>
+</div>
+<div id="tests-and-sensitivity" class="section level1">
+<h1>Tests and sensitivity</h1>
+<p>The free interface supports the same tests as the other mediation
+models — <span class="option">joint significance</span> <span
+class="citation">(<a href="#ref-yzerbyt2018new">Yzerbyt et al.
+2018</a>)</span>, the <span class="option">Sobel test</span> <span
+class="citation">(<a href="#ref-sobel1982asymptotic">Sobel
+1982</a>)</span>, and the <span class="option">Monte Carlo</span>
+confidence-interval methods <span class="citation">(<a
+href="#ref-mackinnon2004confidence">MacKinnon et al. 2004</a>)</span> —
+and the same sensitivity plots. Please refer to the main
+<a href="./mediation.html">Mediation</a> page for the description of the
+tests and to the <a href="./sensitivity.html">Sensitivity analysis</a>
+page for the sensitivity analysis.</p>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+<a class="backto" href="./mediation.html">Mediation</a>
+</div>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-mackinnon2004confidence" class="csl-entry">
+MacKinnon, David P, Chondra M Lockwood, and Jason Williams. 2004.
+<span>“Confidence Limits for the Indirect Effect: Distribution of the
+Product and Resampling Methods.”</span> <em>Multivariate Behavioral
+Research</em> 39 (1): 99–128.
+</div>
+<div id="ref-sobel1982asymptotic" class="csl-entry">
+Sobel, Michael E. 1982. <span>“Asymptotic Confidence Intervals for
+Indirect Effects in Structural Equation Models.”</span> <em>Sociological
+Methodology</em>.
+</div>
+<div id="ref-yzerbyt2018new" class="csl-entry">
+Yzerbyt, Vincent, Dominique Muller, Cédric Batailler, and Charles M
+Judd. 2018. <span>“New Recommendations for Testing Indirect Effects in
+Mediational Models: The Need to Report and Test Component Paths.”</span>
+<em>Journal of Personality and Social Psychology</em> 115 (6): 929.
+</div>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>
