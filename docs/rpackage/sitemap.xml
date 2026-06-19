@@ -1,0 +1,19 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/factorial.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/pamlcorr.html</loc></url>
+<url><loc>/reference/pamlfactorial.html</loc></url>
+<url><loc>/reference/pamlglm.html</loc></url>
+<url><loc>/reference/pamlmed.html</loc></url>
+<url><loc>/reference/pamlmixed.html</loc></url>
+<url><loc>/reference/pamlprop.html</loc></url>
+<url><loc>/reference/pamlsem.html</loc></url>
+<url><loc>/reference/pamlttest.html</loc></url>
+<url><loc>/reference/plot.html</loc></url>
+<url><loc>/reference/s3methods.html</loc></url>
+</urlset>
+

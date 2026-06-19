@@ -19,9 +19,10 @@ navbar:
     href:  sem.html
   - text: "Mixed Models"
     href:  mixed.html
-
   - text: "Rosetta"
     href:  rosetta.html
+  - text: "PAMLj in R"
+    href:  vignettes.html
 
   right: 
   - text: "View on Github"
