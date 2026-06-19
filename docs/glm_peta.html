@@ -10,7 +10,7 @@
     
     <title>GLM based on partial Eta-Squared</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -300,8 +300,8 @@ class="option">Model degrees of freedom</span> will be 1 as well (see
 below for more about computing <em>df</em> in complex models).</p>
 <p>We can simply input these parameters into <span
 class="modulename">PAMLj</span>.</p>
-<p><img src="pics/glm/peta.1.i.png" width="637" />
-<img src="pics/glm/peta.1.a.png" width="533" /></p>
+<p><img src="pics/glm/peta.1.i.png" alt="" width="637" />
+<img src="pics/glm/peta.1.a.png" alt="" width="533" /></p>
 <p>From the results table <code>A priori power analysis</code> we can
 see that the required N is 62, so we need 62 cases to achieve a power of
 .90 given an expected <span class="math inline">\(p\eta^2=.15\)</span>.
@@ -328,8 +328,8 @@ class="math inline">\((2-1)(3-1)=2\)</span> degrees of freedom, whereas
 the overall model has <span class="math inline">\((3*2)-1=5\)</span>
 <em>df</em>. We can plug these values in the interface and get the
 required N.</p>
-<p><img src="pics/glm/peta.2.i.png" width="628" />
-<img src="pics/glm/peta.2.a.png" width="536" /></p>
+<p><img src="pics/glm/peta.2.i.png" alt="" width="628" />
+<img src="pics/glm/peta.2.a.png" alt="" width="536" /></p>
 <p>From the results table <code>A priori power analysis</code> we can
 see that the required N is 201, so we need 201 cases to achieve a power
 of .90 given an expected <span
@@ -358,8 +358,8 @@ same population a sample of 50 participants.</p>
 Power</span>. The effect size is 0.04, N (Sample size) is 50. The effect
 <em>df</em> is 1, and the model <em>df</em> are 4, because there are
 four continuous predictors.</p>
-<p><img src="pics/glm/peta.3.i.png" width="636" />
-<img src="pics/glm/peta.3.a.png" width="560" /></p>
+<p><img src="pics/glm/peta.3.i.png" alt="" width="636" />
+<img src="pics/glm/peta.3.a.png" alt="" width="560" /></p>
 <p>The expected power, calculated as <span
 class="math inline">\(1−\beta=.292\)</span>, indicates that it’s very
 unlikely to replicate the results when drawing from the same population
@@ -387,8 +387,8 @@ Their are going to estimate a multiple regression with 4 predictors.
 They wonder what will be the smallest effect size that would result as
 significant. Plugging the parameters into the input panel, we obtain the
 required results.</p>
-<p><img src="pics/glm/peta.4.i.png" width="630" />
-<img src="pics/glm/peta.4.a.png" width="539" /></p>
+<p><img src="pics/glm/peta.4.i.png" alt="" width="630" />
+<img src="pics/glm/peta.4.a.png" alt="" width="539" /></p>
 <p>Results show that any Partial Eta-squared less than .180 will be
 tested with a power less than .90.</p>
 <p>These results are identical to the ones one would obtain in R using
@@ -411,7 +411,7 @@ would work fine.</p>
 <p><span class="modulename">PAMLj</span> provides a method to convert
 the observed Partial Eta-squared into the adjusted effect size directly
 from the User Interface</p>
-<p><img src="rosetta/checks/esadjust.1.png" width="527" /></p>
+<p><img src="rosetta/checks/esadjust.1.png" alt="" width="527" /></p>
 <p>Please see <a href="./check_glm_es.html">GLM options: converting
 effect size</a> for details.</p>
 </div>
@@ -460,8 +460,7 @@ Return to main help pages
 <a class='backto' href='index.html'>Main page</a>
 <a class="backto" href="./glm.html">General Linear Model</a>
 </div>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-cohen1988spa" class="csl-entry">
 Cohen, J. 1988. <em><span class="nocase">Statistical Power Analysis for
 the Behavioral Sciences</span></em>. Lawrence Erlbaum Associates.

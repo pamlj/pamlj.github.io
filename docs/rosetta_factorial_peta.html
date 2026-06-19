@@ -9,7 +9,7 @@
     
     <title>Factorial designs: power from effect size</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -382,7 +382,7 @@ class="math inline">\(f^2\)</span> so it can be computed from the
 partial Eta-squared as <span
 class="math inline">\(f=\sqrt{p\eta^2/(1-p\eta^2)}\)</span> .</p>
 <p>Plugging in the parameters we obtain:</p>
-<p><img src="rosetta/pics/glm/gpower.n.glm.3.png" width="680" /></p>
+<p><img src="rosetta/pics/glm/gpower.n.glm.3.png" alt="" width="680" /></p>
 </div>
 <div id="r" class="section level2">
 <h2>R</h2>
@@ -417,13 +417,13 @@ class="math inline">\(v=N+m+1\)</span></p>
 <h2>PAMLj</h2>
 <p>We plug in the partial Eta-squared and the required parameters, and
 we obtain N=108, as in GPower.</p>
-<p><img src="rosetta/pics/factorial/facpeta.n.1.png" width="586" />
-<img src="rosetta/pics/factorial/facpeta.n.2.png" width="577" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.1.png" alt="" width="586" />
+<img src="rosetta/pics/factorial/facpeta.n.2.png" alt="" width="577" /></p>
 <p>To obtain a practically equivalent result of the one obtained with
 <code>pwr.f2.test</code>, we can simply select the <code>Liberal</code>
 in the <code>Non-centrality parameter options</code> option.</p>
-<p><img src="rosetta/pics/factorial/facpeta.n.3.png" width="582" />
-<img src="rosetta/pics/factorial/facpeta.n.4.png" width="606" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.3.png" alt="" width="582" />
+<img src="rosetta/pics/factorial/facpeta.n.4.png" alt="" width="606" /></p>
 </div>
 </div>
 <div id="repeated-measures-anova" class="section level1">
@@ -489,7 +489,7 @@ class="modulename">PAMLj</span> use the standard partial-eta squared,
 the same effect size one would find in SPSS repeated-measure Anova
 analysis. To set <code>G*Power</code> to use this effect size, we
 selected the appropriate option in <code>Options</code>.</p>
-<p><img src="rosetta/pics/factorial/facpeta.n.5.png" width="602" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.5.png" alt="" width="602" /></p>
 <p>Furtheremore, <code>G*Power</code> requires in input the number of
 repeated measures and the number of groups in the design. Because the
 example is a completely repeated measure design, the number of groups is
@@ -504,14 +504,14 @@ are 2. After all, a 2-way interaction in a repeated measure design is
 simply the differences between two difference values, so the setup is
 not so far away from the actual design. That, indeed, produces the
 correct output.</p>
-<p><img src="rosetta/pics/factorial/facpeta.n.6.png" width="942" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.6.png" alt="" width="942" /></p>
 </div>
 <div id="pamlj-1" class="section level2">
 <h2>PAMLj</h2>
 <p>The setup in <span class="modulename">PAMLj</span> is straightforward
 and produced the expected results.</p>
-<p><img src="rosetta/pics/factorial/facpeta.n.7.png" width="588" />
-<img src="rosetta/pics/factorial/facpeta.n.8.png" width="545" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.7.png" alt="" width="588" />
+<img src="rosetta/pics/factorial/facpeta.n.8.png" alt="" width="545" /></p>
 </div>
 <div id="required-n" class="section level2">
 <h2>Required N</h2>
@@ -532,12 +532,12 @@ and produced the expected results.</p>
 </div>
 <div id="gpower-2" class="section level3">
 <h3>G*Power</h3>
-<p><img src="rosetta/pics/factorial/facpeta.n.9.png" width="611" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.9.png" alt="" width="611" /></p>
 </div>
 <div id="pamlj-2" class="section level3">
 <h3>PAMLj</h3>
-<p><img src="rosetta/pics/factorial/facpeta.n.11.png" width="591" />
-<img src="rosetta/pics/factorial/facpeta.n.12.png" width="542" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.11.png" alt="" width="591" />
+<img src="rosetta/pics/factorial/facpeta.n.12.png" alt="" width="542" /></p>
 <p>Results are identical with required <span
 class="math inline">\(N=66\)</span>. As an additional test, we can ask
 <code>Superpower</code> to compute the power fo <span
@@ -655,11 +655,11 @@ al., we assume 60 participants, so the power estimates do not ceil up to
 <p>which align quite well with the <span class="modulename">PAMLj</span>
 results, with some small differences mostly due to approximation.</p>
 <p><strong>Main effect of Treatment</strong></p>
-<p><img src="rosetta/pics/factorial/facpeta.n.13.png" width="1188" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.13.png" alt="" width="1188" /></p>
 <p><strong>Main effect of Time</strong></p>
-<p><img src="rosetta/pics/factorial/facpeta.n.14.png" width="1166" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.14.png" alt="" width="1166" /></p>
 <p><strong>Interaction</strong></p>
-<p><img src="rosetta/pics/factorial/facpeta.n.15.png" width="1241" /></p>
+<p><img src="rosetta/pics/factorial/facpeta.n.15.png" alt="" width="1241" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages

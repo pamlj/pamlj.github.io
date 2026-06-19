@@ -9,7 +9,7 @@
     
     <title>GLM options: converting effect size</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -259,7 +259,7 @@ comes from a pilot study). Thus one can plug this info into the fields
 in the <span class="panel"> <i class="fa fa-chevron-down"></i> |
 Options</span> panel , <span class="option"> <b>Convert effect size
 indices </b></span>.</p>
-<p><img src="rosetta/checks/esadjust.1.png" width="527" /></p>
+<p><img src="rosetta/checks/esadjust.1.png" alt="" width="527" /></p>
 <p>To help us out in this exercise, let’s consider he
 <code>Tooth Growth</code> dataset from the <span
 class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>
@@ -267,7 +267,7 @@ data library. The data allows for a <code>2 (dose) X 3 (supp)</code>
 ANOVA that can be carried out with the <code>r</code>jamovi` module <a
 href="https://gamlj.github.io/">GAMLj3</a>. The effect size indices of
 the effects are presented in the ouput table.</p>
-<p><img src="rosetta/checks/esadjust.2.png" width="648" /></p>
+<p><img src="rosetta/checks/esadjust.2.png" alt="" width="648" /></p>
 <p>We now assume that the researcher does not have access to the full
 set of results (say the Partial Eta-squared is taken from a paper), but
 only to the reported effect of the interaction, with F(2,54)=4.107,
@@ -277,20 +277,20 @@ analysis, but the full table of results is not available, only the
 F-test info is as just reported in the text.</p>
 <p>To use an adjusted version, first we define the correct <em>df</em>
 for the effect and for the model in the main panel.</p>
-<p><img src="rosetta/checks/esadjust.3.png" width="530" /></p>
+<p><img src="rosetta/checks/esadjust.3.png" alt="" width="530" /></p>
 <p>Then we fill in the <span class="option">Observed Partial
 Eta-squared</span> (<span class="math inline">\(p\eta^2=.132\)</span>)
 and <span class="option">Observed residuals degrees of freedom</span>
 (<span class="math inline">\(df=54\)</span>) fields with the data from
 our paper.</p>
-<p><img src="rosetta/checks/esadjust.4.png" width="512" /></p>
+<p><img src="rosetta/checks/esadjust.4.png" alt="" width="512" /></p>
 <p>It is clear that the module is computing the right adjusted
 coefficients. At this point, we pick the adjusted index that we like by
 selecting it in <span class="option"> <b>Use as effect size </b></span>
 (here <span class="math inline">\(\omega\)</span>), and it will be
 automagically transferred in the main panel <span
 class="option">Expected partial Eta-squared</span>.</p>
-<p><img src="rosetta/checks/esadjust.5.png" width="557" /></p>
+<p><img src="rosetta/checks/esadjust.5.png" alt="" width="557" /></p>
 <p>Out of curiosity, if we were looking for a minimum sample size to
 achieve a power of at least .90, with the original (un-adjusted) effect
 size we would obtain <span class="math inline">\(N=86\)</span>. With the
@@ -302,7 +302,7 @@ we used .132 and so collected data for a sample of <span
 class="math inline">\(N=86\)</span>, our actual power will be <span
 class="math inline">\(1-\beta=.745\)</span>, way lower than the .90 we
 planned.</p>
-<p><img src="rosetta/checks/esadjust.6.png" width="1213" /></p>
+<p><img src="rosetta/checks/esadjust.6.png" alt="" width="1213" /></p>
 </div>
 <div id="gpower-partial-effect-size-indices" class="section level2">
 <h2>GPower Partial effect size indices</h2>
@@ -315,7 +315,7 @@ class="modulename">PAMLj</span> provides the possibility to use the
 GPower adjustment, by simply selecting
 <span class="option">G*Power</span> in the <span class="option"> <b>Use
 as effect size </b></span> list.</p>
-<p><img src="rosetta/checks/esadjust.7.png" width="543" /></p>
+<p><img src="rosetta/checks/esadjust.7.png" alt="" width="543" /></p>
 <p>For the user convenience, the option <span class="option">f2</span>
 is there to allow comparing results from GPower (which uses <span
 class="math inline">\(f^2\)</span> as an effect size) and <span
@@ -343,8 +343,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 <div id="references" class="section level1">
 <h1>References</h1>
 <p>’</p>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-richardson2011eta" class="csl-entry">
 Richardson, John TE. 2011. <span>“Eta Squared and Partial Eta Squared as
 Measures of Effect Size in Educational Research.”</span> <em>Educational

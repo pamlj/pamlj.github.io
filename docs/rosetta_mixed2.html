@@ -9,7 +9,7 @@
     
     <title>Mixed vs rsim R package</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -346,10 +346,10 @@ are shown below.</p>
 ## -3.02941 -0.63560  0.05347  0.67706  2.67218 
 ## 
 ## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr 
-##  bar      (Intercept) 8.33527  2.8871        
-##           beer        0.02786  0.1669   -0.84
-##  Residual             1.43136  1.1964        
+##  Groups   Name        Variance Std.Dev. Corr  
+##  bar      (Intercept) 8.33527  2.8871         
+##           beer        0.02786  0.1669   -0.84 
+##  Residual             1.43136  1.1964         
 ## Number of obs: 234, groups:  bar, 15
 ## 
 ## Fixed effects:
@@ -388,18 +388,18 @@ to obtain a more informative scenario).</p>
 class="modulename">PAMLj</span>.<br />
 First, we define the model using the mixed-model estimates, entering the
 fixed coefficients, random variances, and the residual variance.</p>
-<p><img src="rosetta/pics/mixed/ros2/e1.input.1.png" width="571" /><br />
-<img src="rosetta/pics/mixed/ros2/e1.input.2.png" width="573" /></p>
+<p><img src="rosetta/pics/mixed/ros2/e1.input.1.png" alt="" width="571" /><br />
+<img src="rosetta/pics/mixed/ros2/e1.input.2.png" alt="" width="573" /></p>
 <p>We then specify the structure of the data by declaring <em>bar</em>
 as the clustering variable with <code># Cluster Levels = 15</code> (the
 15 bars in the dataset) and <code>N per cluster = 15</code>, chosen
 based on the average bar size.</p>
-<p><img src="rosetta/pics/mixed/ros2/e1.input.3.png" width="559" /></p>
+<p><img src="rosetta/pics/mixed/ros2/e1.input.3.png" alt="" width="559" /></p>
 <p>The aim of the analysis is set to
 <code>Aim: calculate Power</code>.</p>
 <p>The resulting power is 1, consistent with the estimate obtained with
 <code>simr</code>.</p>
-<p><img src="rosetta/pics/mixed/ros2/e1.output.1.png" width="747" /></p>
+<p><img src="rosetta/pics/mixed/ros2/e1.output.1.png" alt="" width="747" /></p>
 </div>
 </div>
 <div id="expected-power" class="section level1">
@@ -448,10 +448,10 @@ Time elapsed: 0 h 2 m 24 s</code></pre>
 <h2>PAMLj</h2>
 <p>In <span class="modulename">PAMLj</span>, we update the parameters
 accordingly:</p>
-<p><img src="rosetta/pics/mixed/ros2/e2.input.1.png" width="573" /></p>
+<p><img src="rosetta/pics/mixed/ros2/e2.input.1.png" alt="" width="573" /></p>
 <p>and we obtain a closely matching result (simulation-based estimates
 naturally vary slightly across runs):</p>
-<p><img src="rosetta/pics/mixed/ros2/e2.output.1.png" width="733" /></p>
+<p><img src="rosetta/pics/mixed/ros2/e2.output.1.png" alt="" width="733" /></p>
 </div>
 </div>
 <div id="required-n" class="section level1">
@@ -469,7 +469,7 @@ class="modulename">PAMLj</span> to <code>Aim: N</code> and set
 <code>Find: Number of cluster levels</code>.</p>
 <p><span class="modulename">PAMLj</span> indicates that a sample of 39
 bars would yield an approximate power of 0.907 (effectively .90).</p>
-<p><img src="rosetta/pics/mixed/ros2/e3.output.1.png" width="746" /></p>
+<p><img src="rosetta/pics/mixed/ros2/e3.output.1.png" alt="" width="746" /></p>
 <p>To verify the result R, we extend the original sample to 39 clusters
 and run a new simulation with <code>simr</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="do">### extend the model to obtain 39 levels of bar</span></span>
@@ -509,8 +509,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-simr" class="csl-entry">
 Green, P, and CJ MacLeod. 2016. <span>“SIMR: An r Package for Power
 Analysis of Generalised Linear Mixed Models by Simulation.”</span>

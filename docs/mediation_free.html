@@ -286,9 +286,22 @@ syntax)</a></h2>
       effects</a></li>
       <li><a href="#correlated-variables"
       id="toc-correlated-variables">Correlated variables</a></li>
-      <li><a href="#symbolic-coefficients-and-the-sensitivity-analysis"
-      id="toc-symbolic-coefficients-and-the-sensitivity-analysis">Symbolic
-      coefficients and the sensitivity analysis</a></li>
+      <li><a href="#minimum-detectable-effect-and-sensitivity-analysis"
+      id="toc-minimum-detectable-effect-and-sensitivity-analysis">Minimum
+      detectable effect and sensitivity analysis</a>
+      <ul>
+      <li><a href="#choosing-the-coefficient-to-vary"
+      id="toc-choosing-the-coefficient-to-vary">Choosing the coefficient
+      to vary</a></li>
+      <li><a href="#how-the-search-works"
+      id="toc-how-the-search-works">How the search works</a>
+      <ul>
+      <li><a href="#varying-one-coefficient"
+      id="toc-varying-one-coefficient">Varying one coefficient</a></li>
+      <li><a href="#the-balanced-solution"
+      id="toc-the-balanced-solution">The balanced solution</a></li>
+      </ul></li>
+      </ul></li>
       <li><a href="#results" id="toc-results">Results</a>
       <ul>
       <li><a href="#a-priori-power-analysis"
@@ -434,33 +447,106 @@ by selecting <span class="option">Implied correlations</span> under the
 href="#results">Results</a> below), which is handy to check the
 correlation actually entered into the model.</p>
 </div>
-<div id="symbolic-coefficients-and-the-sensitivity-analysis"
+<div id="minimum-detectable-effect-and-sensitivity-analysis"
 class="section level1">
-<h1>Symbolic coefficients and the sensitivity analysis</h1>
-<p>When the analysis <span class="option"> <b>aim </b></span> is the
-effect size (the minimum detectable effect), <span
-class="modulename">PAMLj</span> needs to know <em>which</em> coefficient
-to resize while solving for the required effect. By default it works on
-each indirect effect separately, shrinking the first edge (the
-<code>a</code> path) of that effect.</p>
-<p>You can instead pick a specific coefficient by giving it a
-<strong>symbolic label</strong> in the syntax and selecting it with the
-<code>test:</code> directive. A label is a letter placed before the
-value, with the syntax <code>label*value*variable</code>:</p>
+<h1>Minimum detectable effect and sensitivity analysis</h1>
+<p>When the analysis <span class="option"> <b>aim </b></span> is set to
+<span class="option">Calculate: Effect size</span>, <span
+class="modulename">PAMLj</span> solves for the <strong>minimum
+detectable effect</strong> (MDE): given a fixed sample size and the
+desired power, it finds the smallest indirect effect the design can
+detect. Because a mediated effect is a <em>product</em> of path
+coefficients, the answer depends on <em>which</em> coefficient is
+allowed to change while the others stay fixed, so the first thing to
+decide is the coefficient to vary.</p>
+<div id="choosing-the-coefficient-to-vary" class="section level2">
+<h2>Choosing the coefficient to vary</h2>
+<p>By default, <span class="modulename">PAMLj</span> works on each
+indirect effect separately and resizes its <strong>first edge</strong>
+(the path leaving the independent variable, the <code>a</code> path of
+that effect). This needs no extra input: just set the aim to the effect
+size and read the <code>ME</code> column.</p>
+<p>To target a <em>specific</em> coefficient instead — for instance the
+<code>b</code> path of a mediator, or a coefficient shared by several
+indirect effects — give it a <strong>symbolic label</strong> in the
+syntax and select it with the <code>test:</code> directive. A label is a
+letter placed before the value, written
+<code>label*value*variable</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>m1 <span class="sc">~</span> .<span class="dv">4</span><span class="sc">*</span>x</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>m2 <span class="sc">~</span> .<span class="dv">5</span><span class="sc">*</span>x</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>y  <span class="sc">~</span> .<span class="dv">1</span><span class="sc">*</span>x <span class="sc">+</span> a<span class="sc">*</span>.<span class="dv">2</span><span class="sc">*</span>m1 <span class="sc">+</span> .<span class="dv">3</span><span class="sc">*</span>m2</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>test<span class="sc">:</span> a</span></code></pre></div>
 <p>Here the coefficient of <code>m1 → y</code> is labelled
-<code>a</code>, and <code>test: a</code> (or <code>test = a</code>)
-tells <span class="modulename">PAMLj</span> to find the minimum
-detectable effect by resizing that coefficient. The search drives the
-indirect effect(s) that travel through the labelled coefficient to the
-required power, and every affected effect is recomputed at the solved
-value.</p>
+<code>a</code>, and <code>test: a</code> (equivalently
+<code>test = a</code>) tells <span class="modulename">PAMLj</span> to
+find the minimum detectable effect by resizing <em>that</em>
+coefficient. The separator can be either <code>:</code> or
+<code>=</code>.</p>
+<div class="adm adm-note">
+<p>Note</p>
 <p>If the label is not defined in the syntax, or the labelled
-coefficient is not part of any indirect effect, a message is issued and
-the analysis falls back to the per-effect default.</p>
+coefficient is not part of any indirect effect (for example a label put
+on the direct <code>x → y</code> path), a message is issued and the
+analysis falls back to the per-effect default (resizing each effect’s
+first edge).</p>
+</div>
+</div>
+<div id="how-the-search-works" class="section level2">
+<h2>How the search works</h2>
+<div id="varying-one-coefficient" class="section level3">
+<h3>Varying one coefficient</h3>
+<p><span class="modulename">PAMLj</span> resizes the selected
+coefficient — keeping every other coefficient at its specified value —
+until the power of the indirect effect(s) that travel <em>through</em>
+that coefficient reaches the desired level. When the coefficient lies on
+more than one indirect path (a shared edge), the search drives the
+<strong>weakest</strong> of those effects to the target, so that every
+affected effect reaches <em>at least</em> the requested power. All
+affected effects are then recomputed at the solved value and reported in
+the table; effects that do not pass through the coefficient are left
+unchanged.</p>
+<p>For the example above, with <code>test: a</code>, the search resizes
+the <code>m1 → y</code> coefficient until the <code>x → m1 → y</code>
+effect reaches the desired power, and reports the resulting
+<code>ME</code> for that pathway.</p>
+</div>
+<div id="the-balanced-solution" class="section level3">
+<h3>The balanced solution</h3>
+<p>Resizing a single coefficient cannot always reach the requested
+power. The power of an indirect effect, seen as a function of one of its
+coefficients, is <em>unimodal</em>: it rises, reaches a peak, and then
+falls back as the coefficient approaches 1 — at that point the mediator
+becomes collinear with its predictor and the other coefficients’
+standard errors explode. The other coefficients on the path therefore
+<strong>cap</strong> the achievable power: if the requested power sits
+above that peak, no value of the single coefficient can deliver it.</p>
+<p>When this happens, <span class="modulename">PAMLj</span> switches to
+a <strong>balanced solution</strong>: instead of moving one coefficient,
+it grows <em>all</em> the coefficients of the path together to a common
+value. This removes the single-coefficient bottleneck and can reach any
+power below 1. A note then reports, for each affected effect, the common
+coefficient value and the implied indirect effect, for example:</p>
+<blockquote>
+<p>The desired power (0.9) cannot be reached at N = 100 by resizing the
+selected coefficient alone (its other path coefficients cap the
+achievable power). The balanced solution is shown instead: for x → m1 →
+y, all path coefficients set to 0.337 give an indirect effect of ME =
+0.114.</p>
+</blockquote>
+<p>If even the balanced solution cannot reach the target at the given
+sample size, the table reports the <em>largest</em> detectable effect
+together with the maximum power it yields, and suggests increasing the
+sample size.</p>
+<div class="adm adm-note">
+<p>Note</p>
+<p>The balanced solution is most useful as a feasibility check: when it
+appears, it tells you that the chosen sample size is too small for the
+requested power <em>whatever single coefficient you adjust</em>, and the
+common value gives a sense of how large every path would have to be to
+make the design work.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>

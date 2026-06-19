@@ -10,7 +10,7 @@
     
     <title>Mixed models: RM to Mixed</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -415,18 +415,18 @@ on the syntax.</p>
 <pre><code>y~1*1+[5,0]*time+(540*1|ID)</code></pre>
 <p>we plug this into the module and set the residual variance to
 360.</p>
-<p><img src="examples/mixed/example3/p.1.input.1.png" width="621" /></p>
+<p><img src="examples/mixed/example3/p.1.input.1.png" alt="" width="621" /></p>
 <p>Then we set the cluster variable <em>ID</em> to have 3
 <code>N per cluster</code>, because each participant has three
 observations. With the same logic, we set the <em>time</em> variable to
 be categorical and to have three levels.</p>
-<p><img src="examples/mixed/example3/p.1.input.2.png" width="626" /></p>
+<p><img src="examples/mixed/example3/p.1.input.2.png" alt="" width="626" /></p>
 <p>We leave the default value for <span
 class="math inline">\(\alpha\)</span> and <code>power</code>, so we are
 asking to estimate the required N (<code>Number of cluster levels</code>
 i.e. number of participants) for our mixed model to achieve a power of
 at least .90.</p>
-<p><img src="examples/mixed/example3/p.1.output.1.png" width="872" /></p>
+<p><img src="examples/mixed/example3/p.1.output.1.png" alt="" width="872" /></p>
 <p>We need 93 participants.</p>
 </div>
 </div>
@@ -438,8 +438,8 @@ class="modulename">PAMLj</span> <strong>Factorial Designs</strong> power
 analysis module. In it, we specify that we have a within-subjects effect
 with 2 degrees of freedom and 1 group (no between effects), and set the
 partial eta-squared to 0.64935 (see above).</p>
-<p><img src="examples/mixed/example3/p.2.input.1.png" width="619" />
-<img src="examples/mixed/example3/p.2.output.1.png" width="679" /></p>
+<p><img src="examples/mixed/example3/p.2.input.1.png" alt="" width="619" />
+<img src="examples/mixed/example3/p.2.output.1.png" alt="" width="679" /></p>
 <p>We obtain 94 participants, which is equivalent to the results
 obtained with the mixed model. Results are not exactly the same because
 the mixed models power analysis employs simulations to estimate the

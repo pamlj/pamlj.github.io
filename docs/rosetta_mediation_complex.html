@@ -9,7 +9,7 @@
     
     <title>Mediation: Complex models</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -338,8 +338,8 @@ re-sampling.</p></li>
 estimate the parameter.</p>
 <div id="two-parallel-mediators" class="section level1">
 <h1>Two parallel mediators</h1>
-<p><img src="pics/mediation/complex.input.1.png" width="578" /></p>
-<p><img src="pics/mediation/complex.diagram.1.png" width="547" /></p>
+<p><img src="pics/mediation/complex.input.1.png" alt="" width="578" /></p>
+<p><img src="pics/mediation/complex.diagram.1.png" alt="" width="547" /></p>
 <div class="adm adm-setup">
 <p>Setup</p>
 <ul>
@@ -355,13 +355,13 @@ estimate the parameter.</p>
 <li>Alpha = .05</li>
 </ul>
 </div>
-<p><img src="rosetta/pics/mediation/complex.input.1.png" width="583" /></p>
+<p><img src="rosetta/pics/mediation/complex.input.1.png" alt="" width="583" /></p>
 <p>For <code>Joint significance</code> method:</p>
-<p><img src="rosetta/pics/mediation/complex.output.1.png" width="563" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.1.png" alt="" width="563" /></p>
 <p>For <code>Sobel test</code> method:</p>
-<p><img src="rosetta/pics/mediation/complex.output.2.png" width="577" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.2.png" alt="" width="577" /></p>
 <p>For <code>Monte Carlo</code> method:</p>
-<p><img src="rosetta/pics/mediation/complex.output.3.png" width="558" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.3.png" alt="" width="558" /></p>
 <p>As expected, <code>joint significance</code> and
 <code>Monte Carlo</code> methods agree in the estimated parameters,
 whereas <code>Sobel test</code> reports a lower power for both mediated
@@ -380,8 +380,8 @@ The <code>Monte Carlo Shiny app</code>, however, assumes normality of
 the parameters but computes the standard errors based on the t-test. For
 small samples, this difference may yield slightly different final
 parameters.</p>
-<p><img src="rosetta/pics/mediation/complex.mc.input.1.png" width="981" />
-<img src="rosetta/pics/mediation/complex.mc.output.1.png" width="487" /></p>
+<p><img src="rosetta/pics/mediation/complex.mc.input.1.png" alt="" width="981" />
+<img src="rosetta/pics/mediation/complex.mc.output.1.png" alt="" width="487" /></p>
 </div>
 <div id="pwrss" class="section level2">
 <h2>pwrss</h2>
@@ -405,7 +405,7 @@ easy: <span class="math inline">\(R_{m.x}^2=a_1^2\)</span>, because
 correlation. For <span class="math inline">\(R_{y.mx}^2\)</span>
 (predicting Y), the computation is more complex. We can take the
 R-squared from <span class="modulename">PAMLj</span> results.</p>
-<p><img src="rosetta/pics/mediation/complex.output.4.png" width="205" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.4.png" alt="" width="205" /></p>
 <p>The R-squared is <span
 class="math inline">\(R_{y.mx}^2=.2335\)</span>. Plugging the parameters
 in we obtain the results, again in lines with the <span
@@ -517,16 +517,16 @@ a_1 \cdot b_1 \cdot c + 2 \cdot a_2 \cdot b_2 \cdot c
 <li>Alpha = .05</li>
 </ul>
 </div>
-<p><img src="rosetta/pics/mediation/complex.diagram.2.png" width="540" /></p>
+<p><img src="rosetta/pics/mediation/complex.diagram.2.png" alt="" width="540" /></p>
 <div id="pamlj" class="section level2">
 <h2>PAMLj</h2>
-<p><img src="rosetta/pics/mediation/complex.input.2.png" width="577" /></p>
+<p><img src="rosetta/pics/mediation/complex.input.2.png" alt="" width="577" /></p>
 <p>For <code>Joint significance</code> method:</p>
-<p><img src="rosetta/pics/mediation/complex.output.5.png" width="559" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.5.png" alt="" width="559" /></p>
 <p>For <code>Sobel test</code> method:</p>
-<p><img src="rosetta/pics/mediation/complex.output.6.png" width="542" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.6.png" alt="" width="542" /></p>
 <p>For <code>Monte Carlo</code> method:</p>
-<p><img src="rosetta/pics/mediation/complex.output.7.png" width="566" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.7.png" alt="" width="566" /></p>
 </div>
 <div id="pwrss-1" class="section level2">
 <h2>pwrss</h2>
@@ -534,7 +534,7 @@ a_1 \cdot b_1 \cdot c + 2 \cdot a_2 \cdot b_2 \cdot c
 effect, the <span class="math inline">\(R^2\)</span> predicting both the
 dependent variable and the mediators. We can take these estimates from
 <span class="modulename">PAMLj</span>.</p>
-<p><img src="rosetta/pics/mediation/complex.output.8.png" width="569" /></p>
+<p><img src="rosetta/pics/mediation/complex.output.8.png" alt="" width="569" /></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>a1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>b1  <span class="ot">&lt;-</span> .<span class="dv">3</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>a2  <span class="ot">&lt;-</span> .<span class="dv">4</span></span>
@@ -610,8 +610,8 @@ produced the intended beta coefficients.</p>
 ##        0.00        0.30        0.20        0.15        0.15</code></pre>
 <p>as expected, they are correct.</p>
 <p>At this point, we can insert the correlation in the app.</p>
-<p><img src="rosetta/pics/mediation/complex.mc.input.2.png" width="1194" /></p>
-<p><img src="rosetta/pics/mediation/complex.mc.output.2.png" width="592" /></p>
+<p><img src="rosetta/pics/mediation/complex.mc.input.2.png" alt="" width="1194" /></p>
+<p><img src="rosetta/pics/mediation/complex.mc.output.2.png" alt="" width="592" /></p>
 <p>As expected, the power obtained is slightly lower than the one
 obtained with <code>pwrss</code> and <span
 class="modulename">PAMLj</span>, but it is substantially in line.</p>

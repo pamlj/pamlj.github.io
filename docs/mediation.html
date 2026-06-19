@@ -10,7 +10,7 @@
     
     <title>Mediation</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -224,6 +224,7 @@
       </ul></li>
       <li><a href="#sensitivity-analysis"
       id="toc-sensitivity-analysis">Sensitivity Analysis</a></li>
+      <li><a href="#details" id="toc-details">Details</a></li>
       <li><a href="#validation" id="toc-validation">Validation</a></li>
       <li><a href="#comments" id="toc-comments">Comments?</a></li>
       </ul>
@@ -248,7 +249,7 @@ Gallucci</p>
 <div style="clear:both">
 
 </div>
-<p><img src="pics/mediation/ui.png" width="1206" /></p>
+<p><img src="pics/mediation/ui.png" alt="" width="1206" /></p>
 <p><code>Mediation power analysis</code> allows for computing power
 parameters for testing indirect (mediated) effects in several
 mediational models. It can be used to estimate power parameters based on
@@ -257,29 +258,36 @@ the <code>Sobel test</code>, <code>joint significance</code> or
 <p>The initial step is to determine the objective of the analysis (
 <em>aim</em> ). Further details regarding different objectives can be
 found in the <code>Info</code> results field.</p>
-<p><img src="pics/common/aim.1.png" width="560" /></p>
+<p><img src="pics/common/aim.1.png" alt="" width="560" /></p>
 <p>The second step is to decide what type of model we are dealing
 with.</p>
-<p><img src="pics/mediation/input.1.png" width="393" /></p>
+<p><img src="pics/mediation/input.1.png" alt="" width="393" /></p>
 <div id="models" class="section level1">
 <h1>Models</h1>
 <ul>
 <li><p><strong>Simple mediation (3 variables)</strong> : This is the
 classical simple mediation, with one independent variable, one mediator.
 The model looks like this
-<img src="pics/mediation/diagram.1.png" width="404" /></p></li>
+<img src="pics/mediation/diagram.1.png" alt="" width="404" /></p></li>
 <li><p><strong>Complex (multiple mediators)</strong> : Allows
 computation of power parameters for more complex models: two parallel
 mediator, three parallel mediator and serial mediation with two
 mediators. They are, respectively:</p></li>
 </ul>
-<p><img src="pics/mediation/diagram.2.png" width="1128" /></p>
+<p><img src="pics/mediation/diagram.2.png" alt="" width="1128" /></p>
+<ul>
+<li><strong>Free (model syntax)</strong> : Allows computation of power
+parameters for any recursive mediation model, specified by typing its
+equations in a model syntax. See
+<a href="./mediation_free.html">Mediation: free models (model
+syntax)</a> for details.</li>
+</ul>
 </div>
 <div id="simple-mediation-model" class="section level1">
 <h1>Simple Mediation Model</h1>
 <p>In simple mediation models there is one independent variable, one
 mediator and one dependent variable. The model is:</p>
-<p><img src="pics/mediation/diagram.1.png" width="404" /></p>
+<p><img src="pics/mediation/diagram.1.png" alt="" width="404" /></p>
 <p>The <code>a</code> coefficient is the simple standardized coefficient
 of a regression from X to M (mediator). <code>b</code> and
 <code>c'</code> are the standardized coefficients of a multiple
@@ -291,11 +299,11 @@ product of the coefficients along the mediator pathway.</p>
 <p>As for any <span class="modulename">PAMLj</span> command, we can
 always obtain some help in setting the analysis by clicking on the
 <code>plus</code> icon in the <code>Info</code> bar.</p>
-<p><img src="pics/mediation/output.0.1.png" width="511" />
-<img src="pics/mediation/output.0.2.png" width="547" /></p>
+<p><img src="pics/mediation/output.0.1.png" alt="" width="511" />
+<img src="pics/mediation/output.0.2.png" alt="" width="547" /></p>
 <p>Thus, we now declare what are the expected standardized coefficients
 of the model.</p>
-<p><img src="pics/mediation/input.2.png" width="342" /></p>
+<p><img src="pics/mediation/input.2.png" alt="" width="342" /></p>
 <p>The power <span class="option"> <b>Parameters </b></span> are the
 usual parameters of power analysis.</p>
 <p><img src="pics/common/input.parameters.png" /><!-- --></p>
@@ -317,7 +325,7 @@ class="math inline">\(\alpha\)</span>.</p></li>
 <p>As soon as the coefficients are set, the path diagram is updated and
 we obtain the results in the <code>A Priori Power Analysis</code>
 table.</p>
-<p><img src="pics/mediation/output.1.png" width="491" /></p>
+<p><img src="pics/mediation/output.1.png" alt="" width="491" /></p>
 <p>The table recaps the input parameters plus the estimated parameter we
 asked in the <span class="option">Compute</span> option. In this
 example, we asked for <code>N</code>, so the module estimated <span
@@ -329,11 +337,11 @@ class="math inline">\(c&#39;=0\)</span>. An additional textual
 description of the results can be obtained by selecting <span
 class="option">Exploratory text</span> under the <span class="option">
 <b>Options </b></span> label.</p>
-<p><img src="pics/mediation/output.text.png" width="507" /></p>
+<p><img src="pics/mediation/output.text.png" alt="" width="507" /></p>
 </div>
 <div id="tests" class="section level1">
 <h1>Tests</h1>
-<p><img src="pics/mediation/input.3.png" width="171" /></p>
+<p><img src="pics/mediation/input.3.png" alt="" width="171" /></p>
 <div id="joint-significance" class="section level2">
 <h2>Joint significance</h2>
 <p>By default, <span class="modulename">PAMLj</span> assumes that the
@@ -351,7 +359,7 @@ much faster in terms of computation.</p>
 <p>In our example, by choosing <span class="option">joint
 significance</span>, we obtain a required sample size of <span
 class="math inline">\(N=137\)</span>.</p>
-<p><img src="pics/mediation/output.1.png" width="491" /></p>
+<p><img src="pics/mediation/output.1.png" alt="" width="491" /></p>
 </div>
 <div id="sobel-test" class="section level2">
 <h2>Sobel test</h2>
@@ -368,24 +376,23 @@ larger than the required N obtained with the
 Sobel test <span class="citation">(<a
 href="#ref-mackinnon2002comparison">MacKinnon et al.
 2002</a>)</span>.</p>
-<p><img src="pics/mediation/output.2.png" width="496" /></p>
+<p><img src="pics/mediation/output.2.png" alt="" width="496" /></p>
 </div>
 <div id="monte-carlo" class="section level2">
 <h2>Monte Carlo</h2>
 <p>The third method is the <span class="option">Monte Carlo</span>
 method. This approach is based on simulations <span class="citation">(<a
-href="#ref-mackinnon2004confidence">MacKinnon, Lockwood, and Williams
-2004</a>)</span>. It generates a distribution of parameters with the
-appropriate standard error and evaluates their joint probability of
-being significant at the error rate provided in the input. This
-simulation process is repeated <span class="math inline">\(R\)</span>
-times, and the probability of obtaining a significant result is
-calculated from the R simulations. If one intends to assess significance
-using a bootstrap method <span class="citation">(<a
-href="#ref-preacher2008asymptotic">Preacher and Hayes 2008</a>)</span>,
-the Monte Carlo method is an accurate approximation of power parameters
-<span class="citation">(<a href="#ref-zhang2014monte">Zhang
-2014</a>)</span>.</p>
+href="#ref-mackinnon2004confidence">MacKinnon et al. 2004</a>)</span>.
+It generates a distribution of parameters with the appropriate standard
+error and evaluates their joint probability of being significant at the
+error rate provided in the input. This simulation process is repeated
+<span class="math inline">\(R\)</span> times, and the probability of
+obtaining a significant result is calculated from the R simulations. If
+one intends to assess significance using a bootstrap method <span
+class="citation">(<a href="#ref-preacher2008asymptotic">Preacher and
+Hayes 2008</a>)</span>, the Monte Carlo method is an accurate
+approximation of power parameters <span class="citation">(<a
+href="#ref-zhang2014monte">Zhang 2014</a>)</span>.</p>
 <p>For the <span class="option">Monte Carlo</span> method, the <span
 class="option">number of simulations</span> can be set in the <span
 class="panel"> <i class="fa fa-chevron-down"></i> | Options</span>
@@ -394,13 +401,13 @@ enable <span class="option">Parallel computation</span> to speed up the
 process. However, users should be aware that in certain operating
 systems (such as Windows), parallel computation might not function
 properly.</p>
-<p><img src="pics/mediation/input.4.png" width="570" /></p>
+<p><img src="pics/mediation/input.4.png" alt="" width="570" /></p>
 <p>The Monte Carlo (MC) and joint significance methods yield nearly
 identical required sample sizes (N) in our example. While MC results may
 slightly vary between runs, this variability decreases as the number of
 simulations (R) increases, improving estimate precision. Typically, both
 methods produce very similar results.</p>
-<p><img src="pics/mediation/output.3.png" width="482" /></p>
+<p><img src="pics/mediation/output.3.png" alt="" width="482" /></p>
 </div>
 </div>
 <div id="sensitivity-analysis" class="section level1">
@@ -410,6 +417,15 @@ combinations of parameters, can be carried out like for any other <span
 class="modulename">PAMLj</span> sub-modules. Please visit
 <a href="./sensitivity.html">Sensitivity analysis</a> page for more
 details.</p>
+</div>
+<div id="details" class="section level1 adm adm-seealso">
+<h1>Details</h1>
+<ul>
+<li>
+<a href="./mediation_free.html">Mediation: free models (model
+syntax)</a>
+</li>
+</ul>
 </div>
 <div id="validation" class="section level1 adm adm-seealso">
 <h1>Validation</h1>
@@ -438,8 +454,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 ">send me an email</a>
 </p>
 </div>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-mackinnon2002comparison" class="csl-entry">
 MacKinnon, David P, Chondra M Lockwood, Jeanne M Hoffman, Stephen G
 West, and Virgil Sheets. 2002. <span>“A Comparison of Methods to Test

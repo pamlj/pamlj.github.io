@@ -10,7 +10,7 @@
     
     <title>Extreme values warnings</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -312,11 +312,12 @@ computation failure. Focusing on required N, for instance, we see that
 asking the required N for a correlation <span
 class="math inline">\(\rho=.93\)</span>, with <span
 class="math inline">\(power=.99\)</span> halts the calculation.</p>
-<p><img src="pics/specs/fail/gpower.1.png" width="613" /></p>
+<p><img src="pics/specs/fail/gpower.1.png" alt="" width="613" /></p>
 <p><a href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R pwr
 package</a>, for another example, simply fails.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r=</span>.<span class="dv">99</span>,<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>)</span></code></pre></div>
-<pre><code>## Error in uniroot(function(n) eval(p.body) - power, c(4 + 1e-10, 1e+09)): f() values at end points not of opposite sign</code></pre>
+<pre><code>## Error in `uniroot()`:
+## ! f() values at end points not of opposite sign</code></pre>
 <p>In both examples, the combination of effect size, power, and type I
 error results in a required sample size so small that it falls outside
 the feasible range. The same issues happens when the effect size is too
@@ -324,7 +325,8 @@ small, and the required N would be simply too large.</p>
 <p>In <a href="https://cran.r-project.org/web/packages/pwr/pwr.pdf">R
 pwr package</a> we can observe this issue.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>pwr<span class="sc">::</span><span class="fu">pwr.r.test</span>(<span class="at">r=</span>.<span class="dv">00001</span>,<span class="at">power=</span>.<span class="dv">80</span>,<span class="at">sig.level=</span>.<span class="dv">05</span>)</span></code></pre></div>
-<pre><code>## Error in uniroot(function(n) eval(p.body) - power, c(4 + 1e-10, 1e+09)): f() values at end points not of opposite sign</code></pre>
+<pre><code>## Error in `uniroot()`:
+## ! f() values at end points not of opposite sign</code></pre>
 <p>Admittedly, these are extreme cases, but they still pose a problem
 when users experiment with such values, whether to learn something new
 or investigate emerging issues.</p>
@@ -332,12 +334,12 @@ or investigate emerging issues.</p>
 outside the feasible range, a warning is issued, ensuring that the user
 is not left confused by an technical error. Here is an example for
 <code>Correlation power analysis</code>.</p>
-<p><img src="pics/specs/fail/pamlj.1.png" width="1173" /></p>
+<p><img src="pics/specs/fail/pamlj.1.png" alt="" width="1173" /></p>
 <p>We asked the required N for <span
 class="math inline">\(power=.80\)</span> and <span
 class="math inline">\(\pho=.99\)</span>. The required N is produced
 ($N=4) with a warning.</p>
-<p><img src="pics/specs/fail/pamlj.2.png" width="533" /></p>
+<p><img src="pics/specs/fail/pamlj.2.png" alt="" width="533" /></p>
 <p>This basically says that given the power and the type I error, the
 effect size <span class="math inline">\(\rho=.99\)</span> is too large,
 because it is larger than <span
@@ -348,13 +350,13 @@ class="math inline">\(N=4\)</span>. Thus, any effect size larger than
 <span class="math inline">\(\rho=.986\)</span> needs only 4 cases to
 achieve the required power.</p>
 <p>Furthermore, another warning is issued:</p>
-<p><img src="pics/specs/fail/pamlj.3.png" width="525" /></p>
+<p><img src="pics/specs/fail/pamlj.3.png" alt="" width="525" /></p>
 <p>This means that if you request sensitivity analysis plots (e.g.,
 contour, by N, or by ES plots), you may encounter some unusual results.
 In this example, the by N</p>
 <p>A similar warning appears when the effect size is too small.</p>
-<p><img src="pics/specs/fail/pamlj.8.png" width="1134" /></p>
-<p><img src="pics/specs/fail/pamlj.9.png" width="516" /></p>
+<p><img src="pics/specs/fail/pamlj.8.png" alt="" width="1134" /></p>
+<p><img src="pics/specs/fail/pamlj.9.png" alt="" width="516" /></p>
 <p>The reasoning is as follows: <span class="modulename">PAMLj</span>
 calculates the smallest effect size (given power and type I error) that
 would require a sample size of 10 million cases. If the input effect

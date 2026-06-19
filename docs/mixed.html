@@ -10,7 +10,7 @@
     
     <title>Mixed models</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -334,7 +334,7 @@ Gallucci</p>
 <div style="clear:both">
 
 </div>
-<p><img src="pics/mixed/ui.png" width="588" /></p>
+<p><img src="pics/mixed/ui.png" alt="" width="588" /></p>
 <div id="linear-mixed-models" class="section level1">
 <h1>Linear Mixed Models</h1>
 <p><code>Linear Mixed Models</code> allows users to compute achievable
@@ -447,7 +447,7 @@ analysis.</p>
 </div>
 <div id="aim-n-required-sample-size" class="section level1">
 <h1>Aim: N (Required sample size)</h1>
-<p><img src="pics/mixed/aim.1.png" width="720" /></p>
+<p><img src="pics/mixed/aim.1.png" alt="" width="720" /></p>
 <p>In mixed models, the sample size depends on the number of clusters
 (<span class="math inline">\(k\)</span> ) of the clustering variable or
 the number of cases (<span class="math inline">\(n\)</span>
@@ -466,7 +466,7 @@ shrunken along the clustering variable, while the number of cases within
 each cluster is set constant to the value specified by the user in the
 <code>N per cases</code> field, in <span class="option"> <b>Clustering
 variables </b></span> section.</p>
-<p><img src="pics/mixed/cluster.1.png" width="560" /></p>
+<p><img src="pics/mixed/cluster.1.png" alt="" width="560" /></p>
 <p>In the example in the figure, user is searching for the Number of
 clusters in a model including <code>clustervar</code> as the clustering
 variable. Thus, the <code># Clusters levels</code> is left empty (or
@@ -477,7 +477,7 @@ variable <code>ID</code> as clustering variable indicating the
 participant id code, the user would set the
 <code># Cluster levels</code> as empty (or equivalently to
 <code>?</code>), and the <code>N per cluster</code> is set to 4.</p>
-<p><img src="pics/mixed/cluster.2.png" width="564" /></p>
+<p><img src="pics/mixed/cluster.2.png" alt="" width="564" /></p>
 <div class="adm adm-note">
 <p>Note</p>
 <p>When <code>Find: Number of cluster levels</code> is selected, if a
@@ -501,7 +501,7 @@ constant to the value specified by the user in the
 <code># Clusters levels</code> field, in
 <code>Clustering Variables</code> section. <code>N per cluster</code> is
 ignored (if empty or <code>?</code>, or used as starting value)</p>
-<p><img src="pics/mixed/cluster.3.png" width="563" /></p>
+<p><img src="pics/mixed/cluster.3.png" alt="" width="563" /></p>
 <p>In the example in the figure, user is searching for the number of
 observations within clusters in a model including
 <code>clustervar</code> as the clustering variable. Thus, the
@@ -512,7 +512,7 @@ repeated measure design on 50 participants, and the researcher is
 looking for the required number of trials to achieve a given power, the
 user would set the <code>N per cluster</code> as empty (or equivalently
 to <code>?</code>), and the <code># Cluster levels</code> to 50.</p>
-<p><img src="pics/mixed/cluster.4.png" width="559" /></p>
+<p><img src="pics/mixed/cluster.4.png" alt="" width="559" /></p>
 <div class="adm adm-note">
 <p>Note</p>
 <p>When <code>Find: Cases within clusters</code> is selected, if a user
@@ -538,7 +538,7 @@ they are considered as continuous variables.</p>
 the number of levels of the variable needs to be specified. In the
 figure, <span class="math inline">\(z\)</span> is considered as
 categorical with 4 levels.</p>
-<p><img src="pics/mixed/variables.1.png" width="686" /></p>
+<p><img src="pics/mixed/variables.1.png" alt="" width="686" /></p>
 <p>The issue with categorical variables is that they are cast into the
 mixed model (like in any other linear model) as contrast variables
 (sometimes refered to as <em>dummy variables</em>). Thus, to cast
@@ -594,6 +594,15 @@ obtain a sensitivity analysis anyway.</p>
 The algorithm to use: <code>Monte Carlo</code> (default) for Monte Carlo
 simulation, <code>Raw approximation</code> for raw approximation based
 on plausible Chi-squared (fast but slightly optimistic)
+</td>
+</tr>
+<tr>
+<td class="optionname">
+<span class="option">Test</span>
+</td>
+<td class="optionvalue">
+Use the inferential test: <code>f</code> for <code>F-test</code>,and
+<code>chi</code> for <code>Chi-squared</code>.
 </td>
 </tr>
 <tr>
@@ -727,8 +736,7 @@ Return to main help pages
 <a class='backto' href='index.html'>Main page</a>
 </div>
 <p>’</p>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-lme4" class="csl-entry">
 Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015.
 <span>“Fitting Linear Mixed-Effects Models Using <span

@@ -90,11 +90,15 @@ The correlation is entered directly as the (residual) correlation between the tw
 
 The model-implied correlations among all variables can be displayed by selecting `r opt("Implied correlations")` under the `r opt_label("Options")` (see [Results](#results) below), which is handy to check the correlation actually entered into the model.
 
-# Symbolic coefficients and the sensitivity analysis
+# Minimum detectable effect and sensitivity analysis
 
-When the analysis `r opt_label("aim")` is the effect size (the minimum detectable effect), `r modulename()` needs to know _which_ coefficient to resize while solving for the required effect. By default it works on each indirect effect separately, shrinking the first edge (the `a` path) of that effect.
+When the analysis `r opt_label("aim")` is set to `r opt("Calculate: Effect size")`, `r modulename()` solves for the __minimum detectable effect__ (MDE): given a fixed sample size and the desired power, it finds the smallest indirect effect the design can detect. Because a mediated effect is a _product_ of path coefficients, the answer depends on _which_ coefficient is allowed to change while the others stay fixed, so the first thing to decide is the coefficient to vary.
 
-You can instead pick a specific coefficient by giving it a __symbolic label__ in the syntax and selecting it with the `test:` directive. A label is a letter placed before the value, with the syntax `label*value*variable`:
+## Choosing the coefficient to vary
+
+By default, `r modulename()` works on each indirect effect separately and resizes its __first edge__ (the path leaving the independent variable, the `a` path of that effect). This needs no extra input: just set the aim to the effect size and read the `ME` column.
+
+To target a _specific_ coefficient instead — for instance the `b` path of a mediator, or a coefficient shared by several indirect effects — give it a __symbolic label__ in the syntax and select it with the `test:` directive. A label is a letter placed before the value, written `label*value*variable`:
 
 ```{r eval=FALSE}
 m1 ~ .4*x
@@ -103,9 +107,37 @@ y  ~ .1*x + a*.2*m1 + .3*m2
 test: a
 ```
 
-Here the coefficient of `m1 → y` is labelled `a`, and `test: a` (or `test = a`) tells `r modulename()` to find the minimum detectable effect by resizing that coefficient. The search drives the indirect effect(s) that travel through the labelled coefficient to the required power, and every affected effect is recomputed at the solved value.
+Here the coefficient of `m1 → y` is labelled `a`, and `test: a` (equivalently `test = a`) tells `r modulename()` to find the minimum detectable effect by resizing _that_ coefficient. The separator can be either `:` or `=`.
 
-If the label is not defined in the syntax, or the labelled coefficient is not part of any indirect effect, a message is issued and the analysis falls back to the per-effect default.
+:::{ .adm .adm-note}
+Note
+
+If the label is not defined in the syntax, or the labelled coefficient is not part of any indirect effect (for example a label put on the direct `x → y` path), a message is issued and the analysis falls back to the per-effect default (resizing each effect's first edge).
+:::
+
+## How the search works
+
+### Varying one coefficient
+
+`r modulename()` resizes the selected coefficient — keeping every other coefficient at its specified value — until the power of the indirect effect(s) that travel _through_ that coefficient reaches the desired level. When the coefficient lies on more than one indirect path (a shared edge), the search drives the __weakest__ of those effects to the target, so that every affected effect reaches _at least_ the requested power. All affected effects are then recomputed at the solved value and reported in the table; effects that do not pass through the coefficient are left unchanged.
+
+For the example above, with `test: a`, the search resizes the `m1 → y` coefficient until the `x → m1 → y` effect reaches the desired power, and reports the resulting `ME` for that pathway.
+
+### The balanced solution
+
+Resizing a single coefficient cannot always reach the requested power. The power of an indirect effect, seen as a function of one of its coefficients, is _unimodal_: it rises, reaches a peak, and then falls back as the coefficient approaches 1 — at that point the mediator becomes collinear with its predictor and the other coefficients' standard errors explode. The other coefficients on the path therefore __cap__ the achievable power: if the requested power sits above that peak, no value of the single coefficient can deliver it.
+
+When this happens, `r modulename()` switches to a __balanced solution__: instead of moving one coefficient, it grows _all_ the coefficients of the path together to a common value. This removes the single-coefficient bottleneck and can reach any power below 1. A note then reports, for each affected effect, the common coefficient value and the implied indirect effect, for example:
+
+> The desired power (0.9) cannot be reached at N = 100 by resizing the selected coefficient alone (its other path coefficients cap the achievable power). The balanced solution is shown instead: for x → m1 → y, all path coefficients set to 0.337 give an indirect effect of ME = 0.114.
+
+If even the balanced solution cannot reach the target at the given sample size, the table reports the _largest_ detectable effect together with the maximum power it yields, and suggests increasing the sample size.
+
+:::{ .adm .adm-note}
+Note
+
+The balanced solution is most useful as a feasibility check: when it appears, it tells you that the chosen sample size is too small for the requested power _whatever single coefficient you adjust_, and the common value gives a sense of how large every path would have to be to make the design work.
+:::
 
 # Results
 

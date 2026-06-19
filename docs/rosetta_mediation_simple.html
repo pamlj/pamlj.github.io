@@ -9,7 +9,7 @@
     
     <title>Mediation: Simple models</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -379,10 +379,10 @@ acceptable range.</p>
 <h3>PAMLj</h3>
 <p>In <span class="modulename">PAMLj</span> we set the parameters as
 follows, using the <code>Sobel test</code>:</p>
-<p><img src="rosetta/pics/mediation/input.2.png" width="570" /></p>
+<p><img src="rosetta/pics/mediation/input.2.png" alt="" width="570" /></p>
 <p>Using the Sobel test method one obtains <span
 class="math inline">\(N=144\)</span>:</p>
-<p><img src="rosetta/pics/mediation/sobel.1.png" width="482" /></p>
+<p><img src="rosetta/pics/mediation/sobel.1.png" alt="" width="482" /></p>
 </div>
 <div id="powermediation-package" class="section level3">
 <h3>powerMediation package</h3>
@@ -460,8 +460,8 @@ class="math inline">\(N=145\)</span>, as the other software.</p>
 <h3>PAMLj</h3>
 <p>In <span class="modulename">PAMLj</span> we set the parameters as
 follows, using the <code>Sobel test</code>:</p>
-<p><img src="rosetta/pics/mediation/input.2.png" width="570" /></p>
-<p><img src="rosetta/pics/mediation/joint.1.png" width="506" /></p>
+<p><img src="rosetta/pics/mediation/input.2.png" alt="" width="570" /></p>
+<p><img src="rosetta/pics/mediation/joint.1.png" alt="" width="506" /></p>
 <p>The relevant parameter here is <span
 class="math inline">\(N=95\)</span></p>
 </div>
@@ -495,15 +495,15 @@ class="modulename">PAMLj</span>.</p>
 <h3>PAMLj</h3>
 <p>In <span class="modulename">PAMLj</span> we set the parameters as
 follows, using the <code>Monte Carlo</code> test:</p>
-<p><img src="rosetta/pics/mediation/input.3.png" width="567" /></p>
+<p><img src="rosetta/pics/mediation/input.3.png" alt="" width="567" /></p>
 <p>Because we are testing the module, we set a <span
 class="option">seed</span> for the Monte Carlo simulation. We do this
 only to ensure the reproducibility of the example; however, in everyday
 analysis, this option should almost never be used.</p>
-<p><img src="rosetta/pics/mediation/input.3.1.png" width="576" /></p>
+<p><img src="rosetta/pics/mediation/input.3.1.png" alt="" width="576" /></p>
 <p>Using the Monte Carlo method one obtains (a part for random
 variability) <span class="math inline">\(N=96\)</span>:</p>
-<p><img src="rosetta/pics/mediation/mc.1.png" width="491" /></p>
+<p><img src="rosetta/pics/mediation/mc.1.png" alt="" width="491" /></p>
 </div>
 <div id="pwrss" class="section level3">
 <h3>pwrss</h3>
@@ -541,8 +541,8 @@ Carlo Power Analysis does not directly solve for the required N, it
 allows you to evaluate power across a range of N values. In this case,
 we requested an evaluation of power with N ranging from 80 to 120, using
 the parameters mentioned above.</p>
-<p><img src="rosetta/pics/mediation/input.4.png" width="1119" /></p>
-<p><img src="rosetta/pics/mediation/mc.2.png" width="579" /></p>
+<p><img src="rosetta/pics/mediation/input.4.png" alt="" width="1119" /></p>
+<p><img src="rosetta/pics/mediation/mc.2.png" alt="" width="579" /></p>
 <p>Results, shown here in the vicinity of <span
 class="math inline">\(power=.80\)</span> (4th column) shows that the
 required N (2nd column) is around 96, congruent with the results of
@@ -565,16 +565,16 @@ when the sample size is given and the required parameter is
 <li>Alpha = .05</li>
 </ul>
 </div>
-<p><img src="rosetta/pics/mediation/input.5.png" width="579" /></p>
+<p><img src="rosetta/pics/mediation/input.5.png" alt="" width="579" /></p>
 <p>For <code>joint significance</code> method we obtain <span
 class="math inline">\(power=.401\)</span>.</p>
-<p><img src="rosetta/pics/mediation/joint.2.png" width="481" /></p>
+<p><img src="rosetta/pics/mediation/joint.2.png" alt="" width="481" /></p>
 <p>for <code>Sobel test</code> method we obtain <span
 class="math inline">\(power=.381\)</span>.</p>
-<p><img src="rosetta/pics/mediation/sobel.2.png" width="463" /></p>
+<p><img src="rosetta/pics/mediation/sobel.2.png" alt="" width="463" /></p>
 <p>and for the <code>Monte Carlo</code> method we get <span
 class="math inline">\(power=.402\)</span>.</p>
-<p><img src="rosetta/pics/mediation/mc.3.png" width="493" /></p>
+<p><img src="rosetta/pics/mediation/mc.3.png" alt="" width="493" /></p>
 <div id="other-software-1" class="section level3">
 <h3>Other software</h3>
 <p>The <code>pwrss</code> package provides all three methods to estimate
@@ -605,8 +605,8 @@ Analysis</strong> shiny app does not allow to run a simulation without a
 <code>seed</code> one uses. To overcome the issue, we set the number of
 simulations to 10000 (patience is required here), so the
 <code>seed</code> becomes less important.</p>
-<p><img src="rosetta/pics/mediation/input.6.png" width="977" />
-<img src="rosetta/pics/mediation/mc.4.png" width="473" /></p>
+<p><img src="rosetta/pics/mediation/input.6.png" alt="" width="977" />
+<img src="rosetta/pics/mediation/mc.4.png" alt="" width="473" /></p>
 <p>The results are nicely in line with the ones obtained with <span
 class="modulename">PAMLj</span>.</p>
 <p>As a final remark, these comparisons demonstrate that one does not

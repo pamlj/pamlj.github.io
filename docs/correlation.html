@@ -10,7 +10,7 @@
     
     <title>Correlation</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -250,13 +250,13 @@ Gallucci</p>
 <p>0.2.0</p>
 </blockquote>
 </div>
-<p><img src="pics/correlation/ui.png" width="1346" /></p>
+<p><img src="pics/correlation/ui.png" alt="" width="1346" /></p>
 <p><code>Correlation</code> allows for computing power parameters for
 testing the Pearson or Spearman correlation coefficient. The initial
 step is to determine the objective of the analysis ( <em>aim</em> ).
 Further details regarding different objectives can be found in the
 <code>Info</code> results field.</p>
-<p><img src="pics/common/aim.1.png" width="560" /></p>
+<p><img src="pics/common/aim.1.png" alt="" width="560" /></p>
 <p>We start with the first aim, finding the required sample size N.</p>
 <div id="aim-n-required-sample-size" class="section level1">
 <h1>Aim: N (Required sample size)</h1>
@@ -271,14 +271,14 @@ sample size (N) for a planned research project. Assuming an expected
 correlation of 0.20 between our target variables, and aiming for a power
 of 0.90 with a two-tailed test, evaluated at α = 0.05, we can simply
 input these parameters into <span class="modulename">PAMLj</span>.</p>
-<p><img src="pics/correlation/r.1.png" width="990" /></p>
+<p><img src="pics/correlation/r.1.png" alt="" width="990" /></p>
 <p>From the result table we can see that the required N is 258, so we
 need 258 case to achieve a power of .90 given an expected correlation of
 .2.</p>
 <p>The second table we get is the <code>Power by Effect Size</code>
 table, which informs us on the different power levels associated with
 different possible effect sizes.</p>
-<p><img src="pics/correlation/r.2.png" width="472" /></p>
+<p><img src="pics/correlation/r.2.png" alt="" width="472" /></p>
 <p>Based on the estimate <span class="math inline">\(N=258\)</span>, we
 should expected a very low power (<span
 class="math inline">\(1-\beta&lt;.5\)</span>) were the actual population
@@ -303,7 +303,7 @@ correlation is larger than .222.</p>
 class="option">Power contour plot</span> visualizes the power from low
 (green) to high (yellow) as a function of possible sample sizes (x-axis)
 and effect (correlation) sizes.</p>
-<p><img src="pics/correlation/r.3.png" width="547" /></p>
+<p><img src="pics/correlation/r.3.png" alt="" width="547" /></p>
 <p>In the power contour plot, we see the solid line representing the
 combinations of Sample Size (N) and effect size that yields the required
 power (in the example .90). So we know how the power will change had we
@@ -312,7 +312,7 @@ sample size (go left on the x-axis).</p>
 <p>The second plot we can ask is the <code>Power curve by N</code> . It
 portraits how the power (y-axis) chances as one increases the sample
 size (x-axis).</p>
-<p><img src="pics/correlation/r.4.png" width="465" /></p>
+<p><img src="pics/correlation/r.4.png" alt="" width="465" /></p>
 <p>The solid line portraits the change in power as we increases sample
 size given the effect size (<span class="math inline">\(r=.2\)</span>)
 and the critical alpha (<span
@@ -338,7 +338,7 @@ the likelihood of detecting a significant effect?</p>
 <p>So, let’s complete the field Calculate: Power. With an effect size of
 0.35 and a sample size of 25, the expected power (see the power column)
 is:</p>
-<p><img src="pics/correlation/r.5.png" width="1245" /></p>
+<p><img src="pics/correlation/r.5.png" alt="" width="1245" /></p>
 <p>The achievable power is <span class="math inline">\(1-\beta =
 .414\)</span>. This means the study is more likely not to detect a
 significant result than to do so, indicating a high risk of being
@@ -354,7 +354,7 @@ class="citation">(<a href="#ref-nuzzo2021post">Nuzzo
 N</strong> have here the same interpretation as mentioned above.
 However, when the aim of the analysis is to find the achieved power, one
 can ask for <span class="option">Power curve by effect size</span>.</p>
-<p><img src="pics/correlation/r.6.png" width="460" /></p>
+<p><img src="pics/correlation/r.6.png" alt="" width="460" /></p>
 <p>Here, we observe the relationship between the power of the test and
 the effect size. The solid curve illustrates how the power may vary
 across different effect sizes, given a fixed sample size (<span
@@ -398,7 +398,7 @@ would be detectable in future studies with a probability greater than
 0.90. By inputting the available information — <span
 class="math inline">\(N=40\)</span>, required power of 0.90 (for
 instance), and an alpha of 0.05 — you can obtain valuable insights.</p>
-<p><img src="pics/correlation/r.7.png" width="1123" /></p>
+<p><img src="pics/correlation/r.7.png" alt="" width="1123" /></p>
 <p>Results show that any correlation less than .483 will be tested with
 a power less than .90.</p>
 <div id="sensitivity-analysis-2" class="section level2">
@@ -424,8 +424,7 @@ Return to main help pages
 <a class='backto' href='index.html'>Main page</a>
 </div>
 <p>’</p>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-albers2017biased" class="csl-entry">
 Albers, C, and D Lakens. 2017. <span>“Biased Sample Size Estimates in
 a-Priori Power Analysis Due to the Choice of Effect Size Index and

@@ -10,7 +10,7 @@
     
     <title>Mixed models: handling clusters</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -296,7 +296,7 @@ parameters will be determined by the algorithm.</p>
 the name of the clustering variable and displays the fields to be filled
 in to generate the correct sample based on the cluster variable
 definition.</p>
-<p><img src="details/mixed/clusters/e1.input.1.png" width="697" /></p>
+<p><img src="details/mixed/clusters/e1.input.1.png" alt="" width="697" /></p>
 <p>Now, depending on the aim of the analysis, one needs to fill one of
 the fields (<code># Cluster Levels (k)</code> or
 <code>N per cluster (n)</code>). Here we discuss the meaning of these
@@ -326,13 +326,13 @@ input:</p>
 <pre><code>y~1*1+[1,1,1]*time+(1*1|ID)</code></pre>
 <p>Then we specify that <code>time</code> is a categorical variable with
 4 levels.</p>
-<p><img src="details/mixed/clusters/e2.input.1.png" width="554" /></p>
+<p><img src="details/mixed/clusters/e2.input.1.png" alt="" width="554" /></p>
 <p>and we set the cluster <code>N per cluster</code> to 4, indicating
 that one participant (the cluster unit) has 4 observations (we assume
 here we have 10 participants (<span
 class="math inline">\(k=10\)</span>), but if the aim is N we would leave
 <span class="math inline">\(k\)</span> empty).</p>
-<p><img src="details/mixed/clusters/e2.input.2.png" width="679" /></p>
+<p><img src="details/mixed/clusters/e2.input.2.png" alt="" width="679" /></p>
 <p>The resulting data look like this:</p>
 <pre><code>             y time      ID
 1   0.64342217    1       1
@@ -352,7 +352,7 @@ each level of time. Table <code>Variable parameters (one sample)</code>
 also shows that we are simulating the correct design, because
 <em>time</em> has 4 levels (column <em>Value</em>) repeated within
 cluster <code>ID</code>.</p>
-<p><img src="details/mixed/clusters/e2.output.1.png" width="472" /></p>
+<p><img src="details/mixed/clusters/e2.output.1.png" alt="" width="472" /></p>
 <p>In terms of clusters structure, table <code>Cluster parameters</code>
 shows that <em>ID</em> has 10 levels, with 4 observations with each
 cluster, and 4 observations within, yielding 40 observations in total.
@@ -377,7 +377,7 @@ model:</p>
 <p>and the same variable definition (time with 4 levels), but now
 <code>N per cluster</code> is 20, which is 4 levels of time × 5
 trials.</p>
-<p><img src="details/mixed/clusters/e2.input.3.png" width="698" /></p>
+<p><img src="details/mixed/clusters/e2.input.3.png" alt="" width="698" /></p>
 <p>The resulting data look like this (first participant):</p>
 <pre><code>              y time      ID
 1    0.38563267    1       1
@@ -442,7 +442,7 @@ we have 60 observations, in which each participant has
 <code>N per cluster (n)</code> equal to 1 as well. It may seem counter
 intuitive, but the participant is actually repeated only once, but their
 measurement is spread across 6 stimuli. Thus, we need to set:</p>
-<p><img src="details/mixed/clusters/e3.input.1.png" width="694" /></p>
+<p><img src="details/mixed/clusters/e3.input.1.png" alt="" width="694" /></p>
 <p>The resulting data (first participant) will look like this:</p>
 <pre><code>        y       PID SID
 1   0.741008569   1   1
@@ -455,7 +455,7 @@ measurement is spread across 6 stimuli. Thus, we need to set:</p>
 6 observations with each participant (<em>PID</em>), because each
 participant sees 6 stimuli, and 10 observations within each stimulus,
 because each stimulus is seen by 10 participants.</p>
-<p><img src="details/mixed/clusters/e3.output.1.png" width="462" /></p>
+<p><img src="details/mixed/clusters/e3.output.1.png" alt="" width="462" /></p>
 <p>Notice, however, that the independent variable <em>x</em> is
 continuous, and it is left to vary both across and with clusters by
 default. For dealing with multiple clusters variables with between vs
@@ -501,7 +501,7 @@ pupils.</p>
 <pre><code>y~1*1+1*x+(1*1|school/class)</code></pre>
 <p>Then we specify that we have 10 schools, each with 6 classes, and
 each class has 12 observations (pupils).</p>
-<p><img src="details/mixed/clusters/e4.input.1.png" width="680" /></p>
+<p><img src="details/mixed/clusters/e4.input.1.png" alt="" width="680" /></p>
 <p>The generated data look similar to the cross-classified data:</p>
 <pre><code>row   y             x           school  class
 1    0.456717064 -1.017673137      1     1
@@ -527,7 +527,7 @@ cross-classified design. If one looks at the
 <code>Clusters parameters</code> table, one finds that the clusters are
 now <code>school</code> and <code>school:class</code>, which is exactly
 how the model specification expands.</p>
-<p><img src="details/mixed/clusters/e4.output.1.png" width="439" /></p>
+<p><img src="details/mixed/clusters/e4.output.1.png" alt="" width="439" /></p>
 <p>In terms of cluster size, we obtain the results we intended. Let’s
 check if the setup is correct: each school has 6 classes with 12 pupils,
 so within each school there are 72 observations. Within each class
@@ -580,17 +580,17 @@ condition), so we have <code># Cluster levels</code>=20 and
 <code>N per cluster</code>=2. Finally, we have 15 stimuli, each stimulus
 has one replication (one version), so <code># Cluster levels</code>=15
 and <code>N per cluster</code>=1.</p>
-<p><img src="details/mixed/clusters/e5.input.1.png" width="697" />
-<img src="details/mixed/clusters/e5.input.2.png" width="694" /></p>
+<p><img src="details/mixed/clusters/e5.input.1.png" alt="" width="697" />
+<img src="details/mixed/clusters/e5.input.2.png" alt="" width="694" /></p>
 <p>This is the resulting sample structure (first rows of the generated
 dataset):</p>
-<p><img src="details/mixed/clusters/e5.output.1.png" width="392" /></p>
+<p><img src="details/mixed/clusters/e5.output.1.png" alt="" width="392" /></p>
 <p>`…</p>
 <p>It is clear that each lab has all PID (here not visible) and each
 participants sees each stimuli twice, in cond=1 and cond=2. To
 appreciate the full sample characteristics we can look at the
 <code>Clusters structure</code> table:</p>
-<p><img src="details/mixed/clusters/e5.output.2.png" width="444" /></p>
+<p><img src="details/mixed/clusters/e5.output.2.png" alt="" width="444" /></p>
 <p>Each participant, identified by the combination <code>LAB:PID</code>
 has 30 observations, because it sees 15 stimuli twice. Each stimulus is
 seen by 20 participant twice in 10 labs, so each stimulus has 400
@@ -615,7 +615,7 @@ as the finding algorithm.</p>
 variability) a <code>Cluster Levels (k)</code> equal to 9. So, given all
 the other parameters, we need 9 labs to get at least a power of .90.
 Let’s see what the structure of the data is.</p>
-<p><img src="details/mixed/clusters/e7.output.1.png" width="444" /></p>
+<p><img src="details/mixed/clusters/e7.output.1.png" alt="" width="444" /></p>
 <p>Does it make sense? We need <span class="math inline">\(9\)</span>
 labs, and each experiment requires <span
 class="math inline">\(600\)</span> observations. Each participant,
@@ -640,7 +640,7 @@ combination of <code>LAB:SID</code>. Thus, we need to cast this
 information in the model. The remaing input definitions are the
 same.</p>
 <pre><code>y~1*1+1*cond+(1*1|LAB)+(1*1|LAB:PID)+(1*1|LAB:SID)</code></pre>
-<p><img src="details/mixed/clusters/e6.output.1.png" width="446" /></p>
+<p><img src="details/mixed/clusters/e6.output.1.png" alt="" width="446" /></p>
 <p>Coherently, we still have 30 observation per participants, that are
 200 in total. Each of the 10 labs has 600 observations. Now, however, we
 have 150 stimuli (<code>LAB:SID</code>, 15 stimuli for each of the 10

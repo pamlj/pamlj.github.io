@@ -10,7 +10,7 @@
     
     <title>Factorial designs: power from means and SD</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -332,19 +332,19 @@ for the desin cells one is planning. Factors of the design should be
 listed as categorical factors, and their means and sd should be listed
 in subsequent columns. For instance, a simple design with two groups,
 can be prepared like this:</p>
-<p><img src="rosetta/pics/factorial/facmeans.1.png" width="398" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.1.png" alt="" width="398" /></p>
 <p>When data are defined, one can use the <span class="option_title">
 Factorial designs power analysis </span> from <span class="option_mode">
 Expected Means </span> interface in define the design factors, their
 means and standard deviations.</p>
-<p><img src="rosetta/pics/factorial/facmeans.2.png" width="571" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.2.png" alt="" width="571" /></p>
 <p>As soon as the variables are defined, the effect sizes are computed
 together with the power parameters.</p>
-<p><img src="rosetta/pics/factorial/facmeans.3.png" width="552" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.3.png" alt="" width="552" /></p>
 <p>As a quick test, we can use <code>G*Power</code> to check the
 results, using its interface for inputing the means and the standard
 deviations.</p>
-<p><img src="rosetta/pics/factorial/facmeans.4.png" width="876" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.4.png" alt="" width="876" /></p>
 <p>Results are the same.</p>
 <p>Unfortunately, G*Power does not allow to input means and sd other
 than for one-way between-subjects designs, so we cannot test <span
@@ -360,18 +360,18 @@ an array of means and standard deviations.</p>
 class="modulename">PAMLj</span> in the <span
 class="jamovi"><a href="http://www.jamovi.org" target="_blank">jamovi</a></span>
 data library.</p>
-<p><img src="rosetta/pics/factorial/facmeans.5.png" width="743" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.5.png" alt="" width="743" /></p>
 <p>Data describe the means and standard deviations for a 2X3X2
 design.</p>
-<p><img src="rosetta/pics/factorial/facmeans.data.png" width="565" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.data.png" alt="" width="565" /></p>
 <p>In <code>Factorial designs power analysis</code> from
 <code>Expected Means</code> we can simply input the factors, indicating
 also the column representing the means and the one representing the
 standard devations.</p>
-<p><img src="rosetta/pics/factorial/facmeans.6.png" width="579" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.6.png" alt="" width="579" /></p>
 <p>For the purpose of computing the expected power, we can set the
 sample size to 240, corresponding to 20 cases per cell.</p>
-<p><img src="rosetta/pics/factorial/facmeans.7.png" width="589" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.7.png" alt="" width="589" /></p>
 <p><span class="modulename">PAMLj</span> computes the expected effect
 sizes and the expected power for all factors effects and their
 interaction.</p>
@@ -388,11 +388,27 @@ following code:</p>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>                       ) </span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>                       ) </span></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;lme4&#39;:
+##   method           from
+##   na.action.merMod car</code></pre>
+<pre><code>## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+## ℹ Please use tidy evaluation idioms with `aes()`.
+## ℹ See also `vignette(&quot;ggplot2-in-packages&quot;)` for more information.
+## ℹ The deprecated feature was likely used in the Superpower package.
+##   Please report the issue at &lt;https://github.com/arcaldwell49/Superpower/issues&gt;.
+## This warning is displayed once per session.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## ℹ The deprecated feature was likely used in the Superpower package.
+##   Please report the issue at &lt;https://github.com/arcaldwell49/Superpower/issues&gt;.
+## This warning is displayed once per session.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
 <pre><code>##          power partial_eta_squared cohen_f non_centrality
 ## a     22.12255             0.00622 0.07909        1.42604
 ## b     25.56930             0.01018 0.10142        2.34531
@@ -413,22 +429,22 @@ small to moderate sample sizes they tend to be larger than in the
 population. Indeed, if we ask <code>Superpower</code> to compute the
 effect sizes for a very large sample, the estimated indices converge to
 the ones obtained in <span class="modulename">PAMLj</span>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">5000</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2b*3b*2b&quot;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>                       ) </span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">5000</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2b*3b*2b&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>                       ) </span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
 <pre><code>##       power partial_eta_squared cohen_f non_centrality
 ## a       100              0.0059  0.0771       356.5104
 ## b       100              0.0097  0.0989       586.3281
@@ -449,34 +465,34 @@ setup the analysis as before, but in the <span class="option">Repeated
 Measures</span> tab, we can declare which factor is within-subjects and
 input the expected correlation. In this example, we set the sample size
 to 50.</p>
-<p><img src="rosetta/pics/factorial/facmeans.8.png" width="563" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.8.png" alt="" width="563" /></p>
 <p>Having set the factors as repeated measures factors and with a
 non-zero correlation changes the effect size estimation and the
 estimated power.</p>
-<p><img src="rosetta/pics/factorial/facmeans.9.png" width="548" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.9.png" alt="" width="548" /></p>
 <p>We should also note that the residuals degrees of freedom are now
 different, because they depend on the sample size and degrees of freedom
 of the effect.</p>
 <p>For comparison, we run the same analysis with
 <code>Superpower</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">50</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2w*3w*2w&quot;</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>r<span class="ot">&lt;-</span>.<span class="dv">2</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>                              <span class="at">r=</span>r,</span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>                       ) </span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">50</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2w*3w*2w&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>r<span class="ot">&lt;-</span>.<span class="dv">2</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>                              <span class="at">r=</span>r,</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>                       ) </span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
 <pre><code>##          power partial_eta_squared cohen_f non_centrality
 ## a     54.36549             0.08336 0.30157        4.45638
 ## b     66.25727             0.06958 0.27347        7.32910
@@ -497,7 +513,7 @@ within effects (1 group) with <span class="math inline">\(N=50\)</span>
 Software inconsistency in RM ANOVA</a>
 <a href="./rosetta_factorial_peta.html">Rosetta: Factorial power from
 effect size</a>).</p>
-<p><img src="rosetta/pics/factorial/facmeans.10.png" width="937" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.10.png" alt="" width="937" /></p>
 <p>Results are indeed identical to <span class="modulename">PAMLj</span>
 results.</p>
 </div>
@@ -511,31 +527,31 @@ factors. This yields a design with 6 groups, so we can set the sample
 size to 120, corresponding to 20 cases per group. As for the
 correlations among repeated measures, we can set it to .5. In PAMLj, we
 simply set up the input as follows.</p>
-<p><img src="rosetta/pics/factorial/facmeans.11.png" width="584" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.11.png" alt="" width="584" /></p>
 <p>and for the repeated measures we have</p>
-<p><img src="rosetta/pics/factorial/facmeans.12.png" width="567" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.12.png" alt="" width="567" /></p>
 <p>Results are the following:</p>
-<p><img src="rosetta/pics/factorial/facmeans.13.png" width="549" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.13.png" alt="" width="549" /></p>
 <p>For comparison, we run the same analysis with
 <code>Superpower</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">50</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2w*3b*2b&quot;</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>r<span class="ot">&lt;-</span>.<span class="dv">5</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>                              <span class="at">r=</span>r,</span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>                       ) </span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>ds<span class="ot">&lt;-</span>pamlj<span class="sc">::</span>factorial</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>std<span class="ot">&lt;-</span><span class="dv">8</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">50</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>des_str<span class="ot">&lt;-</span><span class="st">&quot;2w*3b*2b&quot;</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>r<span class="ot">&lt;-</span>.<span class="dv">5</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>design <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_design</span>(<span class="at">design =</span> des_str, </span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>                              <span class="co">#sample size per group </span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>                              <span class="at">n =</span> n, </span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>                              <span class="co">#pattern of means</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>                              <span class="at">mu =</span>ds<span class="sc">$</span>means,</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>                              <span class="at">r=</span>r,</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>                              <span class="at">sd =</span> std,</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>                              <span class="at">plot=</span><span class="cn">FALSE</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>                       ) </span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>exact_result <span class="ot">&lt;-</span> Superpower<span class="sc">::</span><span class="fu">ANOVA_exact</span>(design,</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>                            <span class="at">alpha_level =</span> .<span class="dv">05</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>                            <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="fu">zapsmall</span>(exact_result<span class="sc">$</span>main_results)</span></code></pre></div>
 <pre><code>##          power partial_eta_squared cohen_f non_centrality
 ## b     40.34061             0.01312 0.11531        3.90885
 ## c     83.85936             0.02891 0.17253        8.75174
@@ -553,7 +569,7 @@ GPOWER. Using the <code>factorial</code> dataset, assuming one repeated
 measure factor (A) with correlation equal to .5, the other two (B and C)
 as between-subjects factors, with required power set to .90, we obtain
 the following results.</p>
-<p><img src="rosetta/pics/factorial/facmeans.14.png" width="529" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.14.png" alt="" width="529" /></p>
 <p>We can now pick the interaction <span
 class="math inline">\(A*B\)</span>, with <span
 class="math inline">\(p\eta^2=.0293\)</span> with 2 degrees of freedom.
@@ -563,7 +579,7 @@ In GPower, we can use
 results, we can set the <code>Number of repeated measures</code> to 2,
 and the <code>Number of groups</code> to 3 (factor B has three
 levels).</p>
-<p><img src="rosetta/pics/factorial/facmeans.15.png" width="943" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.15.png" alt="" width="943" /></p>
 <p>The results are similar but not very close, being the <span
 class="math inline">\(N=219\)</span> for PAMLj and <span
 class="math inline">\(N=216\)</span> for GPower. However, in this case
@@ -578,8 +594,8 @@ in fact, estimates the required N without considering the whole model
 degrees of freedom, but only the effect degrees of freedom (cf
 <a href="./details_failure.html">Extreme values warnings</a>
 <a href="./specs_fncp.html">F-Test Non-centrality parameters</a>).</p>
-<p><img src="rosetta/pics/factorial/facmeans.16.png" width="573" />
-<img src="rosetta/pics/factorial/facmeans.17.png" width="560" /></p>
+<p><img src="rosetta/pics/factorial/facmeans.16.png" alt="" width="573" />
+<img src="rosetta/pics/factorial/facmeans.17.png" alt="" width="560" /></p>
 </div>
 </div>
 <div id="comments" class="section level1 adm adm-warning">

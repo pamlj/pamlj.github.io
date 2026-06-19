@@ -10,7 +10,7 @@
     
     <title>Mixed models: Building factorial designs</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -337,19 +337,19 @@ From a mixed-model perspective, participants define the cluster variable
 <span class="option">N per cluster</span> is equal to 3.</p>
 <p>In <span class="modulename">PAMLj</span>, we proceed as follows.</p>
 <p>First, define the model:</p>
-<p><img src="details/mixed/designs/e1.input.1.png" width="678" /></p>
+<p><img src="details/mixed/designs/e1.input.1.png" alt="" width="678" /></p>
 <p>Then define the variable <code>x</code> as a categorical variable
 with three levels:</p>
-<p><img src="details/mixed/designs/e1.input.2.png" width="671" /></p>
+<p><img src="details/mixed/designs/e1.input.2.png" alt="" width="671" /></p>
 <p>Because each participant (cluster) has three observations, <span
 class="option">N per cluster</span> should be set to 3:</p>
-<p><img src="details/mixed/designs/e1.input.3.png" width="687" /></p>
+<p><img src="details/mixed/designs/e1.input.3.png" alt="" width="687" /></p>
 <p>To verify that the data used by the module for power estimation have
 the intended structure, we can inspect the table <em>Variables
 parameters (one sample)</em>.<br />
 This table is produced from a generated sample that follows the
 specified design.</p>
-<p><img src="details/mixed/designs/e1.output.1.png" width="468" /></p>
+<p><img src="details/mixed/designs/e1.output.1.png" alt="" width="468" /></p>
 <p>We can see that the variable <code>x</code> has three levels
 <em>within</em> each cluster (<code>ID</code>). The cluster variable
 itself has three observations per level.<br />
@@ -366,19 +366,19 @@ Each participant is measured in every combination of the 3
 (<code>x</code>) × 2 (<code>z</code>) design, for a total of six
 measurements per participant.</p>
 <p>We therefore specify a different model:</p>
-<p><img src="details/mixed/designs/e3.input.1.png" width="673" /></p>
+<p><img src="details/mixed/designs/e3.input.1.png" alt="" width="673" /></p>
 <p>with two categorical variables:</p>
-<p><img src="details/mixed/designs/e3.input.2.png" width="676" /></p>
+<p><img src="details/mixed/designs/e3.input.2.png" alt="" width="676" /></p>
 <p>Because this is a 3 × 2 repeated-measures design, we need six
 observations per participant:</p>
-<p><img src="details/mixed/designs/e3.input.3.png" width="676" /></p>
+<p><img src="details/mixed/designs/e3.input.3.png" alt="" width="676" /></p>
 <p>The resulting data structure matches the intended design:</p>
-<p><img src="details/mixed/designs/e3.output.1.png" width="482" /></p>
+<p><img src="details/mixed/designs/e3.output.1.png" alt="" width="482" /></p>
 <p>We can also inspect the <em>Data Structure</em> table, which lists
 the first rows of a generated dataset.<br />
 As expected, the first participant (<code>ID</code>) shows all
 combinations of the two factors.</p>
-<p><img src="details/mixed/designs/e3.output.2.png" width="308" /></p>
+<p><img src="details/mixed/designs/e3.output.2.png" alt="" width="308" /></p>
 </div>
 <div id="factorial-betweenwithin-anova-designs" class="section level1">
 <h1>Factorial between/within ANOVA designs</h1>
@@ -390,15 +390,15 @@ keyword <code>between: var|cluster</code> (can be abbreviated to
 <code>bet: var|cluster</code>) (see <a href="./mixed_syntax.html">Mixed
 models: model syntax</a>).</p>
 <p>We specify this directly in the syntax field:</p>
-<p><img src="details/mixed/designs/e4.input.1.png" width="667" /></p>
+<p><img src="details/mixed/designs/e4.input.1.png" alt="" width="667" /></p>
 <p>If <code>z</code> is between participants, the number of observations
 within each participant is now three (one for each level of
 <code>x</code>).<br />
 Accordingly, we set this value in <span class="option">Clustering
 Variables</span>:</p>
-<p><img src="details/mixed/designs/e4.input.2.png" width="662" /></p>
+<p><img src="details/mixed/designs/e4.input.2.png" alt="" width="662" /></p>
 <p>The resulting data structure is again correct:</p>
-<p><img src="details/mixed/designs/e4.output.1.png" width="512" /></p>
+<p><img src="details/mixed/designs/e4.output.1.png" alt="" width="512" /></p>
 <p>Notice the row <em>Levels within</em> for variable
 <code>z</code>.<br />
 Because <code>z</code> is a between-cluster variable, each cluster
@@ -414,7 +414,7 @@ This may occur as part of a larger design, or in studies where
 clustering is still required for other reasons.</p>
 <p>To specify a fully between-participants design, we simply declare all
 factors as between:</p>
-<p><img src="details/mixed/designs/e5.input.1.png" width="650" /></p>
+<p><img src="details/mixed/designs/e5.input.1.png" alt="" width="650" /></p>
 <p>However, when the analysis goal is to determine the <em>Number of
 cluster levels</em> (i.e., the number of participants), the module may
 initially fail.<br />
@@ -426,7 +426,7 @@ value larger than the number of design cells.<br />
 In this context, <code># Cluster Levels</code> defines the starting
 point of the search algorithm. Setting it to a feasible value allows the
 procedure to work correctly.</p>
-<p><img src="details/mixed/designs/e5.input.1.png" width="650" /></p>
+<p><img src="details/mixed/designs/e5.input.1.png" alt="" width="650" /></p>
 <p>In our example, we have a 3 × 2 design (6 cells).<br />
 To have at least four participants per cell, we need a minimum of 24
 participants (6 × 4).<br />
@@ -507,9 +507,9 @@ Participant 2
 </table>
 <p>Accordingly, we only need to change <code>N per cluster</code> and
 set it to 30:</p>
-<p><img src="details/mixed/designs/e2.input.1.png" width="672" /></p>
+<p><img src="details/mixed/designs/e2.input.1.png" alt="" width="672" /></p>
 <p>The generated data have exactly the intended structure:</p>
-<p><img src="details/mixed/designs/e2.output.1.png" width="497" /></p>
+<p><img src="details/mixed/designs/e2.output.1.png" alt="" width="497" /></p>
 <p>The same logic applies to factorial designs.<br />
 Whatever the design, if each repeated-measures cell contains <span
 class="math inline">\(T\)</span> trials, we simply set
@@ -518,8 +518,8 @@ C\)</span>, where <span class="math inline">\(C\)</span> is the number
 of within-participant cells.</p>
 <p>For example, in a 3 × 2 design with 10 trials per cell, each
 participant contributes 60 observations:</p>
-<p><img src="details/mixed/designs/e6.input.1.png" width="688" /></p>
-<p><img src="details/mixed/designs/e6.output.1.png" width="480" /></p>
+<p><img src="details/mixed/designs/e6.input.1.png" alt="" width="688" /></p>
+<p><img src="details/mixed/designs/e6.output.1.png" alt="" width="480" /></p>
 </div>
 <div id="additional-material" class="section level1">
 <h1>Additional material</h1>

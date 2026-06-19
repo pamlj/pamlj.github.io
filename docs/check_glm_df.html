@@ -9,7 +9,7 @@
     
     <title>GLM options: computing degrees of freedom</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -262,11 +262,11 @@ can declare that we have 0 covariates (continuous independent variables)
 and 3 factors, specifying their levels. We also declare that the model
 will involve all possible interactions among the factors (2-way,
 3-way)</p>
-<p><img src="rosetta/checks/modeldef.1.png" width="625" /></p>
+<p><img src="rosetta/checks/modeldef.1.png" alt="" width="625" /></p>
 <p>As soon as we define the factors levels, the <span
 class="option">Model degrees of freedom</span> field gets updated to the
 correct number.</p>
-<p><img src="rosetta/checks/modeldef.2.png" width="476" /></p>
+<p><img src="rosetta/checks/modeldef.2.png" alt="" width="476" /></p>
 <p><span class="math inline">\(df=35\)</span> as expected.</p>
 <p>Let’s now consider a more complex example. Assume now that we want to
 estimate the model <em>df</em> in the design described above, knowing
@@ -285,9 +285,9 @@ factor_df_, but there are two covariates, so we need to multiply by 2.
 The total must be <span
 class="math inline">\(df=df_1+df_2+df_3=35+2+14=51\)</span>. Let’s check
 the module results.</p>
-<p><img src="rosetta/checks/modeldef.3.png" width="626" /></p>
+<p><img src="rosetta/checks/modeldef.3.png" alt="" width="626" /></p>
 <p>yielding 51 as expected.</p>
-<p><img src="rosetta/checks/modeldef.4.png" width="474" /></p>
+<p><img src="rosetta/checks/modeldef.4.png" alt="" width="474" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages

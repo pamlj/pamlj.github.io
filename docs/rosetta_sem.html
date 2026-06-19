@@ -9,7 +9,7 @@
     
     <title>SEM</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -321,7 +321,7 @@ href="#ref-moshagen2024sempower">2024</a>)</span>, by the authors of
 <li>Loadings = all .5</li>
 </ul>
 </div>
-<p><img src="rosetta/pics/sem/diag.1.png" width="562" /></p>
+<p><img src="rosetta/pics/sem/diag.1.png" alt="" width="562" /></p>
 <p>in <code>semPower</code> one can obtain the required N by issue the
 following command.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(semPower)</span></code></pre></div>
@@ -356,11 +356,11 @@ following command.</p>
 class="modulename">PAMLj</span>. In the module, we need to specify the
 model we have in mind, and which parameter is to be tested, that is
 constrained to zero.</p>
-<p><img src="rosetta/pics/sem/input.1.1.png" width="582" /></p>
+<p><img src="rosetta/pics/sem/input.1.1.png" alt="" width="582" /></p>
 <p>Setting the power parameters as intended</p>
-<p><img src="rosetta/pics/sem/input.1.2.png" width="546" /></p>
+<p><img src="rosetta/pics/sem/input.1.2.png" alt="" width="546" /></p>
 <p>we obtain the same results as before.</p>
-<p><img src="rosetta/pics/sem/output.1.png" width="548" /></p>
+<p><img src="rosetta/pics/sem/output.1.png" alt="" width="548" /></p>
 <p>We can check now that both packages reaches the same conclusion also
 if we set <span class="math inline">\(N=783\)</span> and ask for the
 expected <code>power</code>.</p>
@@ -395,10 +395,10 @@ expected <code>power</code>.</p>
 ##  Beta                     0.199476
 ##  Power (1 - Beta)         0.800524
 ##  Implied Alpha/Beta Ratio 0.250657</code></pre>
-<p><img src="rosetta/pics/sem/input.2.1.png" width="565" /></p>
-<p><img src="rosetta/pics/sem/input.2.2.png" width="577" /></p>
-<p><img src="rosetta/pics/sem/output.2.1.png" width="548" /></p>
-<p><img src="rosetta/pics/sem/output.2.2.png" width="380" /></p>
+<p><img src="rosetta/pics/sem/input.2.1.png" alt="" width="565" /></p>
+<p><img src="rosetta/pics/sem/input.2.2.png" alt="" width="577" /></p>
+<p><img src="rosetta/pics/sem/output.2.1.png" alt="" width="548" /></p>
+<p><img src="rosetta/pics/sem/output.2.2.png" alt="" width="380" /></p>
 <p>It is useful to verify also the sensitivity analysis table <span
 class="tablename">Power by Sample size</span>. We can see that it says
 that for <span class="math inline">\(N&lt;383\)</span>, we should expect
@@ -463,16 +463,16 @@ for <code>dem65</code></li>
 <p><span class="math inline">\(dem65=.3*ind60+.2*dem60\)</span></p>
 </div>
 <p>The model looks like this:</p>
-<p><img src="rosetta/pics/sem/diag.2.png" width="473" /></p>
+<p><img src="rosetta/pics/sem/diag.2.png" alt="" width="473" /></p>
 <p>we want to test that at least one effect on <code>dem65</code> is
 significant, and obtain the required N to achieve that. This means that
 we need to constrain both <span
 class="math inline">\(dem65=.3*ind60\)</span> and <span
 class="math inline">\(dem65=.2*dem60\)</span> to zero. In <span
 class="modulename">PAMLj</span> we set the model like this.</p>
-<p><img src="rosetta/pics/sem/input.3.1.png" width="580" /></p>
+<p><img src="rosetta/pics/sem/input.3.1.png" alt="" width="580" /></p>
 <p>and we obtain</p>
-<p><img src="rosetta/pics/sem/output.3.png" width="565" /></p>
+<p><img src="rosetta/pics/sem/output.3.png" alt="" width="565" /></p>
 <p>In <code>semPower</code> we can obtain the required power parameters
 as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>popModel<span class="ot">&lt;-</span><span class="st">&#39;</span></span>
@@ -553,8 +553,8 @@ are correct.</p>
 the option <span class="option">Standardized solution</span>, and we
 will get exactly the same results as we did in
 <code>semPower</code>.</p>
-<p><img src="rosetta/pics/sem/input.4.png" width="544" /></p>
-<p><img src="rosetta/pics/sem/output.4.png" width="599" /></p>
+<p><img src="rosetta/pics/sem/input.4.png" alt="" width="544" /></p>
+<p><img src="rosetta/pics/sem/output.4.png" alt="" width="599" /></p>
 <p>However, if the user’s intention is to insert standardized
 coefficients, the <span class="option">standardized</span> option must
 be selected. Otherwise, the implied coefficients will differ from the
@@ -563,8 +563,8 @@ we can check the <span class="option">Implied Latent Covariances</span>
 and <span class="option">Standardized regression</span> coefficients in
 the <span class="panel"> <i class="fa fa-chevron-down"></i> |
 Options</span> panel ”</p>
-<p><img src="rosetta/pics/sem/input.5.1.png" width="554" /></p>
-<p><img src="rosetta/pics/sem/output.5.1.png" width="378" /></p>
+<p><img src="rosetta/pics/sem/input.5.1.png" alt="" width="554" /></p>
+<p><img src="rosetta/pics/sem/output.5.1.png" alt="" width="378" /></p>
 <p>The first table lists the variance-covariance matrix of the latent
 variables. From the diagonal (variances), it is clear that the latent
 variables are not standardized. As a result, the
@@ -580,8 +580,8 @@ power. This explains why the unstandardized model requires a larger
 class="option">Standardized solution</span> option selected), the
 covariances appear correctly standardized, and the regression
 coefficients are the ones we intended to use.</p>
-<p><img src="rosetta/pics/sem/input.5.1.png" width="554" /></p>
-<p><img src="rosetta/pics/sem/output.5.2.png" width="327" /></p>
+<p><img src="rosetta/pics/sem/input.5.1.png" alt="" width="554" /></p>
+<p><img src="rosetta/pics/sem/output.5.2.png" alt="" width="327" /></p>
 <div class="adm adm-seealso backto">
 <p>
 Return to main help pages
@@ -602,8 +602,7 @@ at github</a> or <a href="mailto:mcfanda@gmail.com
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-moshagen2024sempower" class="csl-entry">
 Moshagen, Morten, and Martina Bader. 2024. <span>“semPower: General
 Power Analysis for Structural Equation Models.”</span> <em>Behavior

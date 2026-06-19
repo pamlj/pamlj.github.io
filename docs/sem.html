@@ -10,7 +10,7 @@
     
     <title>SEM power analysis</title>
 
-        <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
         <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -322,7 +322,7 @@ Gallucci</p>
 <div style="clear:both">
 
 </div>
-<p><img src="pics/sem/ui.png" width="1247" /></p>
+<p><img src="pics/sem/ui.png" alt="" width="1247" /></p>
 <p><code>SEM power analysis</code> enables the computation of power
 parameters (such as required N and power) for a wide range of structural
 equation models. It can be used to estimate power parameters based on
@@ -404,21 +404,21 @@ significant test by comparing two models: one where the coefficient of
 of <code>ind60</code> is constrained to <span
 class="math inline">\(0\)</span>. In the module, this model looks like
 this:</p>
-<p><img src="pics/sem/input.1.1.png" width="579" /></p>
+<p><img src="pics/sem/input.1.1.png" alt="" width="579" /></p>
 <p>After checking the usual input values (Type I error, required power,
 etc)</p>
-<p><img src="pics/sem/input.1.2.png" width="564" /></p>
+<p><img src="pics/sem/input.1.2.png" alt="" width="564" /></p>
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
-<p><img src="pics/sem/output.1.1.png" width="571" /></p>
+<p><img src="pics/sem/output.1.1.png" alt="" width="571" /></p>
 <p>The main table reports the required N to achieve a statistically
 significant result when testing the <code>ind60</code> coefficient.
 Additionally, we are provided with the path diagram to verify whether
 the model aligns with our expectations. Admittedly, the path diagram may
 appear a bit cluttered at times, but its purpose is solely to confirm
 the model’s structure, not to look aesthetically pleasing.</p>
-<p><img src="pics/sem/output.1.2.png" width="535" /></p>
+<p><img src="pics/sem/output.1.2.png" alt="" width="535" /></p>
 </div>
 <div id="multiple-tests" class="section level1">
 <h1>Multiple tests</h1>
@@ -464,7 +464,7 @@ class="math inline">\(b\)</span>, the code would look like this:</li>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="co"># tests</span></span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    a <span class="sc">==</span> <span class="dv">0</span></span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    b <span class="sc">==</span> <span class="dv">0</span></span></code></pre></div>
-<p><img src="pics/sem/output.2.png" width="508" /></p>
+<p><img src="pics/sem/output.2.png" alt="" width="508" /></p>
 <p>This code computes the power parameters for testing that
 <strong>any</strong> coefficients among <span
 class="math inline">\(a\)</span> and <span
@@ -502,7 +502,7 @@ approximation of the actual population parameters. As expected, the
 required N is much larger than in the previous examples because it is
 more difficult—and thus requires more power—to detect both coefficients
 as significant compared to detecting just one or either of the two.</p>
-<p><img src="pics/sem/output.3.png" width="548" /></p>
+<p><img src="pics/sem/output.3.png" alt="" width="548" /></p>
 </div>
 <div id="options" class="section level1">
 <h1>Options</h1>
@@ -638,7 +638,7 @@ Parameter in the Y-axis of custom power parameters plot. <code>N</code>,
 </tr>
 <tr>
 <td class="optionname">
-<span class="option">Show values</span>
+<span class="option">Value labels</span>
 </td>
 <td class="optionvalue">
 Add value labels to the custom power parameters plot.
@@ -646,7 +646,7 @@ Add value labels to the custom power parameters plot.
 </tr>
 <tr>
 <td class="optionname">
-<span class="option">Show table</span>
+<span class="option">Results table</span>
 </td>
 <td class="optionvalue">
 Produce a table of the values plotted in custom power parameters plot
