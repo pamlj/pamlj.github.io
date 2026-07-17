@@ -18,7 +18,7 @@ joint-significance, or bootstrap confidence intervals."><!-- mathjax --><script 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pamlj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -26,6 +26,19 @@ joint-significance, or bootstrap confidence intervals."><!-- mathjax --><script 
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/mediation_free.html">Free mediation models with pamlj</a>
+    </li>
+    <li>
+      <a href="../articles/mixed_from_lmer.html">Power analysis for mixed models, starting from a fitted lmer()/glmer() model</a>
+    </li>
+  </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -49,6 +62,7 @@ joint-significance, or bootstrap confidence intervals.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pamlmed</span><span class="op">(</span></span>
 <span>  aim <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>  mode <span class="op">=</span> <span class="st">"medsimple"</span>,</span>
+<span>  code <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  a <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  b <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  cprime <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -65,7 +79,7 @@ joint-significance, or bootstrap confidence intervals.</p>
 <span>  r13 <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  r23 <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  cprime2 <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  sensitivity_coef <span class="op">=</span> <span class="st">"a1"</span>,</span>
+<span>  sensitivity_coef <span class="op">=</span> <span class="st">"a"</span>,</span>
 <span>  power <span class="op">=</span> <span class="fl">0.9</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  sig.level <span class="op">=</span> <span class="fl">0.05</span>,</span>
@@ -91,6 +105,7 @@ joint-significance, or bootstrap confidence intervals.</p>
 <span>  plot_to_table <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  test_c <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  explain <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  inspect_cors <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  diagram <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -106,8 +121,16 @@ joint-significance, or bootstrap confidence intervals.</p>
 
 <dt id="arg-mode">mode<a class="anchor" aria-label="anchor" href="#arg-mode"></a></dt>
 <dd><p>Mediation model mode: <code>"medsimple"</code> for simple mediation
-with paths <code>a</code>, <code>b</code>, and <code>cprime</code>, or <code>"medcomplex"</code>
-for multiple/serial mediator models.</p></dd>
+with paths <code>a</code>, <code>b</code>, and <code>cprime</code>, <code>"medcomplex"</code>
+for multiple/serial mediator models, or <code>"medmodels"</code> for a free
+model specified with the model syntax (see <code>code</code>).</p></dd>
+
+
+<dt id="arg-code">code<a class="anchor" aria-label="anchor" href="#arg-code"></a></dt>
+<dd><p>Character string with the model syntax used when
+<code>mode="medmodels"</code>: one regression equation per endogenous variable
+(e.g. <code>"m ~ .3*x\ny ~ .2*x + .4*m"</code>), optionally with <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code>
+directives and symbolic coefficient labels.</p></dd>
 
 
 <dt id="arg-a">a<a class="anchor" aria-label="anchor" href="#arg-a"></a></dt>
@@ -316,6 +339,11 @@ the direct X -&gt; Y effect (<code>c</code> path) without mediators.</p></dd>
 <dt id="arg-explain">explain<a class="anchor" aria-label="anchor" href="#arg-explain"></a></dt>
 <dd><p>Logical; if <code>TRUE</code>, include explanatory output where
 available.</p></dd>
+
+
+<dt id="arg-inspect-cors">inspect_cors<a class="anchor" aria-label="anchor" href="#arg-inspect-cors"></a></dt>
+<dd><p>Logical; if <code>TRUE</code> (free models), add a table of the
+model-implied correlations among the variables.</p></dd>
 
 
 <dt id="arg-diagram">diagram<a class="anchor" aria-label="anchor" href="#arg-diagram"></a></dt>

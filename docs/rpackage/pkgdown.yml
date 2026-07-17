@@ -1,5 +1,7 @@
 pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2026-06-19T09:42Z
+articles:
+  mediation_free: mediation_free.html
+  mixed_from_lmer: mixed_from_lmer.html
+last_built: 2026-07-17T16:01Z

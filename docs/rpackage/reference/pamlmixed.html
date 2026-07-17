@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pamlj</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -25,6 +25,19 @@
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/mediation_free.html">Free mediation models with pamlj</a>
+    </li>
+    <li>
+      <a href="../articles/mixed_from_lmer.html">Power analysis for mixed models, starting from a fitted lmer()/glmer() model</a>
+    </li>
+  </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -48,6 +61,8 @@
 <span>  aim <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>  find <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>  syntax <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  focus <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  clusterpars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  categorical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  model_type <span class="op">=</span> <span class="st">"linear"</span>,</span>
@@ -61,6 +76,7 @@
 <span>  seed <span class="op">=</span> <span class="fl">42</span>,</span>
 <span>  run <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"pamlj.messages"</span><span class="op">)</span>,</span>
+<span>  show_data <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -79,7 +95,43 @@
 
 
 <dt id="arg-syntax">syntax<a class="anchor" aria-label="anchor" href="#arg-syntax"></a></dt>
-<dd><p>The model to be analysed with possible options</p></dd>
+<dd><p>The model to be analysed with possible options. A random-effect term can attach
+a one-letter symbol to a coefficient, e.g. `(a*1*1+b*1*x|cluster)`, so that two such symbols
+can be correlated with a `cor(a,b)=&lt;correlation&gt;` or `cov(a,b)=&lt;covariance&gt;` command line;
+both symbols must label single-value (non-categorical) random terms of the same cluster.</p></dd>
+
+
+<dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
+<dd><p>A fitted <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> or <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code> (binomial) model. When
+supplied, <code>syntax</code>, <code>clusterpars</code>, <code>categorical</code>, <code>sigma2</code> and
+<code>model_type</code> are extracted from it (any of these the user also passes explicitly are
+kept instead), and <code>aim</code> defaults to <code>"power"</code> for the design observed in the
+fitted model (cluster sizes/levels read off the fit). Random effects, including any
+covariance between single-value (non-categorical) random terms of the same group, are read
+off `VarCorr(model)` and reproduced exactly (as `cor()`/`cov()` commands in the extracted
+syntax, see <code>syntax</code> above); covariance touching a categorical random term cannot be
+represented and is dropped, with a warning. Categorical predictors are simulated with the
+exact contrast coding read off the fitted model's own data.frame (see <code>categorical</code>'s
+`coding="custom"` below), so the extracted fixed-effect coefficients remain correctly
+interpretable. Only Gaussian and binomial mixed models are supported. When the fit has two
+or more (crossed) clustering/grouping factors (e.g. `subject` and `item`), only the first
+carries the shared replication factor needed to reproduce the fit's total sample size, so
+the simulated dataset is not needlessly squared in size; a predictor found to be constant
+within every level of one of the clustering factors (e.g. a stimulus property fixed per
+`item`) is automatically marked `between: var|cluster`, so it isn't required to vary within
+every combination of clusters. A predictor that genuinely varies within every cluster (a
+true trial-level, counterbalanced factor) has no such shortcut and still requires enough
+real replication per combination of clusters to realize its levels; if the fit doesn't have
+that, model construction fails with "N per cluster too small for the planned design".</p></dd>
+
+
+<dt id="arg-focus">focus<a class="anchor" aria-label="anchor" href="#arg-focus"></a></dt>
+<dd><p>Only used together with <code>model</code>: the name of the fixed-effect term (as it
+appears in <code>attr(terms(model), "term.labels")</code>, e.g. <code>"Days"</code>, <code>"grp"</code>, or an
+interaction label such as <code>"x:z"</code>; <code>"1"</code>/<code>"(Intercept)"</code> selects the
+intercept) to focus the search/power computation on, instead of the default of using the
+worst-case (minimum) power across all effects. Equivalent to attaching a symbol to a term
+and adding a <code>test:</code> command when writing <code>syntax</code> by hand.</p></dd>
 
 
 <dt id="arg-clusterpars">clusterpars<a class="anchor" aria-label="anchor" href="#arg-clusterpars"></a></dt>
@@ -89,8 +141,15 @@ used as starting point for sample size. If <code>aim=clusters</code>, `k1` is us
 
 
 <dt id="arg-categorical">categorical<a class="anchor" aria-label="anchor" href="#arg-categorical"></a></dt>
-<dd><p>A named list of the form `list(varname1=x1,varname2=x2)`, specifying which variable is categorical and the number of levels (x).
-Any variable in the model not mentioned in `categorical ` is assumed to be numeric.</p></dd>
+<dd><p>A named list specifying which variable is categorical. Each entry can be
+either a bare number of levels, `list(varname=x)`, which uses `deviation` (sum-to-zero)
+coding, or `list(varname=list(levels=x, coding=c))`, which additionally selects a contrast
+coding scheme `c`: `deviation` (default), `simple`, `dummy`, `difference`, `helmert`,
+`repeated`, or `polynomial`. `coding="custom"` together with `contrasts=&lt;matrix&gt;` (an x by
+x-1 numeric contrast matrix, e.g. as returned by `contr.sum()`/`contr.treatment()`/etc.)
+assigns that matrix verbatim; this is how `model=` extracts a fitted model's own coding, and
+can also be supplied directly. Any variable in the model not mentioned in `categorical` is
+assumed to be numeric.</p></dd>
 
 
 <dt id="arg-model-type">model_type<a class="anchor" aria-label="anchor" href="#arg-model-type"></a></dt>
