@@ -11,6 +11,9 @@ navbar:
     href:  prop.html
   - text: "GLM"
     href:  glm.html
+  - text: "GzLM"
+    href:  gzlm.html
+
   - text: "Factorial"
     href:  factorial.html
   - text: "Mediation"

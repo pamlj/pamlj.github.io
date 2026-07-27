@@ -1,0 +1,140 @@
+---
+title: "Generalized Linear Model"
+author: Marcello Gallucci
+topic: pamlgzlm
+category: help
+nickname: pamlgzlm
+bibliography:
+     - bib.bib
+link-citations: true
+
+---
+
+
+```{r echo=FALSE,results="hide"}
+library(mcdocs)
+mcdocs_init()
+```
+
+Power Analysis
+
+
+`r version("1.2.0")`
+
+`r pic("pics/gzlm/ui.png")`
+
+`Generalized Linear Model` allows users to compute power parameters for tests in generalized linear models. The sub-module is intended for categorical outcomes and currently supports logistic, ordinal proportional-odds, and multinomial models.
+
+The analysis requires three main decisions. First, select the type of outcome model. Second, select the aim of the analysis: sample size, achievable power, or minimum detectable effect size. Third, select the effect size index to use in the computation.
+
+`r pic("pics/gzlm/model_type.1.png")`
+
+# Model type
+
+The option `r opt("Model Selection")` defines the outcome model used in the power analysis.
+
+* __Logistic__ is used for binary outcomes. In this case the dependent variable has two levels.
+
+* __Ordinal (proportional odds)__ is used for ordered categorical outcomes. The categories are treated as ordered levels of the same response variable.
+
+* __Multinomial__ is used for nominal categorical outcomes with more than two unordered levels.
+
+For the outcome distribution, `r modulename()` asks for the number of outcome levels and the proportion in the largest level. In the logistic model, the number of levels is fixed to two, so the `r opt("Levels")` option is not required. For ordinal and multinomial models, `r opt("Levels")` indicates the number of outcome categories.
+
+The option `r opt("Prop. in larger level")` defines how unbalanced the outcome distribution is expected to be. A value of .50 corresponds to a balanced binary outcome. Larger values indicate that one category is expected to include a larger proportion of cases.
+
+`r pic("pics/gzlm/outcome.1.png")`
+
+# Aim: 
+
+`r pic("pics/gzlm/aim.1.png")`
+
+## N  (Required sample size)
+
+When estimating the required sample size for planned research, the researcher should specify the expected effect size, the desired power, and the type I error rate. `r modulename()` then estimates the minimum sample size required to obtain the desired power.
+
+For example, if the aim is to detect an eta-squared of .10 in a logistic model, with one degree of freedom and a desired power of .90, select `r opt("Calculate: N")`, choose `r opt("Eta-squared")`, and fill in the effect-size and power parameters.
+
+
+The result table reports the estimated sample size together with the parameters used in the computation. If sensitivity plots are requested, the module also shows how power changes for alternative values of sample size and effect size.
+
+## Power (achievable power)
+
+Achievable power analysis evaluates the probability of obtaining a significant result given a fixed sample size and an assumed effect size.
+
+This aim is useful when the sample size is constrained by the study design, the available population, or practical limitations. In that case, set `r opt("Calculate: Power")`, enter the available `r opt("N")`, the expected effect size, the outcome model, and the type I error rate.
+
+The estimated power should be interpreted as the probability of rejecting the null hypothesis under the assumed population effect and sample characteristics.
+
+## Effect size
+
+The option `r opt("Calculate: Effect Size")` estimates the minimum detectable effect size. This is the smallest effect size that can be detected with the requested power, given the available sample size and the selected alpha level.
+
+This aim can be useful when the sample size is already fixed and the researcher wants to know which effect sizes the study can reasonably detect.
+
+
+# Effect size indexes
+
+The sub-module offers two effect size parameterizations.
+
+## Eta-squared
+
+`r opt("Eta-squared")` is used when the target effect is represented by an eta-squared index. The user should provide the expected `r opt("Expected Eta-squared")` and the `r opt("Effect degrees of freedom")` associated with the test.
+
+For a single regression coefficient or a binary predictor, the effect degrees of freedom are usually 1. For a categorical predictor with $k$ levels, the effect degrees of freedom are usually $k-1$. For a block of predictors, the degrees of freedom correspond to the number of parameters tested together.
+
+`r #pic("pics/gzlm/eta.1.png")`
+
+## R-squared
+
+`r opt("R-squared")` is used when the target effect is represented by the model $R^2$. In this mode, the user should provide the expected `r opt("R-squared")` and the `r opt("Model degrees of freedom")`.
+
+When `r opt("R-squared")` is selected, the `r opt("Model Definition")` panel becomes available. This panel can be used to compute the model degrees of freedom from the number of covariates, categorical factors, and interactions included in the model.
+
+`r #pic("pics/gzlm/r2.1.png")`
+
+# Model Definition
+
+The `r opt("Model Definition")` panel is used only for the `r opt("R-squared")` effect size. It helps reconstruct the degrees of freedom of the full model.
+
+Continuous predictors should be entered as `r opt("Number of covariates")`. Categorical predictors should be entered as `r opt("Number of factors")`, and their number of levels should be specified in the factor definition table.
+
+For each group of predictors, the option `r opt("Max Order")` defines the highest interaction order included in the model. Main effects include only the separate predictors. Higher orders add two-way, three-way, or all possible interactions. The option `r opt("Factors Covariates interactions")` controls interactions between categorical factors and continuous covariates.
+
+As soon as the model structure is filled in, `r modulename()` updates the `r opt("Model degrees of freedom")` field used by the $R^2$ analysis.
+
+`r pic("pics/gzlm/model_definition.1.png")`
+
+# Results
+
+`r pic("pics/gzlm/results.1.png")`
+
+The main results table `r tab("Power Analysis Results")` show the power parameters $N$ *Effect size*, *Power* and $\alpha$. Depending on the *aim*, one of the parameter is the estimated one.
+
+
+# Sensitivity analysis
+
+The sensitivity analysis options have the same interpretation as in the other power-analysis sub-modules of `r modulename()`.
+
+* `r opt("Power contour plot")` shows power as a function of sample size and effect size.
+
+* `r opt("Power curve by effect size")` shows how power changes across possible effect sizes for a fixed sample size.
+
+* `r opt("Power curve by N")` shows how power changes across possible sample sizes for a fixed effect size.
+
+The option `r opt("Log Scale (when needed)")` can improve readability when the plotted values span a wide range. The option `r opt("Colors")` selects the color palette used in the plots.
+
+`r #pic("pics/gzlm/sensitivity.out.1.png")`
+`r #pic("pics/gzlm/sensitivity.out.2.png")`
+
+# Power Parameters Plot
+
+The `r opt("Power Parameters Plot")` panel allows the user to build a custom plot by selecting the parameter shown on the x-axis, the parameter shown on the y-axis, and optionally a third parameter used to draw different curves.
+
+When `r opt("Results table")` is selected, the values used to draw the plot are also reported in a table.
+
+
+
+`r issues()`
+
+`r backto()`
