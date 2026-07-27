@@ -105,14 +105,21 @@ As soon as the model structure is filled in, `r modulename()` updates the `r opt
 
 `r pic("pics/gzlm/model_definition.1.png")`
 
+# Parameters
+
+As for any other sub-module in `r modulename()`, the required power, the observed $N$ (Sample size) and the type I error can be set accordingly to the user needs.  
+
 # Results
 
 `r pic("pics/gzlm/results.1.png")`
 
 The main results table `r tab("Power Analysis Results")` show the power parameters $N$ *Effect size*, *Power* and $\alpha$. Depending on the *aim*, one of the parameter is the estimated one.
 
+The `r tab("Power by Effect Size")` returns the power estimation at different possible value of the effect size computed for the resulting $N$, that is the *required N* computed by the power analysis. 
 
 # Sensitivity analysis
+
+`r pic("pics/gzlm/sensitivity.input.1.png")`
 
 The sensitivity analysis options have the same interpretation as in the other power-analysis sub-modules of `r modulename()`.
 
@@ -124,12 +131,10 @@ The sensitivity analysis options have the same interpretation as in the other po
 
 The option `r opt("Log Scale (when needed)")` can improve readability when the plotted values span a wide range. The option `r opt("Colors")` selects the color palette used in the plots.
 
-`r #pic("pics/gzlm/sensitivity.out.1.png")`
-`r #pic("pics/gzlm/sensitivity.out.2.png")`
-
-# Power Parameters Plot
-
 The `r opt("Power Parameters Plot")` panel allows the user to build a custom plot by selecting the parameter shown on the x-axis, the parameter shown on the y-axis, and optionally a third parameter used to draw different curves.
+
+`r pic("pics/gzlm/sensitivity.out.2.png")`
+`r pic("pics/gzlm/sensitivity.out.1.png")`
 
 When `r opt("Results table")` is selected, the values used to draw the plot are also reported in a table.
 

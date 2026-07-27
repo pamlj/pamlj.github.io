@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Marcello Gallucci" />
+    
+    
+    <title>Generalized Linear Model</title>
+
+        <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <link href="site_libs/magnific-popup-1.1.0/magnific-popup.css" rel="stylesheet" />
+        <script src="site_libs/magnific-popup-1.1.0/jquery.magnific-popup.min.js"></script>
+        <link href="site_libs/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="site_libs/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/readthedown-0.1/readthedown.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            if ($(".root")[0]){
+            $(".toc-details" > a).on("click", function(e) {
+                window.scrollBy(0, 100);
+            })
+                  return
+            };
+            $('.navbar-toggle').show();
+            $('.navbar').css('display', 'none');
+            $('#sidebar > h2 ').append("<a id='navbut' href=''><i class='fa fa-bars'></i></a>");
+            $('#navbut').on( "click", function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+               } );
+              $('.navbar-toggle').on('click', function(e) {
+                       $('.navbar').toggle();
+                       e.preventDefault();
+              });       
+            $(window).scroll(function (event) {
+                $('.navbar').css('display', 'none');
+            });       
+        });
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVCE05YX9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-LLVCE05YX9');
+        </script>
+    
+    
+    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" type="text/css" />
+        <link rel="stylesheet" href="down.css" type="text/css" />
+        <link rel="stylesheet" href="mcdocs.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PAMLj</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+        <a href="ttest.html">t-test</a>
+      </li>
+      <li>
+        <a href="correlation.html">Correlation</a>
+      </li>
+      <li>
+        <a href="prop.html">Proportions</a>
+      </li>
+      <li>
+        <a href="glm.html">GLM</a>
+      </li>
+      <li>
+        <a href="gzlm.html">GzLM</a>
+      </li>
+      <li>
+        <a href="factorial.html">Factorial</a>
+      </li>
+      <li>
+        <a href="mediation.html">Mediation</a>
+      </li>
+      <li>
+        <a href="sem.html">SEM</a>
+      </li>
+      <li>
+        <a href="mixed.html">Mixed Models</a>
+      </li>
+      <li>
+        <a href="rosetta.html">Rosetta</a>
+      </li>
+      <li>
+        <a href="vignettes.html">PAMLj in R</a>
+      </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+        <a href="https://github.com/pamlj/pamlj">View on Github</a>
+      </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Generalized Linear Model</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">Generalized Linear Model</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#model-type" id="toc-model-type">Model type</a></li>
+      <li><a href="#aim" id="toc-aim">Aim:</a>
+      <ul>
+      <li><a href="#n-required-sample-size"
+      id="toc-n-required-sample-size">N (Required sample size)</a></li>
+      <li><a href="#power-achievable-power"
+      id="toc-power-achievable-power">Power (achievable power)</a></li>
+      <li><a href="#effect-size" id="toc-effect-size">Effect
+      size</a></li>
+      </ul></li>
+      <li><a href="#effect-size-indexes"
+      id="toc-effect-size-indexes">Effect size indexes</a>
+      <ul>
+      <li><a href="#eta-squared"
+      id="toc-eta-squared">Eta-squared</a></li>
+      <li><a href="#r-squared" id="toc-r-squared">R-squared</a></li>
+      </ul></li>
+      <li><a href="#model-definition" id="toc-model-definition">Model
+      Definition</a></li>
+      <li><a href="#parameters" id="toc-parameters">Parameters</a></li>
+      <li><a href="#results" id="toc-results">Results</a></li>
+      <li><a href="#sensitivity-analysis"
+      id="toc-sensitivity-analysis">Sensitivity analysis</a></li>
+      <li><a href="#comments" id="toc-comments">Comments?</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Marcello
+Gallucci</p>
+                      </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<p>Power Analysis</p>
+<div class="version">
+<p>
+1.2.0
+</p>
+</div>
+<div style="clear:both">
+
+</div>
+<p><img src="pics/gzlm/ui.png" alt="" width="595" /></p>
+<p><code>Generalized Linear Model</code> allows users to compute power
+parameters for tests in generalized linear models. The sub-module is
+intended for categorical outcomes and currently supports logistic,
+ordinal proportional-odds, and multinomial models.</p>
+<p>The analysis requires three main decisions. First, select the type of
+outcome model. Second, select the aim of the analysis: sample size,
+achievable power, or minimum detectable effect size. Third, select the
+effect size index to use in the computation.</p>
+<p><img src="pics/gzlm/model_type.1.png" alt="" width="548" /></p>
+<div id="model-type" class="section level1">
+<h1>Model type</h1>
+<p>The option <span class="option">Model Selection</span> defines the
+outcome model used in the power analysis.</p>
+<ul>
+<li><p><strong>Logistic</strong> is used for binary outcomes. In this
+case the dependent variable has two levels.</p></li>
+<li><p><strong>Ordinal (proportional odds)</strong> is used for ordered
+categorical outcomes. The categories are treated as ordered levels of
+the same response variable.</p></li>
+<li><p><strong>Multinomial</strong> is used for nominal categorical
+outcomes with more than two unordered levels.</p></li>
+</ul>
+<p>For the outcome distribution, <span class="modulename">PAMLj</span>
+asks for the number of outcome levels and the proportion in the largest
+level. In the logistic model, the number of levels is fixed to two, so
+the <span class="option">Levels</span> option is not required. For
+ordinal and multinomial models, <span class="option">Levels</span>
+indicates the number of outcome categories.</p>
+<p>The option <span class="option">Prop. in larger level</span> defines
+how unbalanced the outcome distribution is expected to be. A value of
+.50 corresponds to a balanced binary outcome. Larger values indicate
+that one category is expected to include a larger proportion of
+cases.</p>
+<p><img src="pics/gzlm/outcome.1.png" alt="" width="552" /></p>
+</div>
+<div id="aim" class="section level1">
+<h1>Aim:</h1>
+<p><img src="pics/gzlm/aim.1.png" alt="" width="542" /></p>
+<div id="n-required-sample-size" class="section level2">
+<h2>N (Required sample size)</h2>
+<p>When estimating the required sample size for planned research, the
+researcher should specify the expected effect size, the desired power,
+and the type I error rate. <span class="modulename">PAMLj</span> then
+estimates the minimum sample size required to obtain the desired
+power.</p>
+<p>For example, if the aim is to detect an eta-squared of .10 in a
+logistic model, with one degree of freedom and a desired power of .90,
+select <span class="option">Calculate: N</span>, choose <span
+class="option">Eta-squared</span>, and fill in the effect-size and power
+parameters.</p>
+<p>The result table reports the estimated sample size together with the
+parameters used in the computation. If sensitivity plots are requested,
+the module also shows how power changes for alternative values of sample
+size and effect size.</p>
+</div>
+<div id="power-achievable-power" class="section level2">
+<h2>Power (achievable power)</h2>
+<p>Achievable power analysis evaluates the probability of obtaining a
+significant result given a fixed sample size and an assumed effect
+size.</p>
+<p>This aim is useful when the sample size is constrained by the study
+design, the available population, or practical limitations. In that
+case, set <span class="option">Calculate: Power</span>, enter the
+available <span class="option">N</span>, the expected effect size, the
+outcome model, and the type I error rate.</p>
+<p>The estimated power should be interpreted as the probability of
+rejecting the null hypothesis under the assumed population effect and
+sample characteristics.</p>
+</div>
+<div id="effect-size" class="section level2">
+<h2>Effect size</h2>
+<p>The option <span class="option">Calculate: Effect Size</span>
+estimates the minimum detectable effect size. This is the smallest
+effect size that can be detected with the requested power, given the
+available sample size and the selected alpha level.</p>
+<p>This aim can be useful when the sample size is already fixed and the
+researcher wants to know which effect sizes the study can reasonably
+detect.</p>
+</div>
+</div>
+<div id="effect-size-indexes" class="section level1">
+<h1>Effect size indexes</h1>
+<p>The sub-module offers two effect size parameterizations.</p>
+<div id="eta-squared" class="section level2">
+<h2>Eta-squared</h2>
+<p><span class="option">Eta-squared</span> is used when the target
+effect is represented by an eta-squared index. The user should provide
+the expected <span class="option">Expected Eta-squared</span> and the
+<span class="option">Effect degrees of freedom</span> associated with
+the test.</p>
+<p>For a single regression coefficient or a binary predictor, the effect
+degrees of freedom are usually 1. For a categorical predictor with <span
+class="math inline">\(k\)</span> levels, the effect degrees of freedom
+are usually <span class="math inline">\(k-1\)</span>. For a block of
+predictors, the degrees of freedom correspond to the number of
+parameters tested together.</p>
+</div>
+<div id="r-squared" class="section level2">
+<h2>R-squared</h2>
+<p><span class="option">R-squared</span> is used when the target effect
+is represented by the model <span class="math inline">\(R^2\)</span>. In
+this mode, the user should provide the expected <span
+class="option">R-squared</span> and the <span class="option">Model
+degrees of freedom</span>.</p>
+<p>When <span class="option">R-squared</span> is selected, the <span
+class="option">Model Definition</span> panel becomes available. This
+panel can be used to compute the model degrees of freedom from the
+number of covariates, categorical factors, and interactions included in
+the model.</p>
+</div>
+</div>
+<div id="model-definition" class="section level1">
+<h1>Model Definition</h1>
+<p>The <span class="option">Model Definition</span> panel is used only
+for the <span class="option">R-squared</span> effect size. It helps
+reconstruct the degrees of freedom of the full model.</p>
+<p>Continuous predictors should be entered as <span
+class="option">Number of covariates</span>. Categorical predictors
+should be entered as <span class="option">Number of factors</span>, and
+their number of levels should be specified in the factor definition
+table.</p>
+<p>For each group of predictors, the option <span class="option">Max
+Order</span> defines the highest interaction order included in the
+model. Main effects include only the separate predictors. Higher orders
+add two-way, three-way, or all possible interactions. The option <span
+class="option">Factors Covariates interactions</span> controls
+interactions between categorical factors and continuous covariates.</p>
+<p>As soon as the model structure is filled in, <span
+class="modulename">PAMLj</span> updates the <span class="option">Model
+degrees of freedom</span> field used by the <span
+class="math inline">\(R^2\)</span> analysis.</p>
+<p><img src="pics/gzlm/model_definition.1.png" alt="" width="532" /></p>
+</div>
+<div id="parameters" class="section level1">
+<h1>Parameters</h1>
+<p>As for any other sub-module in <span class="modulename">PAMLj</span>,
+the required power, the observed <span class="math inline">\(N\)</span>
+(Sample size) and the type I error can be set accordingly to the user
+needs.</p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p><img src="pics/gzlm/results.1.png" alt="" width="522" /></p>
+<p>The main results table <span class="tablename">Power Analysis
+Results</span> show the power parameters <span
+class="math inline">\(N\)</span> <em>Effect size</em>, <em>Power</em>
+and <span class="math inline">\(\alpha\)</span>. Depending on the
+<em>aim</em>, one of the parameter is the estimated one.</p>
+<p>The <span class="tablename">Power by Effect Size</span> returns the
+power estimation at different possible value of the effect size computed
+for the resulting <span class="math inline">\(N\)</span>, that is the
+<em>required N</em> computed by the power analysis.</p>
+</div>
+<div id="sensitivity-analysis" class="section level1">
+<h1>Sensitivity analysis</h1>
+<p><img src="pics/gzlm/sensitivity.input.1.png" alt="" width="565" /></p>
+<p>The sensitivity analysis options have the same interpretation as in
+the other power-analysis sub-modules of <span
+class="modulename">PAMLj</span>.</p>
+<ul>
+<li><p><span class="option">Power contour plot</span> shows power as a
+function of sample size and effect size.</p></li>
+<li><p><span class="option">Power curve by effect size</span> shows how
+power changes across possible effect sizes for a fixed sample
+size.</p></li>
+<li><p><span class="option">Power curve by N</span> shows how power
+changes across possible sample sizes for a fixed effect size.</p></li>
+</ul>
+<p>The option <span class="option">Log Scale (when needed)</span> can
+improve readability when the plotted values span a wide range. The
+option <span class="option">Colors</span> selects the color palette used
+in the plots.</p>
+<p>The <span class="option">Power Parameters Plot</span> panel allows
+the user to build a custom plot by selecting the parameter shown on the
+x-axis, the parameter shown on the y-axis, and optionally a third
+parameter used to draw different curves.</p>
+<p><img src="pics/gzlm/sensitivity.out.2.png" alt="" width="566" />
+<img src="pics/gzlm/sensitivity.out.1.png" alt="" width="579" /></p>
+<p>When <span class="option">Results table</span> is selected, the
+values used to draw the plot are also reported in a table.</p>
+</div>
+<div id="comments" class="section level1 adm adm-warning">
+<h1>Comments?</h1>
+<p>
+Got comments, issues or spotted a bug? Please open an issue on
+<a href="https://github.com/pamlj/pamlj//issues " target="_blank"> PAMLj
+at github</a> or <a href="mailto:mcfanda@gmail.com
+
+">send me an email</a>
+</p>
+</div>
+<div class="adm adm-seealso backto">
+<p>
+Return to main help pages
+</p>
+<a class='backto' href='index.html'>Main page</a>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+		$('#content img:not(.no-lightbox)').addClass("image-lb");
+	$('#content').magnificPopup({
+	    type:'image',
+	    closeOnContentClick: false,
+	    closeBtnInside: false,
+	    delegate: '.image-lb',
+	    gallery: {enabled: false },
+	    image: {
+	        verticalFit: true,
+		titleSrc: 'alt'
+	    }
+ 	});
+ 	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>
